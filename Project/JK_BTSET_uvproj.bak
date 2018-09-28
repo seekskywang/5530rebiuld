@@ -136,10 +136,9 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>1</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>13</TargetSelection>
+          <TargetSelection>7</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -153,7 +152,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>STLink\ST-LINKIII-KEIL_SWO.dll</Driver>
+            <Driver>Segger\JL2CM3.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -162,12 +161,11 @@
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>0</Capability>
-            <DriverSelection>-1</DriverSelection>
+            <Capability>1</Capability>
+            <DriverSelection>4099</DriverSelection>
           </Flash1>
-          <bUseTDR>1</bUseTDR>
-          <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash2>Segger\JL2CM3.dll</Flash2>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>
@@ -346,7 +344,6 @@
             <Rwpi>0</Rwpi>
             <wLevel>0</wLevel>
             <uThumb>0</uThumb>
-            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--diag_suppress=870</MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F40XX,USE_USB_OTG_FS,USE_EMBEDDED_PHY,USE_USB_OTG_HS</Define>
@@ -362,7 +359,6 @@
             <SplitLS>0</SplitLS>
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
-            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -777,6 +773,11 @@
               <FileType>1</FileType>
               <FilePath>..\APP\load_Face.c</FilePath>
             </File>
+            <File>
+              <FileName>STARTER.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>D:\外发资料\电池综合测试仪 2.1\APP\STARTER.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -791,6 +792,31 @@
               <FileName>HZ12.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\drive\HZ12.c</FilePath>
+            </File>
+            <File>
+              <FileName>EN40.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fonts\EN40.c</FilePath>
+            </File>
+            <File>
+              <FileName>HZ20S.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fonts\HZ20S.c</FilePath>
+            </File>
+            <File>
+              <FileName>HZ32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fonts\HZ32.c</FilePath>
+            </File>
+            <File>
+              <FileName>set_font.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fonts\set_font.c</FilePath>
+            </File>
+            <File>
+              <FileName>symbol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fonts\symbol.c</FilePath>
             </File>
           </Files>
         </Group>

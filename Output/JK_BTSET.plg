@@ -5930,3 +5930,920 @@ JTAG speed: 3000 kHz
 Erase Done.
 Programming Done.
 Verify OK.
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=149200 RO-data=59000 RW-data=2156 ZI-data=34532  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.312V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling key.c...
+..\drive\key.c(204): warning:  #223-D: function "INPUT_POW" declared implicitly
+..\drive\key.c(211): warning:  #223-D: function "INPUT_NUM" declared implicitly
+..\drive\key.c(220): warning:  #223-D: function "INPUT_C" declared implicitly
+..\drive\key.c(228): warning:  #223-D: function "INPUT_LOAD" declared implicitly
+..\drive\key.c(235): warning:  #223-D: function "INPUT_CDC" declared implicitly
+..\drive\key.c(244): warning:  #223-D: function "INPUT_INFO" declared implicitly
+..\drive\key.c(259): warning:  #223-D: function "INPUT_POW" declared implicitly
+..\drive\key.c(265): warning:  #223-D: function "INPUT_NUM" declared implicitly
+..\drive\key.c(274): warning:  #223-D: function "INPUT_C" declared implicitly
+..\drive\key.c(282): warning:  #223-D: function "INPUT_LOAD" declared implicitly
+..\drive\key.c(289): warning:  #223-D: function "INPUT_CDC" declared implicitly
+..\drive\key.c(298): warning:  #223-D: function "INPUT_INFO" declared implicitly
+..\drive\key.c(314): warning:  #223-D: function "INPUT_POW" declared implicitly
+..\drive\key.c(320): warning:  #223-D: function "INPUT_NUM" declared implicitly
+..\drive\key.c(329): warning:  #223-D: function "INPUT_C" declared implicitly
+..\drive\key.c(337): warning:  #223-D: function "INPUT_LOAD" declared implicitly
+..\drive\key.c(344): warning:  #223-D: function "INPUT_CDC" declared implicitly
+..\drive\key.c(353): warning:  #223-D: function "INPUT_INFO" declared implicitly
+..\drive\key.c(370): warning:  #223-D: function "INPUT_POW" declared implicitly
+..\drive\key.c(376): warning:  #223-D: function "INPUT_NUM" declared implicitly
+..\drive\key.c(385): warning:  #223-D: function "INPUT_C" declared implicitly
+..\drive\key.c(393): warning:  #223-D: function "INPUT_LOAD" declared implicitly
+..\drive\key.c(400): warning:  #223-D: function "INPUT_CDC" declared implicitly
+..\drive\key.c(409): warning:  #223-D: function "INPUT_INFO" declared implicitly
+..\drive\key.c(424): warning:  #223-D: function "INPUT_POW" declared implicitly
+..\drive\key.c(430): warning:  #223-D: function "INPUT_NUM" declared implicitly
+..\drive\key.c(439): warning:  #223-D: function "INPUT_C" declared implicitly
+..\drive\key.c(447): warning:  #223-D: function "INPUT_LOAD" declared implicitly
+..\drive\key.c(454): warning:  #223-D: function "INPUT_CDC" declared implicitly
+..\drive\key.c(463): warning:  #223-D: function "INPUT_INFO" declared implicitly
+..\drive\key.c(480): warning:  #223-D: function "INPUT_POW" declared implicitly
+..\drive\key.c(486): warning:  #223-D: function "INPUT_NUM" declared implicitly
+..\drive\key.c(495): warning:  #223-D: function "INPUT_C" declared implicitly
+..\drive\key.c(503): warning:  #223-D: function "INPUT_LOAD" declared implicitly
+..\drive\key.c(510): warning:  #223-D: function "INPUT_CDC" declared implicitly
+..\drive\key.c(519): warning:  #223-D: function "INPUT_INFO" declared implicitly
+..\drive\key.c(534): warning:  #223-D: function "INPUT_POW" declared implicitly
+..\drive\key.c(540): warning:  #223-D: function "INPUT_NUM" declared implicitly
+..\drive\key.c(549): warning:  #223-D: function "INPUT_C" declared implicitly
+..\drive\key.c(557): warning:  #223-D: function "INPUT_LOAD" declared implicitly
+..\drive\key.c(564): warning:  #223-D: function "INPUT_CDC" declared implicitly
+..\drive\key.c(573): warning:  #223-D: function "INPUT_INFO" declared implicitly
+..\drive\key.c(588): warning:  #223-D: function "INPUT_POW" declared implicitly
+..\drive\key.c(594): warning:  #223-D: function "INPUT_NUM" declared implicitly
+..\drive\key.c(603): warning:  #223-D: function "INPUT_C" declared implicitly
+..\drive\key.c(611): warning:  #223-D: function "INPUT_LOAD" declared implicitly
+..\drive\key.c(618): warning:  #223-D: function "INPUT_CDC" declared implicitly
+..\drive\key.c(627): warning:  #223-D: function "INPUT_INFO" declared implicitly
+..\drive\key.c(642): warning:  #223-D: function "INPUT_POW" declared implicitly
+..\drive\key.c(648): warning:  #223-D: function "INPUT_NUM" declared implicitly
+..\drive\key.c(657): warning:  #223-D: function "INPUT_C" declared implicitly
+..\drive\key.c(665): warning:  #223-D: function "INPUT_LOAD" declared implicitly
+..\drive\key.c(672): warning:  #223-D: function "INPUT_CDC" declared implicitly
+..\drive\key.c(681): warning:  #223-D: function "INPUT_INFO" declared implicitly
+..\drive\key.c(696): warning:  #223-D: function "INPUT_POW" declared implicitly
+..\drive\key.c(702): warning:  #223-D: function "INPUT_NUM" declared implicitly
+..\drive\key.c(711): warning:  #223-D: function "INPUT_C" declared implicitly
+..\drive\key.c(719): warning:  #223-D: function "INPUT_LOAD" declared implicitly
+..\drive\key.c(726): warning:  #223-D: function "INPUT_CDC" declared implicitly
+..\drive\key.c(735): warning:  #223-D: function "INPUT_INFO" declared implicitly
+..\drive\key.c(752): warning:  #223-D: function "INPUT_POW" declared implicitly
+..\drive\key.c(759): warning:  #223-D: function "INPUT_NUM" declared implicitly
+..\drive\key.c(766): warning:  #223-D: function "INPUT_LOAD" declared implicitly
+..\drive\key.c(775): warning:  #223-D: function "INPUT_C" declared implicitly
+..\drive\key.c(783): warning:  #223-D: function "INPUT_CDC" declared implicitly
+..\drive\key.c(808): warning:  #223-D: function "SET_OP_LEFT" declared implicitly
+..\drive\key.c(817): warning:  #223-D: function "SYS_INFO_LEFT" declared implicitly
+..\drive\key.c(825): warning:  #223-D: function "CDC_OP_LEFT" declared implicitly
+..\drive\key.c(838): warning:  #223-D: function "SET_OP_RIGHT" declared implicitly
+..\drive\key.c(847): warning:  #223-D: function "SYS_INFO_RIGHT" declared implicitly
+..\drive\key.c(855): warning:  #223-D: function "CDC_OP_RIGHT" declared implicitly
+..\drive\key.c(870): warning:  #223-D: function "MENU_OP_UP" declared implicitly
+..\drive\key.c(882): warning:  #223-D: function "SET_OP_UP" declared implicitly
+..\drive\key.c(891): warning:  #223-D: function "OC_OP_UP" declared implicitly
+..\drive\key.c(900): warning:  #223-D: function "CDC_OP_UP" declared implicitly
+..\drive\key.c(909): warning:  #223-D: function "SYS_INFO_UP" declared implicitly
+..\drive\key.c(926): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
+..\drive\key.c(938): warning:  #223-D: function "SET_OP_DOWN" declared implicitly
+..\drive\key.c(947): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
+..\drive\key.c(955): warning:  #223-D: function "CDC_OP_DOWN" declared implicitly
+..\drive\key.c(964): warning:  #223-D: function "SYS_INFO_DOWN" declared implicitly
+..\drive\key.c(981): warning:  #223-D: function "MENU_SET" declared implicitly
+..\drive\key.c(988): warning:  #223-D: function "PARA_SET" declared implicitly
+..\drive\key.c(997): warning:  #223-D: function "OC_SET" declared implicitly
+..\drive\key.c(1005): warning:  #223-D: function "LOAD_SET" declared implicitly
+..\drive\key.c(1012): warning:  #223-D: function "CDC_SET" declared implicitly
+..\drive\key.c(1019): warning:  #223-D: function "CFM_PASS" declared implicitly
+..\drive\key.c(1096): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1351): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1379): warning:  #223-D: function "Createsysinfo" declared implicitly
+linking...
+Program Size: Code=149208 RO-data=59000 RW-data=2156 ZI-data=34532  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 90 Warning(s).
+Build target 'JK_BTSET'
+compiling main.c...
+compiling stm32f4xx_it.c...
+compiling adc.c...
+compiling AT24C01.c...
+compiling BEEP.c...
+compiling bsp_SysTick.c...
+compiling flash.c...
+compiling GPIO.c...
+compiling IIC_24C01.c...
+compiling key.c...
+..\drive\key.c(808): warning:  #223-D: function "SET_OP_LEFT" declared implicitly
+..\drive\key.c(817): warning:  #223-D: function "SYS_INFO_LEFT" declared implicitly
+..\drive\key.c(825): warning:  #223-D: function "CDC_OP_LEFT" declared implicitly
+..\drive\key.c(838): warning:  #223-D: function "SET_OP_RIGHT" declared implicitly
+..\drive\key.c(847): warning:  #223-D: function "SYS_INFO_RIGHT" declared implicitly
+..\drive\key.c(855): warning:  #223-D: function "CDC_OP_RIGHT" declared implicitly
+..\drive\key.c(870): warning:  #223-D: function "MENU_OP_UP" declared implicitly
+..\drive\key.c(882): warning:  #223-D: function "SET_OP_UP" declared implicitly
+..\drive\key.c(891): warning:  #223-D: function "OC_OP_UP" declared implicitly
+..\drive\key.c(900): warning:  #223-D: function "CDC_OP_UP" declared implicitly
+..\drive\key.c(909): warning:  #223-D: function "SYS_INFO_UP" declared implicitly
+..\drive\key.c(926): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
+..\drive\key.c(938): warning:  #223-D: function "SET_OP_DOWN" declared implicitly
+..\drive\key.c(947): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
+..\drive\key.c(955): warning:  #223-D: function "CDC_OP_DOWN" declared implicitly
+..\drive\key.c(964): warning:  #223-D: function "SYS_INFO_DOWN" declared implicitly
+..\drive\key.c(981): warning:  #223-D: function "MENU_SET" declared implicitly
+..\drive\key.c(988): warning:  #223-D: function "PARA_SET" declared implicitly
+..\drive\key.c(997): warning:  #223-D: function "OC_SET" declared implicitly
+..\drive\key.c(1005): warning:  #223-D: function "LOAD_SET" declared implicitly
+..\drive\key.c(1012): warning:  #223-D: function "CDC_SET" declared implicitly
+..\drive\key.c(1019): warning:  #223-D: function "CFM_PASS" declared implicitly
+..\drive\key.c(1096): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1351): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1379): warning:  #223-D: function "Createsysinfo" declared implicitly
+compiling modbus.c...
+compiling ssd1963.c...
+..\drive\ssd1963.c(168): warning:  #550-D: variable "FSMC_NORSRAMTimingInitStructure" was set but never used
+compiling TIM1.c...
+compiling TIM2.c...
+compiling TIM6.c...
+compiling usart.c...
+compiling TM1650.c...
+compiling clock.c...
+compiling GUIDRV_Template.c...
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "xPhys" was declared but never referenced
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "yPhys" was declared but never referenced
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "lphys" was declared but never referenced
+compiling LCDConf_FlexColor_Template.c...
+compiling MainTask.c...
+compiling menu.c...
+compiling R_Face.c...
+..\APP\R_Face.c(334): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(369): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(374): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(386): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(390): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(464): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(493): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(628): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(656): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(715): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(715): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(736): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(736): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(757): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(757): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(778): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(778): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(799): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(799): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1778): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1792): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+compiling load_Face.c...
+compiling STARTER.c...
+compiling graph.c...
+compiling c_dc.c...
+compiling settings.c...
+compiling sysinfo.c...
+..\APP\sysinfo.c(1398): warning:  #940-D: missing return statement at end of non-void function "CFM_PASS"
+linking...
+Program Size: Code=149208 RO-data=59000 RW-data=2156 ZI-data=34532  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 51 Warning(s).
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=149208 RO-data=59000 RW-data=2156 ZI-data=34532  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.272V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling MainTask.c...
+linking...
+Program Size: Code=149232 RO-data=59000 RW-data=2160 ZI-data=34536  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Build target 'JK_BTSET'
+compiling MainTask.c...
+linking...
+Program Size: Code=149168 RO-data=59000 RW-data=2160 ZI-data=34536  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.253V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling MainTask.c...
+linking...
+Program Size: Code=149128 RO-data=59000 RW-data=2156 ZI-data=34532  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.320V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling MainTask.c...
+linking...
+Program Size: Code=149248 RO-data=59000 RW-data=2160 ZI-data=34536  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=149248 RO-data=59000 RW-data=2160 ZI-data=34536  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.317V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling main.c...
+compiling key.c...
+..\drive\key.c(808): warning:  #223-D: function "SET_OP_LEFT" declared implicitly
+..\drive\key.c(817): warning:  #223-D: function "SYS_INFO_LEFT" declared implicitly
+..\drive\key.c(825): warning:  #223-D: function "CDC_OP_LEFT" declared implicitly
+..\drive\key.c(838): warning:  #223-D: function "SET_OP_RIGHT" declared implicitly
+..\drive\key.c(847): warning:  #223-D: function "SYS_INFO_RIGHT" declared implicitly
+..\drive\key.c(855): warning:  #223-D: function "CDC_OP_RIGHT" declared implicitly
+..\drive\key.c(870): warning:  #223-D: function "MENU_OP_UP" declared implicitly
+..\drive\key.c(882): warning:  #223-D: function "SET_OP_UP" declared implicitly
+..\drive\key.c(891): warning:  #223-D: function "OC_OP_UP" declared implicitly
+..\drive\key.c(900): warning:  #223-D: function "CDC_OP_UP" declared implicitly
+..\drive\key.c(909): warning:  #223-D: function "SYS_INFO_UP" declared implicitly
+..\drive\key.c(926): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
+..\drive\key.c(938): warning:  #223-D: function "SET_OP_DOWN" declared implicitly
+..\drive\key.c(947): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
+..\drive\key.c(955): warning:  #223-D: function "CDC_OP_DOWN" declared implicitly
+..\drive\key.c(964): warning:  #223-D: function "SYS_INFO_DOWN" declared implicitly
+..\drive\key.c(981): warning:  #223-D: function "MENU_SET" declared implicitly
+..\drive\key.c(988): warning:  #223-D: function "PARA_SET" declared implicitly
+..\drive\key.c(997): warning:  #223-D: function "OC_SET" declared implicitly
+..\drive\key.c(1005): warning:  #223-D: function "LOAD_SET" declared implicitly
+..\drive\key.c(1012): warning:  #223-D: function "CDC_SET" declared implicitly
+..\drive\key.c(1019): warning:  #223-D: function "CFM_PASS" declared implicitly
+..\drive\key.c(1096): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1351): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1379): warning:  #223-D: function "Createsysinfo" declared implicitly
+compiling ssd1963.c...
+..\drive\ssd1963.c(168): warning:  #550-D: variable "FSMC_NORSRAMTimingInitStructure" was set but never used
+compiling GUIDRV_Template.c...
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "xPhys" was declared but never referenced
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "yPhys" was declared but never referenced
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "lphys" was declared but never referenced
+compiling LCDConf_FlexColor_Template.c...
+compiling MainTask.c...
+linking...
+Program Size: Code=149248 RO-data=59000 RW-data=2160 ZI-data=34536  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 29 Warning(s).
+Build target 'JK_BTSET'
+compiling MainTask.c...
+linking...
+Program Size: Code=149256 RO-data=59000 RW-data=2160 ZI-data=34536  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.316V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling MainTask.c...
+linking...
+Program Size: Code=149224 RO-data=59000 RW-data=2160 ZI-data=34536  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=149224 RO-data=59000 RW-data=2160 ZI-data=34536  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=149224 RO-data=59000 RW-data=2160 ZI-data=34536  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=149224 RO-data=59000 RW-data=2160 ZI-data=34536  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.304V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=149224 RO-data=59000 RW-data=2160 ZI-data=34536  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(80): warning:  #260-D: explicit type is missing ("int" assumed)
+..\drive\TIM6.c(86): warning:  #223-D: function "sLCD_WR_REG" declared implicitly
+..\drive\TIM6.c(87): error:  #20: identifier "read1963" is undefined
+..\drive\TIM6.c(87): warning:  #223-D: function "sLCD_Read_Data" declared implicitly
+..\drive\TIM6.c(92): warning:  #223-D: function "LCD_Initializtion" declared implicitly
+..\drive\TIM6.c(93): warning:  #223-D: function "GUI_Init" declared implicitly
+..\drive\TIM6.c(94): warning:  #223-D: function "GUI_Clear" declared implicitly
+compiling MainTask.c...
+Target not created
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(80): warning:  #260-D: explicit type is missing ("int" assumed)
+..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
+..\drive\TIM6.c(87): warning:  #223-D: function "sLCD_WR_REG" declared implicitly
+..\drive\TIM6.c(88): warning:  #223-D: function "sLCD_Read_Data" declared implicitly
+..\drive\TIM6.c(93): warning:  #223-D: function "LCD_Initializtion" declared implicitly
+..\drive\TIM6.c(94): warning:  #223-D: function "GUI_Init" declared implicitly
+..\drive\TIM6.c(95): warning:  #223-D: function "GUI_Clear" declared implicitly
+linking...
+Program Size: Code=149248 RO-data=59000 RW-data=2168 ZI-data=34536  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 7 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=149248 RO-data=59000 RW-data=2168 ZI-data=34536  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.309V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(80): warning:  #260-D: explicit type is missing ("int" assumed)
+..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
+..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
+..\drive\TIM6.c(90): warning:  #223-D: function "sLCD_WR_REG" declared implicitly
+..\drive\TIM6.c(91): warning:  #223-D: function "sLCD_Read_Data" declared implicitly
+..\drive\TIM6.c(99): warning:  #223-D: function "LCD_Initializtion" declared implicitly
+..\drive\TIM6.c(100): warning:  #223-D: function "GUI_Init" declared implicitly
+..\drive\TIM6.c(101): warning:  #223-D: function "GUI_Clear" declared implicitly
+linking...
+Program Size: Code=149264 RO-data=59000 RW-data=2172 ZI-data=34532  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 8 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.314V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling TIM6.c...
+..\drive\TIM6.c(80): warning:  #260-D: explicit type is missing ("int" assumed)
+..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
+..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
+..\drive\TIM6.c(90): warning:  #223-D: function "sLCD_WR_REG" declared implicitly
+..\drive\TIM6.c(91): warning:  #223-D: function "sLCD_Read_Data" declared implicitly
+..\drive\TIM6.c(100): warning:  #223-D: function "LCD_Initializtion" declared implicitly
+..\drive\TIM6.c(101): warning:  #223-D: function "GUI_Init" declared implicitly
+..\drive\TIM6.c(102): warning:  #223-D: function "GUI_Clear" declared implicitly
+linking...
+Program Size: Code=149264 RO-data=59000 RW-data=2172 ZI-data=34532  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 8 Warning(s).
+Build target 'JK_BTSET'
+compiling key.c...
+..\drive\key.c(808): warning:  #223-D: function "SET_OP_LEFT" declared implicitly
+..\drive\key.c(817): warning:  #223-D: function "SYS_INFO_LEFT" declared implicitly
+..\drive\key.c(825): warning:  #223-D: function "CDC_OP_LEFT" declared implicitly
+..\drive\key.c(838): warning:  #223-D: function "SET_OP_RIGHT" declared implicitly
+..\drive\key.c(847): warning:  #223-D: function "SYS_INFO_RIGHT" declared implicitly
+..\drive\key.c(855): warning:  #223-D: function "CDC_OP_RIGHT" declared implicitly
+..\drive\key.c(870): warning:  #223-D: function "MENU_OP_UP" declared implicitly
+..\drive\key.c(882): warning:  #223-D: function "SET_OP_UP" declared implicitly
+..\drive\key.c(891): warning:  #223-D: function "OC_OP_UP" declared implicitly
+..\drive\key.c(900): warning:  #223-D: function "CDC_OP_UP" declared implicitly
+..\drive\key.c(909): warning:  #223-D: function "SYS_INFO_UP" declared implicitly
+..\drive\key.c(926): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
+..\drive\key.c(938): warning:  #223-D: function "SET_OP_DOWN" declared implicitly
+..\drive\key.c(947): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
+..\drive\key.c(955): warning:  #223-D: function "CDC_OP_DOWN" declared implicitly
+..\drive\key.c(964): warning:  #223-D: function "SYS_INFO_DOWN" declared implicitly
+..\drive\key.c(981): warning:  #223-D: function "MENU_SET" declared implicitly
+..\drive\key.c(988): warning:  #223-D: function "PARA_SET" declared implicitly
+..\drive\key.c(997): warning:  #223-D: function "OC_SET" declared implicitly
+..\drive\key.c(1005): warning:  #223-D: function "LOAD_SET" declared implicitly
+..\drive\key.c(1012): warning:  #223-D: function "CDC_SET" declared implicitly
+..\drive\key.c(1019): warning:  #223-D: function "CFM_PASS" declared implicitly
+..\drive\key.c(1096): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1351): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1379): warning:  #223-D: function "Createsysinfo" declared implicitly
+compiling GUI_X.c...
+linking...
+Program Size: Code=149256 RO-data=59000 RW-data=2172 ZI-data=34532  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 25 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.324V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=149256 RO-data=59000 RW-data=2172 ZI-data=34532  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=149256 RO-data=59000 RW-data=2172 ZI-data=34532  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.283V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
