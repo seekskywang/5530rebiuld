@@ -48550,6 +48550,12 @@ N#define __my_register_h__
 N//=============================================================================
 Nvoid Write_Limits(void);
 Nvoid Wrtite_step(void);
+Nvoid OC_ADD(void);
+Nvoid Wrtite_S(void);
+Nvoid Write_oct(void);
+Nvoid Write_alarm(void);
+Nvoid Write_btype(void);
+Nvoid Write_info(void);
 N
 N//=============================================================================
 N#define NOP   __nop();	  //¿ÕÖ¸Áî
@@ -48671,6 +48677,7 @@ Nextern float DISS_POW_Current;
 Nextern float DISS_R;
 Nextern float bc_raw;
 Nextern vu16 steptime;
+Nextern vu8 r_stable;
 Nextern vu8 bit1;
 Nextern vu8 dot_flag;
 Nextern vu8 page_sw;
@@ -48678,6 +48685,27 @@ Nextern vu8 para_set1;
 Nextern vu8 para_set2;
 Nextern vu8 para_set3;
 Nextern vu8 para_set4;
+Nextern vu8 oct_sw;
+Nextern vu8 set_sw;
+Nextern vu8 lang;
+Nextern vu16 battery_c;
+Nextern char set_limit[5];
+Nextern vu8 bit;
+Nextern vu8 track;
+Nextern vu8 mode_sw;
+Nextern vu8 pow_sw;
+Nextern vu8 cdc_sw;
+Nextern vu8 load_sw;
+Nextern vu8 b_type;
+Nextern vu8 buffer;
+Nextern float gate_v;
+Nextern vu8 cutoff_flag;
+Nextern vu8 charge_step;
+Nextern vu8 pause_flag;
+Nextern vu8 paused;
+Nextern vu8 finish;
+Nextern vu16 restart_time;
+N
 N
 Nextern vu16 Run_Control[43];	
 N#define onoff_ch                        Run_Control[0]  //ON/OFF
@@ -48725,6 +48753,14 @@ N#define pow_v    					    Run_Control[40]
 N#define cdc_dc    					    Run_Control[41]
 N#define pow_c    					    Run_Control[42]
 N
+N
+Nextern float coff[6];
+N#define cov1    					    coff[0]
+N#define cov2    					    coff[1]
+N#define cov3    					    coff[2]
+N#define coc1    					    coff[3]
+N#define coc2    					    coff[4]
+N#define coc3    					    coff[5]
 N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
@@ -48925,6 +48961,456 @@ N
 N
 N
 L 13 "..\APP\R_Face.c" 2
+N#include "tm1650.h"
+L 1 "..\Include\tm1650.h" 1
+N#ifndef _TM1650_H
+N#define _TM1650_H
+N
+N#include "my_register.h"
+L 1 "..\Include\my_register.h" 1
+N/******************** (C) COPYRIGHT 2014 KUNKIN********************
+N * ÎÄ¼þÃû  £ºmy_register
+N * ×÷Õß    £ºÀîÕñ
+N * ÃèÊö    £º¿âº¯Êý°æ
+N * ÄÚÈÝ    £ºDefine register¶¨ÒåÏµÍ³Ê¹ÓÃµÄ¼Ä´æÆ÷£¬È«¾Ö±äÁ¿
+N * ×¢Òâ		 £ºÍ·ÎÄ¼þÖÐÖ»ÄÜÓÐÉùÃ÷£¬²»ÄÜÓÐ¶¨Òå
+N * ÐÞ¸ÄÈÕÆÚ£º2014-12-9
+N*********************************************************************/
+N
+N#include "STM32F4xx.h"
+N#ifndef __my_register_h__
+S#define __my_register_h__
+S//=============================================================================
+Svoid Write_Limits(void);
+Svoid Wrtite_step(void);
+Svoid OC_ADD(void);
+Svoid Wrtite_S(void);
+Svoid Write_oct(void);
+Svoid Write_alarm(void);
+Svoid Write_btype(void);
+Svoid Write_info(void);
+S
+S//=============================================================================
+S#define NOP   __nop();	  //¿ÕÖ¸Áî
+S
+S//============================================================================
+Sextern struct bitDefine flagA,flagB,flagC,flagD,flagE,flagF,flagG;
+S#define   Flag_ADC_Full             (flagA.bit1)//DMA´«ÊäÍê³É±êÖ¾Î» 
+S#define   Flag_BEEP						    	(flagA.bit2)//·äÃùÆ÷´¥·¢±êÖ¾
+S#define   Flag_Key_Scan							(flagA.bit3)//°´¼ü¶¨Ê±É¨Ãè±êÖ¾
+S#define   UART_SEND_flag						(flagA.bit4)//´®¿Ú·¢ËÍÍê³É±êÖ¾
+S#define   UART_Buffer_Rece_flag			(flagA.bit5)//´®¿Ú½ÓÊÕÍê³É±êÖ¾
+S#define   Flag_Swtich_ON      			(flagA.bit6)//Æô¶¯°´¼ü´¦ÓÚON±êÖ¾
+S#define   Flag_0_5S      		      	(flagA.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ÉÁË¸±êÖ¾
+S
+S#define   Flag_1S      		         	(flagB.bit0)//ÏÔÊ¾ÉèÖÃµçÁ÷ÉÁË¸±êÖ¾
+S#define   Flag_5S      		        	(flagB.bit1)//ÍË³öÉèÖÃ×´Ì¬±êÖ¾
+S#define   Flag_Long                 (flagB.bit2)//°´¼ü³¤°´±êÖ¾
+S#define   Flag_DAC_OFF              (flagB.bit3)//æ˜¯å¦è½¬æ¢DACæŽ§åˆ¶å€¼æ ‡å¿—
+S#define   Flag_SetA                 (flagB.bit5)//½øÈëÉèÖÃµçÁ÷±êÖ¾Î»
+S#define   Flag_SetV                 (flagB.bit6)//½øÈëÉèÖÃµçÑ¹±êÖ¾Î» 
+S#define   Flag_DisSet               (flagB.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ºÍµçÁ÷±êÖ¾Î»
+S
+S#define   Flag_GE                   (flagC.bit0)//¸öÎ»ÉÁË¸±êÖ¾
+S#define   Flag_SHI                  (flagC.bit1)//Ê®Î»ÉÁË¸±êÖ¾
+S#define   Flag_BAI                  (flagC.bit2)//°ÙÎ»ÉÁË¸±êÖ¾
+S#define   Flag_QIAN                 (flagC.bit3)//Ç§Î»ÉÁË¸±êÖ¾
+S#define   Flag_Beep_OFF             (flagC.bit6)//·äÃùÆ÷¹Ø±Õ±êÖ¾
+S
+S#define   flag_Tim_USART            (flagD.bit0)//´®¿Ú¼ÆËãÇåÁã±êÖ¾
+S#define   flag_Test                 (flagD.bit1)//×Ô¶¯²âÊÔÆðÍ£±êÖ¾
+S#define   flag_Test_PASS            (flagD.bit2)//×Ô¶¯²âÊÔPASS±êÖ¾
+S#define   flag_Test_FAIL            (flagD.bit3)//×Ô¶¯²âÊÔFAIL±êÖ¾
+S#define   flag_Test_Time            (flagD.bit4)//×Ô¶¯²âÊÔµÈ´ýÊ±¼ä±êÖ¾
+S#define   flag_Test_Start           (flagD.bit5)//×Ô¶¯²âÊÔ±È½Ï¿ªÊ¼±êÖ¾
+S#define   flag_Test_Min             (flagD.bit6)//×Ô¶¯²âÊÔÏÂÏÞ±êÖ¾
+S#define   flag_Test_MAX             (flagD.bit7)//×Ô¶¯²âÊÔÉÏÏÞ±êÖ¾
+S
+S#define   flag_Test_Door             (flagE.bit0)//×Ô¶¯²âÊÔÃÅ¼÷±êÖ¾
+S#define   flag_Test_SetTime          (flagE.bit1)//×Ô¶¯²âÊÔÊ±¼ä±êÖ¾ 
+S#define   flag_OVP                   (flagE.bit2)//OVP±êÖ¾
+S#define   flag_OCP                   (flagE.bit3)//OCP±êÖ¾
+S#define   flag_Doub                  (flagE.bit4)//°´¼üË«»÷
+S#define   flag_t_Doub                (flagE.bit5)//°´¼üË«»÷¼ÆÊ±±êÖ¾
+S#define   flag_Time_SW               (flagE.bit6)//¶¨Ê±¹¦ÄÜ¿ªÆô±êÖ¾
+S#define   flag_CC_MODE               (flagE.bit7)//¹¤×÷Ä£Ê½±êÖ¾
+S
+S#define   flag_Adjust                (flagF.bit0)//æ ¡å‡†æ¨¡å¼æ ‡å¿—ä½
+S#define   flag_ADJ_ON                (flagF.bit1)//
+S#define   flag_ADJ_VL                (flagF.bit2)//
+S#define   flag_ADJ_VH                (flagF.bit3)//
+S#define   flag_ADJ_ALCC              (flagF.bit4)//
+S#define   flag_ADJ_AHCC              (flagF.bit5)//
+S#define   flag_ADJ_ALCV              (flagF.bit6)//
+S#define   flag_ADJ_AHCV              (flagF.bit7)//
+S
+S#define   flag_DisVL                 (flagG.bit0)//
+S#define   flag_OverV                 (flagG.bit1)//
+S#define   flag_OverACC               (flagG.bit2)//
+S#define   flag_OverACV               (flagG.bit3)//
+S#define   flag_Just_Usart            (flagG.bit4)//
+S#define   flag_FAN_ON                (flagG.bit5)//
+S#define   flag_ADJ_FAN               (flagG.bit6)//
+S//=============================================================================
+Sextern vu32 GE_V;
+Sextern vu32 SHI_V;
+Sextern vu32 BAI_V;
+Sextern vu32 QIAN_V;  //ÊýÂë¹ÜÉ¨Ãè¶ÎÂë
+Sextern vu32 GE_A;
+Sextern vu32 SHI_A;
+Sextern vu32 BAI_A;
+Sextern vu32 QIAN_A;
+S//--------------------------
+Sextern vu8 NewKey;
+Sextern vu8 DAC_Flag;
+Sextern vu8 Beep_Flag;
+Sextern vu8 t_beep;
+Sextern vu8 t_KeyScan;
+Sextern vu8 t_LEDScan;  //¶¨Ê±¼ÆÊýÆ÷
+Sextern vu8 t_KEYON;
+Sextern vu16 t_0_5S;
+Sextern vu16 t_1S;
+Sextern vu16 t_5S;
+Sextern vu16 t_Basket;
+Sextern vu16 Basket_V;
+Sextern vu16 Basket_A;
+Sextern vu16 t_OFF_V;
+Sextern vu16 t_ON_V;
+Sextern vu16 t_OFF_A;
+Sextern vu16 t_ON_A;
+Sextern vu8 t_USART;
+Sextern vu16 ADJ_Write;//Ð£×¼Ê±ÐèÐ´ÈëµÄÊµ¼ÊÖµ
+Sextern vu8 OFFSET_Zore;//ÁãµãÖµ
+Sextern vu8 ADDR;
+Sextern vu8 t_lock;
+Sextern vu8 t_onoff;
+Sextern vu16 MAX_limit;
+Sextern vu16 MIN_limit;
+Sextern vu16 Test_Time;
+Sextern vu16 Test_Time1;
+Sextern vu16 Time_sw;
+Sextern vu16 Test_Daley;
+Sextern vu16 Test_C_Door;
+Sextern vu16 TEMP_OFFSET;//ÎÂ¶È²¹³¥Öµ
+S//--------------------------
+Sextern vu8 UART_Buffer_Size;//´®¿Ú½ÓÊÕÊý¾Ý³¤¶È
+Sextern vu8 Transmit_BUFFERsize;
+S//---------------------------
+Sextern vu16 NTC_value;   //ADÖµ
+Sextern vu16 Imon_value;
+Sextern vu16 Imon1_value;
+Sextern vu16 Vmon_value;
+Sextern vu16 Vmon1_value;
+Sextern vu16 Rmon_value;
+S
+Sextern float DISS_Voltage;
+Sextern  float DISS_POW_Voltage;
+Sextern float DISS_Current;
+Sextern float DISS_POW_Current;
+Sextern float DISS_R;
+Sextern float bc_raw;
+Sextern vu16 steptime;
+Sextern vu8 r_stable;
+Sextern vu8 bit1;
+Sextern vu8 dot_flag;
+Sextern vu8 page_sw;
+Sextern vu8 para_set1;
+Sextern vu8 para_set2;
+Sextern vu8 para_set3;
+Sextern vu8 para_set4;
+Sextern vu8 oct_sw;
+Sextern vu8 set_sw;
+Sextern vu8 lang;
+Sextern vu16 battery_c;
+Sextern char set_limit[5];
+Sextern vu8 bit;
+Sextern vu8 track;
+Sextern vu8 mode_sw;
+Sextern vu8 pow_sw;
+Sextern vu8 cdc_sw;
+Sextern vu8 load_sw;
+Sextern vu8 b_type;
+Sextern vu8 buffer;
+Sextern float gate_v;
+Sextern vu8 cutoff_flag;
+Sextern vu8 charge_step;
+Sextern vu8 pause_flag;
+Sextern vu8 paused;
+Sextern vu8 finish;
+Sextern vu16 restart_time;
+S
+S
+Sextern vu16 Run_Control[43];	
+S#define onoff_ch                        Run_Control[0]  //ON/OFF
+S#define SET_Voltage 	    	        Run_Control[1]  //ç”µæºè®¾ç½®ç”µåŽ‹
+S#define SET_Current	    	    		Run_Control[2]  //ç”µæºè®¾ç½®ç”µæµ
+S#define SET_Voltage_Laod 				Run_Control[3]  //ç”µå­è´Ÿè½½è®¾ç½®ç”µåŽ‹
+S#define SET_Current_Laod				Run_Control[4]  //ç”µå­è´Ÿè½½è®¾ç½®ç”µæµ
+S#define LOCK_KEY						Run_Control[5]  //
+S#define BEEP_KEY						Run_Control[6]  //
+S#define STRONG_KEY						Run_Control[7]  //
+S
+S#define MODE_Woke						Run_Control[8]  //
+S#define POW_Voltage	    	            Run_Control[9]  //
+S#define Voltage	    	                Run_Control[10]  //
+S#define Current	    	    		    Run_Control[11]  //
+S#define Laod_Current	    		    Run_Control[12]  //
+S#define R_VLUE							Run_Control[13]  //
+S#define set_max_v						Run_Control[14]  //è®¾ç½®æµ‹é‡ç”µåŽ‹ä¸Šé™
+S#define set_min_v						Run_Control[15]  //è®¾ç½®æµ‹é‡ç”µåŽ‹ä¸‹é™
+S#define set_max_r						Run_Control[16]  //è®¾ç½®æµ‹é‡å†…é˜»ä¸Šé™
+S#define set_min_r						Run_Control[17]  //è®¾ç½®æµ‹é‡å†…é˜»ä¸‹é™
+S#define set_max_c						Run_Control[18]  //è®¾ç½®æµ‹é‡ç”µæµä¸Šé™
+S#define set_min_c						Run_Control[19]  //è®¾ç½®æµ‹é‡ç”µæµè¥¿çº¿
+S#define set_output_v					Run_Control[20]  //è®¾ç½®æµ‹é‡è¾“å‡ºç”µåŽ‹
+S#define set_output_c					Run_Control[21]  //è®¾ç½®æµ‹é‡è¾“å‡ºç”µæµ
+S#define set_init_c					    Run_Control[22]  //è®¾ç½®æµ‹é‡è¾“å‡ºç”µåŽ‹
+S#define set_sbs_c					    Run_Control[23]  //è®¾ç½®æµ‹é‡è¾“å‡ºç”µæµ
+S#define set_add_c					    Run_Control[24]
+S#define set_c_cutoff_v					Run_Control[25]
+S#define set_c_cutoff_c					Run_Control[26]
+S#define set_dc_cutoff_v					Run_Control[27]
+S#define set_dc_cutoff_c					Run_Control[28]
+S#define start_time					    Run_Control[29]
+S#define end_time					    Run_Control[30]
+S#define opv1    					    Run_Control[31]
+S#define opv2    					    Run_Control[32]
+S#define opv3    					    Run_Control[33]
+S#define opc1    					    Run_Control[34]
+S#define opc2    					    Run_Control[35]
+S#define opc3    					    Run_Control[36]
+S#define load_c    					    Run_Control[37]
+S#define cdc_cv    					    Run_Control[38]
+S#define cdc_cc    					    Run_Control[39]
+S#define pow_v    					    Run_Control[40]
+S#define cdc_dc    					    Run_Control[41]
+S#define pow_c    					    Run_Control[42]
+S
+S
+Sextern float coff[6];
+S#define cov1    					    coff[0]
+S#define cov2    					    coff[1]
+S#define cov3    					    coff[2]
+S#define coc1    					    coff[3]
+S#define coc2    					    coff[4]
+S#define coc3    					    coff[5]
+S
+Sextern vu16 Contr_Voltage;//
+Sextern vu16 Contr_Current;//
+Sextern vu16 Contr_Laod;//
+Sextern vu16 Correct_Parametet[13];
+S#define  REG_CorrectionV   Correct_Parametet[0]
+S#define  REG_CorrectionA   Correct_Parametet[1]
+S#define  REG_CorrectionA1  Correct_Parametet[2]
+S#define  REG_CorrectionR   Correct_Parametet[3]
+S#define  Polar             Correct_Parametet[4]
+S#define  SET_CorrectionV   Correct_Parametet[5]
+S#define  SET_CorrectionA   Correct_Parametet[6]
+S#define  SET_CorrectionA1  Correct_Parametet[7]
+S#define  CON_CorrectionA   Correct_Parametet[8]
+S#define  Polar1            Correct_Parametet[9]
+S#define  Polar2						 Correct_Parametet[10]
+S#define  Polar3						 Correct_Parametet[11]
+S#define  REG_CorrectionV1  Correct_Parametet[12]
+S
+S
+Sextern vu32 Correct_Strong[9];//Ð£×¼ÏµÊý
+S#define  REG_ReadV_Offset   Correct_Strong[0]
+S#define  REG_ReadA_Offset   Correct_Strong[1]
+S#define  REG_ReadA1_Offset  Correct_Strong[2]
+S#define  REG_ReadR_Offset   Correct_Strong[3]
+S#define  SET_ReadV_Offset   Correct_Strong[4]
+S#define  SET_ReadA_Offset   Correct_Strong[5]
+S#define  SET_ReadA1_Offset  Correct_Strong[6]
+S#define  CON_ReadA_Offset   Correct_Strong[7]
+S#define  REG_ReadV1_Offset  Correct_Strong[8]
+S
+S/*
+S************************************************************************
+S*						é¡µé¢è¯†åˆ«ç¬¦
+S************************************************************************
+S*/
+S
+S#define face_graph      0
+S#define face_cdc        1
+S#define face_menu       2
+S#define face_r          3
+S#define face_load       4
+S#define face_set        5
+S#define face_starter    6
+S#define face_sys_info   7
+S/*
+S************************************************************************
+S*						è®¾ç½®é€‰é¡¹è¯†åˆ«ç¬¦
+S************************************************************************
+S*/
+S
+S#define set_1           0
+S#define set_2           1
+S#define set_3           2
+S#define set_4           3
+S#define set_5           4
+S#define set_6           5
+S#define set_7           6
+S#define set_8           7
+S#define set_9           8
+S#define set_10          9
+S#define set_11          10
+S#define set_12          11
+S#define set_13          12
+S#define set_14          13
+S#define set_15          14
+S#define set_16          15
+S#define set_17          16
+S#define set_18          17
+S#define set_19          18
+S#define set_20          19
+S#define set_21          20
+S#define set_22          21
+S#define set_23          22
+S#define set_24          23
+S#define set_25          24
+S#define set_26          25
+S#define set_27          26
+S#define set_28          27
+S#define set_29          28
+S#define set_30          29
+S#define set_31          30
+S#define set_32          31
+S#define set_33          32
+S#define set_34          33
+S#define set_35          34
+S#define set_36          35
+S#define set_37          36
+S#define set_38          37
+S#define set_39          38
+S#define set_40          39
+S#define set_41          40
+S#define set_42          41
+S#define set_43          42
+S#define set_44          43
+S#define set_45          44
+S#define set_46          45
+S#define set_47          46
+S#define set_48          47
+S#define set_49          48
+S#define set_50          49
+S#define set_51          50
+S#define set_52          51
+S#define set_53          52
+S#define set_54          53
+S#define set_55          54
+S#define set_56          55
+S#define set_57          56
+S#define set_58          57
+S#define set_59          58
+S#define set_60          59
+S#define set_61          60
+S#define set_62          61
+S#define set_63          62
+S#define set_64          63
+S#define set_65          64
+S#define set_66          65
+S#define set_67          66
+S#define set_68          67
+S/*
+S************************************************************************
+S*						å‚æ•°è®¾ç½®è¯†åˆ«ç¬¦
+S************************************************************************
+S*/
+S
+S#define set_1_on            0xff
+S#define set_1_off           0
+S#define set_2_on            0xff
+S#define set_2_off           0
+S#define set_3_on            1
+S#define set_3_off           0
+S#define set_4_on            0xff
+S#define set_4_off           0
+S#define cdc_on              1
+S#define cdc_off             0
+S#define oct_on              1
+S#define oct_off             0
+S#define c_on                1
+S#define c_off               0
+S#define mode_r              1
+S#define mode_load           2
+S#define mode_pow            3
+S#define load_on             1
+S#define load_off            0
+S#define pow_on              1
+S#define pow_off             0
+S#define Lion                1
+S#define NiMH                2
+S#define NiCd                3
+S#define SLA                 4
+S#define LiMH                5
+S#define step1               0
+S#define step2               1
+S#define step3               2
+S
+S//---------------------------
+Sextern vu16 ADC1_Buffer[300];//ADC×ª»»»º³åÊý×é
+Sextern vu16 ADC_NTC_Filt[50];
+Sextern vu16 ADC_Vmon_Filt[50];
+Sextern vu16 ADC_Imon_Filt[50];
+Sextern vu8 UART_Buffer_Rece[16];
+Sextern vu8 UART_Buffer_Send[20];
+S//============================================================================= 
+S#define Receive_BUFFERSIZE   10
+S//=============================================================================
+N#endif
+N/******************* (C) COPYRIGHT 2015 KUNKIN *****END OF FILE*************************/
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+L 5 "..\Include\tm1650.h" 2
+N
+N#define IIC_WR	0		/* Ð´à ˜×†bit */
+N#define IIC_RD	1		/* ×à ˜×†bit */
+N
+Nvoid IIc_Start(void);
+Nvoid IIc_Stop(void);
+Nvoid IIc_SendByte(vu8 _ucByte);
+Nvu8 IIc_ReadByte(void);
+Nvu8 IIc_WaitAck(void);
+Nvoid IIc_Ack(void);
+Nvoid IIc_NAck(void);
+Nvu8 IIc_CheckDevice(vu8 _Address);
+Nvoid TM1650_GPIO_INT(void);
+Nvu8 TM1650_Read_KEY(void);
+Nvoid TM1650_SET_LED(vu8 addr,vu8 dat);
+N#endif
+L 14 "..\APP\R_Face.c" 2
 N#include "stdio.h"
 L 1 "D:\Keil\ARM\RV31\Inc\stdio.h" 1
 N/* stdio.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.9 */
@@ -49949,7 +50435,7 @@ N
 N#endif /* ndef __stdio_h */
 N
 N/* end of stdio.h */
-L 14 "..\APP\R_Face.c" 2
+L 15 "..\APP\R_Face.c" 2
 N#include "stdlib.h"
 L 1 "D:\Keil\ARM\RV31\Inc\stdlib.h" 1
 N/* stdlib.h: ANSI draft (X3J11 May 88) library header, section 4.10 */
@@ -50889,7 +51375,7 @@ N  #endif /* __cplusplus */
 N
 N#endif
 N/* end of stdlib.h */
-L 15 "..\APP\R_Face.c" 2
+L 16 "..\APP\R_Face.c" 2
 N#include "key.h"
 L 1 "..\Include\key.h" 1
 N/******************** (C) COPYRIGHT 2015 AVER************************
@@ -50916,6 +51402,12 @@ S#define __my_register_h__
 S//=============================================================================
 Svoid Write_Limits(void);
 Svoid Wrtite_step(void);
+Svoid OC_ADD(void);
+Svoid Wrtite_S(void);
+Svoid Write_oct(void);
+Svoid Write_alarm(void);
+Svoid Write_btype(void);
+Svoid Write_info(void);
 S
 S//=============================================================================
 S#define NOP   __nop();	  //¿ÕÖ¸Áî
@@ -51037,6 +51529,7 @@ Sextern float DISS_POW_Current;
 Sextern float DISS_R;
 Sextern float bc_raw;
 Sextern vu16 steptime;
+Sextern vu8 r_stable;
 Sextern vu8 bit1;
 Sextern vu8 dot_flag;
 Sextern vu8 page_sw;
@@ -51044,6 +51537,27 @@ Sextern vu8 para_set1;
 Sextern vu8 para_set2;
 Sextern vu8 para_set3;
 Sextern vu8 para_set4;
+Sextern vu8 oct_sw;
+Sextern vu8 set_sw;
+Sextern vu8 lang;
+Sextern vu16 battery_c;
+Sextern char set_limit[5];
+Sextern vu8 bit;
+Sextern vu8 track;
+Sextern vu8 mode_sw;
+Sextern vu8 pow_sw;
+Sextern vu8 cdc_sw;
+Sextern vu8 load_sw;
+Sextern vu8 b_type;
+Sextern vu8 buffer;
+Sextern float gate_v;
+Sextern vu8 cutoff_flag;
+Sextern vu8 charge_step;
+Sextern vu8 pause_flag;
+Sextern vu8 paused;
+Sextern vu8 finish;
+Sextern vu16 restart_time;
+S
 S
 Sextern vu16 Run_Control[43];	
 S#define onoff_ch                        Run_Control[0]  //ON/OFF
@@ -51091,6 +51605,14 @@ S#define pow_v    					    Run_Control[40]
 S#define cdc_dc    					    Run_Control[41]
 S#define pow_c    					    Run_Control[42]
 S
+S
+Sextern float coff[6];
+S#define cov1    					    coff[0]
+S#define cov2    					    coff[1]
+S#define cov3    					    coff[2]
+S#define coc1    					    coff[3]
+S#define coc2    					    coff[4]
+S#define coc3    					    coff[5]
 S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
@@ -51309,420 +51831,6 @@ N#endif
 N/******************* (C) COPYRIGHT 2015 AVER *****END OF FILE***************************/
 N
 N
-L 16 "..\APP\R_Face.c" 2
-N#include "tm1650.h"
-L 1 "..\Include\tm1650.h" 1
-N#ifndef _TM1650_H
-N#define _TM1650_H
-N
-N#include "my_register.h"
-L 1 "..\Include\my_register.h" 1
-N/******************** (C) COPYRIGHT 2014 KUNKIN********************
-N * ÎÄ¼þÃû  £ºmy_register
-N * ×÷Õß    £ºÀîÕñ
-N * ÃèÊö    £º¿âº¯Êý°æ
-N * ÄÚÈÝ    £ºDefine register¶¨ÒåÏµÍ³Ê¹ÓÃµÄ¼Ä´æÆ÷£¬È«¾Ö±äÁ¿
-N * ×¢Òâ		 £ºÍ·ÎÄ¼þÖÐÖ»ÄÜÓÐÉùÃ÷£¬²»ÄÜÓÐ¶¨Òå
-N * ÐÞ¸ÄÈÕÆÚ£º2014-12-9
-N*********************************************************************/
-N
-N#include "STM32F4xx.h"
-N#ifndef __my_register_h__
-S#define __my_register_h__
-S//=============================================================================
-Svoid Write_Limits(void);
-Svoid Wrtite_step(void);
-S
-S//=============================================================================
-S#define NOP   __nop();	  //¿ÕÖ¸Áî
-S
-S//============================================================================
-Sextern struct bitDefine flagA,flagB,flagC,flagD,flagE,flagF,flagG;
-S#define   Flag_ADC_Full             (flagA.bit1)//DMA´«ÊäÍê³É±êÖ¾Î» 
-S#define   Flag_BEEP						    	(flagA.bit2)//·äÃùÆ÷´¥·¢±êÖ¾
-S#define   Flag_Key_Scan							(flagA.bit3)//°´¼ü¶¨Ê±É¨Ãè±êÖ¾
-S#define   UART_SEND_flag						(flagA.bit4)//´®¿Ú·¢ËÍÍê³É±êÖ¾
-S#define   UART_Buffer_Rece_flag			(flagA.bit5)//´®¿Ú½ÓÊÕÍê³É±êÖ¾
-S#define   Flag_Swtich_ON      			(flagA.bit6)//Æô¶¯°´¼ü´¦ÓÚON±êÖ¾
-S#define   Flag_0_5S      		      	(flagA.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ÉÁË¸±êÖ¾
-S
-S#define   Flag_1S      		         	(flagB.bit0)//ÏÔÊ¾ÉèÖÃµçÁ÷ÉÁË¸±êÖ¾
-S#define   Flag_5S      		        	(flagB.bit1)//ÍË³öÉèÖÃ×´Ì¬±êÖ¾
-S#define   Flag_Long                 (flagB.bit2)//°´¼ü³¤°´±êÖ¾
-S#define   Flag_DAC_OFF              (flagB.bit3)//æ˜¯å¦è½¬æ¢DACæŽ§åˆ¶å€¼æ ‡å¿—
-S#define   Flag_SetA                 (flagB.bit5)//½øÈëÉèÖÃµçÁ÷±êÖ¾Î»
-S#define   Flag_SetV                 (flagB.bit6)//½øÈëÉèÖÃµçÑ¹±êÖ¾Î» 
-S#define   Flag_DisSet               (flagB.bit7)//ÏÔÊ¾ÉèÖÃµçÑ¹ºÍµçÁ÷±êÖ¾Î»
-S
-S#define   Flag_GE                   (flagC.bit0)//¸öÎ»ÉÁË¸±êÖ¾
-S#define   Flag_SHI                  (flagC.bit1)//Ê®Î»ÉÁË¸±êÖ¾
-S#define   Flag_BAI                  (flagC.bit2)//°ÙÎ»ÉÁË¸±êÖ¾
-S#define   Flag_QIAN                 (flagC.bit3)//Ç§Î»ÉÁË¸±êÖ¾
-S#define   Flag_Beep_OFF             (flagC.bit6)//·äÃùÆ÷¹Ø±Õ±êÖ¾
-S
-S#define   flag_Tim_USART            (flagD.bit0)//´®¿Ú¼ÆËãÇåÁã±êÖ¾
-S#define   flag_Test                 (flagD.bit1)//×Ô¶¯²âÊÔÆðÍ£±êÖ¾
-S#define   flag_Test_PASS            (flagD.bit2)//×Ô¶¯²âÊÔPASS±êÖ¾
-S#define   flag_Test_FAIL            (flagD.bit3)//×Ô¶¯²âÊÔFAIL±êÖ¾
-S#define   flag_Test_Time            (flagD.bit4)//×Ô¶¯²âÊÔµÈ´ýÊ±¼ä±êÖ¾
-S#define   flag_Test_Start           (flagD.bit5)//×Ô¶¯²âÊÔ±È½Ï¿ªÊ¼±êÖ¾
-S#define   flag_Test_Min             (flagD.bit6)//×Ô¶¯²âÊÔÏÂÏÞ±êÖ¾
-S#define   flag_Test_MAX             (flagD.bit7)//×Ô¶¯²âÊÔÉÏÏÞ±êÖ¾
-S
-S#define   flag_Test_Door             (flagE.bit0)//×Ô¶¯²âÊÔÃÅ¼÷±êÖ¾
-S#define   flag_Test_SetTime          (flagE.bit1)//×Ô¶¯²âÊÔÊ±¼ä±êÖ¾ 
-S#define   flag_OVP                   (flagE.bit2)//OVP±êÖ¾
-S#define   flag_OCP                   (flagE.bit3)//OCP±êÖ¾
-S#define   flag_Doub                  (flagE.bit4)//°´¼üË«»÷
-S#define   flag_t_Doub                (flagE.bit5)//°´¼üË«»÷¼ÆÊ±±êÖ¾
-S#define   flag_Time_SW               (flagE.bit6)//¶¨Ê±¹¦ÄÜ¿ªÆô±êÖ¾
-S#define   flag_CC_MODE               (flagE.bit7)//¹¤×÷Ä£Ê½±êÖ¾
-S
-S#define   flag_Adjust                (flagF.bit0)//æ ¡å‡†æ¨¡å¼æ ‡å¿—ä½
-S#define   flag_ADJ_ON                (flagF.bit1)//
-S#define   flag_ADJ_VL                (flagF.bit2)//
-S#define   flag_ADJ_VH                (flagF.bit3)//
-S#define   flag_ADJ_ALCC              (flagF.bit4)//
-S#define   flag_ADJ_AHCC              (flagF.bit5)//
-S#define   flag_ADJ_ALCV              (flagF.bit6)//
-S#define   flag_ADJ_AHCV              (flagF.bit7)//
-S
-S#define   flag_DisVL                 (flagG.bit0)//
-S#define   flag_OverV                 (flagG.bit1)//
-S#define   flag_OverACC               (flagG.bit2)//
-S#define   flag_OverACV               (flagG.bit3)//
-S#define   flag_Just_Usart            (flagG.bit4)//
-S#define   flag_FAN_ON                (flagG.bit5)//
-S#define   flag_ADJ_FAN               (flagG.bit6)//
-S//=============================================================================
-Sextern vu32 GE_V;
-Sextern vu32 SHI_V;
-Sextern vu32 BAI_V;
-Sextern vu32 QIAN_V;  //ÊýÂë¹ÜÉ¨Ãè¶ÎÂë
-Sextern vu32 GE_A;
-Sextern vu32 SHI_A;
-Sextern vu32 BAI_A;
-Sextern vu32 QIAN_A;
-S//--------------------------
-Sextern vu8 NewKey;
-Sextern vu8 DAC_Flag;
-Sextern vu8 Beep_Flag;
-Sextern vu8 t_beep;
-Sextern vu8 t_KeyScan;
-Sextern vu8 t_LEDScan;  //¶¨Ê±¼ÆÊýÆ÷
-Sextern vu8 t_KEYON;
-Sextern vu16 t_0_5S;
-Sextern vu16 t_1S;
-Sextern vu16 t_5S;
-Sextern vu16 t_Basket;
-Sextern vu16 Basket_V;
-Sextern vu16 Basket_A;
-Sextern vu16 t_OFF_V;
-Sextern vu16 t_ON_V;
-Sextern vu16 t_OFF_A;
-Sextern vu16 t_ON_A;
-Sextern vu8 t_USART;
-Sextern vu16 ADJ_Write;//Ð£×¼Ê±ÐèÐ´ÈëµÄÊµ¼ÊÖµ
-Sextern vu8 OFFSET_Zore;//ÁãµãÖµ
-Sextern vu8 ADDR;
-Sextern vu8 t_lock;
-Sextern vu8 t_onoff;
-Sextern vu16 MAX_limit;
-Sextern vu16 MIN_limit;
-Sextern vu16 Test_Time;
-Sextern vu16 Test_Time1;
-Sextern vu16 Time_sw;
-Sextern vu16 Test_Daley;
-Sextern vu16 Test_C_Door;
-Sextern vu16 TEMP_OFFSET;//ÎÂ¶È²¹³¥Öµ
-S//--------------------------
-Sextern vu8 UART_Buffer_Size;//´®¿Ú½ÓÊÕÊý¾Ý³¤¶È
-Sextern vu8 Transmit_BUFFERsize;
-S//---------------------------
-Sextern vu16 NTC_value;   //ADÖµ
-Sextern vu16 Imon_value;
-Sextern vu16 Imon1_value;
-Sextern vu16 Vmon_value;
-Sextern vu16 Vmon1_value;
-Sextern vu16 Rmon_value;
-S
-Sextern float DISS_Voltage;
-Sextern  float DISS_POW_Voltage;
-Sextern float DISS_Current;
-Sextern float DISS_POW_Current;
-Sextern float DISS_R;
-Sextern float bc_raw;
-Sextern vu16 steptime;
-Sextern vu8 bit1;
-Sextern vu8 dot_flag;
-Sextern vu8 page_sw;
-Sextern vu8 para_set1;
-Sextern vu8 para_set2;
-Sextern vu8 para_set3;
-Sextern vu8 para_set4;
-S
-Sextern vu16 Run_Control[43];	
-S#define onoff_ch                        Run_Control[0]  //ON/OFF
-S#define SET_Voltage 	    	        Run_Control[1]  //ç”µæºè®¾ç½®ç”µåŽ‹
-S#define SET_Current	    	    		Run_Control[2]  //ç”µæºè®¾ç½®ç”µæµ
-S#define SET_Voltage_Laod 				Run_Control[3]  //ç”µå­è´Ÿè½½è®¾ç½®ç”µåŽ‹
-S#define SET_Current_Laod				Run_Control[4]  //ç”µå­è´Ÿè½½è®¾ç½®ç”µæµ
-S#define LOCK_KEY						Run_Control[5]  //
-S#define BEEP_KEY						Run_Control[6]  //
-S#define STRONG_KEY						Run_Control[7]  //
-S
-S#define MODE_Woke						Run_Control[8]  //
-S#define POW_Voltage	    	            Run_Control[9]  //
-S#define Voltage	    	                Run_Control[10]  //
-S#define Current	    	    		    Run_Control[11]  //
-S#define Laod_Current	    		    Run_Control[12]  //
-S#define R_VLUE							Run_Control[13]  //
-S#define set_max_v						Run_Control[14]  //è®¾ç½®æµ‹é‡ç”µåŽ‹ä¸Šé™
-S#define set_min_v						Run_Control[15]  //è®¾ç½®æµ‹é‡ç”µåŽ‹ä¸‹é™
-S#define set_max_r						Run_Control[16]  //è®¾ç½®æµ‹é‡å†…é˜»ä¸Šé™
-S#define set_min_r						Run_Control[17]  //è®¾ç½®æµ‹é‡å†…é˜»ä¸‹é™
-S#define set_max_c						Run_Control[18]  //è®¾ç½®æµ‹é‡ç”µæµä¸Šé™
-S#define set_min_c						Run_Control[19]  //è®¾ç½®æµ‹é‡ç”µæµè¥¿çº¿
-S#define set_output_v					Run_Control[20]  //è®¾ç½®æµ‹é‡è¾“å‡ºç”µåŽ‹
-S#define set_output_c					Run_Control[21]  //è®¾ç½®æµ‹é‡è¾“å‡ºç”µæµ
-S#define set_init_c					    Run_Control[22]  //è®¾ç½®æµ‹é‡è¾“å‡ºç”µåŽ‹
-S#define set_sbs_c					    Run_Control[23]  //è®¾ç½®æµ‹é‡è¾“å‡ºç”µæµ
-S#define set_add_c					    Run_Control[24]
-S#define set_c_cutoff_v					Run_Control[25]
-S#define set_c_cutoff_c					Run_Control[26]
-S#define set_dc_cutoff_v					Run_Control[27]
-S#define set_dc_cutoff_c					Run_Control[28]
-S#define start_time					    Run_Control[29]
-S#define end_time					    Run_Control[30]
-S#define opv1    					    Run_Control[31]
-S#define opv2    					    Run_Control[32]
-S#define opv3    					    Run_Control[33]
-S#define opc1    					    Run_Control[34]
-S#define opc2    					    Run_Control[35]
-S#define opc3    					    Run_Control[36]
-S#define load_c    					    Run_Control[37]
-S#define cdc_cv    					    Run_Control[38]
-S#define cdc_cc    					    Run_Control[39]
-S#define pow_v    					    Run_Control[40]
-S#define cdc_dc    					    Run_Control[41]
-S#define pow_c    					    Run_Control[42]
-S
-S
-Sextern vu16 Contr_Voltage;//
-Sextern vu16 Contr_Current;//
-Sextern vu16 Contr_Laod;//
-Sextern vu16 Correct_Parametet[13];
-S#define  REG_CorrectionV   Correct_Parametet[0]
-S#define  REG_CorrectionA   Correct_Parametet[1]
-S#define  REG_CorrectionA1  Correct_Parametet[2]
-S#define  REG_CorrectionR   Correct_Parametet[3]
-S#define  Polar             Correct_Parametet[4]
-S#define  SET_CorrectionV   Correct_Parametet[5]
-S#define  SET_CorrectionA   Correct_Parametet[6]
-S#define  SET_CorrectionA1  Correct_Parametet[7]
-S#define  CON_CorrectionA   Correct_Parametet[8]
-S#define  Polar1            Correct_Parametet[9]
-S#define  Polar2						 Correct_Parametet[10]
-S#define  Polar3						 Correct_Parametet[11]
-S#define  REG_CorrectionV1  Correct_Parametet[12]
-S
-S
-Sextern vu32 Correct_Strong[9];//Ð£×¼ÏµÊý
-S#define  REG_ReadV_Offset   Correct_Strong[0]
-S#define  REG_ReadA_Offset   Correct_Strong[1]
-S#define  REG_ReadA1_Offset  Correct_Strong[2]
-S#define  REG_ReadR_Offset   Correct_Strong[3]
-S#define  SET_ReadV_Offset   Correct_Strong[4]
-S#define  SET_ReadA_Offset   Correct_Strong[5]
-S#define  SET_ReadA1_Offset  Correct_Strong[6]
-S#define  CON_ReadA_Offset   Correct_Strong[7]
-S#define  REG_ReadV1_Offset  Correct_Strong[8]
-S
-S/*
-S************************************************************************
-S*						é¡µé¢è¯†åˆ«ç¬¦
-S************************************************************************
-S*/
-S
-S#define face_graph      0
-S#define face_cdc        1
-S#define face_menu       2
-S#define face_r          3
-S#define face_load       4
-S#define face_set        5
-S#define face_starter    6
-S#define face_sys_info   7
-S/*
-S************************************************************************
-S*						è®¾ç½®é€‰é¡¹è¯†åˆ«ç¬¦
-S************************************************************************
-S*/
-S
-S#define set_1           0
-S#define set_2           1
-S#define set_3           2
-S#define set_4           3
-S#define set_5           4
-S#define set_6           5
-S#define set_7           6
-S#define set_8           7
-S#define set_9           8
-S#define set_10          9
-S#define set_11          10
-S#define set_12          11
-S#define set_13          12
-S#define set_14          13
-S#define set_15          14
-S#define set_16          15
-S#define set_17          16
-S#define set_18          17
-S#define set_19          18
-S#define set_20          19
-S#define set_21          20
-S#define set_22          21
-S#define set_23          22
-S#define set_24          23
-S#define set_25          24
-S#define set_26          25
-S#define set_27          26
-S#define set_28          27
-S#define set_29          28
-S#define set_30          29
-S#define set_31          30
-S#define set_32          31
-S#define set_33          32
-S#define set_34          33
-S#define set_35          34
-S#define set_36          35
-S#define set_37          36
-S#define set_38          37
-S#define set_39          38
-S#define set_40          39
-S#define set_41          40
-S#define set_42          41
-S#define set_43          42
-S#define set_44          43
-S#define set_45          44
-S#define set_46          45
-S#define set_47          46
-S#define set_48          47
-S#define set_49          48
-S#define set_50          49
-S#define set_51          50
-S#define set_52          51
-S#define set_53          52
-S#define set_54          53
-S#define set_55          54
-S#define set_56          55
-S#define set_57          56
-S#define set_58          57
-S#define set_59          58
-S#define set_60          59
-S#define set_61          60
-S#define set_62          61
-S#define set_63          62
-S#define set_64          63
-S#define set_65          64
-S#define set_66          65
-S#define set_67          66
-S#define set_68          67
-S/*
-S************************************************************************
-S*						å‚æ•°è®¾ç½®è¯†åˆ«ç¬¦
-S************************************************************************
-S*/
-S
-S#define set_1_on            0xff
-S#define set_1_off           0
-S#define set_2_on            0xff
-S#define set_2_off           0
-S#define set_3_on            1
-S#define set_3_off           0
-S#define set_4_on            0xff
-S#define set_4_off           0
-S#define cdc_on              1
-S#define cdc_off             0
-S#define oct_on              1
-S#define oct_off             0
-S#define c_on                1
-S#define c_off               0
-S#define mode_r              1
-S#define mode_load           2
-S#define mode_pow            3
-S#define load_on             1
-S#define load_off            0
-S#define pow_on              1
-S#define pow_off             0
-S#define Lion                1
-S#define NiMH                2
-S#define NiCd                3
-S#define SLA                 4
-S#define LiMH                5
-S#define step1               0
-S#define step2               1
-S#define step3               2
-S
-S//---------------------------
-Sextern vu16 ADC1_Buffer[300];//ADC×ª»»»º³åÊý×é
-Sextern vu16 ADC_NTC_Filt[50];
-Sextern vu16 ADC_Vmon_Filt[50];
-Sextern vu16 ADC_Imon_Filt[50];
-Sextern vu8 UART_Buffer_Rece[16];
-Sextern vu8 UART_Buffer_Send[20];
-S//============================================================================= 
-S#define Receive_BUFFERSIZE   10
-S//=============================================================================
-N#endif
-N/******************* (C) COPYRIGHT 2015 KUNKIN *****END OF FILE*************************/
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-N
-L 5 "..\Include\tm1650.h" 2
-N
-N#define IIC_WR	0		/* Ð´à ˜×†bit */
-N#define IIC_RD	1		/* ×à ˜×†bit */
-N
-Nvoid IIc_Start(void);
-Nvoid IIc_Stop(void);
-Nvoid IIc_SendByte(vu8 _ucByte);
-Nvu8 IIc_ReadByte(void);
-Nvu8 IIc_WaitAck(void);
-Nvoid IIc_Ack(void);
-Nvoid IIc_NAck(void);
-Nvu8 IIc_CheckDevice(vu8 _Address);
-Nvoid TM1650_GPIO_INT(void);
-Nvu8 TM1650_Read_KEY(void);
-Nvoid TM1650_SET_LED(vu8 addr,vu8 dat);
-N#endif
 L 17 "..\APP\R_Face.c" 2
 N#include "string.h"
 L 1 "D:\Keil\ARM\RV31\Inc\string.h" 1
@@ -52288,53 +52396,60 @@ N
 NWM_HWIN hWinR;
 XGUI_HWIN hWinR;
 Nvoid OC_ADD(void); 
+N// void test_r(vu16 tr,float tv);
 Nvoid test_r(void);
 Nvu8 bit = 1;
 Nvu8 dot_flag = 0;
 Nvu8 page_sw = face_r;
 Xvu8 page_sw = 3;
 Nvu8 para_set1;
-Nvu8 para_set2;
+Nvu8 para_set2 = set_2_on;
+Xvu8 para_set2 = 0xff;
 Nvu8 para_set3;
 Nvu8 para_set4 = set_4_off;
 Xvu8 para_set4 = 0;
-N
+Nvu8 r_stable = 0;
 Nfloat gate_v = 0;
+Nvu8 oct_sw = oct_off;
+Xvu8 oct_sw = 0;
+Nvu8 lang;
+Nvu8 finish = 0;
+Nvu8 set_sw;
+Nchar set_limit[5];
+Nvu16 stable_time;
+N
+N////////////////////////////////////////////////////////
+N
 Nvu16 dis_gate_v;
 Nfloat DISS_R;//å†…é˜»
 Nextern vu8 page_sw;
 Nstatic vu8 oc_sw = set_20;
 Xstatic vu8 oc_sw = 19;
 Nstatic float oc_data;
+Nstatic vu16 r;
 Nvu16 s_time;
 Nvu8 wait_flag;
 Nvu8 test_num = 0;
 Nvu8 con_flag = 0;
 Nvu8 short_flag = 0;
-Nvu16 r;
+N
 Nvu16 short_start;
 Nvu16 short_time;
 Nvu8 short_finish = 0;
 Nfloat v;
-Nvu8 r_stable = 0;
-Nvu16 stable_time;
+N
+N//vu16 stable_time;
 Nfloat time1;
 Nvu16 steptime = 1;
-Nvu8 finish = 0;
+N
 Nvu8 test_finish = 0;
 Nint test_ftime;
-Nextern vu8 bit;
-Nextern vu8 para_set1;
-Nextern vu8 para_set2;
-Nchar set_limit[5];
-Nextern vu8 dot_flag;
-Nvu8 oct_sw = oct_off;
-Xvu8 oct_sw = 0;
-Nvu8 lang = 1;
+N
+N
+N
+N
+N
 Nextern vu8 t_onoff;
-Nextern vu8 mode_sw;
-Nextern vu8 para_set4;
-Nextern vu8 b_type;
 Nextern vu8 LOAD_t;
 Nextern vu8 status_flash;
 Nextern vu8 pass;
@@ -52473,6 +52588,7 @@ N    WM_HWIN hItem;
 X    GUI_HWIN hItem;
 N//    int     NCode;
 N//    int     Id;
+N    
 N    char  buf[5];
 N    float dis_init_c = (float)set_init_c/100;
 X    float dis_init_c = (float)Run_Control[22]/100;
@@ -52553,16 +52669,6 @@ N                    GUI_DispStringAt("Current", 300, 170);
 N                    GUI_DispStringAt("Short Time", 300, 200);//SET
 N                    GUI_DispStringAt("Overflow test", 340, 30);//SET
 N                }
-N//                 if(oc_data == 0)
-N//                 {
-N//                     GUI_SetFont(&GUI_Font24_1);
-N//                     GUI_DispStringAt("__", 410, 140);
-N
-N//                 }else{
-N//                     GUI_SetFont(&GUI_Font24_1);
-N//                     GUI_GotoXY(400,150);//
-N//                     GUI_DispFloatFix(oc_data,5,2);
-N//                 }
 N                break;
 N            }
 N            case set_2_off:
@@ -52577,510 +52683,688 @@ X	case 0x0113:
 N	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime)
 X	if(WM_GetTimerId(pMsg->Data.v) == 1)
 N	{
-N//         if(para_set2 == set_2_on)
+N//         if(para_set2 == set_2_off)
 N//         {
-N//             if(short_finish == 1)
+N//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+N//             sprintf(buf,"%.2f",DISS_Voltage);       
+N//             TEXT_SetText(hItem,buf);
+N//             if(R_VLUE >= 1000 && DISS_Voltage > 1)
 N//             {
-N//                 if(gate_v == 0)
-N//                 {
-N//                     if(GUI_GetTime()/500 - test_ftime == 1)
-N//                     {
-N//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-N//                         Mode_SW_CONT(0x01);
-N//                     }
-N//                     if(/*mode_sw == mode_pow && */DISS_Voltage < 0.3  && GUI_GetTime()/500 - test_ftime > 1 /*&& 
-N//                         < 50*/)
-N//                     {
-N//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-N//                         Mode_SW_CONT(0x01);
-N//                         finish = 0;
-N//                         con_flag = 0;
-N//                         short_finish = 0;
-N//                         test_finish = 0;
-N//                         r_test = 0;
-N//                     }
-N//                 }else{
-N//                     if(GUI_GetTime()/500 - test_ftime == 2)
-N//                     {
-N//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-N//                         Mode_SW_CONT(0x01);
-N//                     }
-N//                     if(/* mode_sw == mode_pow && */(r_test == 0 || DISS_Voltage < gate_v) && GUI_GetTime()/500 - test_ftime > 1/*&& R_VLUE < 50*/)
-N//                     { 
-N//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-N//                         Mode_SW_CONT(0x01);
-N//                         finish = 0;
-N//                         con_flag = 0;
-N//                         short_finish = 0;
-N//                         test_finish = 0;
-N//                         r_test = 0;
-N//                     }
-N//                 }                    
-N//             }else{
-N//                 if(para_set2 == set_2_on)
-N//                 {
-N//                     if(gate_v == 0)
-N//                     {
-N//                         if(DISS_Voltage > 1 && R_VLUE > 50 && con_flag == 0 && finish == 0)
-N//                         {
-N//                             con_flag = 1;
-N//                             time1 = (float)GUI_GetTime()/500.0;
-N//                         }
-N//                         
-N//                         if(con_flag == 1 && oct_sw == oct_off && finish == 0)
-N//                         {
-N//                             if((float)(GUI_GetTime()/500.0 - time1) > 0.2)
-N//                             {
-N//                                 r = R_VLUE;
-N//                                 v = DISS_Voltage;
-N//                                 oct_sw = oct_on;
-N//                                 clear_flag1 = 0;
-N//                             }
-N//                         }
-N//                     }else{
-N//                         if(DISS_Voltage > gate_v && R_VLUE > 50 && con_flag == 0 && finish == 0 && r_test == 1)
-N//                         {
-N//                             con_flag = 1;
-N//                             time1 = (float)GUI_GetTime()/500.0;
-N//                         }                       
-N//                         if(con_flag == 1 && oct_sw == oct_off && finish == 0)
-N//                         {
-N//                             if((float)(GUI_GetTime()/500.0 - time1) > 0.2)
-N//                             {
-N//                                 r = R_VLUE;
-N//                                 v = DISS_Voltage;
-N//                                 oct_sw = oct_on;
-N//                                 clear_flag1 = 0;
-N//                             }
-N//                         }
-N//                     }
-N//                 }
-N//                 
-N//             }
-N//             
-N//             
-N//             
-N//             if(oct_sw == oct_on && para_set2 == set_2_on)
-N//             {
-N//                 Mode_SW_CONT(0x02);
-N//                 GPIO_ResetBits(GPIOC,GPIO_Pin_1);
-N// //                OC_ADD();
 N//                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N//                 TEXT_SetFont(hItem,&GUI_FontD24x32);
-N//                 sprintf(buf,"%4d",r);       
-N//                 TEXT_SetText(hItem,buf);
-N//                 
-N//     //             if(status_flash == 0){
-N
-N//                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
-N//                 TEXT_SetTextColor(hItem, GUI_RED);
-N//                 if(lang == 0)
-N//                 {
-N//                     GUI_SetFont(&GUI_Fontset_font);
-N//                     TEXT_SetText(hItem, "æµ‹è¯•ä¸­");
-N//                     status_flash = 1;
-N//                 }else{
-N//                     GUI_SetFont(&GUI_Font20_ASCII);
-N//                     TEXT_SetText(hItem, "Testing");
-N//                     status_flash = 1;
-N//                 }
-N//                     
-N//     //             }else{
-N//     //                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
-N//     //                 TEXT_SetText(hItem,"");
-N//     //                 status_flash = 0;
-N//     //             }
-N//                 
-N//             }else
-N//             {
-N//                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
-N//                 TEXT_SetTextColor(hItem, GUI_WHITE);
-N//                 
-N//                 
-N//                 if(lang == 0)
-N//                 {
-N//                     GUI_SetFont(&GUI_Fontset_font);
-N//                     TEXT_SetText(hItem, "æœªæµ‹è¯•");
-N//                 }else{
-N//                     GUI_SetFont(&GUI_Font20_ASCII);
-N//                     TEXT_SetText(hItem, "Untested");
-N//                 }
-N//             }
-N//             
-N//             if(oct_sw == oct_off && finish == 0)
-N//             {
-N//                 if(DISS_Voltage > 1 && r_stable == 0)
-N//                 {
-N//                     r_stable = 1;
-N//                     stable_time = GUI_GetTime()/500;
-N//                 }else if(DISS_Voltage < 1){
-N//                     r_stable = 0;
-N//                 }                    
-N//                 if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
-N//                 {
-N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-N//                     sprintf(buf,"%.2f",0);       
-N//                     TEXT_SetText(hItem,buf);
-N//                 }else{
-N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-N//                     sprintf(buf,"%.2f",DISS_Voltage);       
-N//                     TEXT_SetText(hItem,buf);
-N//                 }
-N//                 if(clear_flag1 == 1 && R_VLUE <= clear_r)
-N//                 {
-N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N//                     sprintf(buf,"%4d",0);       
-N//                     TEXT_SetText(hItem,buf);
-N//                 }
-N// //                 else if(R_VLUE >= 1000)
-N// //                 {
-N// //                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N// //                     TEXT_SetFont(hItem,&GUI_FontEN40);//è®¾å®šæ–‡æœ¬å­—ä½“
-N// //                     TEXT_SetText(hItem,"");
-N// //                 }
-N//                 else{
-N//                         if(GUI_GetTime()/500 - stable_time == 1 && r_stable == 1)
-N//                         {
-N//                             r = R_VLUE;
-N//                             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N//                             TEXT_SetFont(hItem,&GUI_FontD24x32);
-N//                             sprintf(buf,"%4d",r);       
-N//                             TEXT_SetText(hItem,buf);
-N//                         }else if(r_stable == 0)
-N//                         {
-N//                             if(DISS_Voltage < 0.3)
-N//                             {
-N//                                 if(para_set1 == set_1_on)
-N//                                 {
-N//                                     TM1650_SET_LED(0x68,0x70);
-N//                                     GPIO_ResetBits(GPIOD,GPIO_Pin_12);//ç­ç¯
-N//                                 }
-N//                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N//                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
-N//                                 TEXT_SetTextColor(hItem, GUI_GREEN);
-N//                                 sprintf(buf,"%4d",0);       
-N//                                 TEXT_SetText(hItem,buf);
-N//                             }else{
-N//                                 
-N// //                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N// //                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
-N// //                                 
-N// //                                 sprintf(buf,"%4d",R_VLUE);       
-N// //                                 TEXT_SetText(hItem,buf);
-N//                             }
-N// //                              hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N// //                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
-N// //                                 
-N// //                                 sprintf(buf,"%4d",R_VLUE);       
-N// //                                 TEXT_SetText(hItem,buf);
-N//                         }                        
-N//                 }
-N//                 short_time = 0;
-N//                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
-N//                 sprintf(buf,"%4d",short_time);
-N//                 TEXT_SetFont(hItem,&GUI_Font24_1);//è®¾å®šæ–‡æœ¬å­—ä½“      
-N//                 TEXT_SetText(hItem,buf);
-N//                 
-N//                 oc_data = 0;
-N//                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_82);
-N//                 sprintf(buf,"%.2f",oc_data);
-N//                 TEXT_SetText(hItem,buf);
+N//                 TEXT_SetFont(hItem,&GUI_FontEN40);//è®¾å®šæ–‡æœ¬å­—ä½“
+N//                 TEXT_SetText(hItem,"");
 N//             }else{
-N//                 if(para_set2 == set_2_on)
+N//                 if(DISS_Voltage >= 1 && r_stable == 0)
 N//                 {
-N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-N//                     sprintf(buf,"%.2f",v);       
-N//                     TEXT_SetText(hItem,buf);
-N//                     
+N//                     r = R_VLUE;
 N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
 N//                     TEXT_SetFont(hItem,&GUI_FontD24x32);
 N//                     sprintf(buf,"%4d",r);       
 N//                     TEXT_SetText(hItem,buf);
-N//                     
-N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
-N//                     sprintf(buf,"%4d",short_time);
-N//                     TEXT_SetFont(hItem,&GUI_Font24_1);//è®¾å®šæ–‡æœ¬å­—ä½“      
-N//                     TEXT_SetText(hItem,buf);
-N//                     
-N//                     if(short_finish == 0 ){
-N//                         if(DISS_Voltage < 1 && short_flag == 0 && oct_sw == oct_off)
-N//                         {
-N//                             SET_Voltage =1000;
-N//                             SET_Current = 1000;
-N//                             Mode_SW_CONT(0x03);
-N//                             GPIO_SetBits(GPIOB,GPIO_Pin_13);
-N//                             //GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-N//                         }else if(oct_sw == oct_off && short_flag == 0){
-N//                             Mode_SW_CONT(0x02);
-N//                             SET_Current_Laod = 1000;
-N//                             short_flag =1;
-N//                             short_start = GUI_GetTime()*2;
-N//                         }
-N//                         if(short_flag == 1)
-N//                         {
-N//                             GPIO_ResetBits(GPIOC,GPIO_Pin_1);
-N//                             if(DISS_Voltage < 1){
-N//                                 SET_Current_Laod = set_init_c;
-N//                                 short_time = GUI_GetTime()*2 - short_start;
-N//                                 short_flag = 0;
-N//                                 short_finish = 1;
-N//                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
-N//                                 sprintf(buf,"%4d",short_time);     
-N//                                 TEXT_SetText(hItem,buf);
-N//                             }
-N//                         }
-N//                     }
-N//                     if(short_finish == 1 && test_finish == 0)
-N//                     {
-N//                         GPIO_SetBits(GPIOC,GPIO_Pin_1);
-N//                         Mode_SW_CONT(0x03);
-N//                         SET_Voltage = 1000;
-N//                         SET_Current = 1000;
-N//                         GPIO_SetBits(GPIOB,GPIO_Pin_13);
-N//                         
-N//                         
-N// //                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);                                                
-N// //                         Mode_SW_CONT(0x01);
-N//                         
-N//                         test_ftime = GUI_GetTime()/500;
-N//                         test_finish = 1;
-N//                     } 
-N//                 }
-N//                 
-N//                 
-N//                 
-N//     //             if(R_VLUE >= 1000)
-N//     //             {
-N//     //                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N//     //                 TEXT_SetFont(hItem,&GUI_FontEN40);//è®¾å®šæ–‡æœ¬å­—ä½“
-N//     //                 TEXT_SetText(hItem,"");
-N//     //             }else{
-N//                     
-N//     //             }
-N//             }
-N//             
-N//             
-N//             
-N//             
-N//                     
-N//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_82);
-N//             sprintf(buf,"%.2f",oc_data);
-N//             TEXT_SetText(hItem,buf);
-N//             
-N//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_83);
-N//             sprintf(buf,"%.2f",DISS_Current);
-N//             TEXT_SetText(hItem,buf); 
-N//         }else{
-N//             
-N//             if(DISS_Voltage > 1 && r_stable == 0)
-N//             {
-N//                 r_stable = 1;
-N//                 stable_time = GUI_GetTime()/500;
-N//             }else if(DISS_Voltage < 1){
-N//                 r_stable = 0;
-N//             }
-N//                 
-N//             if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
-N//                 {
-N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-N//                     sprintf(buf,"%.2f",0);       
-N//                     TEXT_SetText(hItem,buf);
-N//                 }else{
-N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-N//                     sprintf(buf,"%.2f",DISS_Voltage);       
-N//                     TEXT_SetText(hItem,buf);
-N//                 }
-N//                 if(clear_flag1 == 1 && R_VLUE <= clear_r)
-N//                 {
+N//                 }else if(DISS_Voltage < 1){
 N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N//                     sprintf(buf,"%4d",0);       
-N//                     TEXT_SetText(hItem,buf);
+N//                     TEXT_SetFont(hItem,&GUI_FontD24x32);       
+N//                     TEXT_SetText(hItem,"0");
 N//                 }
-N//                 else if(R_VLUE >= 1000 && DISS_Voltage > 1)
+N//             }
+N//             if(para_set1 == set_1_on)
+N//             {
+N//                 test_r(r,DISS_Voltage);
+N//             }
+N//         }else{
+N//             if(gate_v == 0)
+N//             {
+N//                  if(DISS_Voltage >= 1 && R_VLUE > 30 && finish == 0)
+N//                  {
+N//                      oct_sw = oct_on;
+N//                      hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
+N//                     TEXT_SetTextColor(hItem, GUI_RED);
+N//                     if(lang == 0)
+N//                     {
+N//                         GUI_SetFont(&GUI_Fontset_font);
+N//                         TEXT_SetText(hItem, "æµ‹è¯•ä¸­");
+N//                     }else{
+N//                         GUI_SetFont(&GUI_Font20_ASCII);
+N//                         TEXT_SetText(hItem, "Testing");
+N//                     }
+N//                  }else{
+N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
+N//                     TEXT_SetTextColor(hItem, GUI_WHITE);                                        
+N//                     if(lang == 0)
+N//                     {
+N//                         GUI_SetFont(&GUI_Fontset_font);
+N//                         TEXT_SetText(hItem, "æœªæµ‹è¯•");
+N//                     }else{
+N//                         GUI_SetFont(&GUI_Font20_ASCII);
+N//                         TEXT_SetText(hItem, "Untested");
+N//                     }
+N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_82);
+N//                     sprintf(buf,"%.2f",oc_data);
+N//                     TEXT_SetText(hItem,buf);
+N//                  }
+N//             }
+N        
+N        if(para_set2 == set_2_on)
+X        if(para_set2 == 0xff)
+N        {
+N            if(short_finish == 1)
+N            {
+N                if(gate_v == 0)
+N                {
+N                    if(GUI_GetTime()/500 - test_ftime == 1)
+N                    {
+N                        GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                        Mode_SW_CONT(0x01);
+N                    }
+W "..\APP\R_Face.c" 334 51 single-precision operand implicitly converted to double-precision
+N                    if(/*mode_sw == mode_pow && */DISS_Voltage < 0.3  && GUI_GetTime()/500 - test_ftime > 1 /*&&                         < 50*/)
+N                    {
+N                        GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                        Mode_SW_CONT(0x01);
+N                        finish = 0;
+N                        con_flag = 0;
+N                        short_finish = 0;
+N                        test_finish = 0;
+N                        r_test = 0;
+N                    }
+N                }else{
+N                    if(GUI_GetTime()/500 - test_ftime == 2)
+N                    {
+N                        GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                        Mode_SW_CONT(0x01);
+N                    }
+N                    if(/* mode_sw == mode_pow && */(r_test == 0 || DISS_Voltage < gate_v) && GUI_GetTime()/500 - test_ftime > 1/*&& R_VLUE < 50*/)
+N                    { 
+N                        GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                        Mode_SW_CONT(0x01);
+N                        finish = 0;
+N                        con_flag = 0;
+N                        short_finish = 0;
+N                        test_finish = 0;
+N                        r_test = 0;
+N                    }
+N                }                    
+N            }else{
+N                if(para_set2 == set_2_on)
+X                if(para_set2 == 0xff)
+N                {
+N                    if(gate_v == 0)
+N                    {
+N                        if(DISS_Voltage > 1 && R_VLUE > 50 && con_flag == 0 && finish == 0)
+X                        if(DISS_Voltage > 1 && Run_Control[13] > 50 && con_flag == 0 && finish == 0)
+N                        {
+N                            con_flag = 1;
+W "..\APP\R_Face.c" 369 37 single-precision operand implicitly converted to double-precision
+N                            time1 = (float)GUI_GetTime()/500.0;
+N                        }
+N                        
+N                        if(con_flag == 1 && oct_sw == oct_off && finish == 0)
+X                        if(con_flag == 1 && oct_sw == 0 && finish == 0)
+N                        {
+W "..\APP\R_Face.c" 374 32 single-precision operand implicitly converted to double-precision
+N                            if((float)(GUI_GetTime()/500.0 - time1) > 0.2)
+N                            {
+N                                r = R_VLUE;
+X                                r = Run_Control[13];
+N                                v = DISS_Voltage;
+N                                oct_sw = oct_on;
+X                                oct_sw = 1;
+N                                clear_flag1 = 0;
+N                            }
+N                        }
+N                    }else{
+N                        if(DISS_Voltage > gate_v && R_VLUE > 50 && con_flag == 0 && finish == 0 && r_test == 1)
+X                        if(DISS_Voltage > gate_v && Run_Control[13] > 50 && con_flag == 0 && finish == 0 && r_test == 1)
+N                        {
+N                            con_flag = 1;
+W "..\APP\R_Face.c" 386 37 single-precision operand implicitly converted to double-precision
+N                            time1 = (float)GUI_GetTime()/500.0;
+N                        }                       
+N                        if(con_flag == 1 && oct_sw == oct_off && finish == 0)
+X                        if(con_flag == 1 && oct_sw == 0 && finish == 0)
+N                        {
+W "..\APP\R_Face.c" 390 32 single-precision operand implicitly converted to double-precision
+N                            if((float)(GUI_GetTime()/500.0 - time1) > 0.2)
+N                            {
+N                                r = R_VLUE;
+X                                r = Run_Control[13];
+N                                v = DISS_Voltage;
+N                                oct_sw = oct_on;
+X                                oct_sw = 1;
+N                                clear_flag1 = 0;
+N                            }
+N                        }
+N                    }
+N                }
+N                
+N            }
+N            
+N            
+N            
+N            if(oct_sw == oct_on && para_set2 == set_2_on)
+X            if(oct_sw == 1 && para_set2 == 0xff)
+N            {
+N                Mode_SW_CONT(0x02);
+N                GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N//                OC_ADD();
+N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
+N                TEXT_SetFont(hItem,&GUI_FontD24x32);
+N                sprintf(buf,"%4d",r);       
+N                TEXT_SetText(hItem,buf);
+N                
+N    //             if(status_flash == 0){
+N
+N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
+X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0106));
+N                TEXT_SetTextColor(hItem, GUI_RED);
+X                TEXT_SetTextColor(hItem, 0x000000FF);
+N                if(lang == 0)
+N                {
+N                    GUI_SetFont(&GUI_Fontset_font);
+N                    TEXT_SetText(hItem, "æµ‹è¯•ä¸­");
+N                    status_flash = 1;
+N                }else{
+N                    GUI_SetFont(&GUI_Font20_ASCII);
+N                    TEXT_SetText(hItem, "Testing");
+N                    status_flash = 1;
+N                }
+N                    
+N    //             }else{
+N    //                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
+N    //                 TEXT_SetText(hItem,"");
+N    //                 status_flash = 0;
+N    //             }
+N                
+N            }else
+N            {
+N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
+X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0106));
+N                TEXT_SetTextColor(hItem, GUI_WHITE);
+X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N                
+N                
+N                if(lang == 0)
+N                {
+N                    GUI_SetFont(&GUI_Fontset_font);
+N                    TEXT_SetText(hItem, "æœªæµ‹è¯•");
+N                }else{
+N                    GUI_SetFont(&GUI_Font20_ASCII);
+N                    TEXT_SetText(hItem, "Untested");
+N                }
+N            }
+N            
+N            if(oct_sw == oct_off && finish == 0)
+X            if(oct_sw == 0 && finish == 0)
+N            {
+N                if(DISS_Voltage > 1 && r_stable == 0)
+N                {
+N                    r_stable = 1;
+N                    stable_time = GUI_GetTime()/500;
+N                }else if(DISS_Voltage < 1){
+N                    r_stable = 0;
+N                }                    
+N                if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
+N                {
+N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
+W "..\APP\R_Face.c" 464 40 argument is incompatible with corresponding format string conversion
+N                    sprintf(buf,"%.2f",0);       
+N                    TEXT_SetText(hItem,buf);
+N                }else{
+N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
+N                    sprintf(buf,"%.2f",DISS_Voltage);       
+N                    TEXT_SetText(hItem,buf);
+N                }
+N                if(clear_flag1 == 1 && R_VLUE <= clear_r)
+X                if(clear_flag1 == 1 && Run_Control[13] <= clear_r)
+N                {
+N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
+N                    sprintf(buf,"%4d",0);       
+N                    TEXT_SetText(hItem,buf);
+N                }
+N//                 else if(R_VLUE >= 1000)
 N//                 {
 N//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
 N//                     TEXT_SetFont(hItem,&GUI_FontEN40);//è®¾å®šæ–‡æœ¬å­—ä½“
 N//                     TEXT_SetText(hItem,"");
-N//                 }else{
-N//                     if(GUI_GetTime()/500 - stable_time == 1 && r_stable == 1)
-N//                     {
-N//                         r = R_VLUE;
-N//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N//                         TEXT_SetFont(hItem,&GUI_FontD24x32);
-N//                         sprintf(buf,"%4d",r);       
-N//                         TEXT_SetText(hItem,buf);
-N//                     }else if(r_stable == 0)
-N//                     {
-N//                         if(DISS_Voltage < 0.3)
-N//                             {
-N//                                 if(para_set1 == set_1_on)
-N//                                 {
-N//                                     TM1650_SET_LED(0x68,0x70);
-N//                                     GPIO_ResetBits(GPIOD,GPIO_Pin_12);//ç­ç¯
-N//                                 }
+N//                 }
+N                else{
+N                        if(GUI_GetTime()/500 - stable_time == 1 && r_stable == 1)
+N                        {
+N                            r = R_VLUE;
+X                            r = Run_Control[13];
+N                            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+X                            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
+N                            TEXT_SetFont(hItem,&GUI_FontD24x32);
+N                            sprintf(buf,"%4d",r);       
+N                            TEXT_SetText(hItem,buf);
+N                        }else if(r_stable == 0)
+N                        {
+W "..\APP\R_Face.c" 493 32 single-precision operand implicitly converted to double-precision
+N                            if(DISS_Voltage < 0.3)
+N                            {
+N                                if(para_set1 == set_1_on)
+X                                if(para_set1 == 0xff)
+N                                {
+N                                    TM1650_SET_LED(0x68,0x70);
+N                                    GPIO_ResetBits(GPIOD,GPIO_Pin_12);//ç­ç¯
+X                                    GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
+N                                }
+N                                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+X                                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
+N                                TEXT_SetFont(hItem,&GUI_FontD24x32);
+N                                TEXT_SetTextColor(hItem, GUI_GREEN);
+X                                TEXT_SetTextColor(hItem, 0x0000FF00);
+N                                sprintf(buf,"%4d",0);       
+N                                TEXT_SetText(hItem,buf);
+N                            }else{
+N                                
 N//                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
 N//                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
-N//                                 TEXT_SetTextColor(hItem, GUI_GREEN);
-N//                                 sprintf(buf,"%4d",0);       
-N//                                 TEXT_SetText(hItem,buf);
-N//                             }else{
 N//                                 
-N// //                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N// //                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
-N// //                                 
-N// //                                 sprintf(buf,"%4d",R_VLUE);       
-N// //                                 TEXT_SetText(hItem,buf);
-N//                             }
-N// //                              hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-N// //                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
-N// //                                 
-N// //                                 sprintf(buf,"%4d",R_VLUE);       
-N// //                                 TEXT_SetText(hItem,buf);
-N//                     }                 
-N//                 }
-N//             
-N//         }
-N//                
+N//                                 sprintf(buf,"%4d",R_VLUE);       
+N//                                 TEXT_SetText(hItem,buf);
+N                            }
+N//                              hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+N//                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
+N//                                 
+N//                                 sprintf(buf,"%4d",R_VLUE);       
+N//                                 TEXT_SetText(hItem,buf);
+N                        }                        
+N                }
+N                short_time = 0;
+N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x30C));
+N                sprintf(buf,"%4d",short_time);
+N                TEXT_SetFont(hItem,&GUI_Font24_1);//è®¾å®šæ–‡æœ¬å­—ä½“      
+N                TEXT_SetText(hItem,buf);
+N                
+N                oc_data = 0;
+N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_82);
+X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8F));
+N                sprintf(buf,"%.2f",oc_data);
+N                TEXT_SetText(hItem,buf);
+N            }else{
+N                if(para_set2 == set_2_on)
+X                if(para_set2 == 0xff)
+N                {
+N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
+N                    sprintf(buf,"%.2f",v);       
+N                    TEXT_SetText(hItem,buf);
+N                    
+N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
+N                    TEXT_SetFont(hItem,&GUI_FontD24x32);
+N                    sprintf(buf,"%4d",r);       
+N                    TEXT_SetText(hItem,buf);
+N                    
+N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x30C));
+N                    sprintf(buf,"%4d",short_time);
+N                    TEXT_SetFont(hItem,&GUI_Font24_1);//è®¾å®šæ–‡æœ¬å­—ä½“      
+N                    TEXT_SetText(hItem,buf);
+N                    
+N                    if(short_finish == 0 ){
+N                        if(DISS_Voltage < 1 && short_flag == 0 && oct_sw == oct_off)
+X                        if(DISS_Voltage < 1 && short_flag == 0 && oct_sw == 0)
+N                        {
+N                            SET_Voltage =1000;
+X                            Run_Control[1] =1000;
+N                            SET_Current = 1000;
+X                            Run_Control[2] = 1000;
+N                            Mode_SW_CONT(0x03);
+N                            GPIO_SetBits(GPIOB,GPIO_Pin_13);
+X                            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                            //GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+N                        }else if(oct_sw == oct_off && short_flag == 0){
+X                        }else if(oct_sw == 0 && short_flag == 0){
+N                            Mode_SW_CONT(0x02);
+N                            SET_Current_Laod = 1000;
+X                            Run_Control[4] = 1000;
+N                            short_flag =1;
+N                            short_start = GUI_GetTime()*2;
+N                        }
+N                        if(short_flag == 1)
+N                        {
+N                            GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+X                            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                            if(DISS_Voltage < 1){
+N                                SET_Current_Laod = set_init_c;
+X                                Run_Control[4] = Run_Control[22];
+N                                short_time = GUI_GetTime()*2 - short_start;
+N                                short_flag = 0;
+N                                short_finish = 1;
+N                                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+X                                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x30C));
+N                                sprintf(buf,"%4d",short_time);     
+N                                TEXT_SetText(hItem,buf);
+N                            }
+N                        }
+N                    }
+N                    if(short_finish == 1 && test_finish == 0)
+N                    {
+N                        GPIO_SetBits(GPIOC,GPIO_Pin_1);
+X                        GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                        Mode_SW_CONT(0x03);
+N                        SET_Voltage = 1000;
+X                        Run_Control[1] = 1000;
+N                        SET_Current = 1000;
+X                        Run_Control[2] = 1000;
+N                        GPIO_SetBits(GPIOB,GPIO_Pin_13);
+X                        GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                        
+N                        
+N//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);                                                
+N//                         Mode_SW_CONT(0x01);
+N                        
+N                        test_ftime = GUI_GetTime()/500;
+N                        test_finish = 1;
+N                    } 
+N                }
+N                
+N                
+N                
+N    //             if(R_VLUE >= 1000)
+N    //             {
+N    //                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+N    //                 TEXT_SetFont(hItem,&GUI_FontEN40);//è®¾å®šæ–‡æœ¬å­—ä½“
+N    //                 TEXT_SetText(hItem,"");
+N    //             }else{
+N                    
+N    //             }
+N            }
+N            
+N            
+N            
+N            
+N                    
+N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_82);
+X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8F));
+N            sprintf(buf,"%.2f",oc_data);
+N            TEXT_SetText(hItem,buf);
+N            
+N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_83);
+X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x90));
+N            sprintf(buf,"%.2f",DISS_Current);
+N            TEXT_SetText(hItem,buf); 
+N        }else{
+N            
+N            if(DISS_Voltage > 1 && r_stable == 0)
+N            {
+N                r_stable = 1;
+N                stable_time = GUI_GetTime()/500;
+N            }else if(DISS_Voltage < 1){
+N                r_stable = 0;
+N            }
+N                
+N            if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
+N                {
+N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
+W "..\APP\R_Face.c" 628 40 argument is incompatible with corresponding format string conversion
+N                    sprintf(buf,"%.2f",0);       
+N                    TEXT_SetText(hItem,buf);
+N                }else{
+N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
+N                    sprintf(buf,"%.2f",DISS_Voltage);       
+N                    TEXT_SetText(hItem,buf);
+N                }
+N                if(clear_flag1 == 1 && R_VLUE <= clear_r)
+X                if(clear_flag1 == 1 && Run_Control[13] <= clear_r)
+N                {
+N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
+N                    sprintf(buf,"%4d",0);       
+N                    TEXT_SetText(hItem,buf);
+N                }
+N                else if(R_VLUE >= 1000 && DISS_Voltage > 1)
+X                else if(Run_Control[13] >= 1000 && DISS_Voltage > 1)
+N                {
+N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
+N                    TEXT_SetFont(hItem,&GUI_FontEN40);//è®¾å®šæ–‡æœ¬å­—ä½“
+N                    TEXT_SetText(hItem,"");
+N                }else{
+N                    if(GUI_GetTime()/500 - stable_time == 1 && r_stable == 1)
+N                    {
+N                        r = R_VLUE;
+X                        r = Run_Control[13];
+N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
+N                        TEXT_SetFont(hItem,&GUI_FontD24x32);
+N                        sprintf(buf,"%4d",r);       
+N                        TEXT_SetText(hItem,buf);
+N                    }else if(r_stable == 0)
+N                    {
+W "..\APP\R_Face.c" 656 28 single-precision operand implicitly converted to double-precision
+N                        if(DISS_Voltage < 0.3)
+N                            {
+N                                if(para_set1 == set_1_on)
+X                                if(para_set1 == 0xff)
+N                                {
+N                                    TM1650_SET_LED(0x68,0x70);
+N                                    GPIO_ResetBits(GPIOD,GPIO_Pin_12);//ç­ç¯
+X                                    GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
+N                                }
+N                                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+X                                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
+N                                TEXT_SetFont(hItem,&GUI_FontD24x32);
+N                                TEXT_SetTextColor(hItem, GUI_GREEN);
+X                                TEXT_SetTextColor(hItem, 0x0000FF00);
+N                                sprintf(buf,"%4d",0);       
+N                                TEXT_SetText(hItem,buf);
+N                            }else{
+N                                
+N//                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+N//                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
+N//                                 
+N//                                 sprintf(buf,"%4d",R_VLUE);       
+N//                                 TEXT_SetText(hItem,buf);
+N                            }
+N//                              hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+N//                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
+N//                                 
+N//                                 sprintf(buf,"%4d",R_VLUE);       
+N//                                 TEXT_SetText(hItem,buf);
+N                    }                 
+N                }
+N            
+N        }
+N               
 N
-N//         if(para_set2 == set_2_on)
-N//         {
-N//             if(para_set1 == set_1_on && oct_sw == oct_off && finish == 1)
-N//             {
-N//                  test_r();
-N//             }else
-N//             {
-N//                 TM1650_SET_LED(0x68,0x70);
-N//                 GPIO_ResetBits(GPIOD,GPIO_Pin_12);//ç­ç¯
-N//             }
-N//         }else{
-N//             if(para_set1 == set_1_on && DISS_Voltage > 1)
-N//             {
-N//                  test_r();
-N//             }else
-N//             {
-N//                 TM1650_SET_LED(0x68,0x70);
-N//                 GPIO_ResetBits(GPIOD,GPIO_Pin_12);//ç­ç¯
-N//             }
-N//         }
+N        if(para_set2 == set_2_on)
+X        if(para_set2 == 0xff)
+N        {
+N            if(para_set1 == set_1_on && oct_sw == oct_off && finish == 1)
+X            if(para_set1 == 0xff && oct_sw == 0 && finish == 1)
+N            {
+N                 test_r();
+N            }else
+N            {
+N                TM1650_SET_LED(0x68,0x70);
+N                GPIO_ResetBits(GPIOD,GPIO_Pin_12);//ç­ç¯
+X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
+N            }
+N        }else{
+N            if(para_set1 == set_1_on && DISS_Voltage > 1)
+X            if(para_set1 == 0xff && DISS_Voltage > 1)
+N            {
+N                 test_r();
+N            }else
+N            {
+N                TM1650_SET_LED(0x68,0x70);
+N                GPIO_ResetBits(GPIOD,GPIO_Pin_12);//ç­ç¯
+X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
+N            }
+N        }
 N
-N//         
-N//         if(oct_sw == oct_off)
-N//         {
-N//             switch(b_type)
-N//             {
-N//                 case Lion:
-N//                 {
-N//                     if(R_VLUE != 0  && DISS_Voltage >= 3.4 && DISS_Voltage <= 4.2)
-N//                     {
-N//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-N//                         TEXT_SetTextColor(hItem, GUI_WHITE);//è®¾ç½®å­—ä½“é¢œè‰²      
-N//                         if(lang == 0)
-N//                         {
-N//                             TEXT_SetFont(hItem,&GUI_Fontset_font);
-N//                             TEXT_SetText(hItem,"é”‚ç”µæ± ");
-N//                         }else{
-N//                             TEXT_SetFont(hItem,&GUI_Font20_ASCII);
-N//                             TEXT_SetText(hItem,"Lion");
-N//                         }
-N//                     }else{
-N//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-N//                         TEXT_SetTextColor(hItem, GUI_RED);//è®¾ç½®å­—ä½“é¢œè‰²      
-N//                         TEXT_SetText(hItem,"");
-N//                     }
-N//                     break;
-N//                 }
-N//                 case NiMH:
-N//                 {
-N//                     if(R_VLUE != 0  && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
-N//                     {
-N//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-N//                         TEXT_SetTextColor(hItem, GUI_WHITE);//è®¾ç½®å­—ä½“é¢œè‰²      
-N//                         if(lang == 0)
-N//                         {
-N//                             TEXT_SetFont(hItem,&GUI_Fontset_font);
-N//                             TEXT_SetText(hItem,"é•æ°¢ç”µæ± ");
-N//                         }else{
-N//                             TEXT_SetFont(hItem,&GUI_Font20_ASCII);
-N//                             TEXT_SetText(hItem,"NiMH");
-N//                         }
-N//                     }else{
-N//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-N//                         TEXT_SetTextColor(hItem, GUI_RED);//è®¾ç½®å­—ä½“é¢œè‰²      
-N//                         TEXT_SetText(hItem,"");
-N//                     }
-N//                     break;
-N//                 }
-N//                 case NiCd:
-N//                 {
-N//                     if(R_VLUE != 0 && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
-N//                     {
-N//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-N//                         TEXT_SetTextColor(hItem, GUI_WHITE);//è®¾ç½®å­—ä½“é¢œè‰²      
-N//                         if(lang == 0)
-N//                         {
-N//                             TEXT_SetFont(hItem,&GUI_Fontset_font);
-N//                             TEXT_SetText(hItem,"é•é•‰ç”µæ± ");
-N//                         }else{
-N//                             TEXT_SetFont(hItem,&GUI_Font20_ASCII);
-N//                             TEXT_SetText(hItem,"NiCd");
-N//                         }
-N//                     }else{
-N//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-N//                         TEXT_SetTextColor(hItem, GUI_RED);//è®¾ç½®å­—ä½“é¢œè‰²      
-N//                         TEXT_SetText(hItem,"");
-N//                     }
-N//                     break;
-N//                 }
-N//                 case SLA:
-N//                 {
-N//                     if(R_VLUE != 0  && DISS_Voltage >= 1.8 && DISS_Voltage <= 2.4)
-N//                     {
-N//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-N//                         TEXT_SetTextColor(hItem, GUI_WHITE);//è®¾ç½®å­—ä½“é¢œè‰²      
-N//                         if(lang == 0)
-N//                         {
-N//                             TEXT_SetFont(hItem,&GUI_Fontset_font);
-N//                             TEXT_SetText(hItem,"å°åž‹é“…é…¸ç”µæ± ");
-N//                         }else{
-N//                             TEXT_SetFont(hItem,&GUI_Font20_ASCII);
-N//                             TEXT_SetText(hItem,"SLA");
-N//                         }
-N//                     }else{
-N//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-N//                         TEXT_SetTextColor(hItem, GUI_RED);//è®¾ç½®å­—ä½“é¢œè‰²      
-N//                         TEXT_SetText(hItem,"");
-N//                     }
-N//                     break;
-N//                 }
-N//                 case LiMH:
-N//                 {
-N//                     if(R_VLUE != 0  && DISS_Voltage >= 2.8 && DISS_Voltage <= 3.3)
-N//                     {
-N//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-N//                         TEXT_SetTextColor(hItem, GUI_WHITE);//è®¾ç½®å­—ä½“é¢œè‰²      
-N//                         if(lang == 0)
-N//                         {
-N//                             TEXT_SetFont(hItem,&GUI_Fontset_font);
-N//                             TEXT_SetText(hItem,"é”‚é”°ç”µæ± ");
-N//                         }else{
-N//                             TEXT_SetFont(hItem,&GUI_Font20_ASCII);
-N//                             TEXT_SetText(hItem,"LiMH");
-N//                         }
-N//                     }else{
-N//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-N//                         TEXT_SetTextColor(hItem, GUI_RED);//è®¾ç½®å­—ä½“é¢œè‰²      
-N//                         TEXT_SetText(hItem,"");
-N//                     }
-N//                     break;
-N//                 }
-N//             }
-N//         }
-N//             
-N// 		WM_RestartTimer(pMsg->Data.v, 20);//å¤ä½å®šæ—¶å™¨æ•°å€¼è¶Šå¤§åˆ·æ–°æ—¶é—´è¶ŠçŸ­
+N        
+N        if(oct_sw == oct_off)
+X        if(oct_sw == 0)
+N        {
+N            switch(b_type)
+N            {
+N                case Lion:
+X                case 1:
+N                {
+W "..\APP\R_Face.c" 715 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 715 63 single-precision operand implicitly converted to double-precision
+N                    if(R_VLUE != 0  && DISS_Voltage >= 3.4 && DISS_Voltage <= 4.2)
+X                    if(Run_Control[13] != 0  && DISS_Voltage >= 3.4 && DISS_Voltage <= 4.2)
+N                    {
+N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
+N                        TEXT_SetTextColor(hItem, GUI_WHITE);//è®¾ç½®å­—ä½“é¢œè‰²      
+X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N                        if(lang == 0)
+N                        {
+N                            TEXT_SetFont(hItem,&GUI_Fontset_font);
+N                            TEXT_SetText(hItem,"é”‚ç”µæ± ");
+N                        }else{
+N                            TEXT_SetFont(hItem,&GUI_Font20_ASCII);
+N                            TEXT_SetText(hItem,"Lion");
+N                        }
+N                    }else{
+N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
+N                        TEXT_SetTextColor(hItem, GUI_RED);//è®¾ç½®å­—ä½“é¢œè‰²      
+X                        TEXT_SetTextColor(hItem, 0x000000FF);
+N                        TEXT_SetText(hItem,"");
+N                    }
+N                    break;
+N                }
+N                case NiMH:
+X                case 2:
+N                {
+W "..\APP\R_Face.c" 736 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 736 63 single-precision operand implicitly converted to double-precision
+N                    if(R_VLUE != 0  && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
+X                    if(Run_Control[13] != 0  && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
+N                    {
+N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
+N                        TEXT_SetTextColor(hItem, GUI_WHITE);//è®¾ç½®å­—ä½“é¢œè‰²      
+X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N                        if(lang == 0)
+N                        {
+N                            TEXT_SetFont(hItem,&GUI_Fontset_font);
+N                            TEXT_SetText(hItem,"é•æ°¢ç”µæ± ");
+N                        }else{
+N                            TEXT_SetFont(hItem,&GUI_Font20_ASCII);
+N                            TEXT_SetText(hItem,"NiMH");
+N                        }
+N                    }else{
+N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
+N                        TEXT_SetTextColor(hItem, GUI_RED);//è®¾ç½®å­—ä½“é¢œè‰²      
+X                        TEXT_SetTextColor(hItem, 0x000000FF);
+N                        TEXT_SetText(hItem,"");
+N                    }
+N                    break;
+N                }
+N                case NiCd:
+X                case 3:
+N                {
+W "..\APP\R_Face.c" 757 39 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 757 62 single-precision operand implicitly converted to double-precision
+N                    if(R_VLUE != 0 && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
+X                    if(Run_Control[13] != 0 && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
+N                    {
+N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
+N                        TEXT_SetTextColor(hItem, GUI_WHITE);//è®¾ç½®å­—ä½“é¢œè‰²      
+X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N                        if(lang == 0)
+N                        {
+N                            TEXT_SetFont(hItem,&GUI_Fontset_font);
+N                            TEXT_SetText(hItem,"é•é•‰ç”µæ± ");
+N                        }else{
+N                            TEXT_SetFont(hItem,&GUI_Font20_ASCII);
+N                            TEXT_SetText(hItem,"NiCd");
+N                        }
+N                    }else{
+N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
+N                        TEXT_SetTextColor(hItem, GUI_RED);//è®¾ç½®å­—ä½“é¢œè‰²      
+X                        TEXT_SetTextColor(hItem, 0x000000FF);
+N                        TEXT_SetText(hItem,"");
+N                    }
+N                    break;
+N                }
+N                case SLA:
+X                case 4:
+N                {
+W "..\APP\R_Face.c" 778 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 778 63 single-precision operand implicitly converted to double-precision
+N                    if(R_VLUE != 0  && DISS_Voltage >= 1.8 && DISS_Voltage <= 2.4)
+X                    if(Run_Control[13] != 0  && DISS_Voltage >= 1.8 && DISS_Voltage <= 2.4)
+N                    {
+N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
+N                        TEXT_SetTextColor(hItem, GUI_WHITE);//è®¾ç½®å­—ä½“é¢œè‰²      
+X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N                        if(lang == 0)
+N                        {
+N                            TEXT_SetFont(hItem,&GUI_Fontset_font);
+N                            TEXT_SetText(hItem,"å°åž‹é“…é…¸ç”µæ± ");
+N                        }else{
+N                            TEXT_SetFont(hItem,&GUI_Font20_ASCII);
+N                            TEXT_SetText(hItem,"SLA");
+N                        }
+N                    }else{
+N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
+N                        TEXT_SetTextColor(hItem, GUI_RED);//è®¾ç½®å­—ä½“é¢œè‰²      
+X                        TEXT_SetTextColor(hItem, 0x000000FF);
+N                        TEXT_SetText(hItem,"");
+N                    }
+N                    break;
+N                }
+N                case LiMH:
+X                case 5:
+N                {
+W "..\APP\R_Face.c" 799 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 799 63 single-precision operand implicitly converted to double-precision
+N                    if(R_VLUE != 0  && DISS_Voltage >= 2.8 && DISS_Voltage <= 3.3)
+X                    if(Run_Control[13] != 0  && DISS_Voltage >= 2.8 && DISS_Voltage <= 3.3)
+N                    {
+N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
+N                        TEXT_SetTextColor(hItem, GUI_WHITE);//è®¾ç½®å­—ä½“é¢œè‰²      
+X                        TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N                        if(lang == 0)
+N                        {
+N                            TEXT_SetFont(hItem,&GUI_Fontset_font);
+N                            TEXT_SetText(hItem,"é”‚é”°ç”µæ± ");
+N                        }else{
+N                            TEXT_SetFont(hItem,&GUI_Font20_ASCII);
+N                            TEXT_SetText(hItem,"LiMH");
+N                        }
+N                    }else{
+N                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+X                        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x0104));
+N                        TEXT_SetTextColor(hItem, GUI_RED);//è®¾ç½®å­—ä½“é¢œè‰²      
+X                        TEXT_SetTextColor(hItem, 0x000000FF);
+N                        TEXT_SetText(hItem,"");
+N                    }
+N                    break;
+N                }
+N            }
+N        }
+N 		WM_RestartTimer(pMsg->Data.v, 20);//å¤ä½å®šæ—¶å™¨æ•°å€¼è¶Šå¤§åˆ·æ–°æ—¶é—´è¶ŠçŸ­
 N	}
 N	break;
-N    
-N		
+N    		
 N  case WM_INIT_DIALOG:
 X  case 29:
 N    //
@@ -53234,13 +53518,11 @@ N		TEXT_SetFont(hItem, &GUI_FontEN40);
 N        
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
-W "..\APP\R_Face.c" 888 28 argument is incompatible with corresponding format string conversion
-N        sprintf(buf,"%.2f",0);
 N        TEXT_SetTextColor(hItem, GUI_GREEN);//è®¾ç½®å­—ä½“é¢œè‰²
 X        TEXT_SetTextColor(hItem, 0x0000FF00);
 N        TEXT_SetFont(hItem,&GUI_FontD24x32);//è®¾å®šæ–‡æœ¬å­—ä½“
 N        GUI_UC_SetEncodeUTF8();        
-N        TEXT_SetText(hItem,buf);
+N        TEXT_SetText(hItem,"0.00");
 N            
 N        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
 X        hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8E));
@@ -53381,23 +53663,19 @@ N                TEXT_SetText(hItem,buf);
 N                
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_82);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8F));
-W "..\APP\R_Face.c" 1000 36 argument is incompatible with corresponding format string conversion
-N                sprintf(buf,"%.2f",0);
 N                TEXT_SetTextColor(hItem, GUI_GREEN);//è®¾ç½®å­—ä½“é¢œè‰²
 X                TEXT_SetTextColor(hItem, 0x0000FF00);
 N                TEXT_SetFont(hItem,&GUI_FontD24x32);//è®¾å®šæ–‡æœ¬å­—ä½“
 N                GUI_UC_SetEncodeUTF8();        
-N                TEXT_SetText(hItem,buf);
+N                TEXT_SetText(hItem,"0.00");
 N                
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_83);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x90));
-W "..\APP\R_Face.c" 1007 36 argument is incompatible with corresponding format string conversion
-N                sprintf(buf,"%.2f",0);
 N                TEXT_SetTextColor(hItem, GUI_WHITE);//è®¾ç½®å­—ä½“é¢œè‰²
 X                TEXT_SetTextColor(hItem, 0x00FFFFFF);
 N                TEXT_SetFont(hItem,&GUI_Font24_1);//è®¾å®šæ–‡æœ¬å­—ä½“
 N                GUI_UC_SetEncodeUTF8();        
-N                TEXT_SetText(hItem,buf);
+N                TEXT_SetText(hItem,"0.00");
 N                
 N                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
 X                hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x30C));
@@ -53513,8 +53791,8 @@ NWM_HWIN CreateR(void);
 XGUI_HWIN CreateR(void);
 NWM_HWIN CreateR(void) {
 XGUI_HWIN CreateR(void) {
-N  oc_sw = set_20;
-X  oc_sw = 19;
+N  set_sw = set_20;
+X  set_sw = 19;
 N  page_sw = face_r;
 X  page_sw = 3;
 N  track = face_r;
@@ -53532,7 +53810,7 @@ N
 Nvoid OC_OP_DOWN(void);
 Nvoid OC_OP_DOWN(void)
 N{
-N    switch(oc_sw)
+N    switch(set_sw)
 N    {
 N        case set_20:
 X        case 19:
@@ -53553,8 +53831,8 @@ N            TEXT_SetBkColor(hItem,0x00BFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
 N            
-N            oc_sw = set_21;
-X            oc_sw = 20;
+N            set_sw = set_21;
+X            set_sw = 20;
 N            break;
 N        }
 N        case set_21:
@@ -53576,8 +53854,8 @@ N            TEXT_SetBkColor(hItem,0x00BFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
 N            
-N            oc_sw = set_64;
-X            oc_sw = 63;
+N            set_sw = set_64;
+X            set_sw = 63;
 N            break;
 N        }
 N        case set_64:
@@ -53599,8 +53877,8 @@ N            TEXT_SetBkColor(hItem,0x00BFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
 N            
-N            oc_sw = set_67;
-X            oc_sw = 66;
+N            set_sw = set_67;
+X            set_sw = 66;
 N            break;
 N        }
 N        case set_67:
@@ -53622,8 +53900,8 @@ N            TEXT_SetBkColor(hItem,0x00BFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
 N            
-N            oc_sw = set_20;
-X            oc_sw = 19;
+N            set_sw = set_20;
+X            set_sw = 19;
 N            break;
 N        }
 N        
@@ -53634,7 +53912,7 @@ N
 Nvoid OC_OP_UP(void);
 Nvoid OC_OP_UP(void)
 N{
-N    switch(oc_sw)
+N    switch(set_sw)
 N    {
 N        case set_20:
 X        case 19:
@@ -53655,8 +53933,8 @@ N            TEXT_SetBkColor(hItem,0x00BFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
 N            
-N            oc_sw = set_67;
-X            oc_sw = 66;
+N            set_sw = set_67;
+X            set_sw = 66;
 N            break;
 N        }
 N        case set_21:
@@ -53679,8 +53957,8 @@ N            TEXT_SetBkColor(hItem,0x00BFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
 N            
-N            oc_sw = set_20;
-X            oc_sw = 19;
+N            set_sw = set_20;
+X            set_sw = 19;
 N            break;
 N        }
 N        case set_64:
@@ -53702,8 +53980,8 @@ N            TEXT_SetBkColor(hItem,0x00BFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
 N            
-N            oc_sw = set_21;
-X            oc_sw = 20;
+N            set_sw = set_21;
+X            set_sw = 20;
 N            break;
 N        }
 N        case set_67:
@@ -53725,8 +54003,8 @@ N            TEXT_SetBkColor(hItem,0x00BFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
 N            
-N            oc_sw = set_64;
-X            oc_sw = 63;
+N            set_sw = set_64;
+X            set_sw = 63;
 N            break;
 N        }
 N        
@@ -53743,7 +54021,7 @@ N
 N    float dis_init_c;
 N    float dis_sbs_c;
 N    vu16 dis_steptime = steptime;
-N    switch(oc_sw)
+N    switch(set_sw)
 N    {
 N        case set_20:
 X        case 19:
@@ -53768,8 +54046,8 @@ N            for(i=0;i<5;i++)
 N            {
 N                set_limit[i] = '\0';
 N            }
-N            oc_sw = set_22;
-X            oc_sw = 21;
+N            set_sw = set_22;
+X            set_sw = 21;
 N            break;
 N        }
 N        case set_22:
@@ -53803,8 +54081,8 @@ N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
 N            Write_Limits();
 N            
-N            oc_sw = set_20;
-X            oc_sw = 19;
+N            set_sw = set_20;
+X            set_sw = 19;
 N            bit =1;
 N            dot_flag = 0;
 N            break;
@@ -53833,8 +54111,8 @@ N            {
 N                set_limit[i] = '\0';
 N            }
 N            
-N            oc_sw = set_23;
-X            oc_sw = 22;
+N            set_sw = set_23;
+X            set_sw = 22;
 N            break;
 N        }
 N        case set_23:
@@ -53861,8 +54139,8 @@ N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
 N            Write_Limits();
 N            
-N            oc_sw = set_21;
-X            oc_sw = 20;
+N            set_sw = set_21;
+X            set_sw = 20;
 N            bit = 1;
 N            dot_flag = 0;
 N            break;
@@ -53891,8 +54169,8 @@ N            {
 N                set_limit[i] = '\0';
 N            }
 N            
-N            oc_sw = set_65;
-X            oc_sw = 64;
+N            set_sw = set_65;
+X            set_sw = 64;
 N            break;
 N        }
 N        case set_65:
@@ -53918,8 +54196,8 @@ N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
 N            Write_Limits();
 N            
-N            oc_sw = set_64;
-X            oc_sw = 63;
+N            set_sw = set_64;
+X            set_sw = 63;
 N            bit = 1;
 N            dot_flag = 0;
 N            break;
@@ -53948,8 +54226,8 @@ N            {
 N                set_limit[i] = '\0';
 N            }
 N            
-N            oc_sw = set_68;
-X            oc_sw = 67;
+N            set_sw = set_68;
+X            set_sw = 67;
 N            break;
 N        }
 N        case set_68:
@@ -53974,8 +54252,8 @@ N            TEXT_SetTextColor(hItem, GUI_BLACK);
 X            TEXT_SetTextColor(hItem, 0x00000000);
 N            Write_Limits();
 N            
-N            oc_sw = set_67;
-X            oc_sw = 66;
+N            set_sw = set_67;
+X            set_sw = 66;
 N            bit = 1;
 N            dot_flag = 0;
 N            Wrtite_step();
@@ -53987,7 +54265,7 @@ N
 N//å†…é˜»é¡µé¢æ•°å­—è¾“å…¥
 Nvoid INPUT_C(char* num);            
 Nvoid INPUT_C(char* num){
-N    switch(oc_sw)
+N    switch(set_sw)
 N    {
 N        case set_22:
 X        case 21:
@@ -54309,14 +54587,11 @@ N    WM_HWIN hItem;
 X    GUI_HWIN hItem;
 N    char sbs_c[5];
 N    float change_sbs_c;
-N//     if(DISS_Voltage > 1){
-N//          
-N//     }
-W "..\APP\R_Face.c" 1728 27 single-precision operand implicitly converted to double-precision
+N
+W "..\APP\R_Face.c" 1778 27 single-precision operand implicitly converted to double-precision
 N    if(v - DISS_Voltage > v*0.3 && para_set2 == set_2_on)
 X    if(v - DISS_Voltage > v*0.3 && para_set2 == 0xff)
 N    {
-N//        stepcount=0;
 N        oc_data = (float)SET_Current_Laod/100;       
 X        oc_data = (float)Run_Control[4]/100;       
 N        SET_Current_Laod = set_init_c;
@@ -54336,7 +54611,7 @@ N        finish = 1;
 N    }else{
 N        SET_Current_Laod = SET_Current_Laod + set_sbs_c;
 X        Run_Control[4] = Run_Control[4] + Run_Control[23];
-W "..\APP\R_Face.c" 1743 31 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 1792 31 single-precision operand implicitly converted to double-precision
 N        if(v - DISS_Voltage > v*0.3 && para_set2 == set_2_on)
 X        if(v - DISS_Voltage > v*0.3 && para_set2 == 0xff)
 N        {
@@ -54360,6 +54635,130 @@ N            finish = 1;
 N        }
 N    }        
 N}
+N
+N// void test_r(vu16 tr,float tv)
+N// {
+N//     WM_HWIN hItem;
+N//     if(para_set2 == set_2_off)
+N//     {
+N//         if((tr > set_max_r || tr < set_min_r || DISS_Voltage*100 > set_max_v || DISS_Voltage*100 < set_min_v)&& DISS_Voltage >= 1)
+N//         {
+N//             if(para_set4 == set_4_on){
+N//                 BEEP_Tiggr();
+N//             }
+N//             TM1650_SET_LED(0x68,0x70);//FAILç¯
+N//             GPIO_SetBits(GPIOD,GPIO_Pin_12);//
+N//             if(tr > set_max_r || tr < set_min_r)
+N//             {
+N//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+N//                 TEXT_SetTextColor(hItem, GUI_RED);
+N//             }else{
+N//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+N//                 TEXT_SetTextColor(hItem, GUI_GREEN);
+N//             }
+N//             if(DISS_Voltage*100 > set_max_v || DISS_Voltage*100 < set_min_v){
+N//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+N//                 TEXT_SetTextColor(hItem, GUI_RED);
+N//             }else{
+N//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+N//                 TEXT_SetTextColor(hItem, GUI_GREEN);
+N//             }
+N//         }else{
+N//             hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+N//             TEXT_SetTextColor(hItem, GUI_GREEN);
+N//             hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+N//             TEXT_SetTextColor(hItem, GUI_GREEN);
+N//             
+N//             GPIO_ResetBits(GPIOD,GPIO_Pin_12);
+N//             TM1650_SET_LED(0x48,0x71);
+N//             TM1650_SET_LED(0x68,0xF2);//PASSç¯
+N//         }
+N//     }else{
+N//         if(finish == 0)
+N//         {
+N//             if(tr > set_max_r || tr < set_min_r || DISS_Voltage*100 > set_max_v || DISS_Voltage*100 < set_min_v)
+N//             {
+N//                 if(para_set4 == set_4_on){
+N//                     BEEP_Tiggr();
+N//                 }
+N//                 TM1650_SET_LED(0x68,0x70);//FAILç¯
+N//                 GPIO_SetBits(GPIOD,GPIO_Pin_12);//
+N//                 if(tr > set_max_r || tr < set_min_r)
+N//                 {
+N//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+N//                     TEXT_SetTextColor(hItem, GUI_RED);
+N//                 }else{
+N//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+N//                     TEXT_SetTextColor(hItem, GUI_GREEN);
+N//                 }
+N//                 if(DISS_Voltage*100 > set_max_v || DISS_Voltage*100 < set_min_v){
+N//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+N//                     TEXT_SetTextColor(hItem, GUI_RED);
+N//                 }else{
+N//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+N//                     TEXT_SetTextColor(hItem, GUI_GREEN);
+N//                 }
+N//             }else{
+N//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+N//                 TEXT_SetTextColor(hItem, GUI_GREEN);
+N//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+N//                 TEXT_SetTextColor(hItem, GUI_GREEN);
+N//                 
+N//                 GPIO_ResetBits(GPIOD,GPIO_Pin_12);
+N//                 TM1650_SET_LED(0x48,0x71);
+N//                 TM1650_SET_LED(0x68,0xF2);//PASSç¯
+N//             }
+N//         }else{
+N//             if(r > set_max_r || r < set_min_r || v*100 > set_max_v || v*100 < set_min_v || oc_data*100 > set_max_c || oc_data*100 < set_min_c)
+N//             {
+N//                 if(para_set4 == set_4_on){
+N//                     BEEP_Tiggr();
+N//                 }
+N//                 TM1650_SET_LED(0x68,0x70);//FAILç¯
+N//                 GPIO_SetBits(GPIOD,GPIO_Pin_12);//
+N//                 if(r > set_max_r || r < set_min_r)
+N//                 {
+N//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+N//                     TEXT_SetTextColor(hItem, GUI_RED);
+N//                 }else{
+N//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+N//                     TEXT_SetTextColor(hItem, GUI_GREEN);
+N//                 }
+N//                 if(v*100 > set_max_v || v*100 < set_min_v){
+N//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+N//                     TEXT_SetTextColor(hItem, GUI_RED);
+N//                 }else{
+N//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+N//                     TEXT_SetTextColor(hItem, GUI_GREEN);
+N//                 }
+N//                 if(oc_data*100 > set_max_c || oc_data*100 < set_min_c){
+N//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_82);
+N//                     TEXT_SetTextColor(hItem, GUI_RED);
+N//                 }else{
+N//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_82);
+N//                     TEXT_SetTextColor(hItem, GUI_GREEN);
+N//                 }
+N//             }else{
+N//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+N//                 TEXT_SetTextColor(hItem, GUI_GREEN);
+N//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+N//                 TEXT_SetTextColor(hItem, GUI_GREEN);
+N//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_82);
+N//                 TEXT_SetTextColor(hItem, GUI_GREEN);
+N//                 
+N//                 GPIO_ResetBits(GPIOD,GPIO_Pin_12);
+N//                 TM1650_SET_LED(0x48,0x71);
+N//                 TM1650_SET_LED(0x68,0xF2);//PASSç¯
+N//             }
+N//         }
+N//                
+N//     }
+N// //     else
+N// //     {
+N// //         TM1650_SET_LED(0x68,0x70);
+N// //         GPIO_ResetBits(GPIOD,GPIO_Pin_12);//ç­ç¯
+N// //     }
+N// }
 N
 Nvoid test_r(void)
 N{

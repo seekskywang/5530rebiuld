@@ -16,7 +16,7 @@
 //无
 ////////////////////////////////////////////////////////////////////////////////// 	   
 
-static u8 AppState;
+//static u8 AppState;
 extern USB_OTG_CORE_HANDLE  USB_OTG_Core;
 //USB OTG 中断服务函数
 //处理所有USB中断

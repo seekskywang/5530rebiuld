@@ -13,6 +13,12 @@
 //=============================================================================
 void Write_Limits(void);
 void Wrtite_step(void);
+void OC_ADD(void);
+void Wrtite_S(void);
+void Write_oct(void);
+void Write_alarm(void);
+void Write_btype(void);
+void Write_info(void);
 
 //=============================================================================
 #define NOP   __nop();	  //ø’÷∏¡Ó
@@ -134,6 +140,7 @@ extern float DISS_POW_Current;
 extern float DISS_R;
 extern float bc_raw;
 extern vu16 steptime;
+extern vu8 r_stable;
 extern vu8 bit1;
 extern vu8 dot_flag;
 extern vu8 page_sw;
@@ -141,6 +148,27 @@ extern vu8 para_set1;
 extern vu8 para_set2;
 extern vu8 para_set3;
 extern vu8 para_set4;
+extern vu8 oct_sw;
+extern vu8 set_sw;
+extern vu8 lang;
+extern vu16 battery_c;
+extern char set_limit[5];
+extern vu8 bit;
+extern vu8 track;
+extern vu8 mode_sw;
+extern vu8 pow_sw;
+extern vu8 cdc_sw;
+extern vu8 load_sw;
+extern vu8 b_type;
+extern vu8 buffer;
+extern float gate_v;
+extern vu8 cutoff_flag;
+extern vu8 charge_step;
+extern vu8 pause_flag;
+extern vu8 paused;
+extern vu8 finish;
+extern vu16 restart_time;
+
 
 extern vu16 Run_Control[43];	
 #define onoff_ch                        Run_Control[0]  //ON/OFF
@@ -188,6 +216,14 @@ extern vu16 Run_Control[43];
 #define cdc_dc    					    Run_Control[41]
 #define pow_c    					    Run_Control[42]
 
+
+extern float coff[6];
+#define cov1    					    coff[0]
+#define cov2    					    coff[1]
+#define cov3    					    coff[2]
+#define coc1    					    coff[3]
+#define coc2    					    coff[4]
+#define coc3    					    coff[5]
 
 extern vu16 Contr_Voltage;//
 extern vu16 Contr_Current;//

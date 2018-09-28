@@ -35,21 +35,14 @@ vu16 t_0_5S;
 /****************************************************************/
 void BEEP_Ring(void)//蜂鸣器控制
 {
-	if(Flag_Beep_OFF==0)
-	{
-		if(Flag_BEEP==1)
-		{
-			if(Flag_0_5S==0)
-			{
-				GPIO_SetBits(GPIOB,GPIO_Pin_11);
-			}
-			else 
-			{
-				GPIO_ResetBits(GPIOB,GPIO_Pin_11);
-				Flag_BEEP=0;
-			}
-		}
-	}
+	if(Flag_0_5S == 0)
+    {
+        GPIO_SetBits(GPIOB,GPIO_Pin_11);
+    }
+    else 
+    {
+        GPIO_ResetBits(GPIOB,GPIO_Pin_11);;
+    }
 }
 /***************************************************************/
 void BEEP_Tiggr(void)//蜂鸣器触发

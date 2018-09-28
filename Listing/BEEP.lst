@@ -34713,6 +34713,12 @@ N#define __my_register_h__
 N//=============================================================================
 Nvoid Write_Limits(void);
 Nvoid Wrtite_step(void);
+Nvoid OC_ADD(void);
+Nvoid Wrtite_S(void);
+Nvoid Write_oct(void);
+Nvoid Write_alarm(void);
+Nvoid Write_btype(void);
+Nvoid Write_info(void);
 N
 N//=============================================================================
 N#define NOP   __nop();	  //��ָ��
@@ -34834,6 +34840,7 @@ Nextern float DISS_POW_Current;
 Nextern float DISS_R;
 Nextern float bc_raw;
 Nextern vu16 steptime;
+Nextern vu8 r_stable;
 Nextern vu8 bit1;
 Nextern vu8 dot_flag;
 Nextern vu8 page_sw;
@@ -34841,6 +34848,27 @@ Nextern vu8 para_set1;
 Nextern vu8 para_set2;
 Nextern vu8 para_set3;
 Nextern vu8 para_set4;
+Nextern vu8 oct_sw;
+Nextern vu8 set_sw;
+Nextern vu8 lang;
+Nextern vu16 battery_c;
+Nextern char set_limit[5];
+Nextern vu8 bit;
+Nextern vu8 track;
+Nextern vu8 mode_sw;
+Nextern vu8 pow_sw;
+Nextern vu8 cdc_sw;
+Nextern vu8 load_sw;
+Nextern vu8 b_type;
+Nextern vu8 buffer;
+Nextern float gate_v;
+Nextern vu8 cutoff_flag;
+Nextern vu8 charge_step;
+Nextern vu8 pause_flag;
+Nextern vu8 paused;
+Nextern vu8 finish;
+Nextern vu16 restart_time;
+N
 N
 Nextern vu16 Run_Control[43];	
 N#define onoff_ch                        Run_Control[0]  //ON/OFF
@@ -34888,6 +34916,14 @@ N#define pow_v    					    Run_Control[40]
 N#define cdc_dc    					    Run_Control[41]
 N#define pow_c    					    Run_Control[42]
 N
+N
+Nextern float coff[6];
+N#define cov1    					    coff[0]
+N#define cov2    					    coff[1]
+N#define cov3    					    coff[2]
+N#define coc1    					    coff[3]
+N#define coc2    					    coff[4]
+N#define coc3    					    coff[5]
 N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
@@ -35117,27 +35153,17 @@ N// vu16 t_ON_A;
 N/****************************************************************/
 Nvoid BEEP_Ring(void)//蜂鸣器控制
 N{
-N	if(Flag_Beep_OFF==0)
-X	if((flagC . bit6)==0)
-N	{
-N		if(Flag_BEEP==1)
-X		if((flagA . bit2)==1)
-N		{
-N			if(Flag_0_5S==0)
-X			if((flagA . bit7)==0)
-N			{
-N				GPIO_SetBits(GPIOB,GPIO_Pin_11);
-X				GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x0800));
-N			}
-N			else 
-N			{
-N				GPIO_ResetBits(GPIOB,GPIO_Pin_11);
-X				GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x0800));
-N				Flag_BEEP=0;
-X				(flagA . bit2)=0;
-N			}
-N		}
-N	}
+N	if(Flag_0_5S == 0)
+X	if((flagA . bit7) == 0)
+N    {
+N        GPIO_SetBits(GPIOB,GPIO_Pin_11);
+X        GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x0800));
+N    }
+N    else 
+N    {
+N        GPIO_ResetBits(GPIOB,GPIO_Pin_11);;
+X        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x0800));;
+N    }
 N}
 N/***************************************************************/
 Nvoid BEEP_Tiggr(void)//蜂鸣器触发

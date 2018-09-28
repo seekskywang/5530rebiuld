@@ -81,3 +81,11 @@
 ..\Output\menu.o: ..\Libraries\FWlib\inc\stm32f4xx_dac.h
 ..\Output\menu.o: ..\Libraries\FWlib\inc\stm32f4xx_dcmi.h
 ..\Output\menu.o: ..\Libraries\FWlib\inc\stm32f4xx_fsmc.h
+..\Output\menu.o: ..\Include\tm1650.h
+..\Output\menu.o: ..\Include\my_register.h
+..\Output\menu.o: D:\Keil\ARM\RV31\Inc\stdio.h
+..\Output\menu.o: D:\Keil\ARM\RV31\Inc\stdlib.h
+..\Output\menu.o: ..\Include\key.h
+..\Output\menu.o: ..\Include\my_register.h
+..\Output\menu.o: D:\Keil\ARM\RV31\Inc\string.h
+..\Output\menu.o: ..\Include\beep.h

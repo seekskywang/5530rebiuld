@@ -10,33 +10,29 @@
 #include  "gui.h"
 #include "DIALOG.h"
 #include "my_register.h" 
+#include "my_register.h" 
+#include "tm1650.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "key.h"
+#include "string.h"
+#include "beep.h"
 
 WM_HWIN hWincdc;
-extern void Mode_SW_CONT(vu8 mode);
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ16;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ12;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ20S;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontEN40;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ32;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Fontsymbol;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Fontset_font;
-extern vu8 page_sw;
+
 //extern vu8 double_sw;
-extern vu8 set_sw;
-extern vu8 bit;
 vu8 set_loop_count = 1;
 static vu8 second = 0;
 static vu8 minute = 0;
 static vu8 hour = 0;
 static vu16 cutoff_time;
 vu8 cutoff_flag = 0;
-vu16 battery_c;
 extern char set_limit[5];
 extern vu8 dot_flag;
 vu8 cdc_sw = cdc_off;
 vu8 c_sw = c_on;
 vu8 timer_sw = 1;
-vu8 mode_sw;
+
 vu8 c_sum = 0;
 vu8 count = 1;
 vu8 status_flash = 0;
@@ -51,7 +47,6 @@ vu8 coffc_step;
 vu8 charge_step;
 float coff[6];
 int count_num(int data);
-WM_HWIN timer(void);
 extern vu8 pass;
 extern vu8 track;
 /*********************************************************************
@@ -582,11 +577,11 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             }
         }else if(pause_flag == 1 && battery_c != 0){
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_66);
-            sprintf(buf,"%.2f",0);       
+            sprintf(buf,"%.2f",0.00);       
             TEXT_SetText(hItem,buf);
                 
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_67);
-            sprintf(buf,"%.2f",0);       
+            sprintf(buf,"%.2f",0.00);       
             TEXT_SetText(hItem,buf);
             
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_69);
@@ -600,11 +595,11 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             
         }else if(cdc_sw == cdc_off){
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_66);
-            sprintf(buf,"%.2f",0);       
+            sprintf(buf,"%.2f",0.00);       
             TEXT_SetText(hItem,buf);
                 
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_67);
-            sprintf(buf,"%.2f",0);       
+            sprintf(buf,"%.2f",0.00);       
             TEXT_SetText(hItem,buf);
             
             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_119);
@@ -882,14 +877,14 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 // 		TEXT_SetText(hItem,dc_cutoff_c);
         
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_66);
-        sprintf(buf,"%.2f",0);
+        sprintf(buf,"%.2f",0.00);
         TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
         TEXT_SetFont(hItem,&GUI_FontD24x32);//设定文本字体
         GUI_UC_SetEncodeUTF8();        
         TEXT_SetText(hItem,buf);
             
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_67);
-        sprintf(buf,"%.2f",0);
+        sprintf(buf,"%.2f",0.00);
         TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
         TEXT_SetFont(hItem,&GUI_FontD24x32);//设定文本字体
         GUI_UC_SetEncodeUTF8();        
@@ -990,8 +985,8 @@ WM_HWIN CreateCDC(void) {
   return hWincdc;
 }
 
-WM_HWIN CDC_OP_DOWN(void);
-WM_HWIN CDC_OP_DOWN(void)
+void CDC_OP_DOWN(void);
+void CDC_OP_DOWN(void)
 {
     switch(set_sw)
     {
@@ -1118,8 +1113,8 @@ WM_HWIN CDC_OP_DOWN(void)
     }
 }
 
-WM_HWIN CDC_OP_UP(void);
-WM_HWIN CDC_OP_UP(void)
+void CDC_OP_UP(void);
+void CDC_OP_UP(void)
 {
     switch(set_sw)
     {
@@ -1245,8 +1240,8 @@ WM_HWIN CDC_OP_UP(void)
     }
 }
 
-WM_HWIN CDC_OP_LEFT(void);
-WM_HWIN CDC_OP_LEFT(void)
+void CDC_OP_LEFT(void);
+void CDC_OP_LEFT(void)
 {
     float buffer;
     char buf[5];
@@ -1403,8 +1398,8 @@ WM_HWIN CDC_OP_LEFT(void)
     }
 }
 
-WM_HWIN CDC_OP_RIGHT(void);
-WM_HWIN CDC_OP_RIGHT(void)
+void CDC_OP_RIGHT(void);
+void CDC_OP_RIGHT(void)
 {
     float buffer;
     char buf[5];
@@ -1559,8 +1554,8 @@ WM_HWIN CDC_OP_RIGHT(void)
 }
 
 //充放电界面设置
-WM_HWIN CDC_SET(void);
-WM_HWIN CDC_SET(void)
+void CDC_SET(void);
+void CDC_SET(void)
 {
     vu8 i;
     char buf[5];
@@ -1931,8 +1926,8 @@ WM_HWIN CDC_SET(void)
 }
 
 //充放电界面数字键盘输入
-WM_HWIN INPUT_CDC(char* num);            
-WM_HWIN INPUT_CDC(char* num){
+void INPUT_CDC(char* num);            
+void INPUT_CDC(char* num){
     char loop_count[2];
     switch(set_sw){
         case set_30:

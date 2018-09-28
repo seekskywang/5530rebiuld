@@ -51,6 +51,9 @@
 // 	NVIC_Init(&NVIC_InitStructure);
 // }
 
+
+
+
 void TIM3_Int_Init(u16 arr,u16 psc)
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
@@ -73,113 +76,114 @@ void TIM3_Int_Init(u16 arr,u16 psc)
 //֨ʱǷ 3 א׏ؾϱگ˽
 void TIM3_IRQHandler(void)
 {
-    static vu16 count1s;
+    static vu16 count1ms;
+    
     
     if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) //ӧԶא׏
     {
         TIM_ClearITPendingBit(TIM3,TIM_IT_Update); //ȥԽא׏Ҫ־λ
         switch(page_sw)
         {
-//             case face_menu:
-//             {                
-//                 if(pow_sw == pow_on)
-//                 {
-//                     count1s++;
-//                     if(count1s == 1000)
-//                     {
-//                         bc_raw += DISS_POW_Current * 1000 * 1/3600;
-//                         count1s = 0;
-//                     }
-//                 }else{
-//                     bc_raw = 0;
-//                     count1s = 0;
-//                 }
-//             }break;
-//             case face_cdc:
-//             {
-//                 if(mode_sw == mode_pow && cdc_sw == cdc_on)
-//                 {
-//                     count1s++;
-//                     if(count1s == 1000)
-//                     {
-//                         bc_raw += DISS_POW_Current * 1000 * 1/3600;
-//                         count1s = 0;
-//                     }
-//                 }else if(cdc_sw == cdc_off){
-//                     bc_raw = 0;
-//                     count1s = 0;
-//                 }
-//             }break;
-//             case face_load:
-//             {
-//                 if(load_sw == load_on)
-//                 {
-//                     count1s++;
-//                     if(count1s == 1000)
-//                     {
-//                         bc_raw += DISS_Current * 1000 * 1/3600;
-//                         count1s = 0;
-//                     }
-//                 }else{
-//                     bc_raw = 0;
-//                     count1s = 0;
-//                 }
-//             }break;
-//             case face_graph:
-//             {
-//                 if(mode_sw == mode_pow)
-//                 {
-//                     if(pow_sw == pow_on)
-//                     {
-//                         count1s++;
-//                         if(count1s == 1000)
-//                         {
-//                             bc_raw += DISS_POW_Current * 1000 * 1/3600;
-//                             count1s = 0;
-//                         }
-//                     }else if(mode_sw == mode_pow && cdc_sw == cdc_on)
-//                     {
-//                         count1s++;
-//                         if(count1s == 1000)
-//                         {
-//                             bc_raw += DISS_POW_Current * 1000 * 1/3600;
-//                             count1s = 0;
-//                         }
-//                     }
-//                     else{
-//                         bc_raw = 0;
-//                         count1s = 0;
-//                     }
-//                 }               
-//                 
-//                 if(mode_sw == mode_load)
-//                 {
-//                     if(load_sw == load_on)
-//                     {
-//                         count1s++;
-//                         if(count1s == 1000)
-//                         {
-//                             GPIO_ResetBits(GPIOC,GPIO_Pin_1);
-//                             bc_raw += DISS_Current * 1000 * 1/3600;
-//                             count1s = 0;
-//                         }
-//                     }else{
-//                         bc_raw = 0;
-//                         count1s = 0;
-//                     }
-//                 }
-//             }break;
+            case face_menu:
+            {                
+                if(pow_sw == pow_on)
+                {
+                    count1ms++;
+                    if(count1ms == 1000)
+                    {
+                        bc_raw += DISS_POW_Current * 1000 * 1/3600;
+                        count1ms = 0;
+                    }
+                }else{
+                    bc_raw = 0;
+                    count1ms = 0;
+                }
+            }break;
+            case face_cdc:
+            {
+                if(mode_sw == mode_pow && cdc_sw == cdc_on)
+                {
+                    count1ms++;
+                    if(count1ms == 1000)
+                    {
+                        bc_raw += DISS_POW_Current * 1000 * 1/3600;
+                        count1ms = 0;
+                    }
+                }else if(cdc_sw == cdc_off){
+                    bc_raw = 0;
+                    count1ms = 0;
+                }
+            }break;
+            case face_load:
+            {
+                if(load_sw == load_on)
+                {
+                    count1ms++;
+                    if(count1ms == 1000)
+                    {
+                        bc_raw += DISS_Current * 1000 * 1/3600;
+                        count1ms = 0;
+                    }
+                }else{
+                    bc_raw = 0;
+                    count1ms = 0;
+                }
+            }break;
+            case face_graph:
+            {
+                if(mode_sw == mode_pow)
+                {
+                    if(pow_sw == pow_on)
+                    {
+                        count1ms++;
+                        if(count1ms == 1000)
+                        {
+                            bc_raw += DISS_POW_Current * 1000 * 1/3600;
+                            count1ms = 0;
+                        }
+                    }else if(mode_sw == mode_pow && cdc_sw == cdc_on)
+                    {
+                        count1ms++;
+                        if(count1ms == 1000)
+                        {
+                            bc_raw += DISS_POW_Current * 1000 * 1/3600;
+                            count1ms = 0;
+                        }
+                    }
+                    else{
+                        bc_raw = 0;
+                        count1ms = 0;
+                    }
+                }               
+                
+                if(mode_sw == mode_load)
+                {
+                    if(load_sw == load_on)
+                    {
+                        count1ms++;
+                        if(count1ms == 1000)
+                        {
+                            GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+                            bc_raw += DISS_Current * 1000 * 1/3600;
+                            count1ms = 0;
+                        }
+                    }else{
+                        bc_raw = 0;
+                        count1ms = 0;
+                    }
+                }
+            }break;
             case face_r:
             {                               
-//                     if(oct_sw == oct_on && para_set2 == set_2_on)
-//                     {
-//                         stepcount ++;
-//                         if(stepcount == steptime)
-//                         {
-//                             OC_ADD();
-//                             stepcount = 0;
-//                         }
-//                     }               
+                if(oct_sw == oct_on && para_set2 == set_2_on)
+                    {
+                        count1ms ++;
+                        if(count1ms == steptime)
+                        {
+                            OC_ADD();
+                            count1ms = 0;
+                        }
+                    }  
             }break;
         }
     }    

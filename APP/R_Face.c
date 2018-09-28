@@ -10,59 +10,65 @@
 #include  "gui.h"
 #include "DIALOG.h"
 #include "my_register.h" 
+#include "tm1650.h"
 #include "stdio.h"
 #include "stdlib.h"
 #include "key.h"
-#include "tm1650.h"
 #include "string.h"
 #include "beep.h"
 
 
 WM_HWIN hWinR;
 void OC_ADD(void); 
+// void test_r(vu16 tr,float tv);
 void test_r(void);
 vu8 bit = 1;
 vu8 dot_flag = 0;
 vu8 page_sw = face_r;
 vu8 para_set1;
-vu8 para_set2;
+vu8 para_set2 = set_2_on;
 vu8 para_set3;
 vu8 para_set4 = set_4_off;
-
+vu8 r_stable = 0;
 float gate_v = 0;
+vu8 oct_sw = oct_off;
+vu8 lang;
+vu8 finish = 0;
+vu8 set_sw;
+char set_limit[5];
+vu16 stable_time;
+
+////////////////////////////////////////////////////////
+
 vu16 dis_gate_v;
 float DISS_R;//内阻
 extern vu8 page_sw;
 static vu8 oc_sw = set_20;
 static float oc_data;
+static vu16 r;
 vu16 s_time;
 vu8 wait_flag;
 vu8 test_num = 0;
 vu8 con_flag = 0;
 vu8 short_flag = 0;
-vu16 r;
+
 vu16 short_start;
 vu16 short_time;
 vu8 short_finish = 0;
 float v;
-vu8 r_stable = 0;
-vu16 stable_time;
+
+//vu16 stable_time;
 float time1;
 vu16 steptime = 1;
-vu8 finish = 0;
+
 vu8 test_finish = 0;
 int test_ftime;
-extern vu8 bit;
-extern vu8 para_set1;
-extern vu8 para_set2;
-char set_limit[5];
-extern vu8 dot_flag;
-vu8 oct_sw = oct_off;
-vu8 lang = 1;
+
+
+
+
+
 extern vu8 t_onoff;
-extern vu8 mode_sw;
-extern vu8 para_set4;
-extern vu8 b_type;
 extern vu8 LOAD_t;
 extern vu8 status_flash;
 extern vu8 pass;
@@ -174,6 +180,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     WM_HWIN hItem;
 //    int     NCode;
 //    int     Id;
+    
     char  buf[5];
     float dis_init_c = (float)set_init_c/100;
     float dis_sbs_c = (float)set_sbs_c/100;
@@ -241,16 +248,6 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                     GUI_DispStringAt("Short Time", 300, 200);//SET
                     GUI_DispStringAt("Overflow test", 340, 30);//SET
                 }
-//                 if(oc_data == 0)
-//                 {
-//                     GUI_SetFont(&GUI_Font24_1);
-//                     GUI_DispStringAt("__", 410, 140);
-
-//                 }else{
-//                     GUI_SetFont(&GUI_Font24_1);
-//                     GUI_GotoXY(400,150);//
-//                     GUI_DispFloatFix(oc_data,5,2);
-//                 }
                 break;
             }
             case set_2_off:
@@ -262,510 +259,568 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 	case WM_TIMER://定时模块消息
 	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime)
 	{
-//         if(para_set2 == set_2_on)
+//         if(para_set2 == set_2_off)
 //         {
-//             if(short_finish == 1)
+//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+//             sprintf(buf,"%.2f",DISS_Voltage);       
+//             TEXT_SetText(hItem,buf);
+//             if(R_VLUE >= 1000 && DISS_Voltage > 1)
 //             {
-//                 if(gate_v == 0)
-//                 {
-//                     if(GUI_GetTime()/500 - test_ftime == 1)
-//                     {
-//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-//                         Mode_SW_CONT(0x01);
-//                     }
-//                     if(/*mode_sw == mode_pow && */DISS_Voltage < 0.3  && GUI_GetTime()/500 - test_ftime > 1 /*&& 
-//                         < 50*/)
-//                     {
-//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-//                         Mode_SW_CONT(0x01);
-//                         finish = 0;
-//                         con_flag = 0;
-//                         short_finish = 0;
-//                         test_finish = 0;
-//                         r_test = 0;
-//                     }
-//                 }else{
-//                     if(GUI_GetTime()/500 - test_ftime == 2)
-//                     {
-//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-//                         Mode_SW_CONT(0x01);
-//                     }
-//                     if(/* mode_sw == mode_pow && */(r_test == 0 || DISS_Voltage < gate_v) && GUI_GetTime()/500 - test_ftime > 1/*&& R_VLUE < 50*/)
-//                     { 
-//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-//                         Mode_SW_CONT(0x01);
-//                         finish = 0;
-//                         con_flag = 0;
-//                         short_finish = 0;
-//                         test_finish = 0;
-//                         r_test = 0;
-//                     }
-//                 }                    
-//             }else{
-//                 if(para_set2 == set_2_on)
-//                 {
-//                     if(gate_v == 0)
-//                     {
-//                         if(DISS_Voltage > 1 && R_VLUE > 50 && con_flag == 0 && finish == 0)
-//                         {
-//                             con_flag = 1;
-//                             time1 = (float)GUI_GetTime()/500.0;
-//                         }
-//                         
-//                         if(con_flag == 1 && oct_sw == oct_off && finish == 0)
-//                         {
-//                             if((float)(GUI_GetTime()/500.0 - time1) > 0.2)
-//                             {
-//                                 r = R_VLUE;
-//                                 v = DISS_Voltage;
-//                                 oct_sw = oct_on;
-//                                 clear_flag1 = 0;
-//                             }
-//                         }
-//                     }else{
-//                         if(DISS_Voltage > gate_v && R_VLUE > 50 && con_flag == 0 && finish == 0 && r_test == 1)
-//                         {
-//                             con_flag = 1;
-//                             time1 = (float)GUI_GetTime()/500.0;
-//                         }                       
-//                         if(con_flag == 1 && oct_sw == oct_off && finish == 0)
-//                         {
-//                             if((float)(GUI_GetTime()/500.0 - time1) > 0.2)
-//                             {
-//                                 r = R_VLUE;
-//                                 v = DISS_Voltage;
-//                                 oct_sw = oct_on;
-//                                 clear_flag1 = 0;
-//                             }
-//                         }
-//                     }
-//                 }
-//                 
-//             }
-//             
-//             
-//             
-//             if(oct_sw == oct_on && para_set2 == set_2_on)
-//             {
-//                 Mode_SW_CONT(0x02);
-//                 GPIO_ResetBits(GPIOC,GPIO_Pin_1);
-// //                OC_ADD();
 //                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-//                 TEXT_SetFont(hItem,&GUI_FontD24x32);
-//                 sprintf(buf,"%4d",r);       
-//                 TEXT_SetText(hItem,buf);
-//                 
-//     //             if(status_flash == 0){
-
-//                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
-//                 TEXT_SetTextColor(hItem, GUI_RED);
-//                 if(lang == 0)
-//                 {
-//                     GUI_SetFont(&GUI_Fontset_font);
-//                     TEXT_SetText(hItem, "测试中");
-//                     status_flash = 1;
-//                 }else{
-//                     GUI_SetFont(&GUI_Font20_ASCII);
-//                     TEXT_SetText(hItem, "Testing");
-//                     status_flash = 1;
-//                 }
-//                     
-//     //             }else{
-//     //                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
-//     //                 TEXT_SetText(hItem,"");
-//     //                 status_flash = 0;
-//     //             }
-//                 
-//             }else
-//             {
-//                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
-//                 TEXT_SetTextColor(hItem, GUI_WHITE);
-//                 
-//                 
-//                 if(lang == 0)
-//                 {
-//                     GUI_SetFont(&GUI_Fontset_font);
-//                     TEXT_SetText(hItem, "未测试");
-//                 }else{
-//                     GUI_SetFont(&GUI_Font20_ASCII);
-//                     TEXT_SetText(hItem, "Untested");
-//                 }
-//             }
-//             
-//             if(oct_sw == oct_off && finish == 0)
-//             {
-//                 if(DISS_Voltage > 1 && r_stable == 0)
-//                 {
-//                     r_stable = 1;
-//                     stable_time = GUI_GetTime()/500;
-//                 }else if(DISS_Voltage < 1){
-//                     r_stable = 0;
-//                 }                    
-//                 if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
-//                 {
-//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-//                     sprintf(buf,"%.2f",0);       
-//                     TEXT_SetText(hItem,buf);
-//                 }else{
-//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-//                     sprintf(buf,"%.2f",DISS_Voltage);       
-//                     TEXT_SetText(hItem,buf);
-//                 }
-//                 if(clear_flag1 == 1 && R_VLUE <= clear_r)
-//                 {
-//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-//                     sprintf(buf,"%4d",0);       
-//                     TEXT_SetText(hItem,buf);
-//                 }
-// //                 else if(R_VLUE >= 1000)
-// //                 {
-// //                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-// //                     TEXT_SetFont(hItem,&GUI_FontEN40);//设定文本字体
-// //                     TEXT_SetText(hItem,"");
-// //                 }
-//                 else{
-//                         if(GUI_GetTime()/500 - stable_time == 1 && r_stable == 1)
-//                         {
-//                             r = R_VLUE;
-//                             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-//                             TEXT_SetFont(hItem,&GUI_FontD24x32);
-//                             sprintf(buf,"%4d",r);       
-//                             TEXT_SetText(hItem,buf);
-//                         }else if(r_stable == 0)
-//                         {
-//                             if(DISS_Voltage < 0.3)
-//                             {
-//                                 if(para_set1 == set_1_on)
-//                                 {
-//                                     TM1650_SET_LED(0x68,0x70);
-//                                     GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
-//                                 }
-//                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-//                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
-//                                 TEXT_SetTextColor(hItem, GUI_GREEN);
-//                                 sprintf(buf,"%4d",0);       
-//                                 TEXT_SetText(hItem,buf);
-//                             }else{
-//                                 
-// //                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-// //                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
-// //                                 
-// //                                 sprintf(buf,"%4d",R_VLUE);       
-// //                                 TEXT_SetText(hItem,buf);
-//                             }
-// //                              hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-// //                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
-// //                                 
-// //                                 sprintf(buf,"%4d",R_VLUE);       
-// //                                 TEXT_SetText(hItem,buf);
-//                         }                        
-//                 }
-//                 short_time = 0;
-//                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
-//                 sprintf(buf,"%4d",short_time);
-//                 TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体      
-//                 TEXT_SetText(hItem,buf);
-//                 
-//                 oc_data = 0;
-//                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_82);
-//                 sprintf(buf,"%.2f",oc_data);
-//                 TEXT_SetText(hItem,buf);
+//                 TEXT_SetFont(hItem,&GUI_FontEN40);//设定文本字体
+//                 TEXT_SetText(hItem,"");
 //             }else{
-//                 if(para_set2 == set_2_on)
+//                 if(DISS_Voltage >= 1 && r_stable == 0)
 //                 {
-//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-//                     sprintf(buf,"%.2f",v);       
-//                     TEXT_SetText(hItem,buf);
-//                     
+//                     r = R_VLUE;
 //                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
 //                     TEXT_SetFont(hItem,&GUI_FontD24x32);
 //                     sprintf(buf,"%4d",r);       
 //                     TEXT_SetText(hItem,buf);
-//                     
-//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
-//                     sprintf(buf,"%4d",short_time);
-//                     TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体      
-//                     TEXT_SetText(hItem,buf);
-//                     
-//                     if(short_finish == 0 ){
-//                         if(DISS_Voltage < 1 && short_flag == 0 && oct_sw == oct_off)
-//                         {
-//                             SET_Voltage =1000;
-//                             SET_Current = 1000;
-//                             Mode_SW_CONT(0x03);
-//                             GPIO_SetBits(GPIOB,GPIO_Pin_13);
-//                             //GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-//                         }else if(oct_sw == oct_off && short_flag == 0){
-//                             Mode_SW_CONT(0x02);
-//                             SET_Current_Laod = 1000;
-//                             short_flag =1;
-//                             short_start = GUI_GetTime()*2;
-//                         }
-//                         if(short_flag == 1)
-//                         {
-//                             GPIO_ResetBits(GPIOC,GPIO_Pin_1);
-//                             if(DISS_Voltage < 1){
-//                                 SET_Current_Laod = set_init_c;
-//                                 short_time = GUI_GetTime()*2 - short_start;
-//                                 short_flag = 0;
-//                                 short_finish = 1;
-//                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
-//                                 sprintf(buf,"%4d",short_time);     
-//                                 TEXT_SetText(hItem,buf);
-//                             }
-//                         }
-//                     }
-//                     if(short_finish == 1 && test_finish == 0)
-//                     {
-//                         GPIO_SetBits(GPIOC,GPIO_Pin_1);
-//                         Mode_SW_CONT(0x03);
-//                         SET_Voltage = 1000;
-//                         SET_Current = 1000;
-//                         GPIO_SetBits(GPIOB,GPIO_Pin_13);
-//                         
-//                         
-// //                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);                                                
-// //                         Mode_SW_CONT(0x01);
-//                         
-//                         test_ftime = GUI_GetTime()/500;
-//                         test_finish = 1;
-//                     } 
-//                 }
-//                 
-//                 
-//                 
-//     //             if(R_VLUE >= 1000)
-//     //             {
-//     //                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-//     //                 TEXT_SetFont(hItem,&GUI_FontEN40);//设定文本字体
-//     //                 TEXT_SetText(hItem,"");
-//     //             }else{
-//                     
-//     //             }
-//             }
-//             
-//             
-//             
-//             
-//                     
-//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_82);
-//             sprintf(buf,"%.2f",oc_data);
-//             TEXT_SetText(hItem,buf);
-//             
-//             hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_83);
-//             sprintf(buf,"%.2f",DISS_Current);
-//             TEXT_SetText(hItem,buf); 
-//         }else{
-//             
-//             if(DISS_Voltage > 1 && r_stable == 0)
-//             {
-//                 r_stable = 1;
-//                 stable_time = GUI_GetTime()/500;
-//             }else if(DISS_Voltage < 1){
-//                 r_stable = 0;
-//             }
-//                 
-//             if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
-//                 {
-//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-//                     sprintf(buf,"%.2f",0);       
-//                     TEXT_SetText(hItem,buf);
-//                 }else{
-//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-//                     sprintf(buf,"%.2f",DISS_Voltage);       
-//                     TEXT_SetText(hItem,buf);
-//                 }
-//                 if(clear_flag1 == 1 && R_VLUE <= clear_r)
-//                 {
+//                 }else if(DISS_Voltage < 1){
 //                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-//                     sprintf(buf,"%4d",0);       
-//                     TEXT_SetText(hItem,buf);
+//                     TEXT_SetFont(hItem,&GUI_FontD24x32);       
+//                     TEXT_SetText(hItem,"0");
 //                 }
-//                 else if(R_VLUE >= 1000 && DISS_Voltage > 1)
+//             }
+//             if(para_set1 == set_1_on)
+//             {
+//                 test_r(r,DISS_Voltage);
+//             }
+//         }else{
+//             if(gate_v == 0)
+//             {
+//                  if(DISS_Voltage >= 1 && R_VLUE > 30 && finish == 0)
+//                  {
+//                      oct_sw = oct_on;
+//                      hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
+//                     TEXT_SetTextColor(hItem, GUI_RED);
+//                     if(lang == 0)
+//                     {
+//                         GUI_SetFont(&GUI_Fontset_font);
+//                         TEXT_SetText(hItem, "测试中");
+//                     }else{
+//                         GUI_SetFont(&GUI_Font20_ASCII);
+//                         TEXT_SetText(hItem, "Testing");
+//                     }
+//                  }else{
+//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
+//                     TEXT_SetTextColor(hItem, GUI_WHITE);                                        
+//                     if(lang == 0)
+//                     {
+//                         GUI_SetFont(&GUI_Fontset_font);
+//                         TEXT_SetText(hItem, "未测试");
+//                     }else{
+//                         GUI_SetFont(&GUI_Font20_ASCII);
+//                         TEXT_SetText(hItem, "Untested");
+//                     }
+//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_82);
+//                     sprintf(buf,"%.2f",oc_data);
+//                     TEXT_SetText(hItem,buf);
+//                  }
+//             }
+        
+        if(para_set2 == set_2_on)
+        {
+            if(short_finish == 1)
+            {
+                if(gate_v == 0)
+                {
+                    if(GUI_GetTime()/500 - test_ftime == 1)
+                    {
+                        GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+                        Mode_SW_CONT(0x01);
+                    }
+                    if(/*mode_sw == mode_pow && */DISS_Voltage < 0.3  && GUI_GetTime()/500 - test_ftime > 1 /*&&                         < 50*/)
+                    {
+                        GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+                        Mode_SW_CONT(0x01);
+                        finish = 0;
+                        con_flag = 0;
+                        short_finish = 0;
+                        test_finish = 0;
+                        r_test = 0;
+                    }
+                }else{
+                    if(GUI_GetTime()/500 - test_ftime == 2)
+                    {
+                        GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+                        Mode_SW_CONT(0x01);
+                    }
+                    if(/* mode_sw == mode_pow && */(r_test == 0 || DISS_Voltage < gate_v) && GUI_GetTime()/500 - test_ftime > 1/*&& R_VLUE < 50*/)
+                    { 
+                        GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+                        Mode_SW_CONT(0x01);
+                        finish = 0;
+                        con_flag = 0;
+                        short_finish = 0;
+                        test_finish = 0;
+                        r_test = 0;
+                    }
+                }                    
+            }else{
+                if(para_set2 == set_2_on)
+                {
+                    if(gate_v == 0)
+                    {
+                        if(DISS_Voltage > 1 && R_VLUE > 50 && con_flag == 0 && finish == 0)
+                        {
+                            con_flag = 1;
+                            time1 = (float)GUI_GetTime()/500.0;
+                        }
+                        
+                        if(con_flag == 1 && oct_sw == oct_off && finish == 0)
+                        {
+                            if((float)(GUI_GetTime()/500.0 - time1) > 0.2)
+                            {
+                                r = R_VLUE;
+                                v = DISS_Voltage;
+                                oct_sw = oct_on;
+                                clear_flag1 = 0;
+                            }
+                        }
+                    }else{
+                        if(DISS_Voltage > gate_v && R_VLUE > 50 && con_flag == 0 && finish == 0 && r_test == 1)
+                        {
+                            con_flag = 1;
+                            time1 = (float)GUI_GetTime()/500.0;
+                        }                       
+                        if(con_flag == 1 && oct_sw == oct_off && finish == 0)
+                        {
+                            if((float)(GUI_GetTime()/500.0 - time1) > 0.2)
+                            {
+                                r = R_VLUE;
+                                v = DISS_Voltage;
+                                oct_sw = oct_on;
+                                clear_flag1 = 0;
+                            }
+                        }
+                    }
+                }
+                
+            }
+            
+            
+            
+            if(oct_sw == oct_on && para_set2 == set_2_on)
+            {
+                Mode_SW_CONT(0x02);
+                GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+//                OC_ADD();
+                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+                TEXT_SetFont(hItem,&GUI_FontD24x32);
+                sprintf(buf,"%4d",r);       
+                TEXT_SetText(hItem,buf);
+                
+    //             if(status_flash == 0){
+
+                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
+                TEXT_SetTextColor(hItem, GUI_RED);
+                if(lang == 0)
+                {
+                    GUI_SetFont(&GUI_Fontset_font);
+                    TEXT_SetText(hItem, "测试中");
+                    status_flash = 1;
+                }else{
+                    GUI_SetFont(&GUI_Font20_ASCII);
+                    TEXT_SetText(hItem, "Testing");
+                    status_flash = 1;
+                }
+                    
+    //             }else{
+    //                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
+    //                 TEXT_SetText(hItem,"");
+    //                 status_flash = 0;
+    //             }
+                
+            }else
+            {
+                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_98);
+                TEXT_SetTextColor(hItem, GUI_WHITE);
+                
+                
+                if(lang == 0)
+                {
+                    GUI_SetFont(&GUI_Fontset_font);
+                    TEXT_SetText(hItem, "未测试");
+                }else{
+                    GUI_SetFont(&GUI_Font20_ASCII);
+                    TEXT_SetText(hItem, "Untested");
+                }
+            }
+            
+            if(oct_sw == oct_off && finish == 0)
+            {
+                if(DISS_Voltage > 1 && r_stable == 0)
+                {
+                    r_stable = 1;
+                    stable_time = GUI_GetTime()/500;
+                }else if(DISS_Voltage < 1){
+                    r_stable = 0;
+                }                    
+                if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
+                {
+                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+                    sprintf(buf,"%.2f",0);       
+                    TEXT_SetText(hItem,buf);
+                }else{
+                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+                    sprintf(buf,"%.2f",DISS_Voltage);       
+                    TEXT_SetText(hItem,buf);
+                }
+                if(clear_flag1 == 1 && R_VLUE <= clear_r)
+                {
+                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+                    sprintf(buf,"%4d",0);       
+                    TEXT_SetText(hItem,buf);
+                }
+//                 else if(R_VLUE >= 1000)
 //                 {
 //                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
 //                     TEXT_SetFont(hItem,&GUI_FontEN40);//设定文本字体
 //                     TEXT_SetText(hItem,"");
-//                 }else{
-//                     if(GUI_GetTime()/500 - stable_time == 1 && r_stable == 1)
-//                     {
-//                         r = R_VLUE;
-//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-//                         TEXT_SetFont(hItem,&GUI_FontD24x32);
-//                         sprintf(buf,"%4d",r);       
-//                         TEXT_SetText(hItem,buf);
-//                     }else if(r_stable == 0)
-//                     {
-//                         if(DISS_Voltage < 0.3)
-//                             {
-//                                 if(para_set1 == set_1_on)
-//                                 {
-//                                     TM1650_SET_LED(0x68,0x70);
-//                                     GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
-//                                 }
+//                 }
+                else{
+                        if(GUI_GetTime()/500 - stable_time == 1 && r_stable == 1)
+                        {
+                            r = R_VLUE;
+                            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+                            TEXT_SetFont(hItem,&GUI_FontD24x32);
+                            sprintf(buf,"%4d",r);       
+                            TEXT_SetText(hItem,buf);
+                        }else if(r_stable == 0)
+                        {
+                            if(DISS_Voltage < 0.3)
+                            {
+                                if(para_set1 == set_1_on)
+                                {
+                                    TM1650_SET_LED(0x68,0x70);
+                                    GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
+                                }
+                                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+                                TEXT_SetFont(hItem,&GUI_FontD24x32);
+                                TEXT_SetTextColor(hItem, GUI_GREEN);
+                                sprintf(buf,"%4d",0);       
+                                TEXT_SetText(hItem,buf);
+                            }else{
+                                
 //                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
 //                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
-//                                 TEXT_SetTextColor(hItem, GUI_GREEN);
-//                                 sprintf(buf,"%4d",0);       
-//                                 TEXT_SetText(hItem,buf);
-//                             }else{
 //                                 
-// //                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-// //                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
-// //                                 
-// //                                 sprintf(buf,"%4d",R_VLUE);       
-// //                                 TEXT_SetText(hItem,buf);
-//                             }
-// //                              hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-// //                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
-// //                                 
-// //                                 sprintf(buf,"%4d",R_VLUE);       
-// //                                 TEXT_SetText(hItem,buf);
-//                     }                 
-//                 }
-//             
-//         }
-//                
+//                                 sprintf(buf,"%4d",R_VLUE);       
+//                                 TEXT_SetText(hItem,buf);
+                            }
+//                              hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+//                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
+//                                 
+//                                 sprintf(buf,"%4d",R_VLUE);       
+//                                 TEXT_SetText(hItem,buf);
+                        }                        
+                }
+                short_time = 0;
+                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+                sprintf(buf,"%4d",short_time);
+                TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体      
+                TEXT_SetText(hItem,buf);
+                
+                oc_data = 0;
+                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_82);
+                sprintf(buf,"%.2f",oc_data);
+                TEXT_SetText(hItem,buf);
+            }else{
+                if(para_set2 == set_2_on)
+                {
+                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+                    sprintf(buf,"%.2f",v);       
+                    TEXT_SetText(hItem,buf);
+                    
+                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+                    TEXT_SetFont(hItem,&GUI_FontD24x32);
+                    sprintf(buf,"%4d",r);       
+                    TEXT_SetText(hItem,buf);
+                    
+                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+                    sprintf(buf,"%4d",short_time);
+                    TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体      
+                    TEXT_SetText(hItem,buf);
+                    
+                    if(short_finish == 0 ){
+                        if(DISS_Voltage < 1 && short_flag == 0 && oct_sw == oct_off)
+                        {
+                            SET_Voltage =1000;
+                            SET_Current = 1000;
+                            Mode_SW_CONT(0x03);
+                            GPIO_SetBits(GPIOB,GPIO_Pin_13);
+                            //GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+                        }else if(oct_sw == oct_off && short_flag == 0){
+                            Mode_SW_CONT(0x02);
+                            SET_Current_Laod = 1000;
+                            short_flag =1;
+                            short_start = GUI_GetTime()*2;
+                        }
+                        if(short_flag == 1)
+                        {
+                            GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+                            if(DISS_Voltage < 1){
+                                SET_Current_Laod = set_init_c;
+                                short_time = GUI_GetTime()*2 - short_start;
+                                short_flag = 0;
+                                short_finish = 1;
+                                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+                                sprintf(buf,"%4d",short_time);     
+                                TEXT_SetText(hItem,buf);
+                            }
+                        }
+                    }
+                    if(short_finish == 1 && test_finish == 0)
+                    {
+                        GPIO_SetBits(GPIOC,GPIO_Pin_1);
+                        Mode_SW_CONT(0x03);
+                        SET_Voltage = 1000;
+                        SET_Current = 1000;
+                        GPIO_SetBits(GPIOB,GPIO_Pin_13);
+                        
+                        
+//                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);                                                
+//                         Mode_SW_CONT(0x01);
+                        
+                        test_ftime = GUI_GetTime()/500;
+                        test_finish = 1;
+                    } 
+                }
+                
+                
+                
+    //             if(R_VLUE >= 1000)
+    //             {
+    //                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+    //                 TEXT_SetFont(hItem,&GUI_FontEN40);//设定文本字体
+    //                 TEXT_SetText(hItem,"");
+    //             }else{
+                    
+    //             }
+            }
+            
+            
+            
+            
+                    
+            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_82);
+            sprintf(buf,"%.2f",oc_data);
+            TEXT_SetText(hItem,buf);
+            
+            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_83);
+            sprintf(buf,"%.2f",DISS_Current);
+            TEXT_SetText(hItem,buf); 
+        }else{
+            
+            if(DISS_Voltage > 1 && r_stable == 0)
+            {
+                r_stable = 1;
+                stable_time = GUI_GetTime()/500;
+            }else if(DISS_Voltage < 1){
+                r_stable = 0;
+            }
+                
+            if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
+                {
+                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+                    sprintf(buf,"%.2f",0);       
+                    TEXT_SetText(hItem,buf);
+                }else{
+                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+                    sprintf(buf,"%.2f",DISS_Voltage);       
+                    TEXT_SetText(hItem,buf);
+                }
+                if(clear_flag1 == 1 && R_VLUE <= clear_r)
+                {
+                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+                    sprintf(buf,"%4d",0);       
+                    TEXT_SetText(hItem,buf);
+                }
+                else if(R_VLUE >= 1000 && DISS_Voltage > 1)
+                {
+                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+                    TEXT_SetFont(hItem,&GUI_FontEN40);//设定文本字体
+                    TEXT_SetText(hItem,"");
+                }else{
+                    if(GUI_GetTime()/500 - stable_time == 1 && r_stable == 1)
+                    {
+                        r = R_VLUE;
+                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+                        TEXT_SetFont(hItem,&GUI_FontD24x32);
+                        sprintf(buf,"%4d",r);       
+                        TEXT_SetText(hItem,buf);
+                    }else if(r_stable == 0)
+                    {
+                        if(DISS_Voltage < 0.3)
+                            {
+                                if(para_set1 == set_1_on)
+                                {
+                                    TM1650_SET_LED(0x68,0x70);
+                                    GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
+                                }
+                                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+                                TEXT_SetFont(hItem,&GUI_FontD24x32);
+                                TEXT_SetTextColor(hItem, GUI_GREEN);
+                                sprintf(buf,"%4d",0);       
+                                TEXT_SetText(hItem,buf);
+                            }else{
+                                
+//                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+//                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
+//                                 
+//                                 sprintf(buf,"%4d",R_VLUE);       
+//                                 TEXT_SetText(hItem,buf);
+                            }
+//                              hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+//                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
+//                                 
+//                                 sprintf(buf,"%4d",R_VLUE);       
+//                                 TEXT_SetText(hItem,buf);
+                    }                 
+                }
+            
+        }
+               
 
-//         if(para_set2 == set_2_on)
-//         {
-//             if(para_set1 == set_1_on && oct_sw == oct_off && finish == 1)
-//             {
-//                  test_r();
-//             }else
-//             {
-//                 TM1650_SET_LED(0x68,0x70);
-//                 GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
-//             }
-//         }else{
-//             if(para_set1 == set_1_on && DISS_Voltage > 1)
-//             {
-//                  test_r();
-//             }else
-//             {
-//                 TM1650_SET_LED(0x68,0x70);
-//                 GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
-//             }
-//         }
+        if(para_set2 == set_2_on)
+        {
+            if(para_set1 == set_1_on && oct_sw == oct_off && finish == 1)
+            {
+                 test_r();
+            }else
+            {
+                TM1650_SET_LED(0x68,0x70);
+                GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
+            }
+        }else{
+            if(para_set1 == set_1_on && DISS_Voltage > 1)
+            {
+                 test_r();
+            }else
+            {
+                TM1650_SET_LED(0x68,0x70);
+                GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
+            }
+        }
 
-//         
-//         if(oct_sw == oct_off)
-//         {
-//             switch(b_type)
-//             {
-//                 case Lion:
-//                 {
-//                     if(R_VLUE != 0  && DISS_Voltage >= 3.4 && DISS_Voltage <= 4.2)
-//                     {
-//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-//                         TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色      
-//                         if(lang == 0)
-//                         {
-//                             TEXT_SetFont(hItem,&GUI_Fontset_font);
-//                             TEXT_SetText(hItem,"锂电池");
-//                         }else{
-//                             TEXT_SetFont(hItem,&GUI_Font20_ASCII);
-//                             TEXT_SetText(hItem,"Lion");
-//                         }
-//                     }else{
-//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-//                         TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色      
-//                         TEXT_SetText(hItem,"");
-//                     }
-//                     break;
-//                 }
-//                 case NiMH:
-//                 {
-//                     if(R_VLUE != 0  && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
-//                     {
-//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-//                         TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色      
-//                         if(lang == 0)
-//                         {
-//                             TEXT_SetFont(hItem,&GUI_Fontset_font);
-//                             TEXT_SetText(hItem,"镍氢电池");
-//                         }else{
-//                             TEXT_SetFont(hItem,&GUI_Font20_ASCII);
-//                             TEXT_SetText(hItem,"NiMH");
-//                         }
-//                     }else{
-//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-//                         TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色      
-//                         TEXT_SetText(hItem,"");
-//                     }
-//                     break;
-//                 }
-//                 case NiCd:
-//                 {
-//                     if(R_VLUE != 0 && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
-//                     {
-//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-//                         TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色      
-//                         if(lang == 0)
-//                         {
-//                             TEXT_SetFont(hItem,&GUI_Fontset_font);
-//                             TEXT_SetText(hItem,"镍镉电池");
-//                         }else{
-//                             TEXT_SetFont(hItem,&GUI_Font20_ASCII);
-//                             TEXT_SetText(hItem,"NiCd");
-//                         }
-//                     }else{
-//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-//                         TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色      
-//                         TEXT_SetText(hItem,"");
-//                     }
-//                     break;
-//                 }
-//                 case SLA:
-//                 {
-//                     if(R_VLUE != 0  && DISS_Voltage >= 1.8 && DISS_Voltage <= 2.4)
-//                     {
-//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-//                         TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色      
-//                         if(lang == 0)
-//                         {
-//                             TEXT_SetFont(hItem,&GUI_Fontset_font);
-//                             TEXT_SetText(hItem,"小型铅酸电池");
-//                         }else{
-//                             TEXT_SetFont(hItem,&GUI_Font20_ASCII);
-//                             TEXT_SetText(hItem,"SLA");
-//                         }
-//                     }else{
-//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-//                         TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色      
-//                         TEXT_SetText(hItem,"");
-//                     }
-//                     break;
-//                 }
-//                 case LiMH:
-//                 {
-//                     if(R_VLUE != 0  && DISS_Voltage >= 2.8 && DISS_Voltage <= 3.3)
-//                     {
-//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-//                         TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色      
-//                         if(lang == 0)
-//                         {
-//                             TEXT_SetFont(hItem,&GUI_Fontset_font);
-//                             TEXT_SetText(hItem,"锂锰电池");
-//                         }else{
-//                             TEXT_SetFont(hItem,&GUI_Font20_ASCII);
-//                             TEXT_SetText(hItem,"LiMH");
-//                         }
-//                     }else{
-//                         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
-//                         TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色      
-//                         TEXT_SetText(hItem,"");
-//                     }
-//                     break;
-//                 }
-//             }
-//         }
-//             
-// 		WM_RestartTimer(pMsg->Data.v, 20);//复位定时器数值越大刷新时间越短
+        
+        if(oct_sw == oct_off)
+        {
+            switch(b_type)
+            {
+                case Lion:
+                {
+                    if(R_VLUE != 0  && DISS_Voltage >= 3.4 && DISS_Voltage <= 4.2)
+                    {
+                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+                        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色      
+                        if(lang == 0)
+                        {
+                            TEXT_SetFont(hItem,&GUI_Fontset_font);
+                            TEXT_SetText(hItem,"锂电池");
+                        }else{
+                            TEXT_SetFont(hItem,&GUI_Font20_ASCII);
+                            TEXT_SetText(hItem,"Lion");
+                        }
+                    }else{
+                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+                        TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色      
+                        TEXT_SetText(hItem,"");
+                    }
+                    break;
+                }
+                case NiMH:
+                {
+                    if(R_VLUE != 0  && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
+                    {
+                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+                        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色      
+                        if(lang == 0)
+                        {
+                            TEXT_SetFont(hItem,&GUI_Fontset_font);
+                            TEXT_SetText(hItem,"镍氢电池");
+                        }else{
+                            TEXT_SetFont(hItem,&GUI_Font20_ASCII);
+                            TEXT_SetText(hItem,"NiMH");
+                        }
+                    }else{
+                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+                        TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色      
+                        TEXT_SetText(hItem,"");
+                    }
+                    break;
+                }
+                case NiCd:
+                {
+                    if(R_VLUE != 0 && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
+                    {
+                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+                        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色      
+                        if(lang == 0)
+                        {
+                            TEXT_SetFont(hItem,&GUI_Fontset_font);
+                            TEXT_SetText(hItem,"镍镉电池");
+                        }else{
+                            TEXT_SetFont(hItem,&GUI_Font20_ASCII);
+                            TEXT_SetText(hItem,"NiCd");
+                        }
+                    }else{
+                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+                        TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色      
+                        TEXT_SetText(hItem,"");
+                    }
+                    break;
+                }
+                case SLA:
+                {
+                    if(R_VLUE != 0  && DISS_Voltage >= 1.8 && DISS_Voltage <= 2.4)
+                    {
+                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+                        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色      
+                        if(lang == 0)
+                        {
+                            TEXT_SetFont(hItem,&GUI_Fontset_font);
+                            TEXT_SetText(hItem,"小型铅酸电池");
+                        }else{
+                            TEXT_SetFont(hItem,&GUI_Font20_ASCII);
+                            TEXT_SetText(hItem,"SLA");
+                        }
+                    }else{
+                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+                        TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色      
+                        TEXT_SetText(hItem,"");
+                    }
+                    break;
+                }
+                case LiMH:
+                {
+                    if(R_VLUE != 0  && DISS_Voltage >= 2.8 && DISS_Voltage <= 3.3)
+                    {
+                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+                        TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色      
+                        if(lang == 0)
+                        {
+                            TEXT_SetFont(hItem,&GUI_Fontset_font);
+                            TEXT_SetText(hItem,"锂锰电池");
+                        }else{
+                            TEXT_SetFont(hItem,&GUI_Font20_ASCII);
+                            TEXT_SetText(hItem,"LiMH");
+                        }
+                    }else{
+                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_96);
+                        TEXT_SetTextColor(hItem, GUI_RED);//设置字体颜色      
+                        TEXT_SetText(hItem,"");
+                    }
+                    break;
+                }
+            }
+        }
+ 		WM_RestartTimer(pMsg->Data.v, 20);//复位定时器数值越大刷新时间越短
 	}
 	break;
-    
-		
+    		
   case WM_INIT_DIALOG:
     //
     // Initialization of 'R'
@@ -885,11 +940,10 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 		TEXT_SetFont(hItem, &GUI_FontEN40);
         
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-        sprintf(buf,"%.2f",0);
         TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
         TEXT_SetFont(hItem,&GUI_FontD24x32);//设定文本字体
         GUI_UC_SetEncodeUTF8();        
-        TEXT_SetText(hItem,buf);
+        TEXT_SetText(hItem,"0.00");
             
         hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
         sprintf(buf,"%04d",0);
@@ -997,18 +1051,16 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 TEXT_SetText(hItem,buf);
                 
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_82);
-                sprintf(buf,"%.2f",0);
                 TEXT_SetTextColor(hItem, GUI_GREEN);//设置字体颜色
                 TEXT_SetFont(hItem,&GUI_FontD24x32);//设定文本字体
                 GUI_UC_SetEncodeUTF8();        
-                TEXT_SetText(hItem,buf);
+                TEXT_SetText(hItem,"0.00");
                 
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_83);
-                sprintf(buf,"%.2f",0);
                 TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
                 TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
                 GUI_UC_SetEncodeUTF8();        
-                TEXT_SetText(hItem,buf);
+                TEXT_SetText(hItem,"0.00");
                 
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
                 sprintf(buf,"%4d",short_time);
@@ -1097,7 +1149,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 */
 WM_HWIN CreateR(void);
 WM_HWIN CreateR(void) {
-  oc_sw = set_20;
+  set_sw = set_20;
   page_sw = face_r;
   track = face_r;
   con_flag = 0;
@@ -1111,7 +1163,7 @@ WM_HWIN CreateR(void) {
 void OC_OP_DOWN(void);
 void OC_OP_DOWN(void)
 {
-    switch(oc_sw)
+    switch(set_sw)
     {
         case set_20:
         {
@@ -1125,7 +1177,7 @@ void OC_OP_DOWN(void)
             TEXT_SetBkColor(hItem,0x00BFFFFF);
             TEXT_SetTextColor(hItem, GUI_BLACK);
             
-            oc_sw = set_21;
+            set_sw = set_21;
             break;
         }
         case set_21:
@@ -1140,7 +1192,7 @@ void OC_OP_DOWN(void)
             TEXT_SetBkColor(hItem,0x00BFFFFF);
             TEXT_SetTextColor(hItem, GUI_BLACK);
             
-            oc_sw = set_64;
+            set_sw = set_64;
             break;
         }
         case set_64:
@@ -1155,7 +1207,7 @@ void OC_OP_DOWN(void)
             TEXT_SetBkColor(hItem,0x00BFFFFF);
             TEXT_SetTextColor(hItem, GUI_BLACK);
             
-            oc_sw = set_67;
+            set_sw = set_67;
             break;
         }
         case set_67:
@@ -1170,7 +1222,7 @@ void OC_OP_DOWN(void)
             TEXT_SetBkColor(hItem,0x00BFFFFF);
             TEXT_SetTextColor(hItem, GUI_BLACK);
             
-            oc_sw = set_20;
+            set_sw = set_20;
             break;
         }
         
@@ -1181,7 +1233,7 @@ void OC_OP_DOWN(void)
 void OC_OP_UP(void);
 void OC_OP_UP(void)
 {
-    switch(oc_sw)
+    switch(set_sw)
     {
         case set_20:
         {
@@ -1195,7 +1247,7 @@ void OC_OP_UP(void)
             TEXT_SetBkColor(hItem,0x00BFFFFF);
             TEXT_SetTextColor(hItem, GUI_BLACK);
             
-            oc_sw = set_67;
+            set_sw = set_67;
             break;
         }
         case set_21:
@@ -1211,7 +1263,7 @@ void OC_OP_UP(void)
             TEXT_SetBkColor(hItem,0x00BFFFFF);
             TEXT_SetTextColor(hItem, GUI_BLACK);
             
-            oc_sw = set_20;
+            set_sw = set_20;
             break;
         }
         case set_64:
@@ -1226,7 +1278,7 @@ void OC_OP_UP(void)
             TEXT_SetBkColor(hItem,0x00BFFFFF);
             TEXT_SetTextColor(hItem, GUI_BLACK);
             
-            oc_sw = set_21;
+            set_sw = set_21;
             break;
         }
         case set_67:
@@ -1241,7 +1293,7 @@ void OC_OP_UP(void)
             TEXT_SetBkColor(hItem,0x00BFFFFF);
             TEXT_SetTextColor(hItem, GUI_BLACK);
             
-            oc_sw = set_64;
+            set_sw = set_64;
             break;
         }
         
@@ -1258,7 +1310,7 @@ void OC_SET(void) {
     float dis_init_c;
     float dis_sbs_c;
     vu16 dis_steptime = steptime;
-    switch(oc_sw)
+    switch(set_sw)
     {
         case set_20:
         {
@@ -1276,7 +1328,7 @@ void OC_SET(void) {
             {
                 set_limit[i] = '\0';
             }
-            oc_sw = set_22;
+            set_sw = set_22;
             break;
         }
         case set_22:
@@ -1299,7 +1351,7 @@ void OC_SET(void) {
             TEXT_SetTextColor(hItem, GUI_BLACK);
             Write_Limits();
             
-            oc_sw = set_20;
+            set_sw = set_20;
             bit =1;
             dot_flag = 0;
             break;
@@ -1321,7 +1373,7 @@ void OC_SET(void) {
                 set_limit[i] = '\0';
             }
             
-            oc_sw = set_23;
+            set_sw = set_23;
             break;
         }
         case set_23:
@@ -1340,7 +1392,7 @@ void OC_SET(void) {
             TEXT_SetTextColor(hItem, GUI_BLACK);
             Write_Limits();
             
-            oc_sw = set_21;
+            set_sw = set_21;
             bit = 1;
             dot_flag = 0;
             break;
@@ -1362,7 +1414,7 @@ void OC_SET(void) {
                 set_limit[i] = '\0';
             }
             
-            oc_sw = set_65;
+            set_sw = set_65;
             break;
         }
         case set_65:
@@ -1381,7 +1433,7 @@ void OC_SET(void) {
             TEXT_SetTextColor(hItem, GUI_BLACK);
             Write_Limits();
             
-            oc_sw = set_64;
+            set_sw = set_64;
             bit = 1;
             dot_flag = 0;
             break;
@@ -1403,7 +1455,7 @@ void OC_SET(void) {
                 set_limit[i] = '\0';
             }
             
-            oc_sw = set_68;
+            set_sw = set_68;
             break;
         }
         case set_68:
@@ -1421,7 +1473,7 @@ void OC_SET(void) {
             TEXT_SetTextColor(hItem, GUI_BLACK);
             Write_Limits();
             
-            oc_sw = set_67;
+            set_sw = set_67;
             bit = 1;
             dot_flag = 0;
             Wrtite_step();
@@ -1433,7 +1485,7 @@ void OC_SET(void) {
 //内阻页面数字输入
 void INPUT_C(char* num);            
 void INPUT_C(char* num){
-    switch(oc_sw)
+    switch(set_sw)
     {
         case set_22:
         {
@@ -1722,12 +1774,9 @@ void OC_ADD(void){
     WM_HWIN hItem;
     char sbs_c[5];
     float change_sbs_c;
-//     if(DISS_Voltage > 1){
-//          
-//     }
+
     if(v - DISS_Voltage > v*0.3 && para_set2 == set_2_on)
     {
-//        stepcount=0;
         oc_data = (float)SET_Current_Laod/100;       
         SET_Current_Laod = set_init_c;
         hItem = WM_GetDialogItem(hWinR, ID_TEXT_47);
@@ -1756,6 +1805,130 @@ void OC_ADD(void){
         }
     }        
 }
+
+// void test_r(vu16 tr,float tv)
+// {
+//     WM_HWIN hItem;
+//     if(para_set2 == set_2_off)
+//     {
+//         if((tr > set_max_r || tr < set_min_r || DISS_Voltage*100 > set_max_v || DISS_Voltage*100 < set_min_v)&& DISS_Voltage >= 1)
+//         {
+//             if(para_set4 == set_4_on){
+//                 BEEP_Tiggr();
+//             }
+//             TM1650_SET_LED(0x68,0x70);//FAIL灯
+//             GPIO_SetBits(GPIOD,GPIO_Pin_12);//
+//             if(tr > set_max_r || tr < set_min_r)
+//             {
+//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+//                 TEXT_SetTextColor(hItem, GUI_RED);
+//             }else{
+//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+//                 TEXT_SetTextColor(hItem, GUI_GREEN);
+//             }
+//             if(DISS_Voltage*100 > set_max_v || DISS_Voltage*100 < set_min_v){
+//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+//                 TEXT_SetTextColor(hItem, GUI_RED);
+//             }else{
+//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+//                 TEXT_SetTextColor(hItem, GUI_GREEN);
+//             }
+//         }else{
+//             hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+//             TEXT_SetTextColor(hItem, GUI_GREEN);
+//             hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+//             TEXT_SetTextColor(hItem, GUI_GREEN);
+//             
+//             GPIO_ResetBits(GPIOD,GPIO_Pin_12);
+//             TM1650_SET_LED(0x48,0x71);
+//             TM1650_SET_LED(0x68,0xF2);//PASS灯
+//         }
+//     }else{
+//         if(finish == 0)
+//         {
+//             if(tr > set_max_r || tr < set_min_r || DISS_Voltage*100 > set_max_v || DISS_Voltage*100 < set_min_v)
+//             {
+//                 if(para_set4 == set_4_on){
+//                     BEEP_Tiggr();
+//                 }
+//                 TM1650_SET_LED(0x68,0x70);//FAIL灯
+//                 GPIO_SetBits(GPIOD,GPIO_Pin_12);//
+//                 if(tr > set_max_r || tr < set_min_r)
+//                 {
+//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+//                     TEXT_SetTextColor(hItem, GUI_RED);
+//                 }else{
+//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+//                     TEXT_SetTextColor(hItem, GUI_GREEN);
+//                 }
+//                 if(DISS_Voltage*100 > set_max_v || DISS_Voltage*100 < set_min_v){
+//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+//                     TEXT_SetTextColor(hItem, GUI_RED);
+//                 }else{
+//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+//                     TEXT_SetTextColor(hItem, GUI_GREEN);
+//                 }
+//             }else{
+//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+//                 TEXT_SetTextColor(hItem, GUI_GREEN);
+//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+//                 TEXT_SetTextColor(hItem, GUI_GREEN);
+//                 
+//                 GPIO_ResetBits(GPIOD,GPIO_Pin_12);
+//                 TM1650_SET_LED(0x48,0x71);
+//                 TM1650_SET_LED(0x68,0xF2);//PASS灯
+//             }
+//         }else{
+//             if(r > set_max_r || r < set_min_r || v*100 > set_max_v || v*100 < set_min_v || oc_data*100 > set_max_c || oc_data*100 < set_min_c)
+//             {
+//                 if(para_set4 == set_4_on){
+//                     BEEP_Tiggr();
+//                 }
+//                 TM1650_SET_LED(0x68,0x70);//FAIL灯
+//                 GPIO_SetBits(GPIOD,GPIO_Pin_12);//
+//                 if(r > set_max_r || r < set_min_r)
+//                 {
+//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+//                     TEXT_SetTextColor(hItem, GUI_RED);
+//                 }else{
+//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+//                     TEXT_SetTextColor(hItem, GUI_GREEN);
+//                 }
+//                 if(v*100 > set_max_v || v*100 < set_min_v){
+//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+//                     TEXT_SetTextColor(hItem, GUI_RED);
+//                 }else{
+//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+//                     TEXT_SetTextColor(hItem, GUI_GREEN);
+//                 }
+//                 if(oc_data*100 > set_max_c || oc_data*100 < set_min_c){
+//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_82);
+//                     TEXT_SetTextColor(hItem, GUI_RED);
+//                 }else{
+//                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_82);
+//                     TEXT_SetTextColor(hItem, GUI_GREEN);
+//                 }
+//             }else{
+//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_80);
+//                 TEXT_SetTextColor(hItem, GUI_GREEN);
+//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
+//                 TEXT_SetTextColor(hItem, GUI_GREEN);
+//                 hItem = WM_GetDialogItem(hWinR, ID_TEXT_82);
+//                 TEXT_SetTextColor(hItem, GUI_GREEN);
+//                 
+//                 GPIO_ResetBits(GPIOD,GPIO_Pin_12);
+//                 TM1650_SET_LED(0x48,0x71);
+//                 TM1650_SET_LED(0x68,0xF2);//PASS灯
+//             }
+//         }
+//                
+//     }
+// //     else
+// //     {
+// //         TM1650_SET_LED(0x68,0x70);
+// //         GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
+// //     }
+// }
 
 void test_r(void)
 {

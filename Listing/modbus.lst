@@ -34714,6 +34714,12 @@ N#define __my_register_h__
 N//=============================================================================
 Nvoid Write_Limits(void);
 Nvoid Wrtite_step(void);
+Nvoid OC_ADD(void);
+Nvoid Wrtite_S(void);
+Nvoid Write_oct(void);
+Nvoid Write_alarm(void);
+Nvoid Write_btype(void);
+Nvoid Write_info(void);
 N
 N//=============================================================================
 N#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -34835,6 +34841,7 @@ Nextern float DISS_POW_Current;
 Nextern float DISS_R;
 Nextern float bc_raw;
 Nextern vu16 steptime;
+Nextern vu8 r_stable;
 Nextern vu8 bit1;
 Nextern vu8 dot_flag;
 Nextern vu8 page_sw;
@@ -34842,6 +34849,27 @@ Nextern vu8 para_set1;
 Nextern vu8 para_set2;
 Nextern vu8 para_set3;
 Nextern vu8 para_set4;
+Nextern vu8 oct_sw;
+Nextern vu8 set_sw;
+Nextern vu8 lang;
+Nextern vu16 battery_c;
+Nextern char set_limit[5];
+Nextern vu8 bit;
+Nextern vu8 track;
+Nextern vu8 mode_sw;
+Nextern vu8 pow_sw;
+Nextern vu8 cdc_sw;
+Nextern vu8 load_sw;
+Nextern vu8 b_type;
+Nextern vu8 buffer;
+Nextern float gate_v;
+Nextern vu8 cutoff_flag;
+Nextern vu8 charge_step;
+Nextern vu8 pause_flag;
+Nextern vu8 paused;
+Nextern vu8 finish;
+Nextern vu16 restart_time;
+N
 N
 Nextern vu16 Run_Control[43];	
 N#define onoff_ch                        Run_Control[0]  //ON/OFF
@@ -34889,6 +34917,14 @@ N#define pow_v    					    Run_Control[40]
 N#define cdc_dc    					    Run_Control[41]
 N#define pow_c    					    Run_Control[42]
 N
+N
+Nextern float coff[6];
+N#define cov1    					    coff[0]
+N#define cov2    					    coff[1]
+N#define cov3    					    coff[2]
+N#define coc1    					    coff[3]
+N#define coc2    					    coff[4]
+N#define coc3    					    coff[5]
 N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
@@ -35159,6 +35195,12 @@ S#define __my_register_h__
 S//=============================================================================
 Svoid Write_Limits(void);
 Svoid Wrtite_step(void);
+Svoid OC_ADD(void);
+Svoid Wrtite_S(void);
+Svoid Write_oct(void);
+Svoid Write_alarm(void);
+Svoid Write_btype(void);
+Svoid Write_info(void);
 S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -35280,6 +35322,7 @@ Sextern float DISS_POW_Current;
 Sextern float DISS_R;
 Sextern float bc_raw;
 Sextern vu16 steptime;
+Sextern vu8 r_stable;
 Sextern vu8 bit1;
 Sextern vu8 dot_flag;
 Sextern vu8 page_sw;
@@ -35287,6 +35330,27 @@ Sextern vu8 para_set1;
 Sextern vu8 para_set2;
 Sextern vu8 para_set3;
 Sextern vu8 para_set4;
+Sextern vu8 oct_sw;
+Sextern vu8 set_sw;
+Sextern vu8 lang;
+Sextern vu16 battery_c;
+Sextern char set_limit[5];
+Sextern vu8 bit;
+Sextern vu8 track;
+Sextern vu8 mode_sw;
+Sextern vu8 pow_sw;
+Sextern vu8 cdc_sw;
+Sextern vu8 load_sw;
+Sextern vu8 b_type;
+Sextern vu8 buffer;
+Sextern float gate_v;
+Sextern vu8 cutoff_flag;
+Sextern vu8 charge_step;
+Sextern vu8 pause_flag;
+Sextern vu8 paused;
+Sextern vu8 finish;
+Sextern vu16 restart_time;
+S
 S
 Sextern vu16 Run_Control[43];	
 S#define onoff_ch                        Run_Control[0]  //ON/OFF
@@ -35334,6 +35398,14 @@ S#define pow_v    					    Run_Control[40]
 S#define cdc_dc    					    Run_Control[41]
 S#define pow_c    					    Run_Control[42]
 S
+S
+Sextern float coff[6];
+S#define cov1    					    coff[0]
+S#define cov2    					    coff[1]
+S#define cov3    					    coff[2]
+S#define coc1    					    coff[3]
+S#define coc2    					    coff[4]
+S#define coc3    					    coff[5]
 S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//

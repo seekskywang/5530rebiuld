@@ -41035,7 +41035,7 @@ N//修改信息
 N//无
 N////////////////////////////////////////////////////////////////////////////////// 	   
 N
-Nstatic u8 AppState;
+N//static u8 AppState;
 Nextern USB_OTG_CORE_HANDLE  USB_OTG_Core;
 N//USB OTG 中断服务函数
 N//处理所有USB中断
@@ -41313,4 +41313,3 @@ N
 N
 N
 N
-W "..\USB\USB_APP\usbh_usr.c" 19 11 variable "AppState" was declared but never referenced

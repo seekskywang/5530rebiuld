@@ -10,19 +10,18 @@
 #include  "gui.h"
 #include "DIALOG.h"
 #include "my_register.h"
+#include "tm1650.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "key.h"
+#include "string.h"
+#include "beep.h"
+
 
 
 WM_HWIN hWinsysinfo;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ16;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ12;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ20S;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontEN40;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ32;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Fontsymbol;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Fontset_font;
 extern GUI_CONST_STORAGE GUI_BITMAP bmOPSCRENN;
 vu8 info_set = set_48;
-extern vu8 page_sw;
 vu16 year1 = 0;
 vu16 year2 = 0;
 vu16 year3 = 0;
@@ -351,8 +350,8 @@ WM_HWIN Createsysinfo(void) {
 }
 
 
-WM_HWIN SYS_INFO_RIGHT(void);
-WM_HWIN SYS_INFO_RIGHT(void)
+void SYS_INFO_RIGHT(void);
+void SYS_INFO_RIGHT(void)
 {
     WM_HWIN hItem;
     switch(info_set)
@@ -570,8 +569,8 @@ WM_HWIN SYS_INFO_RIGHT(void)
 }
 
 
-WM_HWIN SYS_INFO_LEFT(void);
-WM_HWIN SYS_INFO_LEFT(void)
+void SYS_INFO_LEFT(void);
+void SYS_INFO_LEFT(void)
 {
     WM_HWIN hItem;
     switch(info_set)
@@ -789,8 +788,8 @@ WM_HWIN SYS_INFO_LEFT(void)
 }
 
 
-WM_HWIN SYS_INFO_UP(void);
-WM_HWIN SYS_INFO_UP(void)
+void SYS_INFO_UP(void);
+void SYS_INFO_UP(void)
 {
     WM_HWIN hItem;
     switch(info_set)
@@ -1008,8 +1007,8 @@ WM_HWIN SYS_INFO_UP(void)
 }
 
 
-WM_HWIN SYS_INFO_DOWN(void);
-WM_HWIN SYS_INFO_DOWN(void)
+void SYS_INFO_DOWN(void);
+void SYS_INFO_DOWN(void)
 {
     WM_HWIN hItem;
     switch(info_set)
@@ -1227,8 +1226,8 @@ WM_HWIN SYS_INFO_DOWN(void)
 }
 
 
-WM_HWIN INPUT_INFO(vu8 num);            
-WM_HWIN INPUT_INFO(vu8 num){
+void INPUT_INFO(vu8 num);            
+void INPUT_INFO(vu8 num){
     static char buf[5];
     WM_HWIN hItem;
     switch(info_set)

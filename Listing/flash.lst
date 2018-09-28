@@ -34714,6 +34714,12 @@ N#define __my_register_h__
 N//=============================================================================
 Nvoid Write_Limits(void);
 Nvoid Wrtite_step(void);
+Nvoid OC_ADD(void);
+Nvoid Wrtite_S(void);
+Nvoid Write_oct(void);
+Nvoid Write_alarm(void);
+Nvoid Write_btype(void);
+Nvoid Write_info(void);
 N
 N//=============================================================================
 N#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -34835,6 +34841,7 @@ Nextern float DISS_POW_Current;
 Nextern float DISS_R;
 Nextern float bc_raw;
 Nextern vu16 steptime;
+Nextern vu8 r_stable;
 Nextern vu8 bit1;
 Nextern vu8 dot_flag;
 Nextern vu8 page_sw;
@@ -34842,6 +34849,27 @@ Nextern vu8 para_set1;
 Nextern vu8 para_set2;
 Nextern vu8 para_set3;
 Nextern vu8 para_set4;
+Nextern vu8 oct_sw;
+Nextern vu8 set_sw;
+Nextern vu8 lang;
+Nextern vu16 battery_c;
+Nextern char set_limit[5];
+Nextern vu8 bit;
+Nextern vu8 track;
+Nextern vu8 mode_sw;
+Nextern vu8 pow_sw;
+Nextern vu8 cdc_sw;
+Nextern vu8 load_sw;
+Nextern vu8 b_type;
+Nextern vu8 buffer;
+Nextern float gate_v;
+Nextern vu8 cutoff_flag;
+Nextern vu8 charge_step;
+Nextern vu8 pause_flag;
+Nextern vu8 paused;
+Nextern vu8 finish;
+Nextern vu16 restart_time;
+N
 N
 Nextern vu16 Run_Control[43];	
 N#define onoff_ch                        Run_Control[0]  //ON/OFF
@@ -34889,6 +34917,14 @@ N#define pow_v    					    Run_Control[40]
 N#define cdc_dc    					    Run_Control[41]
 N#define pow_c    					    Run_Control[42]
 N
+N
+Nextern float coff[6];
+N#define cov1    					    coff[0]
+N#define cov2    					    coff[1]
+N#define cov3    					    coff[2]
+N#define coc1    					    coff[3]
+N#define coc2    					    coff[4]
+N#define coc3    					    coff[5]
 N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
@@ -35110,6 +35146,12 @@ S#define __my_register_h__
 S//=============================================================================
 Svoid Write_Limits(void);
 Svoid Wrtite_step(void);
+Svoid OC_ADD(void);
+Svoid Wrtite_S(void);
+Svoid Write_oct(void);
+Svoid Write_alarm(void);
+Svoid Write_btype(void);
+Svoid Write_info(void);
 S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -35231,6 +35273,7 @@ Sextern float DISS_POW_Current;
 Sextern float DISS_R;
 Sextern float bc_raw;
 Sextern vu16 steptime;
+Sextern vu8 r_stable;
 Sextern vu8 bit1;
 Sextern vu8 dot_flag;
 Sextern vu8 page_sw;
@@ -35238,6 +35281,27 @@ Sextern vu8 para_set1;
 Sextern vu8 para_set2;
 Sextern vu8 para_set3;
 Sextern vu8 para_set4;
+Sextern vu8 oct_sw;
+Sextern vu8 set_sw;
+Sextern vu8 lang;
+Sextern vu16 battery_c;
+Sextern char set_limit[5];
+Sextern vu8 bit;
+Sextern vu8 track;
+Sextern vu8 mode_sw;
+Sextern vu8 pow_sw;
+Sextern vu8 cdc_sw;
+Sextern vu8 load_sw;
+Sextern vu8 b_type;
+Sextern vu8 buffer;
+Sextern float gate_v;
+Sextern vu8 cutoff_flag;
+Sextern vu8 charge_step;
+Sextern vu8 pause_flag;
+Sextern vu8 paused;
+Sextern vu8 finish;
+Sextern vu16 restart_time;
+S
 S
 Sextern vu16 Run_Control[43];	
 S#define onoff_ch                        Run_Control[0]  //ON/OFF
@@ -35285,6 +35349,14 @@ S#define pow_v    					    Run_Control[40]
 S#define cdc_dc    					    Run_Control[41]
 S#define pow_c    					    Run_Control[42]
 S
+S
+Sextern float coff[6];
+S#define cov1    					    coff[0]
+S#define cov2    					    coff[1]
+S#define cov3    					    coff[2]
+S#define coc1    					    coff[3]
+S#define coc2    					    coff[4]
+S#define coc3    					    coff[5]
 S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
@@ -35514,6 +35586,24 @@ Nvu8 EEPROM_READ_Byte(vu8 ReadAddr);
 N
 N#endif /* __I2C_EE_H */
 L 11 "..\drive\flash.c" 2
+N
+Nextern vu16 year1;
+Nextern vu16 year2;
+Nextern vu16 year3;
+Nextern vu16 year4;
+Nextern vu8 month1;
+Nextern vu8 month2;
+Nextern vu8 day1;
+Nextern vu8 day2;
+Nextern vu8 code1;
+Nextern vu8 code2;
+Nextern vu8 code3;
+Nextern vu8 code4;
+Nextern vu8 code5;
+Nextern vu8 code6;
+Nextern vu8 code7;
+Nextern vu8 code8;
+N
 N//================================================================//
 Nextern struct bitDefine
 N{
@@ -35711,7 +35801,7 @@ N}
 N//===========================================================================//
 Nvoid EEPROM_READ_Coeff(void)
 N{
-N/****************≤‚¡ø≤Œ ˝∂¡»°*********************/
+N/****************”¢”éÀΩ◊Å»°*********************/
 N	REG_ReadV_Offset=EEPROM_READ_Byte(0x01);
 X	Correct_Strong[0]=EEPROM_READ_Byte(0x01);
 N	REG_ReadV_Offset=REG_ReadV_Offset<<8;
@@ -35826,7 +35916,7 @@ N	Polar=EEPROM_READ_Byte(0x13);
 X	Correct_Parametet[4]=EEPROM_READ_Byte(0x13);
 N	Polar3=EEPROM_READ_Byte(0x46);
 X	Correct_Parametet[11]=EEPROM_READ_Byte(0x46);
-N/*******************…Ë÷√≤Œ ˝∂¡»°****************************/
+N/******************* ®◊É”éÀΩ◊Å»°****************************/
 N	SET_ReadV_Offset=EEPROM_READ_Byte(0x14);
 X	Correct_Strong[4]=EEPROM_READ_Byte(0x14);
 N	SET_ReadV_Offset=SET_ReadV_Offset<<8;
@@ -35921,38 +36011,153 @@ X	Correct_Strong[7]=Correct_Strong[7]+EEPROM_READ_Byte(0x26);
 N	Polar2=EEPROM_READ_Byte(0x27);
 X	Correct_Parametet[10]=EEPROM_READ_Byte(0x27);
 N	
-N/*****************∂¡»°πÿª˙«∞…Ë÷√÷µ*************************/
-N	//SET_Voltage=EEPROM_READ_Byte(0x2A);
-N	//SET_Voltage=SET_Voltage<<8;
-N	//SET_Voltage=SET_Voltage+EEPROM_READ_Byte(0x2B);
+N/*****************◊Å»°⁄ò‹∫«∞ ®◊É÷µ*************************/
+N	pow_v=EEPROM_READ_Byte(0x2A);
+X	Run_Control[40]=EEPROM_READ_Byte(0x2A);
+N	pow_v=pow_v<<8;
+X	Run_Control[40]=Run_Control[40]<<8;
+N	pow_v=pow_v+EEPROM_READ_Byte(0x2B);
+X	Run_Control[40]=Run_Control[40]+EEPROM_READ_Byte(0x2B);
 N	
-N	//SET_Current=EEPROM_READ_Byte(0x2C);
-N	//SET_Current=SET_Current<<8;
-N	//SET_Current=SET_Current+EEPROM_READ_Byte(0x2D);
+N	pow_c=EEPROM_READ_Byte(0x2C);
+X	Run_Control[42]=EEPROM_READ_Byte(0x2C);
+N	pow_c=pow_c<<8;
+X	Run_Control[42]=Run_Control[42]<<8;
+N	pow_c=pow_c+EEPROM_READ_Byte(0x2D);
+X	Run_Control[42]=Run_Control[42]+EEPROM_READ_Byte(0x2D);
 N	
 N	TEMP_OFFSET=EEPROM_READ_Byte(0x28);
 N	TEMP_OFFSET=TEMP_OFFSET<<8;
 N	TEMP_OFFSET=TEMP_OFFSET+EEPROM_READ_Byte(0x29);
 N
-N/*****************∂¡»°∑‰√˘∆˜◊¥Ã¨*************************/
-N	//Beep_Flag=EEPROM_READ_Byte(0x2E);
-N	//t_beep=EEPROM_READ_Byte(0x2F);
-N	//if(Beep_Flag==0xff)
-N	//{
-N		//Flag_Beep_OFF=1;
-N	//}
-N	///else
-N	//{
-N		//Flag_Beep_OFF=0;
-N	//}
+N/*****************◊Å»°ÿ§ƒπ«∑◊¥Ã¨*************************/
+N//	Beep_Flag=EEPROM_READ_Byte(0x2E);
+N	t_beep=EEPROM_READ_Byte(0x2F);
+N    para_set4 = EEPROM_READ_Byte(0x56);
+N    para_set2 = EEPROM_READ_Byte(0x55);
+N    lang = EEPROM_READ_Byte(0x74);
+N    b_type = EEPROM_READ_Byte(0x57);
+N    buffer = EEPROM_READ_Byte(0x58);
+N    para_set1 = EEPROM_READ_Byte(0x59);
+N    year1 = EEPROM_READ_Byte(0x5A);
+N    year2 = EEPROM_READ_Byte(0x5B);
+N    year3 = EEPROM_READ_Byte(0x5C);
+N    year4 = EEPROM_READ_Byte(0x5D);
+N    month1 = EEPROM_READ_Byte(0x5E);
+N    month2 = EEPROM_READ_Byte(0x5F);
+N    day1 = EEPROM_READ_Byte(0x60);
+N    day2 = EEPROM_READ_Byte(0x61);
+N    code1 = EEPROM_READ_Byte(0x62);
+N    code2 = EEPROM_READ_Byte(0x63);
+N    code3 = EEPROM_READ_Byte(0x64);
+N    code4 = EEPROM_READ_Byte(0x65);
+N    code5 = EEPROM_READ_Byte(0x66);
+N    code6 = EEPROM_READ_Byte(0x67);
+N    code7 = EEPROM_READ_Byte(0x68);
+N    code8 = EEPROM_READ_Byte(0x69);
+N    steptime = EEPROM_READ_Byte(0x75);
+N// 	if(Beep_Flag==set_1_off)
+N// 	{
+N// 		Flag_Beep_OFF=1;
+N// 	}
+N// 	else
+N// 	{
+N// 		Flag_Beep_OFF=0;
+N// 	}
 N	t_lock=EEPROM_READ_Byte(0x30);
-N	/***************∂¡±æª˙µÿ÷∑*********************************/
+N	/***************◊Å—æ‹∫÷ò÷∑*********************************/
 N	ADDR=EEPROM_READ_Byte(0x31);
 N	OFFSET_Zore=EEPROM_READ_Byte(0x32);
 N	if(OFFSET_Zore>10)
 N	{
 N		OFFSET_Zore=0;
 N	}
+N/*****************ËØªÂèñÁ≥ªÁªüËÆæÁΩÆ‰∏ä‰∏ãÈôê*************************/
+N	set_max_v=EEPROM_READ_Byte(0x47);
+X	Run_Control[14]=EEPROM_READ_Byte(0x47);
+N	set_max_v=set_max_v<<8;
+X	Run_Control[14]=Run_Control[14]<<8;
+N	set_max_v=set_max_v+EEPROM_READ_Byte(0x48);
+X	Run_Control[14]=Run_Control[14]+EEPROM_READ_Byte(0x48);
+N	
+N	set_min_v=EEPROM_READ_Byte(0x49);
+X	Run_Control[15]=EEPROM_READ_Byte(0x49);
+N	set_min_v=set_min_v<<8;
+X	Run_Control[15]=Run_Control[15]<<8;
+N	set_min_v=set_min_v+EEPROM_READ_Byte(0x4A);
+X	Run_Control[15]=Run_Control[15]+EEPROM_READ_Byte(0x4A);
+N    
+N	set_max_r=EEPROM_READ_Byte(0x4B);
+X	Run_Control[16]=EEPROM_READ_Byte(0x4B);
+N	set_max_r=set_max_r<<8;
+X	Run_Control[16]=Run_Control[16]<<8;
+N	set_max_r=set_max_r+EEPROM_READ_Byte(0x4C);
+X	Run_Control[16]=Run_Control[16]+EEPROM_READ_Byte(0x4C);
+N	
+N	set_min_r=EEPROM_READ_Byte(0x4D);
+X	Run_Control[17]=EEPROM_READ_Byte(0x4D);
+N	set_min_r=set_min_r<<8;
+X	Run_Control[17]=Run_Control[17]<<8;
+N	set_min_r=set_min_r+EEPROM_READ_Byte(0x4E);
+X	Run_Control[17]=Run_Control[17]+EEPROM_READ_Byte(0x4E);
+N
+N    set_max_c=EEPROM_READ_Byte(0x4F);
+X    Run_Control[18]=EEPROM_READ_Byte(0x4F);
+N	set_max_c=set_max_c<<8;
+X	Run_Control[18]=Run_Control[18]<<8;
+N	set_max_c=set_max_c+EEPROM_READ_Byte(0x50);
+X	Run_Control[18]=Run_Control[18]+EEPROM_READ_Byte(0x50);
+N	
+N	set_min_c=EEPROM_READ_Byte(0x51);
+X	Run_Control[19]=EEPROM_READ_Byte(0x51);
+N	set_min_c=set_min_c<<8;
+X	Run_Control[19]=Run_Control[19]<<8;
+N	set_min_c=set_min_c+EEPROM_READ_Byte(0x52);  
+X	Run_Control[19]=Run_Control[19]+EEPROM_READ_Byte(0x52);  
+N
+N    load_c=EEPROM_READ_Byte(0x53);
+X    Run_Control[37]=EEPROM_READ_Byte(0x53);
+N	load_c=load_c<<8;
+X	Run_Control[37]=Run_Control[37]<<8;
+N	load_c=load_c+EEPROM_READ_Byte(0x54); 
+X	Run_Control[37]=Run_Control[37]+EEPROM_READ_Byte(0x54); 
+N    
+N    set_init_c=EEPROM_READ_Byte(0x70);
+X    Run_Control[22]=EEPROM_READ_Byte(0x70);
+N	set_init_c=set_init_c<<8;
+X	Run_Control[22]=Run_Control[22]<<8;
+N	set_init_c=set_init_c+EEPROM_READ_Byte(0x71);
+X	Run_Control[22]=Run_Control[22]+EEPROM_READ_Byte(0x71);
+N    
+N    set_sbs_c=EEPROM_READ_Byte(0x72);
+X    Run_Control[23]=EEPROM_READ_Byte(0x72);
+N	set_sbs_c=set_sbs_c<<8;
+X	Run_Control[23]=Run_Control[23]<<8;
+N	set_sbs_c=set_sbs_c+EEPROM_READ_Byte(0x73);
+X	Run_Control[23]=Run_Control[23]+EEPROM_READ_Byte(0x73);
+N    
+N    cdc_cv=EEPROM_READ_Byte(0x76);
+X    Run_Control[38]=EEPROM_READ_Byte(0x76);
+N	cdc_cv=cdc_cv<<8;
+X	Run_Control[38]=Run_Control[38]<<8;
+N	cdc_cv=cdc_cv+EEPROM_READ_Byte(0x77);
+X	Run_Control[38]=Run_Control[38]+EEPROM_READ_Byte(0x77);
+N    
+N    cdc_cc=EEPROM_READ_Byte(0x78);
+X    Run_Control[39]=EEPROM_READ_Byte(0x78);
+N	cdc_cc=cdc_cc<<8;
+X	Run_Control[39]=Run_Control[39]<<8;
+N	cdc_cc=cdc_cc+EEPROM_READ_Byte(0x79);
+X	Run_Control[39]=Run_Control[39]+EEPROM_READ_Byte(0x79);
+N    
+N    cdc_dc=EEPROM_READ_Byte(0x7A);
+X    Run_Control[41]=EEPROM_READ_Byte(0x7A);
+N	cdc_dc=cdc_dc<<8;
+X	Run_Control[41]=Run_Control[41]<<8;
+N	cdc_dc=cdc_dc+EEPROM_READ_Byte(0x7B);
+X	Run_Control[41]=Run_Control[41]+EEPROM_READ_Byte(0x7B);
+N    
+N
 N}
 N/****************************************************************************/
 Nvoid Wrtite_Zore(void)
@@ -36066,6 +36271,54 @@ N	EEPROM_WriteByte(0x7B, cdc_dc);
 X	EEPROM_WriteByte(0x7B, Run_Control[41]);
 N    
 N}
+Nvoid Wrtite_Beep(void)//—£’¶BEEP◊¥Ã¨◊ÅFLASH◊ê
+N{
+N	EEPROM_WriteByte(0x2E, Beep_Flag);
+N	EEPROM_WriteByte(0x2F, t_beep);
+N}
+N/*****************************************************************************/
+Nvoid Wrtite_S(void)//—£’¶BEEP◊¥Ã¨◊ÅFLASH◊ê
+N{
+N	EEPROM_WriteByte(0x59, para_set1);
+N    EEPROM_WriteByte(0x74, lang);
+N}
+N
+Nvoid Write_info(void)
+N{
+N	EEPROM_WriteByte(0x5A,year1);
+N    EEPROM_WriteByte(0x5B,year2);
+N    EEPROM_WriteByte(0x5C,year3);
+N    EEPROM_WriteByte(0x5D,year4);
+N    EEPROM_WriteByte(0x5E,month1);
+N    EEPROM_WriteByte(0x5F,month2);
+N    EEPROM_WriteByte(0x60,day1);
+N    EEPROM_WriteByte(0x61,day2);
+N    EEPROM_WriteByte(0x62,code1);
+N    EEPROM_WriteByte(0x63,code2);
+N    EEPROM_WriteByte(0x64,code3);
+N    EEPROM_WriteByte(0x65,code4);
+N    EEPROM_WriteByte(0x66,code5);
+N    EEPROM_WriteByte(0x67,code6);
+N    EEPROM_WriteByte(0x68,code7);
+N    EEPROM_WriteByte(0x69,code8);
+N    
+N}
+N
+Nvoid Write_btype(void)
+N{
+N	EEPROM_WriteByte(0x57,b_type);
+N    EEPROM_WriteByte(0x58,buffer);
+N}
+N/************************************************************************/
+Nvoid Write_alarm(void)
+N{
+N	EEPROM_WriteByte(0x56,para_set4);
+N}
+N/************************************************************************/
+Nvoid Write_oct(void)
+N{
+N	EEPROM_WriteByte(0x55,para_set2);
+N}
 N
 Nvoid Wrtite_step(void)
 N{
@@ -36077,12 +36330,7 @@ Nvoid Wrtite_Lock(void)
 N{
 N	EEPROM_WriteByte(0x30, t_lock);
 N}
-N/*****************************************************************************/
-Nvoid Wrtite_Beep(void)//±£¥ÊBEEP◊¥Ã¨÷¡FLASH÷–
-N{
-N	EEPROM_WriteByte(0x2E, Beep_Flag);
-N	EEPROM_WriteByte(0x2F, t_beep);
-N}
+N
 N/************************************************************************/
 Nvoid Wite_adress(void)
 N{

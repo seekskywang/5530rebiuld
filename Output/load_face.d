@@ -81,3 +81,11 @@
 ..\Output\load_face.o: ..\Libraries\FWlib\inc\stm32f4xx_dac.h
 ..\Output\load_face.o: ..\Libraries\FWlib\inc\stm32f4xx_dcmi.h
 ..\Output\load_face.o: ..\Libraries\FWlib\inc\stm32f4xx_fsmc.h
+..\Output\load_face.o: ..\Include\tm1650.h
+..\Output\load_face.o: ..\Include\my_register.h
+..\Output\load_face.o: D:\Keil\ARM\RV31\Inc\stdio.h
+..\Output\load_face.o: D:\Keil\ARM\RV31\Inc\stdlib.h
+..\Output\load_face.o: ..\Include\key.h
+..\Output\load_face.o: ..\Include\my_register.h
+..\Output\load_face.o: D:\Keil\ARM\RV31\Inc\string.h
+..\Output\load_face.o: ..\Include\beep.h

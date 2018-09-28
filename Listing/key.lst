@@ -34714,6 +34714,12 @@ N#define __my_register_h__
 N//=============================================================================
 Nvoid Write_Limits(void);
 Nvoid Wrtite_step(void);
+Nvoid OC_ADD(void);
+Nvoid Wrtite_S(void);
+Nvoid Write_oct(void);
+Nvoid Write_alarm(void);
+Nvoid Write_btype(void);
+Nvoid Write_info(void);
 N
 N//=============================================================================
 N#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -34835,6 +34841,7 @@ Nextern float DISS_POW_Current;
 Nextern float DISS_R;
 Nextern float bc_raw;
 Nextern vu16 steptime;
+Nextern vu8 r_stable;
 Nextern vu8 bit1;
 Nextern vu8 dot_flag;
 Nextern vu8 page_sw;
@@ -34842,6 +34849,27 @@ Nextern vu8 para_set1;
 Nextern vu8 para_set2;
 Nextern vu8 para_set3;
 Nextern vu8 para_set4;
+Nextern vu8 oct_sw;
+Nextern vu8 set_sw;
+Nextern vu8 lang;
+Nextern vu16 battery_c;
+Nextern char set_limit[5];
+Nextern vu8 bit;
+Nextern vu8 track;
+Nextern vu8 mode_sw;
+Nextern vu8 pow_sw;
+Nextern vu8 cdc_sw;
+Nextern vu8 load_sw;
+Nextern vu8 b_type;
+Nextern vu8 buffer;
+Nextern float gate_v;
+Nextern vu8 cutoff_flag;
+Nextern vu8 charge_step;
+Nextern vu8 pause_flag;
+Nextern vu8 paused;
+Nextern vu8 finish;
+Nextern vu16 restart_time;
+N
 N
 Nextern vu16 Run_Control[43];	
 N#define onoff_ch                        Run_Control[0]  //ON/OFF
@@ -34889,6 +34917,14 @@ N#define pow_v    					    Run_Control[40]
 N#define cdc_dc    					    Run_Control[41]
 N#define pow_c    					    Run_Control[42]
 N
+N
+Nextern float coff[6];
+N#define cov1    					    coff[0]
+N#define cov2    					    coff[1]
+N#define cov3    					    coff[2]
+N#define coc1    					    coff[3]
+N#define coc2    					    coff[4]
+N#define coc3    					    coff[5]
 N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
@@ -35134,6 +35170,12 @@ S#define __my_register_h__
 S//=============================================================================
 Svoid Write_Limits(void);
 Svoid Wrtite_step(void);
+Svoid OC_ADD(void);
+Svoid Wrtite_S(void);
+Svoid Write_oct(void);
+Svoid Write_alarm(void);
+Svoid Write_btype(void);
+Svoid Write_info(void);
 S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -35255,6 +35297,7 @@ Sextern float DISS_POW_Current;
 Sextern float DISS_R;
 Sextern float bc_raw;
 Sextern vu16 steptime;
+Sextern vu8 r_stable;
 Sextern vu8 bit1;
 Sextern vu8 dot_flag;
 Sextern vu8 page_sw;
@@ -35262,6 +35305,27 @@ Sextern vu8 para_set1;
 Sextern vu8 para_set2;
 Sextern vu8 para_set3;
 Sextern vu8 para_set4;
+Sextern vu8 oct_sw;
+Sextern vu8 set_sw;
+Sextern vu8 lang;
+Sextern vu16 battery_c;
+Sextern char set_limit[5];
+Sextern vu8 bit;
+Sextern vu8 track;
+Sextern vu8 mode_sw;
+Sextern vu8 pow_sw;
+Sextern vu8 cdc_sw;
+Sextern vu8 load_sw;
+Sextern vu8 b_type;
+Sextern vu8 buffer;
+Sextern float gate_v;
+Sextern vu8 cutoff_flag;
+Sextern vu8 charge_step;
+Sextern vu8 pause_flag;
+Sextern vu8 paused;
+Sextern vu8 finish;
+Sextern vu16 restart_time;
+S
 S
 Sextern vu16 Run_Control[43];	
 S#define onoff_ch                        Run_Control[0]  //ON/OFF
@@ -35309,6 +35373,14 @@ S#define pow_v    					    Run_Control[40]
 S#define cdc_dc    					    Run_Control[41]
 S#define pow_c    					    Run_Control[42]
 S
+S
+Sextern float coff[6];
+S#define cov1    					    coff[0]
+S#define cov2    					    coff[1]
+S#define cov3    					    coff[2]
+S#define coc1    					    coff[3]
+S#define coc2    					    coff[4]
+S#define coc3    					    coff[5]
 S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
@@ -35577,6 +35649,12 @@ S#define __my_register_h__
 S//=============================================================================
 Svoid Write_Limits(void);
 Svoid Wrtite_step(void);
+Svoid OC_ADD(void);
+Svoid Wrtite_S(void);
+Svoid Write_oct(void);
+Svoid Write_alarm(void);
+Svoid Write_btype(void);
+Svoid Write_info(void);
 S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -35698,6 +35776,7 @@ Sextern float DISS_POW_Current;
 Sextern float DISS_R;
 Sextern float bc_raw;
 Sextern vu16 steptime;
+Sextern vu8 r_stable;
 Sextern vu8 bit1;
 Sextern vu8 dot_flag;
 Sextern vu8 page_sw;
@@ -35705,6 +35784,27 @@ Sextern vu8 para_set1;
 Sextern vu8 para_set2;
 Sextern vu8 para_set3;
 Sextern vu8 para_set4;
+Sextern vu8 oct_sw;
+Sextern vu8 set_sw;
+Sextern vu8 lang;
+Sextern vu16 battery_c;
+Sextern char set_limit[5];
+Sextern vu8 bit;
+Sextern vu8 track;
+Sextern vu8 mode_sw;
+Sextern vu8 pow_sw;
+Sextern vu8 cdc_sw;
+Sextern vu8 load_sw;
+Sextern vu8 b_type;
+Sextern vu8 buffer;
+Sextern float gate_v;
+Sextern vu8 cutoff_flag;
+Sextern vu8 charge_step;
+Sextern vu8 pause_flag;
+Sextern vu8 paused;
+Sextern vu8 finish;
+Sextern vu16 restart_time;
+S
 S
 Sextern vu16 Run_Control[43];	
 S#define onoff_ch                        Run_Control[0]  //ON/OFF
@@ -35752,6 +35852,14 @@ S#define pow_v    					    Run_Control[40]
 S#define cdc_dc    					    Run_Control[41]
 S#define pow_c    					    Run_Control[42]
 S
+S
+Sextern float coff[6];
+S#define cov1    					    coff[0]
+S#define cov2    					    coff[1]
+S#define cov3    					    coff[2]
+S#define coc1    					    coff[3]
+S#define coc2    					    coff[4]
+S#define coc3    					    coff[5]
 S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
@@ -49827,6 +49935,12 @@ S#define __my_register_h__
 S//=============================================================================
 Svoid Write_Limits(void);
 Svoid Wrtite_step(void);
+Svoid OC_ADD(void);
+Svoid Wrtite_S(void);
+Svoid Write_oct(void);
+Svoid Write_alarm(void);
+Svoid Write_btype(void);
+Svoid Write_info(void);
 S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -49948,6 +50062,7 @@ Sextern float DISS_POW_Current;
 Sextern float DISS_R;
 Sextern float bc_raw;
 Sextern vu16 steptime;
+Sextern vu8 r_stable;
 Sextern vu8 bit1;
 Sextern vu8 dot_flag;
 Sextern vu8 page_sw;
@@ -49955,6 +50070,27 @@ Sextern vu8 para_set1;
 Sextern vu8 para_set2;
 Sextern vu8 para_set3;
 Sextern vu8 para_set4;
+Sextern vu8 oct_sw;
+Sextern vu8 set_sw;
+Sextern vu8 lang;
+Sextern vu16 battery_c;
+Sextern char set_limit[5];
+Sextern vu8 bit;
+Sextern vu8 track;
+Sextern vu8 mode_sw;
+Sextern vu8 pow_sw;
+Sextern vu8 cdc_sw;
+Sextern vu8 load_sw;
+Sextern vu8 b_type;
+Sextern vu8 buffer;
+Sextern float gate_v;
+Sextern vu8 cutoff_flag;
+Sextern vu8 charge_step;
+Sextern vu8 pause_flag;
+Sextern vu8 paused;
+Sextern vu8 finish;
+Sextern vu16 restart_time;
+S
 S
 Sextern vu16 Run_Control[43];	
 S#define onoff_ch                        Run_Control[0]  //ON/OFF
@@ -50002,6 +50138,14 @@ S#define pow_v    					    Run_Control[40]
 S#define cdc_dc    					    Run_Control[41]
 S#define pow_c    					    Run_Control[42]
 S
+S
+Sextern float coff[6];
+S#define cov1    					    coff[0]
+S#define cov2    					    coff[1]
+S#define cov3    					    coff[2]
+S#define coc1    					    coff[3]
+S#define coc2    					    coff[4]
+S#define coc3    					    coff[5]
 S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
@@ -50229,12 +50373,24 @@ Nextern WM_HWIN CreateWindow2(void);
 Xextern GUI_HWIN CreateWindow2(void);
 Nextern WM_HWIN CreateWindow(void);
 Xextern GUI_HWIN CreateWindow(void);
+Nextern WM_HWIN CreateG(void);
+Xextern GUI_HWIN CreateG(void);
+Nextern WM_HWIN CreateSET(void);
+Xextern GUI_HWIN CreateSET(void);
 Nextern WM_HWIN hWinWind;
 Xextern GUI_HWIN hWinWind;
 Nextern WM_HWIN hWinR;
 Xextern GUI_HWIN hWinR;
 Nextern WM_HWIN load_wind;//Ë¥üËΩΩÁïåÈù¢Âè•ÊüÑ
 Xextern GUI_HWIN load_wind;
+Nextern WM_HWIN hWinG;
+Xextern GUI_HWIN hWinG;
+Nextern WM_HWIN hWinset;
+Xextern GUI_HWIN hWinset;
+Nextern WM_HWIN hWincdc;
+Xextern GUI_HWIN hWincdc;
+Nextern WM_HWIN hWinsysinfo;
+Xextern GUI_HWIN hWinsysinfo;
 N//=================================================================
 Nextern struct bitDefine
 N{
@@ -50271,11 +50427,11 @@ Nvu16 menu_time;
 Nvu16 load_time;
 Nvu8 r_test = 0;
 Nfloat clear_v = 0;
-Nfloat clear_pv = 0;
+N//float clear_pv = 0;
 Nfloat clear_lv = 0;
 Nvu8 clear_r = 0;
 Nvu8 mode_sw;
-N
+Nextern vu8 admin;
 N
 Nvu32 Key_Scan(void);
 Nvoid Lift_Move(void);
@@ -50346,7 +50502,7 @@ X	KeyValue= 0X00;
 N	
 N	if((NewKey>0x37)&&(IsKeyRelease==1))
 N	{
-N		if(KeyState == KEY_INIT_STATE)                    /*Œﬁ∞¥º¸∞¥œ¬*/
+N		if(KeyState == KEY_INIT_STATE)                    /*œû–¥›º–¥–Ç*/
 X		if(KeyState == 0)                     
 N		{
 N			KeyState = KEY_WOBBLE_STATE;
@@ -50354,7 +50510,7 @@ X			KeyState = 1;
 N			return KEY_NULL_VALUE;
 X			return 0X00;
 N		}
-N		else if(KeyState == KEY_WOBBLE_STATE)                /* œ˚∂∂ */
+N		else if(KeyState == KEY_WOBBLE_STATE)                /* –ª÷∂ */
 X		else if(KeyState == 1)                 
 N		{
 N			KeyState = KEY_PRESS_STATE;
@@ -50362,7 +50518,7 @@ X			KeyState = 2;
 N			return KEY_NULL_VALUE;
 X			return 0X00;
 N		}
-N		else if(KeyState == KEY_PRESS_STATE)                /* ”–∞¥º¸∞¥œ¬£¨∑µªÿ∞¥º¸÷µ */
+N		else if(KeyState == KEY_PRESS_STATE)                /* ‘ê–¥›º–¥–Ç√¨◊µ‹ò–¥›º÷µ */
 X		else if(KeyState == 2)                 
 N		{
 N			KeyValue = NewKey;
@@ -50371,7 +50527,7 @@ N			KeyState = KEY_CONTINUE_STATE;
 X			KeyState = 4;
 N			return KeyValue;
 N		}
-N		else if(KeyState == KEY_CONTINUE_STATE)           /*À´ª˜∞¥º¸*/
+N		else if(KeyState == KEY_CONTINUE_STATE)           /*À´‹∑–¥›º*/
 X		else if(KeyState == 4)            
 N		{
 N			KeyCounter ++;
@@ -50383,7 +50539,7 @@ N				 KeyState = KEY_LONG_STATE;
 X				 KeyState = 3;
 N			}
 N		}
-N		else if(KeyState == KEY_LONG_STATE)                        /* ≥§∞¥∞¥º¸ */
+N		else if(KeyState == KEY_LONG_STATE)                        /* ”§–¥–¥›º */
 X		else if(KeyState == 3)                         
 N		{
 N			KeyCounter ++;
@@ -50391,14 +50547,14 @@ N			if(KeyCounter == KEY_LONG_PERIOD)
 X			if(KeyCounter == 50)
 N			{
 N				KeyCounter = 0;
-N				Flag_Long=1; //≥§∞¥¥•∑¢±Í÷æŒª
+N				Flag_Long=1; //”§–¥‘•◊¢“™÷æŒª
 X				(flagB . bit2)=1; 
 N			}
 N		}
 N	}
 N	else if(NewKey<=0x37)
 N	{
-N		KeyState = KEY_INIT_STATE;        /* ŒÛ¥•∑¢£¨∑µªÿµΩ≥ı º◊¥Ã¨ */
+N		KeyState = KEY_INIT_STATE;        /* œ≥‘•◊¢√¨◊µ‹ò’Ω‘µ º◊¥Ã¨ */
 X		KeyState = 0;         
 N		IsKeyRelease = 1;
 N		Flag_Long=0;
@@ -50407,7 +50563,8 @@ N	}
 N	return KEY_NULL_VALUE;
 X	return 0X00;
 N}
-N/***************************************************************************************************************************/
+N
+N/************************************************************************************************************************/
 Nvoid Key_Funtion(void)
 N{
 N	vu32 KeyValue = 0;
@@ -50425,238 +50582,1376 @@ N		{
 N			case KEY_1 ://
 X			case 0X4E :
 N			{
-N				SET_Voltage=1000;
-X				Run_Control[1]=1000;
-N				SET_Current=4000;
-X				Run_Control[2]=4000;
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                switch(page_sw){
+N                    case face_menu: 
+X                    case 2: 
+N                    {
+W "..\drive\key.c" 204 25 function "INPUT_POW" declared implicitly
+N                        INPUT_POW("1");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_set:
+X                    case 5:
+N                    {
+W "..\drive\key.c" 211 26 function "INPUT_NUM" declared implicitly
+N                         INPUT_NUM("1");
+N                         KeyCounter = 0;
+N                         BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                         break;
+N                    }
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        if(para_set2 == set_2_on)
+X                        if(para_set2 == 0xff)
+N                        {
+W "..\drive\key.c" 220 29 function "INPUT_C" declared implicitly
+N                            INPUT_C("1");
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                            break;
+N                        }
+N                    }   
+N                    case face_load:
+X                    case 4:
+N                    {
+W "..\drive\key.c" 228 25 function "INPUT_LOAD" declared implicitly
+N                        INPUT_LOAD("1");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+W "..\drive\key.c" 235 25 function "INPUT_CDC" declared implicitly
+N                        INPUT_CDC("1");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_sys_info:
+X                    case 7:
+N                    {
+N                        if(admin == 1)
+N                        {
+W "..\drive\key.c" 244 29 function "INPUT_INFO" declared implicitly
+N                            INPUT_INFO(1);    
+N                        }
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }  
+N                }
 N			}
 N			break;
 N			
 N			case KEY_2 ://
 X			case 0X56 :
 N			{
-N				SET_Voltage=420;
-X				Run_Control[1]=420;
-N				SET_Current=1000;
-X				Run_Control[2]=1000;
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                 switch(page_sw){
+N                    case face_menu:  
+X                    case 2:  
+N                    {
+W "..\drive\key.c" 259 25 function "INPUT_POW" declared implicitly
+N                        INPUT_POW("2");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô® 
+N                    }
+N                    case face_set:
+X                    case 5:
+N                    {
+W "..\drive\key.c" 265 25 function "INPUT_NUM" declared implicitly
+N                        INPUT_NUM("2");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        if(para_set2 == set_2_on)
+X                        if(para_set2 == 0xff)
+N                        {
+W "..\drive\key.c" 274 29 function "INPUT_C" declared implicitly
+N                            INPUT_C("2");
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                            break;
+N                        }
+N                    }
+N                    case face_load:
+X                    case 4:
+N                    {
+W "..\drive\key.c" 282 25 function "INPUT_LOAD" declared implicitly
+N                        INPUT_LOAD("2");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+W "..\drive\key.c" 289 25 function "INPUT_CDC" declared implicitly
+N                        INPUT_CDC("2");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_sys_info:
+X                    case 7:
+N                    {
+N                        if(admin == 1)
+N                        {
+W "..\drive\key.c" 298 29 function "INPUT_INFO" declared implicitly
+N                            INPUT_INFO(2);    
+N                        }
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N   
+N                }
 N			}
 N			break;
 N			
 N			case KEY_3 ://
 X			case 0X5E :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N				switch(page_sw){
+N                    case face_menu:  
+X                    case 2:  
+N                    {
+W "..\drive\key.c" 314 25 function "INPUT_POW" declared implicitly
+N                        INPUT_POW("3");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô® 
+N                    }
+N                    case face_set:
+X                    case 5:
+N                    {
+W "..\drive\key.c" 320 25 function "INPUT_NUM" declared implicitly
+N                        INPUT_NUM("3");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        if(para_set2 == set_2_on)
+X                        if(para_set2 == 0xff)
+N                        {
+W "..\drive\key.c" 329 29 function "INPUT_C" declared implicitly
+N                            INPUT_C("3");
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                            break;
+N                        }
+N                    }
+N                    case face_load:
+X                    case 4:
+N                    {
+W "..\drive\key.c" 337 25 function "INPUT_LOAD" declared implicitly
+N                        INPUT_LOAD("3");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+W "..\drive\key.c" 344 25 function "INPUT_CDC" declared implicitly
+N                        INPUT_CDC("3");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_sys_info:
+X                    case 7:
+N                    {
+N                        if(admin == 1)
+N                        {
+W "..\drive\key.c" 353 29 function "INPUT_INFO" declared implicitly
+N                            INPUT_INFO(3);    
+N                        }else{
+N                            pass += 3;
+N                        }
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                }
 N			}
 N			break;
 N			
 N			case KEY_4 ://
 X			case 0X57 :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N				switch(page_sw){
+N                    case face_menu:  
+X                    case 2:  
+N                    {
+W "..\drive\key.c" 370 25 function "INPUT_POW" declared implicitly
+N                        INPUT_POW("4");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô® 
+N                    }
+N                    case face_set:
+X                    case 5:
+N                    {
+W "..\drive\key.c" 376 25 function "INPUT_NUM" declared implicitly
+N                        INPUT_NUM("4");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        if(para_set2 == set_2_on)
+X                        if(para_set2 == 0xff)
+N                        {
+W "..\drive\key.c" 385 29 function "INPUT_C" declared implicitly
+N                            INPUT_C("4");
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                            break;
+N                        }
+N                    }
+N                    case face_load:
+X                    case 4:
+N                    {
+W "..\drive\key.c" 393 25 function "INPUT_LOAD" declared implicitly
+N                        INPUT_LOAD("4");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+W "..\drive\key.c" 400 25 function "INPUT_CDC" declared implicitly
+N                        INPUT_CDC("4");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_sys_info:
+X                    case 7:
+N                    {
+N                        if(admin == 1)
+N                        {
+W "..\drive\key.c" 409 29 function "INPUT_INFO" declared implicitly
+N                            INPUT_INFO(4);    
+N                        }
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                }
 N			}
 N			break;
 N			
 N			case KEY_5 ://
 X			case 0X5F :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N				switch(page_sw){
+N                    case face_menu:  
+X                    case 2:  
+N                    {
+W "..\drive\key.c" 424 25 function "INPUT_POW" declared implicitly
+N                        INPUT_POW("5");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô® 
+N                    }
+N                    case face_set:
+X                    case 5:
+N                    {
+W "..\drive\key.c" 430 25 function "INPUT_NUM" declared implicitly
+N                        INPUT_NUM("5");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        if(para_set2 == set_2_on)
+X                        if(para_set2 == 0xff)
+N                        {
+W "..\drive\key.c" 439 29 function "INPUT_C" declared implicitly
+N                            INPUT_C("5");
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                            break;
+N                        }
+N                    }
+N                    case face_load:
+X                    case 4:
+N                    {
+W "..\drive\key.c" 447 25 function "INPUT_LOAD" declared implicitly
+N                        INPUT_LOAD("5");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+W "..\drive\key.c" 454 25 function "INPUT_CDC" declared implicitly
+N                        INPUT_CDC("5");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_sys_info:
+X                    case 7:
+N                    {
+N                        if(admin == 1)
+N                        {
+W "..\drive\key.c" 463 29 function "INPUT_INFO" declared implicitly
+N                            INPUT_INFO(5);    
+N                        }else{
+N                            pass += 5;
+N                        }
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                }
 N			}
 N			break;	
 N			
 N			case KEY_6 ://
 X			case 0X76 :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N				switch(page_sw){
+N                    case face_menu:  
+X                    case 2:  
+N                    {
+W "..\drive\key.c" 480 25 function "INPUT_POW" declared implicitly
+N                        INPUT_POW("6");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô® 
+N                    }
+N                    case face_set:
+X                    case 5:
+N                    {
+W "..\drive\key.c" 486 25 function "INPUT_NUM" declared implicitly
+N                        INPUT_NUM("6");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        if(para_set2 == set_2_on)
+X                        if(para_set2 == 0xff)
+N                        {
+W "..\drive\key.c" 495 29 function "INPUT_C" declared implicitly
+N                            INPUT_C("6");
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                            break;
+N                        }
+N                    }
+N                    case face_load:
+X                    case 4:
+N                    {
+W "..\drive\key.c" 503 25 function "INPUT_LOAD" declared implicitly
+N                        INPUT_LOAD("6");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+W "..\drive\key.c" 510 25 function "INPUT_CDC" declared implicitly
+N                        INPUT_CDC("6");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    } 
+N                    case face_sys_info:
+X                    case 7:
+N                    {
+N                        if(admin == 1)
+N                        {
+W "..\drive\key.c" 519 29 function "INPUT_INFO" declared implicitly
+N                            INPUT_INFO(6);    
+N                        }
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                }
 N			}
 N			break;
 N			
 N			case KEY_7 ://
 X			case 0X67 :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N				switch(page_sw){
+N                    case face_menu:  
+X                    case 2:  
+N                    {
+W "..\drive\key.c" 534 25 function "INPUT_POW" declared implicitly
+N                        INPUT_POW("7");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô® 
+N                    }
+N                    case face_set:
+X                    case 5:
+N                    {
+W "..\drive\key.c" 540 25 function "INPUT_NUM" declared implicitly
+N                        INPUT_NUM("7");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        if(para_set2 == set_2_on)
+X                        if(para_set2 == 0xff)
+N                        {
+W "..\drive\key.c" 549 29 function "INPUT_C" declared implicitly
+N                            INPUT_C("7");
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                            break;
+N                        }
+N                    }
+N                    case face_load:
+X                    case 4:
+N                    {
+W "..\drive\key.c" 557 25 function "INPUT_LOAD" declared implicitly
+N                        INPUT_LOAD("7");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+W "..\drive\key.c" 564 25 function "INPUT_CDC" declared implicitly
+N                        INPUT_CDC("7");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_sys_info:
+X                    case 7:
+N                    {
+N                        if(admin == 1)
+N                        {
+W "..\drive\key.c" 573 29 function "INPUT_INFO" declared implicitly
+N                            INPUT_INFO(7);    
+N                        }
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                }
 N			}
 N			break;
 N			
 N			case KEY_8 ://
 X			case 0X6F :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N				switch(page_sw){
+N                    case face_menu:  
+X                    case 2:  
+N                    {
+W "..\drive\key.c" 588 25 function "INPUT_POW" declared implicitly
+N                        INPUT_POW("8");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô® 
+N                    }
+N                    case face_set:
+X                    case 5:
+N                    {
+W "..\drive\key.c" 594 25 function "INPUT_NUM" declared implicitly
+N                        INPUT_NUM("8");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        if(para_set2 == set_2_on)
+X                        if(para_set2 == 0xff)
+N                        {
+W "..\drive\key.c" 603 29 function "INPUT_C" declared implicitly
+N                            INPUT_C("8");
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                            break;
+N                        }
+N                    }
+N                    case face_load:
+X                    case 4:
+N                    {
+W "..\drive\key.c" 611 25 function "INPUT_LOAD" declared implicitly
+N                        INPUT_LOAD("8");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+W "..\drive\key.c" 618 25 function "INPUT_CDC" declared implicitly
+N                        INPUT_CDC("8");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_sys_info:
+X                    case 7:
+N                    {
+N                        if(admin == 1)
+N                        {
+W "..\drive\key.c" 627 29 function "INPUT_INFO" declared implicitly
+N                            INPUT_INFO(8);    
+N                        }
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                }
 N			}
 N			break;
 N			
 N			case KEY_9 ://
 X			case 0X77 :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N				switch(page_sw){
+N                    case face_menu:  
+X                    case 2:  
+N                    {
+W "..\drive\key.c" 642 25 function "INPUT_POW" declared implicitly
+N                        INPUT_POW("9");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô® 
+N                    }
+N                    case face_set:
+X                    case 5:
+N                    {
+W "..\drive\key.c" 648 25 function "INPUT_NUM" declared implicitly
+N                        INPUT_NUM("9");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        if(para_set2 == set_2_on)
+X                        if(para_set2 == 0xff)
+N                        {
+W "..\drive\key.c" 657 29 function "INPUT_C" declared implicitly
+N                            INPUT_C("9");
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                            break;
+N                        }
+N                    }
+N                    case face_load:
+X                    case 4:
+N                    {
+W "..\drive\key.c" 665 25 function "INPUT_LOAD" declared implicitly
+N                        INPUT_LOAD("9");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+W "..\drive\key.c" 672 25 function "INPUT_CDC" declared implicitly
+N                        INPUT_CDC("9");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_sys_info:
+X                    case 7:
+N                    {
+N                        if(admin == 1)
+N                        {
+W "..\drive\key.c" 681 29 function "INPUT_INFO" declared implicitly
+N                            INPUT_INFO(9);    
+N                        }
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                }
 N			}
 N			break;
 N			
 N			case KEY_0 ://
 X			case 0X5D :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N				switch(page_sw){
+N                    case face_menu:  
+X                    case 2:  
+N                    {
+W "..\drive\key.c" 696 25 function "INPUT_POW" declared implicitly
+N                        INPUT_POW("0");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô® 
+N                    }
+N                    case face_set:
+X                    case 5:
+N                    {
+W "..\drive\key.c" 702 25 function "INPUT_NUM" declared implicitly
+N                        INPUT_NUM("0");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        if(para_set2 == set_2_on)
+X                        if(para_set2 == 0xff)
+N                        {
+W "..\drive\key.c" 711 29 function "INPUT_C" declared implicitly
+N                            INPUT_C("0");
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                            break;
+N                        }
+N                    }
+N                    case face_load:
+X                    case 4:
+N                    {
+W "..\drive\key.c" 719 25 function "INPUT_LOAD" declared implicitly
+N                        INPUT_LOAD("0");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+W "..\drive\key.c" 726 25 function "INPUT_CDC" declared implicitly
+N                        INPUT_CDC("0");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_sys_info:
+X                    case 7:
+N                    {
+N                        if(admin == 1)
+N                        {
+W "..\drive\key.c" 735 29 function "INPUT_INFO" declared implicitly
+N                            INPUT_INFO(0);    
+N                        }else{
+N                            pass += 1;
+N                        }
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }                    
+N                }
 N			}
 N			break;
 N			
 N			case KEY_dian ://
 X			case 0X65 :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                switch(page_sw){
+N                    case face_menu:
+X                    case 2:
+N                    {
+W "..\drive\key.c" 752 25 function "INPUT_POW" declared implicitly
+N                        INPUT_POW(".");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_set:
+X                    case 5:
+N                    {
+W "..\drive\key.c" 759 25 function "INPUT_NUM" declared implicitly
+N                        INPUT_NUM(".");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_load:
+X                    case 4:
+N                    {
+W "..\drive\key.c" 766 25 function "INPUT_LOAD" declared implicitly
+N                        INPUT_LOAD(".");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        if(para_set2 == set_2_on)
+X                        if(para_set2 == 0xff)
+N                        {
+W "..\drive\key.c" 775 29 function "INPUT_C" declared implicitly
+N                            INPUT_C(".");
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                            break;
+N                        }
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+W "..\drive\key.c" 783 25 function "INPUT_CDC" declared implicitly
+N                        INPUT_CDC(".");
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }                     
+N                }
 N			}
 N			break;
 N			
 N			case KEY_ESC :
 X			case 0X6D :
 N			{
+N                LCD_Initializtion();
+N                GUI_Clear();//Ê∏ÖÂ±è
+N//                timer_sw = 0;
 N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N//				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
 N			}
 N			break;
 N			
 N			case PUSH_Lift :
 X			case 0X45 :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                switch(page_sw){
+N                    case face_set:  //Á≥ªÁªüËÆæÁΩÆ
+X                    case 5:  
+N                    {
+W "..\drive\key.c" 807 25 function "SET_OP_LEFT" declared implicitly
+N                        SET_OP_LEFT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_sys_info:
+X                    case 7:
+N                    {
+N                        if(admin == 1)
+N                        {
+W "..\drive\key.c" 816 29 function "SYS_INFO_LEFT" declared implicitly
+N                            SYS_INFO_LEFT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+N                        } 
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_cdc:  //Á≥ªÁªüËÆæÁΩÆ
+X                    case 1:  
+N                    {
+W "..\drive\key.c" 824 25 function "CDC_OP_LEFT" declared implicitly
+N                        CDC_OP_LEFT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        break;
+N                    }
+N                }
 N			}
 N			break;
 N			case PUSH_Right :
 X			case 0X55 :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                switch(page_sw){
+N                    case face_set:  //Á≥ªÁªüËÆæÁΩÆ
+X                    case 5:  
+N                    {
+W "..\drive\key.c" 837 25 function "SET_OP_RIGHT" declared implicitly
+N                        SET_OP_RIGHT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_sys_info:
+X                    case 7:
+N                    {
+N                        if(admin == 1)
+N                        {
+W "..\drive\key.c" 846 29 function "SYS_INFO_RIGHT" declared implicitly
+N                            SYS_INFO_RIGHT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+N                        } 
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_cdc:  //Á≥ªÁªüËÆæÁΩÆ
+X                    case 1:  
+N                    {
+W "..\drive\key.c" 854 25 function "CDC_OP_RIGHT" declared implicitly
+N                        CDC_OP_RIGHT();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        break;
+N                    }
+N                }
 N			}
 N			break;
 N			case PUSH_Up :
 X			case 0X46 :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
-N				SET_Current_Laod=SET_Current_Laod+1;
-X				Run_Control[4]=Run_Control[4]+1;
+N                switch(page_sw){
+N                    case face_menu:
+X                    case 2:
+N                    {
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+W "..\drive\key.c" 869 25 function "MENU_OP_UP" declared implicitly
+N                        MENU_OP_UP();
+N                        break;
+N                    }                    
+N                    case face_load:
+X                    case 4:
+N                    {
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        SET_Current_Laod=SET_Current_Laod+1;
+X                        Run_Control[4]=Run_Control[4]+1;
+N                        break;
+N                    }
+N                    case face_set:
+X                    case 5:
+N                    {
+W "..\drive\key.c" 881 25 function "SET_OP_UP" declared implicitly
+N                        SET_OP_UP();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        if(para_set2 == set_2_on)
+X                        if(para_set2 == 0xff)
+N                        {
+W "..\drive\key.c" 890 29 function "OC_OP_UP" declared implicitly
+N                            OC_OP_UP();
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                            break;
+N                        }
+N
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+W "..\drive\key.c" 899 25 function "CDC_OP_UP" declared implicitly
+N                        CDC_OP_UP();
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_sys_info:
+X                    case 7:
+N                    {
+N                        if(admin == 1)
+N                        {
+W "..\drive\key.c" 908 29 function "SYS_INFO_UP" declared implicitly
+N                            SYS_INFO_UP();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+N                        }                        
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N
+N                }
 N			}
 N			break;
 N			case PUSH_Down :
 X			case 0X74 :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
-N				SET_Current_Laod=SET_Current_Laod-1;
-X				Run_Control[4]=Run_Control[4]-1;
+N                switch(page_sw){
+N                    case face_menu:
+X                    case 2:
+N                    {
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+W "..\drive\key.c" 925 25 function "MENU_OP_DOWN" declared implicitly
+N                        MENU_OP_DOWN();
+N                        break;
+N                    }  
+N                    case face_load:
+X                    case 4:
+N                    {
+N                       	KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        SET_Current_Laod=SET_Current_Laod-1;
+X                        Run_Control[4]=Run_Control[4]-1;
+N                        break;
+N                    }
+N                    case face_set:  //Á≥ªÁªüËÆæÁΩÆ
+X                    case 5:  
+N                    {
+W "..\drive\key.c" 937 25 function "SET_OP_DOWN" declared implicitly
+N                        SET_OP_DOWN();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        if(para_set2 == set_2_on)
+X                        if(para_set2 == 0xff)
+N                        {
+W "..\drive\key.c" 946 29 function "OC_OP_DOWN" declared implicitly
+N                            OC_OP_DOWN();
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                            break;
+N                        }
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+W "..\drive\key.c" 954 25 function "CDC_OP_DOWN" declared implicitly
+N                        CDC_OP_DOWN();
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_sys_info:
+X                    case 7:
+N                    {
+N                        if(admin == 1)
+N                        {
+W "..\drive\key.c" 963 29 function "SYS_INFO_DOWN" declared implicitly
+N                            SYS_INFO_DOWN();  //ËÆæÁΩÆÈÄâÈ°πÂàáÊç¢
+N                        } 
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N   
+N                }
+N
 N			}
 N			break;
 N			
 N			case ENTER ://
 X			case 0X4D :
 N			{
-N                LCD_Initializtion();
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                switch(page_sw){
+N                    case face_menu:
+X                    case 2:
+N                    {
+W "..\drive\key.c" 980 25 function "MENU_SET" declared implicitly
+N                        MENU_SET();
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }  
+N                    case face_set:
+X                    case 5:
+N                    {
+W "..\drive\key.c" 987 25 function "PARA_SET" declared implicitly
+N                        PARA_SET();  //ÂèÇÊï∞ËÆæÁΩÆ
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;                        
+N                    }
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        if(para_set2 == set_2_on)
+X                        if(para_set2 == 0xff)
+N                        {
+W "..\drive\key.c" 996 29 function "OC_SET" declared implicitly
+N                            OC_SET();
+N                            KeyCounter = 0;
+N                            BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                            break;
+N                        }
+N                    }
+N                    case face_load:
+X                    case 4:
+N                    {
+W "..\drive\key.c" 1004 25 function "LOAD_SET" declared implicitly
+N                        LOAD_SET();
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+W "..\drive\key.c" 1011 25 function "CDC_SET" declared implicitly
+N                        CDC_SET();
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_sys_info:
+X                    case 7:
+N                    {
+W "..\drive\key.c" 1018 25 function "CFM_PASS" declared implicitly
+N                        CFM_PASS();
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                }
 N			}
 N			break;
 N			case PUSH_DISP :
 X			case 0X47 :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                switch(track)
+N                {
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        WM_DeleteWindow(hWinR);
+N                        WM_DeleteWindow(hWinWind);
+N                        WM_DeleteWindow(hWinG);
+N                        WM_DeleteWindow(load_wind);
+N                        WM_DeleteWindow(hWinsysinfo);
+N                        WM_DeleteWindow(hWincdc);
+N                        WM_DeleteWindow(hWinset);                       
+N                        CreateR();
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        break;
+N                    }
+N                    case face_load:
+X                    case 4:
+N                    {
+N                        WM_DeleteWindow(hWinR);
+N                        WM_DeleteWindow(hWinWind);
+N                        WM_DeleteWindow(hWinG);
+N                        WM_DeleteWindow(load_wind);
+N                        WM_DeleteWindow(hWinsysinfo);
+N                        WM_DeleteWindow(hWincdc);
+N                        WM_DeleteWindow(hWinset);
+N                        CreateWindow2();
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        break;
+N                    }
+N                    case face_menu:
+X                    case 2:
+N                    {
+N                        WM_DeleteWindow(hWinR);
+N                        WM_DeleteWindow(hWinWind);
+N                        WM_DeleteWindow(hWinG);
+N                        WM_DeleteWindow(load_wind);
+N                        WM_DeleteWindow(hWinsysinfo);
+N                        WM_DeleteWindow(hWincdc);
+N                        WM_DeleteWindow(hWinset); 
+N                        CreateWindow();
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        break;
+N                    }
+N                    case face_graph:
+X                    case 0:
+N                    {
+N                        WM_DeleteWindow(hWinR);
+N                        WM_DeleteWindow(hWinWind);
+N                        WM_DeleteWindow(hWinG);
+N                        WM_DeleteWindow(load_wind);
+N                        WM_DeleteWindow(hWinsysinfo);
+N                        WM_DeleteWindow(hWincdc);
+N                        WM_DeleteWindow(hWinset); 
+N                        CreateG();
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        break;
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+N                        WM_DeleteWindow(hWinR);
+N                        WM_DeleteWindow(hWinWind);
+N                        WM_DeleteWindow(hWinG);
+N                        WM_DeleteWindow(load_wind);
+N                        WM_DeleteWindow(hWinsysinfo);
+N                        WM_DeleteWindow(hWincdc);
+N                        WM_DeleteWindow(hWinset);
+W "..\drive\key.c" 1095 25 function "CreateCDC" declared implicitly
+N                        CreateCDC();
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        break;
+N                    }
+N                }
+N                   
+N                
 N			}
 N			break;
 N			case PUSH_SETUP :
 X			case 0X4F :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N				WM_DeleteWindow(hWinR);
+N                WM_DeleteWindow(hWinWind);
+N                WM_DeleteWindow(hWinG);
+N                WM_DeleteWindow(load_wind);
+N                WM_DeleteWindow(hWinsysinfo);
+N                WM_DeleteWindow(hWincdc);
+N                WM_DeleteWindow(hWinset); 
+N                CreateSET();
+N                KeyCounter = 0;
+N                BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
 N			}
 N			break;
 N			case KEY_TRIG:
 X			case 0X75:
 N			{
-N				t_onoff++;
-N				if(t_onoff>1)
-N				{
-N					t_onoff=0;
-N				}
-N				if(t_onoff==0)
-N				{
-N					Flag_Swtich_ON=0;
-X					(flagA . bit6)=0;
-N					GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
-X					GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N					
-N				}
-N				else if(t_onoff==1)
-N				{
-N					Flag_Swtich_ON=1;
-X					(flagA . bit6)=1;
-N					GPIO_ResetBits(GPIOC,GPIO_Pin_1);//On
-X					GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
-N				}
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                switch(page_sw){
+N                    case face_load:
+X                    case 4:
+N                    {
+N//                        static vu8 LOAD_t;
+N                        LOAD_t++;
+N                        if(LOAD_t>1)
+N                        {
+N                            LOAD_t=0;
+N                        }
+N                        if(LOAD_t==0)
+N                        {
+N                            Flag_Swtich_ON=0;
+X                            (flagA . bit6)=0;
+N                            GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
+X                            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                            load_sw = load_off;
+X                            load_sw = 0;
+N                        }
+N                        else if(LOAD_t==1)
+N                        {
+N                            Flag_Swtich_ON=1;
+X                            (flagA . bit6)=1;
+N                            GPIO_ResetBits(GPIOC,GPIO_Pin_1);//On
+X                            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                            load_time = GUI_GetTime()/500;
+N                            load_sw = load_on;
+X                            load_sw = 1;
+N                        }
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                    case face_r:
+X                    case 3:
+N                    {
+N//                         if(para_set2 == set_2_on)
+N//                         {
+N// //                            static vu8 LOAD_t;
+N//                             Mode_SW_CONT(0x02);
+N//                             LOAD_t++;
+N//                             if(LOAD_t>1)
+N//                             {
+N//                                 LOAD_t=0;
+N//                             }
+N//                             if(LOAD_t==0)
+N//                             {
+N//                                 oct_sw = oct_off;
+N//                                 set_add_c = 0;
+N//                                 Flag_Swtich_ON=0;
+N//                                 GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
+N//                                  
+N//                             }
+N//                             else if(LOAD_t==1)
+N//                             {
+N//                                 oct_sw = oct_on;
+N//                                 Flag_Swtich_ON=1;
+N//                                 GPIO_ResetBits(GPIOC,GPIO_Pin_1);//On
+N//                             }
+N//                          }
+N                         if(r_test == 0 && DISS_Voltage > gate_v)
+N                         {
+N                            r_test = 1;
+N                         }else{
+N                             r_test = 0;
+N                         }
+N                         KeyCounter = 0;
+N                         BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                         break;
+N                    }
+N                    case face_cdc:
+X                    case 1:
+N                    {
+N                       if(cdc_sw == cdc_off)
+X                       if(cdc_sw == 0)
+N                       {
+N                           SET_Voltage = opv1;
+X                           Run_Control[1] = Run_Control[31];
+N                           SET_Current = opc1;
+X                           Run_Control[2] = Run_Control[34];
+N                           cutoff_flag = 0;
+N                           Mode_SW_CONT(0x03);
+N                           
+N                           charge_step = 1;
+N                           GPIO_SetBits(GPIOB,GPIO_Pin_13);//ÊâìÂºÄÁ®≥ÂéãÁîµÊ∫êËæìÂá∫
+X                           GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                           cdc_sw = cdc_on;
+X                           cdc_sw = 1;
+N                       }else{
+N                           GPIO_ResetBits(GPIOB,GPIO_Pin_13);//ÂÖ≥Èó≠Á®≥ÂéãÁîµÊ∫êËæìÂá∫
+X                           GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                           cdc_sw = cdc_off;
+X                           cdc_sw = 0;
+N                           paused = 0;
+N                           mode_sw = 0;
+N                       }
+N                       KeyCounter = 0;
+N                       BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                       break; 
+N                    }
+N                    case face_menu:
+X                    case 2:
+N                    {
+N                        static vu8 POW_t;
+N                        POW_t++;
+N                        if(POW_t>1)
+N                        {
+N                            POW_t=0;
+N                        }
+N                        if(POW_t==0)
+N                        {
+N                            GPIO_ResetBits(GPIOB,GPIO_Pin_13);//ÂÖ≥Èó≠Á®≥ÂéãÁîµÊ∫êËæìÂá∫
+X                            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                            pow_sw = pow_off;
+X                            pow_sw = 0;
+N                        }
+N                        else if(POW_t==1)
+N                        {
+N                            GPIO_SetBits(GPIOB,GPIO_Pin_13);//ÊâìÂºÄÁ®≥ÂéãÁîµÊ∫êËæìÂá∫
+X                            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                            pow_sw = pow_on;
+X                            pow_sw = 1;
+N                            menu_time = GUI_GetTime()/500;
+N                        }
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                        break;
+N                    }
+N                }
+N				
 N			}
 N			break;
 N			case KEY_Reset:
 X			case 0X66:
 N			{
-N				static vu8 POW_t;
-N				POW_t++;
-N				if(POW_t>1)
-N				{
-N					POW_t=0;
-N				}
-N				if(POW_t==0)
-N				{
-N					GPIO_ResetBits(GPIOB,GPIO_Pin_13);//ÂÖ≥Èó≠Á®≥ÂéãÁîµÊ∫êËæìÂá∫
-X					GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
-N				}
-N				else if(POW_t==1)
-N				{
-N					GPIO_SetBits(GPIOB,GPIO_Pin_13);//ÊâìÂºÄÁ®≥ÂéãÁîµÊ∫êËæìÂá∫
-X					GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
-N				}
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N                switch(page_sw)
+N                {
+N                    case face_r:
+X                    case 3:
+N                    {
+N                        clear_flag1 = 1;
+N                        finish = 0;
+N//                        short_finish = 0;
+N                        clear_r = R_VLUE;
+X                        clear_r = Run_Control[13];
+N                        clear_v = DISS_Voltage;
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        break;
+N                    }
+N                    case face_menu:
+X                    case 2:
+N                    {
+N                        clear_flag2 = 1;
+N//                        clear_pv = DISS_POW_Voltage;
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        break;
+N                    }
+N                    case face_load:
+X                    case 4:
+N                    {
+N                        clear_flag3 = 1;
+N                        clear_lv = DISS_Voltage;
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        break;
+N                    }   
+N                    case face_cdc:
+X                    case 1:
+N                    {
+N                        if(mode_sw == mode_load && pause_flag == 0)
+X                        if(mode_sw == 2 && pause_flag == 0)
+N                        {
+N                            pause_flag = 1;
+N                        }else{
+N                            pause_flag = 0;
+N                            cdc_sw = cdc_on;
+X                            cdc_sw = 1;
+N                            restart_time = GUI_GetTime()/500;
+N                            GPIO_ResetBits(GPIOC,GPIO_Pin_1);//On
+X                            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N                        }
+N                        KeyCounter = 0;
+N                        BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N                        break;
+N                    }
+N                }
+N				
 N			}
 N			break;
 N			case KEY_Powe :
 X			case 0X6C :
 N			{
-N				
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N//                 TM1650_SET_LED(0x48,0x71);
+N//                 TM1650_SET_LED(0x68,0xF1);
+N// //  				TM1650_SET_LED(0x6A,0x60);
+N// //                 TM1650_SET_LED(0x6C,0x60);
+N// //                 TM1650_SET_LED(0x6E,0x60);
+N// 				KeyCounter = 0;
+N// 				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
 N			}
 N			break;
 N			case KEY_Face1 :
 X			case 0X64 :
-N			{
-N				WM_DeleteWindow(hWinWind);
-N				WM_DeleteWindow(hWinR);
-N				CreateR();
-N				Mode_SW_CONT(0x01);//ËøõÂÖ•ÂÜÖÈòªÊµãËØïÊ®°Âºè
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
-N			}
+N			{                    
+N                    WM_DeleteWindow(hWinR);
+N                    WM_DeleteWindow(hWinWind);
+N                    WM_DeleteWindow(hWinG);
+N                    WM_DeleteWindow(load_wind);
+N                    WM_DeleteWindow(hWinsysinfo);
+N                    WM_DeleteWindow(hWincdc);
+N                    WM_DeleteWindow(hWinset);
+N                    CreateR();
+N//                    double_sw = face_graph;
+N                    Mode_SW_CONT(0x01);//ËøõÂÖ•ÂÜÖÈòªÊµãËØïÊ®°Âºè
+N                    BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N            }
 N			break;
 N			case KEY_Face2 :
 X			case 0X5c :
 N			{
 N				WM_DeleteWindow(hWinR);
-N				WM_DeleteWindow(hWinWind);
+N                WM_DeleteWindow(hWinWind);
+N                WM_DeleteWindow(hWinG);
+N                WM_DeleteWindow(load_wind);
+N                WM_DeleteWindow(hWinsysinfo);
+N                WM_DeleteWindow(hWincdc);
+N                WM_DeleteWindow(hWinset);
 N				CreateWindow2();
+N//                double_sw = face_graph;
 N				Mode_SW_CONT(0x02);//ËøõÂÖ•Ë¥üËΩΩÊ®°Âºè
+N//                GPIO_SetBits(GPIOC,GPIO_Pin_1);
 N				KeyCounter = 0;
 N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
 N			}
@@ -50665,7 +51960,12 @@ N			case KEY_Face3 :
 X			case 0X54 :
 N			{
 N				WM_DeleteWindow(hWinR);
-N				WM_DeleteWindow(hWinWind);
+N                WM_DeleteWindow(hWinWind);
+N                WM_DeleteWindow(hWinG);
+N                WM_DeleteWindow(load_wind);
+N                WM_DeleteWindow(hWinsysinfo);
+N                WM_DeleteWindow(hWincdc);
+N                WM_DeleteWindow(hWinset);
 N				CreateWindow();
 N				Mode_SW_CONT(0x03);//ËøõÂÖ•ÁîµÊ∫êÊ®°Âºè
 N				KeyCounter = 0;
@@ -50675,15 +51975,49 @@ N			break;
 N			case KEY_Face4 :
 X			case 0X4c :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N
+N                    WM_DeleteWindow(hWinR);
+N                    WM_DeleteWindow(hWinWind);
+N                    WM_DeleteWindow(hWinG);
+N                    WM_DeleteWindow(load_wind);
+N                    WM_DeleteWindow(hWinsysinfo);
+N                    WM_DeleteWindow(hWincdc);
+N                    WM_DeleteWindow(hWinset);
+W "..\drive\key.c" 1350 21 function "CreateCDC" declared implicitly
+N                    CreateCDC();                
+N                    KeyCounter = 0;
+N                    BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
 N			}
 N			break;
 N			case KEY_Face5 :
 X			case 0X44 :
 N			{
-N				KeyCounter = 0;
-N				BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âô®
+N				    WM_DeleteWindow(hWinR);
+N                    WM_DeleteWindow(hWinWind);
+N                    WM_DeleteWindow(hWinG);
+N                    WM_DeleteWindow(load_wind);
+N                    WM_DeleteWindow(hWinsysinfo);
+N                    WM_DeleteWindow(hWincdc);
+N                    WM_DeleteWindow(hWinset);
+N                    CreateG();
+N                    KeyCounter = 0;
+N                    BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
+N			}
+N			break;
+N            case KEY_BIAS :
+X            case 0X6E :
+N			{
+N				    WM_DeleteWindow(hWinR);
+N                    WM_DeleteWindow(hWinWind);
+N                    WM_DeleteWindow(hWinG);
+N                    WM_DeleteWindow(load_wind);
+N                    WM_DeleteWindow(hWinsysinfo);
+N                    WM_DeleteWindow(hWincdc);
+N                    WM_DeleteWindow(hWinset);
+W "..\drive\key.c" 1378 21 function "Createsysinfo" declared implicitly
+N                    Createsysinfo();
+N                    KeyCounter = 0;
+N                    BEEP_Tiggr();//Ëß¶ÂèëËúÇÈ∏£Âôø
 N			}
 N			break;
 N			
@@ -50692,566 +52026,7 @@ N			break;
 N		}	
 N	}
 N}
-N// /***************************************************************************************************************************/
-N// void Lift_Move(void)
-N// {
-N// 	t_wei++;
-N// 	if(t_wei>3)
-N// 	{
-N// 		t_wei=0;
-N// 	}
-N// 	if(t_wei==0)
-N// 	{
-N// 		Flag_QIAN=1;
-N// 		Flag_GE=0;
-N// 		Flag_SHI=0;
-N// 		Flag_BAI=0;
-N// 	}
-N// 	else if(t_wei==1)
-N// 	{
-N// 		Flag_GE=1;
-N// 		Flag_QIAN=0;
-N// 		Flag_SHI=0;
-N// 		Flag_BAI=0;
-N// 	}
-N// 	else if(t_wei==2)
-N// 	{
-N// 		Flag_SHI=1;
-N// 		Flag_QIAN=0;
-N// 		Flag_GE=0;
-N// 		Flag_BAI=0;
-N// 	}
-N// 	else if(t_wei==3)
-N// 	{
-N// 		Flag_BAI=1;
-N// 		Flag_QIAN=0;
-N// 		Flag_GE=0;
-N// 		Flag_SHI=0;
-N// 	}
-N// }
-N// /***********************************************************************************************************************/
-N// void Right_Move(void)
-N// {
-N// 	t_wei--;
-N// 	Flag_DisSet=1;//ø™∆Ù…Ë÷√÷µœ‘ æ
-N// 	if(t_wei>3)
-N// 	{
-N// 		t_wei=3;
-N// 	}
-N// 	if(t_wei==0)
-N// 	{
-N// 		Flag_QIAN=1;
-N// 		Flag_GE=0;
-N// 		Flag_SHI=0;
-N// 		Flag_BAI=0;
-N// 	}
-N// 	else if(t_wei==1)
-N// 	{
-N// 		Flag_GE=1;
-N// 		Flag_QIAN=0;
-N// 		Flag_SHI=0;
-N// 		Flag_BAI=0;
-N// 	}
-N// 	else if(t_wei==2)
-N// 	{
-N// 		Flag_SHI=1;
-N// 		Flag_QIAN=0;
-N// 		Flag_GE=0;
-N// 		Flag_BAI=0;
-N// 	}
-N// 	else if(t_wei==3)
-N// 	{
-N// 		Flag_BAI=1;
-N// 		Flag_QIAN=0;
-N// 		Flag_GE=0;
-N// 		Flag_SHI=0;
-N// 	}
-N// }
-N// /*************************************************************************************************************************/
-N// void Setvalue_Add(void)//…Ë÷√µÁ—π∫ÕµÁ¡˜µ›‘ˆ
-N// {
-N// 	/********µÁ—π…Ë÷√*********************/
-N// 	if(Flag_GE==1&&Flag_SetV==1)
-N// 	{
-N// 		SET_Voltage++;
-N// 		if(SET_Voltage>MAX_VOL)
-N// 		{
-N// 			SET_Voltage=MAX_VOL;
-N// 		}
-N// 	}
-N// 	else if(Flag_SHI==1&&Flag_SetV==1)
-N// 	{
-N// 		SET_Voltage=SET_Voltage+10;
-N// 		if(SET_Voltage>MAX_VOL)
-N// 		{
-N// 			SET_Voltage=MAX_VOL;//»Áπ˚ ˝÷µ¥Û”⁄3000±æ¥Œµ›‘ˆŒﬁ–ß
-N// 		}
-N// 	}
-N// 	else if(Flag_BAI==1&&Flag_SetV==1)
-N// 	{
-N// 		SET_Voltage=SET_Voltage+100;
-N// 		if(SET_Voltage>MAX_VOL)
-N// 		{
-N// 			SET_Voltage=MAX_VOL;//»Áπ˚ ˝÷µ¥Û”⁄3000±æ¥Œµ›‘ˆŒﬁ–ß
-N// 		}
-N// 	}
-N// 	else if(Flag_QIAN==1&&Flag_SetV==1)
-N// 	{
-N// 		SET_Voltage=SET_Voltage+1000;
-N// 		if(SET_Voltage>MAX_VOL)
-N// 		{
-N// 			SET_Voltage=SET_Voltage-1000;//»Áπ˚ ˝÷µ¥Û”⁄3000±æ¥Œµ›‘ˆŒﬁ–ß
-N// 		}
-N// 	}
-N// /**********µÁ¡˜…Ë÷√*******************/
-N// 	if(Flag_GE==1&&Flag_SetA==1)
-N// 	{
-N// 		if(flag_Test_Min==1)//…Ë÷√œ¬œﬁ÷µ
-N// 		{
-N// 			MIN_limit++;
-N// 			if( MIN_limit>MAX_CUR)
-N// 			{
-N// 				 MIN_limit=MAX_CUR;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_MAX==1)//…Ë÷√…œœﬁ÷µ
-N// 		{
-N// 			MAX_limit++;
-N// 			if( MAX_limit>MAX_CUR)
-N// 			{
-N// 				 MAX_limit=MAX_CUR;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_SetTime==1)//…Ë÷√≤‚ ‘ ±º‰
-N// 		{
-N// 			Test_Daley++;
-N// 			if( Test_Daley>9999)
-N// 			{
-N// 				Test_Daley=9999;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_Door==1)//…Ë÷√√≈º˜µÁ¡˜
-N// 		{
-N// 			Test_C_Door++;
-N// 			if(Test_C_Door>MAX_CUR)
-N// 			{
-N// 				Test_C_Door=MAX_CUR;
-N// 			}
-N// 		}
-N// 		else if(flag_ADJ_ON==1)//Ω¯»Î–£◊ºƒ£ Ω
-N// 		{
-N// 			ADJ_Write++;
-N// 			if(ADJ_Write>MAX_CUR)
-N// 			{
-N// 				ADJ_Write=MAX_CUR;
-N// 			}
-N// 		}
-N// 		else
-N// 		{
-N// 			SET_Current++;
-N// 			if(SET_Current>MAX_CUR)
-N// 			{
-N// 				SET_Current=MAX_CUR;
-N// 			}
-N// 		}
-N// 	}
-N// 	else if(Flag_SHI==1&&Flag_SetA==1)
-N// 	{
-N// 		if(flag_Test_Min==1)//…Ë÷√œ¬œﬁ÷µ
-N// 		{
-N// 			MIN_limit=MIN_limit+10;
-N// 			if( MIN_limit>MAX_CUR)
-N// 			{
-N// 				 MIN_limit=MIN_limit-10;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_MAX==1)//…Ë÷√…œœﬁ÷µ
-N// 		{
-N// 			MAX_limit=MAX_limit+10;
-N// 			if( MAX_limit>MAX_CUR)
-N// 			{
-N// 				 MAX_limit=MAX_limit-10;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_SetTime==1)//…Ë÷√≤‚ ‘ ±º‰
-N// 		{
-N// 			Test_Daley=Test_Daley+10;
-N// 			if( Test_Daley>9999)
-N// 			{
-N// 				Test_Daley=Test_Daley-10;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_Door==1)//…Ë÷√√≈º˜µÁ¡˜
-N// 		{
-N// 			Test_C_Door=Test_C_Door+10;
-N// 			if(Test_C_Door>MAX_CUR)
-N// 			{
-N// 				Test_C_Door=Test_C_Door-10;
-N// 			}
-N// 		}
-N// 		else if(flag_ADJ_ON==1)//Ω¯»Î–£◊ºƒ£ Ω
-N// 		{
-N// 			ADJ_Write=ADJ_Write+10;
-N// 			if(ADJ_Write>MAX_CUR)
-N// 			{
-N// 				ADJ_Write=MAX_CUR;//»Áπ˚ ˝÷µ¥Û”⁄5000±æ¥Œµ›‘ˆŒﬁ–ß
-N// 			}
-N// 		}
-N// 		else
-N// 		{
-N// 			SET_Current=SET_Current+10;
-N// 			if(SET_Current>MAX_CUR)
-N// 			{
-N// 				SET_Current=MAX_CUR;//»Áπ˚ ˝÷µ¥Û”⁄5000±æ¥Œµ›‘ˆŒﬁ–ß
-N// 			}
-N// 		}
-N// 	}
-N// 	else if(Flag_BAI==1&&Flag_SetA==1)
-N// 	{
-N// 		if(flag_Test_Min==1)//…Ë÷√œ¬œﬁ÷µ
-N// 		{
-N// 			MIN_limit=MIN_limit+100;
-N// 			if( MIN_limit>MAX_CUR)
-N// 			{
-N// 				 MIN_limit=MIN_limit-100;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_MAX==1)//…Ë÷√…œœﬁ÷µ
-N// 		{
-N// 			MAX_limit=MAX_limit+100;
-N// 			if( MAX_limit>MAX_CUR)
-N// 			{
-N// 				 MAX_limit=MAX_limit-100;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_SetTime==1)//…Ë÷√≤‚ ‘ ±º‰
-N// 		{
-N// 			Test_Daley=Test_Daley+100;
-N// 			if( Test_Daley>9999)
-N// 			{
-N// 				Test_Daley=Test_Daley-100;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_Door==1)//…Ë÷√√≈º˜µÁ¡˜
-N// 		{
-N// 			Test_C_Door=Test_C_Door+100;
-N// 			if(Test_C_Door>MAX_CUR)
-N// 			{
-N// 				Test_C_Door=Test_C_Door-100;
-N// 			}
-N// 		}
-N// 		else if(flag_ADJ_ON==1)//Ω¯»Î–£◊ºƒ£ Ω
-N// 		{
-N// 			ADJ_Write=ADJ_Write+100;
-N// 			if(ADJ_Write>MAX_CUR)
-N// 			{
-N// 				ADJ_Write=ADJ_Write-100;
-N// 			}
-N// 		}
-N// 		else
-N// 		{
-N// 			SET_Current=SET_Current+100;
-N// 			if(SET_Current>MAX_CUR)
-N// 			{
-N// 				SET_Current=MAX_CUR;//»Áπ˚ ˝÷µ¥Û”⁄5000±æ¥Œµ›‘ˆŒﬁ–ß
-N// 			}
-N// 		}
-N// 	}
-N// 	else if(Flag_QIAN==1&&Flag_SetA==1)
-N// 	{
-N// 		if(flag_Test_Min==1)//…Ë÷√œ¬œﬁ÷µ
-N// 		{
-N// 			MIN_limit=MIN_limit+1000;
-N// 			if( MIN_limit>MAX_CUR)
-N// 			{
-N// 				 MIN_limit=MIN_limit-1000;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_MAX==1)//…Ë÷√…œœﬁ÷µ
-N// 		{
-N// 			MAX_limit=MAX_limit+1000;
-N// 			if( MAX_limit>MAX_CUR)
-N// 			{
-N// 				 MAX_limit=MAX_limit-1000;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_SetTime==1)//…Ë÷√≤‚ ‘ ±º‰
-N// 		{
-N// 			Test_Daley=Test_Daley+1000;
-N// 			if( Test_Daley>9999)
-N// 			{
-N// 				Test_Daley=Test_Daley-1000;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_Door==1)//…Ë÷√√≈º˜µÁ¡˜
-N// 		{
-N// 			Test_C_Door=Test_C_Door+1000;
-N// 			if(Test_C_Door>MAX_CUR)
-N// 			{
-N// 				Test_C_Door=Test_C_Door-1000;
-N// 			}
-N// 		}
-N// 		else if(flag_ADJ_ON==1)//Ω¯»Î–£◊ºƒ£ Ω
-N// 		{
-N// 			ADJ_Write=ADJ_Write+1000;
-N// 			if(ADJ_Write>MAX_CUR)
-N// 			{
-N// 				ADJ_Write=ADJ_Write-1000;//»Áπ˚ ˝÷µ¥Û”⁄5000±æ¥Œµ›‘ˆŒﬁ–ß
-N// 			}
-N// 		}
-N// 		else
-N// 		{
-N// 			SET_Current=SET_Current+1000;
-N// 			if(SET_Current>MAX_CUR)
-N// 			{
-N// 				SET_Current=SET_Current-1000;//»Áπ˚ ˝÷µ¥Û”⁄5000±æ¥Œµ›‘ˆŒﬁ–ß
-N// 			}
-N// 		}
-N// 	}
-N// }
-N// /***************************************************************************************/
-N// void Setvalue_Reduction(void)//…Ë÷√µÁ—π∫ÕµÁ¡˜µ›ºı
-N// {
-N// 	/*********************…Ë÷√µÁ—π***********************************************/
-N// 	if(Flag_GE==1&&Flag_SetV==1)
-N// 	{
-N// 		SET_Voltage--;
-N// 		if(SET_Voltage>MAX_VOL)
-N// 		{
-N// 			SET_Voltage=0;
-N// 		}
-N// 	}
-N// 	else if(Flag_SHI==1&&Flag_SetV==1)
-N// 	{
-N// 		SET_Voltage=SET_Voltage-10;
-N// 		if(SET_Voltage>MAX_VOL)
-N// 		{
-N// 			SET_Voltage=SET_Voltage+10;//»Áπ˚ ˝÷µ¥Û”⁄3000±æ¥Œµ›ºıŒﬁ–ß
-N// 		}
-N// 	}
-N// 	else if(Flag_BAI==1&&Flag_SetV==1)
-N// 	{
-N// 		SET_Voltage=SET_Voltage-100;
-N// 		if(SET_Voltage>MAX_VOL)
-N// 		{
-N// 			SET_Voltage=SET_Voltage+100;//»Áπ˚ ˝÷µ¥Û”⁄3000±æ¥Œµ›ºıŒﬁ–ß
-N// 		}
-N// 	}
-N// 	else if(Flag_QIAN==1&&Flag_SetV==1)
-N// 	{
-N// 		SET_Voltage=SET_Voltage-1000;
-N// 		if(SET_Voltage>MAX_VOL)
-N// 		{
-N// 			SET_Voltage=SET_Voltage+1000;//»Áπ˚ ˝÷µ¥Û”⁄3000±æ¥Œµ›ºıŒﬁ–ß
-N// 		}
-N// 	}
-N// /******************************…Ë÷√µÁ¡˜******************************************/
-N// 	if(Flag_GE==1&&Flag_SetA==1)
-N// 	{
-N// 		if(flag_Test_Min==1)//…Ë÷√œ¬œﬁ÷µ
-N// 		{
-N// 			MIN_limit--;
-N// 			if( MIN_limit>MAX_CUR)
-N// 			{
-N// 				 MIN_limit=0;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_MAX==1)//…Ë÷√…œœﬁ÷µ
-N// 		{
-N// 			MAX_limit--;
-N// 			if( MAX_limit>MAX_CUR)
-N// 			{
-N// 				 MAX_limit=0;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_SetTime==1)//…Ë÷√≤‚ ‘ ±º‰
-N// 		{
-N// 			Test_Daley--;
-N// 			if( Test_Daley>9999)
-N// 			{
-N// 				Test_Daley=0;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_Door==1)//…Ë÷√√≈º˜µÁ¡˜
-N// 		{
-N// 			Test_C_Door--;
-N// 			if(Test_C_Door<10)
-N// 			{
-N// 				Test_C_Door=10;
-N// 			}
-N// 		}
-N// 		else if(flag_ADJ_ON==1)//Ω¯»Î–£◊ºƒ£ Ω
-N// 		{
-N// 			ADJ_Write--;//…Ë÷√µÁ¡˜÷µ
-N// 			if(ADJ_Write>MAX_CUR)
-N// 			{
-N// 				ADJ_Write=0;
-N// 			}
-N// 		}
-N// 		else
-N// 		{
-N// 			SET_Current--;//…Ë÷√µÁ¡˜÷µ
-N// 			if(SET_Current>MAX_CUR)
-N// 			{
-N// 				SET_Current=0;
-N// 			}
-N// 		}
-N// 		
-N// 	}
-N// 	else if(Flag_SHI==1&&Flag_SetA==1)
-N// 	{
-N// 		if(flag_Test_Min==1)//…Ë÷√œ¬œﬁ÷µ
-N// 		{
-N// 			MIN_limit=MIN_limit-10;
-N// 			if( MIN_limit>MAX_CUR)
-N// 			{
-N// 				 MIN_limit=MIN_limit+10;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_MAX==1)//…Ë÷√…œœﬁ÷µ
-N// 		{
-N// 			MAX_limit=MAX_limit-10;
-N// 			if( MAX_limit>MAX_CUR)
-N// 			{
-N// 				 MAX_limit=MAX_limit+10;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_SetTime==1)//…Ë÷√≤‚ ‘ ±º‰
-N// 		{
-N// 			Test_Daley=Test_Daley-10;
-N// 			if( Test_Daley>9999)
-N// 			{
-N// 				Test_Daley=Test_Daley+10;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_Door==1)//…Ë÷√√≈º˜µÁ¡˜
-N// 		{
-N// 			Test_C_Door=Test_C_Door-10;
-N// 			if(Test_C_Door>MAX_CUR)
-N// 			{
-N// 				Test_C_Door=Test_C_Door+10;
-N// 			}
-N// 		}
-N// 		else if(flag_ADJ_ON==1)//Ω¯»Î–£◊ºƒ£ Ω
-N// 		{
-N// 			ADJ_Write=ADJ_Write-10;
-N// 			if(ADJ_Write>MAX_CUR)
-N// 			{
-N// 				ADJ_Write=ADJ_Write+10;//»Áπ˚ ˝÷µ¥Û”⁄5000±æ¥Œµ›ºıŒﬁ–ß
-N// 			}
-N// 		}
-N// 		else
-N// 		{
-N// 			SET_Current=SET_Current-10;
-N// 			if(SET_Current>MAX_CUR)
-N// 			{
-N// 				SET_Current=SET_Current+10;//»Áπ˚ ˝÷µ¥Û”⁄5000±æ¥Œµ›ºıŒﬁ–ß
-N// 			}
-N// 		}
-N// 	}
-N// 	else if(Flag_BAI==1&&Flag_SetA==1)
-N// 	{
-N// 		if(flag_Test_Min==1)//…Ë÷√œ¬œﬁ÷µ
-N// 		{
-N// 			MIN_limit=MIN_limit-100;
-N// 			if( MIN_limit>MAX_CUR)
-N// 			{
-N// 				 MIN_limit=MIN_limit+100;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_MAX==1)//…Ë÷√…œœﬁ÷µ
-N// 		{
-N// 			MAX_limit=MAX_limit-100;
-N// 			if( MAX_limit>MAX_CUR)
-N// 			{
-N// 				 MAX_limit=MAX_limit+100;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_SetTime==1)//…Ë÷√≤‚ ‘ ±º‰
-N// 		{
-N// 			Test_Daley=Test_Daley-100;
-N// 			if( Test_Daley>9999)
-N// 			{
-N// 				Test_Daley=Test_Daley+100;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_Door==1)//…Ë÷√√≈º˜µÁ¡˜
-N// 		{
-N// 			Test_C_Door=Test_C_Door-100;
-N// 			if(Test_C_Door>MAX_CUR)
-N// 			{
-N// 				Test_C_Door=Test_C_Door+100;
-N// 			}
-N// 		}
-N// 		else if(flag_ADJ_ON==1)//Ω¯»Î–£◊ºƒ£ Ω
-N// 		{
-N// 			ADJ_Write=ADJ_Write-100;
-N// 			if(ADJ_Write>MAX_CUR)
-N// 			{
-N// 				ADJ_Write=ADJ_Write+100;//»Áπ˚ ˝÷µ¥Û”⁄5000±æ¥Œµ›ºıŒﬁ–ß
-N// 			}
-N// 		}
-N// 		else
-N// 		{
-N// 			SET_Current=SET_Current-100;
-N// 			if(SET_Current>MAX_CUR)
-N// 			{
-N// 				SET_Current=SET_Current+100;//»Áπ˚ ˝÷µ¥Û”⁄5000±æ¥Œµ›ºıŒﬁ–ß
-N// 			}
-N// 		}
-N// 	}
-N// 	else if(Flag_QIAN==1&&Flag_SetA==1)
-N// 	{
-N// 		if(flag_Test_Min==1)//…Ë÷√œ¬œﬁ÷µ
-N// 		{
-N// 			MIN_limit=MIN_limit-1000;
-N// 			if( MIN_limit>MAX_CUR)
-N// 			{
-N// 				 MIN_limit=MIN_limit+1000;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_MAX==1)//…Ë÷√…œœﬁ÷µ
-N// 		{
-N// 			MAX_limit=MAX_limit-1000;
-N// 			if( MAX_limit>MAX_CUR)
-N// 			{
-N// 				 MAX_limit=MAX_limit+1000;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_SetTime==1)//…Ë÷√≤‚ ‘ ±º‰
-N// 		{
-N// 			Test_Daley=Test_Daley-1000;
-N// 			if( Test_Daley>9999)
-N// 			{
-N// 				Test_Daley=Test_Daley+1000;
-N// 			}
-N// 		}
-N// 		else if(flag_Test_Door==1)//…Ë÷√√≈º˜µÁ¡˜
-N// 		{
-N// 			Test_C_Door=Test_C_Door-1000;
-N// 			if(Test_C_Door>MAX_CUR)
-N// 			{
-N// 				Test_C_Door=Test_C_Door+1000;
-N// 			}
-N// 		}
-N// 		else if(flag_ADJ_ON==1)//Ω¯»Î–£◊ºƒ£ Ω
-N// 		{
-N// 			ADJ_Write=ADJ_Write-1000;
-N// 			if(ADJ_Write>MAX_CUR)
-N// 			{
-N// 				ADJ_Write=ADJ_Write+1000;//»Áπ˚ ˝÷µ¥Û”⁄5000±æ¥Œµ›ºıŒﬁ–ß
-N// 			}
-N// 		}
-N// 		else
-N// 		{
-N// 			SET_Current=SET_Current-1000;
-N// 			if(SET_Current>MAX_CUR)
-N// 			{
-N// 				SET_Current=SET_Current+1000;//»Áπ˚ ˝÷µ¥Û”⁄5000±æ¥Œµ›ºıŒﬁ–ß
-N// 			}
-N// 		}
-N// 	}
-N// }
+N
 N/********************************************************************************/
 Nvoid Mode_SW_CONT(vu8 mode)//ƒ£ Ω»ê€ª‡†ò◊Ü
 N{

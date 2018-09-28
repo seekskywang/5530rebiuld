@@ -10,27 +10,17 @@
 #include  "gui.h"
 #include "DIALOG.h"
 #include "my_register.h"
+#include "tm1650.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "key.h"
+#include "string.h"
+#include "beep.h"
 
 
 WM_HWIN hWinset;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ16;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ12;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ20S;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontEN40;
-extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ32;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Fontsymbol;
-extern GUI_CONST_STORAGE GUI_FONT GUI_Fontset_font;
-extern vu8 page_sw;
-extern vu8 set_sw = set_1;
-vu8 para_set1;
-vu8 para_set2;
-vu8 para_set3;
-vu8 para_set4 = set_4_off;
 vu8 b_type = Lion;
 vu8 buffer = Lion;
-vu8 bit = 1;
-char set_limit[5];
-vu8 dot_flag = 0;
 vu8 alarm_flag;
 extern int count_num(int data);
 extern vu8 pass;
@@ -1098,7 +1088,6 @@ WM_HWIN SET_OP_DOWN(void) {
                     default: break;
                  }
                 return set_sw;
-                return b_type;
 }
 
 //向上选择
@@ -1866,8 +1855,8 @@ WM_HWIN SET_OP_LEFT(void) {
 }
 
 //参数设置
-WM_HWIN PARA_SET(void);
-WM_HWIN PARA_SET(void) {
+void PARA_SET(void);
+void PARA_SET(void) {
                 vu8 i;
                 char buf[5];
   
@@ -1934,28 +1923,28 @@ WM_HWIN PARA_SET(void) {
                     }
                     case set_3:
                     {
-                        switch(para_set4){
-                        case set_4_on:
+                        switch(para_set4)
                         {
-                            WM_HWIN hItem;
-//                            WM_InvalidateWindow(hWinset);
-                            hItem = WM_GetDialogItem(hWinset, ID_TEXT_30);
-                            TEXT_SetText(hItem,"OFF");
-                            para_set4 = set_4_off;
-                            Write_alarm();
-                            break;
-                        }
-                        case set_4_off:
-                        {
-                            WM_HWIN hItem;
-//                            WM_InvalidateWindow(hWinset);
-                            hItem = WM_GetDialogItem(hWinset, ID_TEXT_30);
-                            TEXT_SetText(hItem,"ON");
-                            para_set4 = set_4_on;
-                            Write_alarm();
-                            break;
-                        }
-                        break;
+                            case set_4_on:
+                            {
+                                WM_HWIN hItem;
+    //                            WM_InvalidateWindow(hWinset);
+                                hItem = WM_GetDialogItem(hWinset, ID_TEXT_30);
+                                TEXT_SetText(hItem,"OFF");
+                                para_set4 = set_4_off;
+                                Write_alarm();
+                                break;
+                            }
+                            case set_4_off:
+                            {
+                                WM_HWIN hItem;
+    //                            WM_InvalidateWindow(hWinset);
+                                hItem = WM_GetDialogItem(hWinset, ID_TEXT_30);
+                                TEXT_SetText(hItem,"ON");
+                                para_set4 = set_4_on;
+                                Write_alarm();
+                                break;
+                            }
                         }
                     break;
                     }
@@ -3157,8 +3146,8 @@ WM_HWIN PARA_SET(void) {
 //    return tempt;
 // }
 //系统设置界面数据输入
-WM_HWIN INPUT_NUM(char* num);            
-WM_HWIN INPUT_NUM(char* num){
+void INPUT_NUM(char* num);            
+void INPUT_NUM(char* num){
     
     switch(set_sw){
         case set_12:

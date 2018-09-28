@@ -40,6 +40,7 @@ extern WM_HWIN CreateR(void);
 */
 void MainTask(void) 
 { 
+    static vu16 read1963;
 //	unsigned char  ucKeyCode;
 	GUI_Init();
 	WM_SetDesktopColor(GUI_BLUE);  
@@ -59,6 +60,12 @@ void MainTask(void)
 	Flag_Swtich_ON=0;
 	while (1)
 	{
+//         sLCD_WR_REG(0xf1);
+//         read1963 =sLCD_Read_Data();
+//         if(read1963 != 0x03)
+//         {
+//             LCD_Initializtion();
+//         }
 		DAC_SetChannel1Data(DAC_Align_12b_R,Contr_Laod);//负载DAC控制
 		TIM_SetCompare1(TIM2,Contr_Current);//电源电流控制
 		TIM_SetCompare2(TIM2,Contr_Voltage);//电源电压控制
