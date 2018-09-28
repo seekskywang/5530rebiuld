@@ -78,7 +78,7 @@
                           AREA ||i.INPUT_POW||, CODE, READONLY, ALIGN=2
 
                   INPUT_POW PROC
-;;;694    void INPUT_POW(char* num);            
+;;;694              
 ;;;695    void INPUT_POW(char* num){    
 000000  e92d4ff1          PUSH     {r0,r4-r11,lr}
 ;;;696        switch(set_sw){

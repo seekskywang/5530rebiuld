@@ -34867,6 +34867,12 @@ Nvoid Write_oct(void);
 Nvoid Write_alarm(void);
 Nvoid Write_btype(void);
 Nvoid Write_info(void);
+Nvoid INPUT_POW(char* num);  
+Nvoid INPUT_NUM(char* num); 
+Nvoid INPUT_CDC(char* num); 
+Nvoid INPUT_C(char* num);  
+Nvoid INPUT_LOAD(char* num);  
+Nvoid INPUT_INFO(vu8 num);  
 N
 N//=============================================================================
 N#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -35286,6 +35292,7 @@ Nvoid sLCD_WR_Data(unsigned int val);
 Nvu16 sLCD_Read_Data(void);
 N
 Nvoid LCD_Initializtion(void);
+Nvoid sLCD_Init(void);
 Nvoid LCD_SetPoint(vu16 x,vu16 y,vu16 c);
 Nvu16 LCD_GetPoint(vu16 x, vu16 y);
 N

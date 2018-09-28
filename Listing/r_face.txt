@@ -61,7 +61,7 @@
                           AREA ||i.INPUT_C||, CODE, READONLY, ALIGN=2
 
                   INPUT_C PROC
-;;;1486   void INPUT_C(char* num);            
+;;;1486             
 ;;;1487   void INPUT_C(char* num){
 000000  e92d4ff1          PUSH     {r0,r4-r11,lr}
 000004  b082              SUB      sp,sp,#8

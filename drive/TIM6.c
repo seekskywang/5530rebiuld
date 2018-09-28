@@ -77,11 +77,39 @@ void TIM3_Int_Init(u16 arr,u16 psc)
 void TIM3_IRQHandler(void)
 {
     static vu16 count1ms;
-    
+    static resetcount;
+    static read1963;
+    static scancount;
     
     if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) //ӧԶא׏
     {
         TIM_ClearITPendingBit(TIM3,TIM_IT_Update); //ȥԽא׏Ҫ־λ
+        
+        if(scancount == 1000)
+        {
+            sLCD_WR_REG(0xf1);
+            read1963 =sLCD_Read_Data();
+            scancount = 0;
+        }else{
+            scancount++;
+        }
+         if(read1963 != 0x03)
+         {
+             if(resetcount == 2000)
+             {
+                 LCD_Initializtion();
+                 GUI_Init();
+                 GUI_Clear();//清屏
+                 resetcount = 0;
+             }else{
+                 resetcount++;
+             }
+//             sLCD_Init();
+//             GUI_Init();
+//             WM_SetDesktopColor(GUI_BLUE);  
+//             GUI_Clear();//清屏
+            
+         }
         switch(page_sw)
         {
             case face_menu:

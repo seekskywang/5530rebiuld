@@ -1226,7 +1226,7 @@ void SYS_INFO_DOWN(void)
 }
 
 
-void INPUT_INFO(vu8 num);            
+          
 void INPUT_INFO(vu8 num){
     static char buf[5];
     WM_HWIN hItem;

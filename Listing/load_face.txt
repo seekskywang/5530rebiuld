@@ -74,7 +74,7 @@
                           AREA ||i.INPUT_LOAD||, CODE, READONLY, ALIGN=2
 
                   INPUT_LOAD PROC
-;;;552    void INPUT_LOAD(char* num);            
+;;;552              
 ;;;553    void INPUT_LOAD(char* num){    
 000000  e92d4ff1          PUSH     {r0,r4-r11,lr}
 ;;;554        switch(set_sw){

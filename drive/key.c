@@ -792,7 +792,8 @@ void Key_Funtion(void)
 			case KEY_ESC :
 			{
                 LCD_Initializtion();
-                GUI_Clear();//清屏
+//                 GUI_Init();
+//                 GUI_Clear();//清屏
 //                timer_sw = 0;
 				KeyCounter = 0;
 //				BEEP_Tiggr();//触发蜂鸣器

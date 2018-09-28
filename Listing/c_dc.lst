@@ -48556,6 +48556,12 @@ Nvoid Write_oct(void);
 Nvoid Write_alarm(void);
 Nvoid Write_btype(void);
 Nvoid Write_info(void);
+Nvoid INPUT_POW(char* num);  
+Nvoid INPUT_NUM(char* num); 
+Nvoid INPUT_CDC(char* num); 
+Nvoid INPUT_C(char* num);  
+Nvoid INPUT_LOAD(char* num);  
+Nvoid INPUT_INFO(vu8 num);  
 N
 N//=============================================================================
 N#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -48984,6 +48990,12 @@ Svoid Write_oct(void);
 Svoid Write_alarm(void);
 Svoid Write_btype(void);
 Svoid Write_info(void);
+Svoid INPUT_POW(char* num);  
+Svoid INPUT_NUM(char* num); 
+Svoid INPUT_CDC(char* num); 
+Svoid INPUT_C(char* num);  
+Svoid INPUT_LOAD(char* num);  
+Svoid INPUT_INFO(vu8 num);  
 S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -49417,6 +49429,12 @@ Svoid Write_oct(void);
 Svoid Write_alarm(void);
 Svoid Write_btype(void);
 Svoid Write_info(void);
+Svoid INPUT_POW(char* num);  
+Svoid INPUT_NUM(char* num); 
+Svoid INPUT_CDC(char* num); 
+Svoid INPUT_C(char* num);  
+Svoid INPUT_LOAD(char* num);  
+Svoid INPUT_INFO(vu8 num);  
 S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -51836,6 +51854,12 @@ Svoid Write_oct(void);
 Svoid Write_alarm(void);
 Svoid Write_btype(void);
 Svoid Write_info(void);
+Svoid INPUT_POW(char* num);  
+Svoid INPUT_NUM(char* num); 
+Svoid INPUT_CDC(char* num); 
+Svoid INPUT_C(char* num);  
+Svoid INPUT_LOAD(char* num);  
+Svoid INPUT_INFO(vu8 num);  
 S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -55371,7 +55395,7 @@ N    }
 N}
 N
 N//ÂÖÖÊîæÁîµÁïåÈù¢Êï∞Â≠óÈîÆÁõòËæìÂÖ•
-Nvoid INPUT_CDC(char* num);            
+N           
 Nvoid INPUT_CDC(char* num){
 N    char loop_count[2];
 N    switch(set_sw){

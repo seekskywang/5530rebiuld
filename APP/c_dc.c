@@ -1926,7 +1926,7 @@ void CDC_SET(void)
 }
 
 //充放电界面数字键盘输入
-void INPUT_CDC(char* num);            
+           
 void INPUT_CDC(char* num){
     char loop_count[2];
     switch(set_sw){

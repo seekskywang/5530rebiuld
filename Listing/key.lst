@@ -34720,6 +34720,12 @@ Nvoid Write_oct(void);
 Nvoid Write_alarm(void);
 Nvoid Write_btype(void);
 Nvoid Write_info(void);
+Nvoid INPUT_POW(char* num);  
+Nvoid INPUT_NUM(char* num); 
+Nvoid INPUT_CDC(char* num); 
+Nvoid INPUT_C(char* num);  
+Nvoid INPUT_LOAD(char* num);  
+Nvoid INPUT_INFO(vu8 num);  
 N
 N//=============================================================================
 N#define NOP   __nop();	  //��ָ��
@@ -35176,6 +35182,12 @@ Svoid Write_oct(void);
 Svoid Write_alarm(void);
 Svoid Write_btype(void);
 Svoid Write_info(void);
+Svoid INPUT_POW(char* num);  
+Svoid INPUT_NUM(char* num); 
+Svoid INPUT_CDC(char* num); 
+Svoid INPUT_C(char* num);  
+Svoid INPUT_LOAD(char* num);  
+Svoid INPUT_INFO(vu8 num);  
 S
 S//=============================================================================
 S#define NOP   __nop();	  //��ָ��
@@ -35655,6 +35667,12 @@ Svoid Write_oct(void);
 Svoid Write_alarm(void);
 Svoid Write_btype(void);
 Svoid Write_info(void);
+Svoid INPUT_POW(char* num);  
+Svoid INPUT_NUM(char* num); 
+Svoid INPUT_CDC(char* num); 
+Svoid INPUT_C(char* num);  
+Svoid INPUT_LOAD(char* num);  
+Svoid INPUT_INFO(vu8 num);  
 S
 S//=============================================================================
 S#define NOP   __nop();	  //��ָ��
@@ -49941,6 +49959,12 @@ Svoid Write_oct(void);
 Svoid Write_alarm(void);
 Svoid Write_btype(void);
 Svoid Write_info(void);
+Svoid INPUT_POW(char* num);  
+Svoid INPUT_NUM(char* num); 
+Svoid INPUT_CDC(char* num); 
+Svoid INPUT_C(char* num);  
+Svoid INPUT_LOAD(char* num);  
+Svoid INPUT_INFO(vu8 num);  
 S
 S//=============================================================================
 S#define NOP   __nop();	  //��ָ��
@@ -50360,6 +50384,7 @@ Nvoid sLCD_WR_Data(unsigned int val);
 Nvu16 sLCD_Read_Data(void);
 N
 Nvoid LCD_Initializtion(void);
+Nvoid sLCD_Init(void);
 Nvoid LCD_SetPoint(vu16 x,vu16 y,vu16 c);
 Nvu16 LCD_GetPoint(vu16 x, vu16 y);
 N
@@ -50586,7 +50611,6 @@ N                switch(page_sw){
 N                    case face_menu: 
 X                    case 2: 
 N                    {
-W "..\drive\key.c" 204 25 function "INPUT_POW" declared implicitly
 N                        INPUT_POW("1");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50595,7 +50619,6 @@ N                    }
 N                    case face_set:
 X                    case 5:
 N                    {
-W "..\drive\key.c" 211 26 function "INPUT_NUM" declared implicitly
 N                         INPUT_NUM("1");
 N                         KeyCounter = 0;
 N                         BEEP_Tiggr();//触发蜂鸣器
@@ -50607,7 +50630,6 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 220 29 function "INPUT_C" declared implicitly
 N                            INPUT_C("1");
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -50617,7 +50639,6 @@ N                    }
 N                    case face_load:
 X                    case 4:
 N                    {
-W "..\drive\key.c" 228 25 function "INPUT_LOAD" declared implicitly
 N                        INPUT_LOAD("1");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50626,7 +50647,6 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 235 25 function "INPUT_CDC" declared implicitly
 N                        INPUT_CDC("1");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50637,7 +50657,6 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 244 29 function "INPUT_INFO" declared implicitly
 N                            INPUT_INFO(1);    
 N                        }
 N                        KeyCounter = 0;
@@ -50655,7 +50674,6 @@ N                 switch(page_sw){
 N                    case face_menu:  
 X                    case 2:  
 N                    {
-W "..\drive\key.c" 259 25 function "INPUT_POW" declared implicitly
 N                        INPUT_POW("2");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器 
@@ -50663,7 +50681,6 @@ N                    }
 N                    case face_set:
 X                    case 5:
 N                    {
-W "..\drive\key.c" 265 25 function "INPUT_NUM" declared implicitly
 N                        INPUT_NUM("2");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50675,7 +50692,6 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 274 29 function "INPUT_C" declared implicitly
 N                            INPUT_C("2");
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -50685,7 +50701,6 @@ N                    }
 N                    case face_load:
 X                    case 4:
 N                    {
-W "..\drive\key.c" 282 25 function "INPUT_LOAD" declared implicitly
 N                        INPUT_LOAD("2");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50694,7 +50709,6 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 289 25 function "INPUT_CDC" declared implicitly
 N                        INPUT_CDC("2");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50705,7 +50719,6 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 298 29 function "INPUT_INFO" declared implicitly
 N                            INPUT_INFO(2);    
 N                        }
 N                        KeyCounter = 0;
@@ -50724,7 +50737,6 @@ N				switch(page_sw){
 N                    case face_menu:  
 X                    case 2:  
 N                    {
-W "..\drive\key.c" 314 25 function "INPUT_POW" declared implicitly
 N                        INPUT_POW("3");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器 
@@ -50732,7 +50744,6 @@ N                    }
 N                    case face_set:
 X                    case 5:
 N                    {
-W "..\drive\key.c" 320 25 function "INPUT_NUM" declared implicitly
 N                        INPUT_NUM("3");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50744,7 +50755,6 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 329 29 function "INPUT_C" declared implicitly
 N                            INPUT_C("3");
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -50754,7 +50764,6 @@ N                    }
 N                    case face_load:
 X                    case 4:
 N                    {
-W "..\drive\key.c" 337 25 function "INPUT_LOAD" declared implicitly
 N                        INPUT_LOAD("3");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50763,7 +50772,6 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 344 25 function "INPUT_CDC" declared implicitly
 N                        INPUT_CDC("3");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50774,7 +50782,6 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 353 29 function "INPUT_INFO" declared implicitly
 N                            INPUT_INFO(3);    
 N                        }else{
 N                            pass += 3;
@@ -50794,7 +50801,6 @@ N				switch(page_sw){
 N                    case face_menu:  
 X                    case 2:  
 N                    {
-W "..\drive\key.c" 370 25 function "INPUT_POW" declared implicitly
 N                        INPUT_POW("4");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器 
@@ -50802,7 +50808,6 @@ N                    }
 N                    case face_set:
 X                    case 5:
 N                    {
-W "..\drive\key.c" 376 25 function "INPUT_NUM" declared implicitly
 N                        INPUT_NUM("4");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50814,7 +50819,6 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 385 29 function "INPUT_C" declared implicitly
 N                            INPUT_C("4");
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -50824,7 +50828,6 @@ N                    }
 N                    case face_load:
 X                    case 4:
 N                    {
-W "..\drive\key.c" 393 25 function "INPUT_LOAD" declared implicitly
 N                        INPUT_LOAD("4");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50833,7 +50836,6 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 400 25 function "INPUT_CDC" declared implicitly
 N                        INPUT_CDC("4");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50844,7 +50846,6 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 409 29 function "INPUT_INFO" declared implicitly
 N                            INPUT_INFO(4);    
 N                        }
 N                        KeyCounter = 0;
@@ -50862,7 +50863,6 @@ N				switch(page_sw){
 N                    case face_menu:  
 X                    case 2:  
 N                    {
-W "..\drive\key.c" 424 25 function "INPUT_POW" declared implicitly
 N                        INPUT_POW("5");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器 
@@ -50870,7 +50870,6 @@ N                    }
 N                    case face_set:
 X                    case 5:
 N                    {
-W "..\drive\key.c" 430 25 function "INPUT_NUM" declared implicitly
 N                        INPUT_NUM("5");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50882,7 +50881,6 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 439 29 function "INPUT_C" declared implicitly
 N                            INPUT_C("5");
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -50892,7 +50890,6 @@ N                    }
 N                    case face_load:
 X                    case 4:
 N                    {
-W "..\drive\key.c" 447 25 function "INPUT_LOAD" declared implicitly
 N                        INPUT_LOAD("5");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50901,7 +50898,6 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 454 25 function "INPUT_CDC" declared implicitly
 N                        INPUT_CDC("5");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50912,7 +50908,6 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 463 29 function "INPUT_INFO" declared implicitly
 N                            INPUT_INFO(5);    
 N                        }else{
 N                            pass += 5;
@@ -50932,7 +50927,6 @@ N				switch(page_sw){
 N                    case face_menu:  
 X                    case 2:  
 N                    {
-W "..\drive\key.c" 480 25 function "INPUT_POW" declared implicitly
 N                        INPUT_POW("6");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器 
@@ -50940,7 +50934,6 @@ N                    }
 N                    case face_set:
 X                    case 5:
 N                    {
-W "..\drive\key.c" 486 25 function "INPUT_NUM" declared implicitly
 N                        INPUT_NUM("6");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50952,7 +50945,6 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 495 29 function "INPUT_C" declared implicitly
 N                            INPUT_C("6");
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -50962,7 +50954,6 @@ N                    }
 N                    case face_load:
 X                    case 4:
 N                    {
-W "..\drive\key.c" 503 25 function "INPUT_LOAD" declared implicitly
 N                        INPUT_LOAD("6");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50971,7 +50962,6 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 510 25 function "INPUT_CDC" declared implicitly
 N                        INPUT_CDC("6");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -50982,7 +50972,6 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 519 29 function "INPUT_INFO" declared implicitly
 N                            INPUT_INFO(6);    
 N                        }
 N                        KeyCounter = 0;
@@ -51000,7 +50989,6 @@ N				switch(page_sw){
 N                    case face_menu:  
 X                    case 2:  
 N                    {
-W "..\drive\key.c" 534 25 function "INPUT_POW" declared implicitly
 N                        INPUT_POW("7");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器 
@@ -51008,7 +50996,6 @@ N                    }
 N                    case face_set:
 X                    case 5:
 N                    {
-W "..\drive\key.c" 540 25 function "INPUT_NUM" declared implicitly
 N                        INPUT_NUM("7");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51020,7 +51007,6 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 549 29 function "INPUT_C" declared implicitly
 N                            INPUT_C("7");
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -51030,7 +51016,6 @@ N                    }
 N                    case face_load:
 X                    case 4:
 N                    {
-W "..\drive\key.c" 557 25 function "INPUT_LOAD" declared implicitly
 N                        INPUT_LOAD("7");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51039,7 +51024,6 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 564 25 function "INPUT_CDC" declared implicitly
 N                        INPUT_CDC("7");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51050,7 +51034,6 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 573 29 function "INPUT_INFO" declared implicitly
 N                            INPUT_INFO(7);    
 N                        }
 N                        KeyCounter = 0;
@@ -51068,7 +51051,6 @@ N				switch(page_sw){
 N                    case face_menu:  
 X                    case 2:  
 N                    {
-W "..\drive\key.c" 588 25 function "INPUT_POW" declared implicitly
 N                        INPUT_POW("8");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器 
@@ -51076,7 +51058,6 @@ N                    }
 N                    case face_set:
 X                    case 5:
 N                    {
-W "..\drive\key.c" 594 25 function "INPUT_NUM" declared implicitly
 N                        INPUT_NUM("8");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51088,7 +51069,6 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 603 29 function "INPUT_C" declared implicitly
 N                            INPUT_C("8");
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -51098,7 +51078,6 @@ N                    }
 N                    case face_load:
 X                    case 4:
 N                    {
-W "..\drive\key.c" 611 25 function "INPUT_LOAD" declared implicitly
 N                        INPUT_LOAD("8");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51107,7 +51086,6 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 618 25 function "INPUT_CDC" declared implicitly
 N                        INPUT_CDC("8");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51118,7 +51096,6 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 627 29 function "INPUT_INFO" declared implicitly
 N                            INPUT_INFO(8);    
 N                        }
 N                        KeyCounter = 0;
@@ -51136,7 +51113,6 @@ N				switch(page_sw){
 N                    case face_menu:  
 X                    case 2:  
 N                    {
-W "..\drive\key.c" 642 25 function "INPUT_POW" declared implicitly
 N                        INPUT_POW("9");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器 
@@ -51144,7 +51120,6 @@ N                    }
 N                    case face_set:
 X                    case 5:
 N                    {
-W "..\drive\key.c" 648 25 function "INPUT_NUM" declared implicitly
 N                        INPUT_NUM("9");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51156,7 +51131,6 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 657 29 function "INPUT_C" declared implicitly
 N                            INPUT_C("9");
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -51166,7 +51140,6 @@ N                    }
 N                    case face_load:
 X                    case 4:
 N                    {
-W "..\drive\key.c" 665 25 function "INPUT_LOAD" declared implicitly
 N                        INPUT_LOAD("9");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51175,7 +51148,6 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 672 25 function "INPUT_CDC" declared implicitly
 N                        INPUT_CDC("9");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51186,7 +51158,6 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 681 29 function "INPUT_INFO" declared implicitly
 N                            INPUT_INFO(9);    
 N                        }
 N                        KeyCounter = 0;
@@ -51204,7 +51175,6 @@ N				switch(page_sw){
 N                    case face_menu:  
 X                    case 2:  
 N                    {
-W "..\drive\key.c" 696 25 function "INPUT_POW" declared implicitly
 N                        INPUT_POW("0");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器 
@@ -51212,7 +51182,6 @@ N                    }
 N                    case face_set:
 X                    case 5:
 N                    {
-W "..\drive\key.c" 702 25 function "INPUT_NUM" declared implicitly
 N                        INPUT_NUM("0");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51224,7 +51193,6 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 711 29 function "INPUT_C" declared implicitly
 N                            INPUT_C("0");
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -51234,7 +51202,6 @@ N                    }
 N                    case face_load:
 X                    case 4:
 N                    {
-W "..\drive\key.c" 719 25 function "INPUT_LOAD" declared implicitly
 N                        INPUT_LOAD("0");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51243,7 +51210,6 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 726 25 function "INPUT_CDC" declared implicitly
 N                        INPUT_CDC("0");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51254,7 +51220,6 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 735 29 function "INPUT_INFO" declared implicitly
 N                            INPUT_INFO(0);    
 N                        }else{
 N                            pass += 1;
@@ -51274,7 +51239,6 @@ N                switch(page_sw){
 N                    case face_menu:
 X                    case 2:
 N                    {
-W "..\drive\key.c" 752 25 function "INPUT_POW" declared implicitly
 N                        INPUT_POW(".");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51283,7 +51247,6 @@ N                    }
 N                    case face_set:
 X                    case 5:
 N                    {
-W "..\drive\key.c" 759 25 function "INPUT_NUM" declared implicitly
 N                        INPUT_NUM(".");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51292,7 +51255,6 @@ N                    }
 N                    case face_load:
 X                    case 4:
 N                    {
-W "..\drive\key.c" 766 25 function "INPUT_LOAD" declared implicitly
 N                        INPUT_LOAD(".");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51304,7 +51266,6 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 775 29 function "INPUT_C" declared implicitly
 N                            INPUT_C(".");
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -51314,7 +51275,6 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 783 25 function "INPUT_CDC" declared implicitly
 N                        INPUT_CDC(".");
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51328,7 +51288,8 @@ N			case KEY_ESC :
 X			case 0X6D :
 N			{
 N                LCD_Initializtion();
-N                GUI_Clear();//清屏
+N//                 GUI_Init();
+N//                 GUI_Clear();//清屏
 N//                timer_sw = 0;
 N				KeyCounter = 0;
 N//				BEEP_Tiggr();//触发蜂鸣器
@@ -51342,7 +51303,7 @@ N                switch(page_sw){
 N                    case face_set:  //系统设置
 X                    case 5:  
 N                    {
-W "..\drive\key.c" 807 25 function "SET_OP_LEFT" declared implicitly
+W "..\drive\key.c" 808 25 function "SET_OP_LEFT" declared implicitly
 N                        SET_OP_LEFT();  //设置选项切换
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51353,7 +51314,7 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 816 29 function "SYS_INFO_LEFT" declared implicitly
+W "..\drive\key.c" 817 29 function "SYS_INFO_LEFT" declared implicitly
 N                            SYS_INFO_LEFT();  //设置选项切换
 N                        } 
 N                        KeyCounter = 0;
@@ -51363,7 +51324,7 @@ N                    }
 N                    case face_cdc:  //系统设置
 X                    case 1:  
 N                    {
-W "..\drive\key.c" 824 25 function "CDC_OP_LEFT" declared implicitly
+W "..\drive\key.c" 825 25 function "CDC_OP_LEFT" declared implicitly
 N                        CDC_OP_LEFT();  //设置选项切换
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣噿
@@ -51379,7 +51340,7 @@ N                switch(page_sw){
 N                    case face_set:  //系统设置
 X                    case 5:  
 N                    {
-W "..\drive\key.c" 837 25 function "SET_OP_RIGHT" declared implicitly
+W "..\drive\key.c" 838 25 function "SET_OP_RIGHT" declared implicitly
 N                        SET_OP_RIGHT();  //设置选项切换
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51390,7 +51351,7 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 846 29 function "SYS_INFO_RIGHT" declared implicitly
+W "..\drive\key.c" 847 29 function "SYS_INFO_RIGHT" declared implicitly
 N                            SYS_INFO_RIGHT();  //设置选项切换
 N                        } 
 N                        KeyCounter = 0;
@@ -51400,7 +51361,7 @@ N                    }
 N                    case face_cdc:  //系统设置
 X                    case 1:  
 N                    {
-W "..\drive\key.c" 854 25 function "CDC_OP_RIGHT" declared implicitly
+W "..\drive\key.c" 855 25 function "CDC_OP_RIGHT" declared implicitly
 N                        CDC_OP_RIGHT();  //设置选项切换
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣噿
@@ -51418,7 +51379,7 @@ X                    case 2:
 N                    {
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
-W "..\drive\key.c" 869 25 function "MENU_OP_UP" declared implicitly
+W "..\drive\key.c" 870 25 function "MENU_OP_UP" declared implicitly
 N                        MENU_OP_UP();
 N                        break;
 N                    }                    
@@ -51434,7 +51395,7 @@ N                    }
 N                    case face_set:
 X                    case 5:
 N                    {
-W "..\drive\key.c" 881 25 function "SET_OP_UP" declared implicitly
+W "..\drive\key.c" 882 25 function "SET_OP_UP" declared implicitly
 N                        SET_OP_UP();  //设置选项切换
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51446,7 +51407,7 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 890 29 function "OC_OP_UP" declared implicitly
+W "..\drive\key.c" 891 29 function "OC_OP_UP" declared implicitly
 N                            OC_OP_UP();
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -51457,7 +51418,7 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 899 25 function "CDC_OP_UP" declared implicitly
+W "..\drive\key.c" 900 25 function "CDC_OP_UP" declared implicitly
 N                        CDC_OP_UP();
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51468,7 +51429,7 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 908 29 function "SYS_INFO_UP" declared implicitly
+W "..\drive\key.c" 909 29 function "SYS_INFO_UP" declared implicitly
 N                            SYS_INFO_UP();  //设置选项切换
 N                        }                        
 N                        KeyCounter = 0;
@@ -51488,7 +51449,7 @@ X                    case 2:
 N                    {
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
-W "..\drive\key.c" 925 25 function "MENU_OP_DOWN" declared implicitly
+W "..\drive\key.c" 926 25 function "MENU_OP_DOWN" declared implicitly
 N                        MENU_OP_DOWN();
 N                        break;
 N                    }  
@@ -51504,7 +51465,7 @@ N                    }
 N                    case face_set:  //系统设置
 X                    case 5:  
 N                    {
-W "..\drive\key.c" 937 25 function "SET_OP_DOWN" declared implicitly
+W "..\drive\key.c" 938 25 function "SET_OP_DOWN" declared implicitly
 N                        SET_OP_DOWN();  //设置选项切换
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51516,7 +51477,7 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 946 29 function "OC_OP_DOWN" declared implicitly
+W "..\drive\key.c" 947 29 function "OC_OP_DOWN" declared implicitly
 N                            OC_OP_DOWN();
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -51526,7 +51487,7 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 954 25 function "CDC_OP_DOWN" declared implicitly
+W "..\drive\key.c" 955 25 function "CDC_OP_DOWN" declared implicitly
 N                        CDC_OP_DOWN();
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51537,7 +51498,7 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 963 29 function "SYS_INFO_DOWN" declared implicitly
+W "..\drive\key.c" 964 29 function "SYS_INFO_DOWN" declared implicitly
 N                            SYS_INFO_DOWN();  //设置选项切换
 N                        } 
 N                        KeyCounter = 0;
@@ -51557,7 +51518,7 @@ N                switch(page_sw){
 N                    case face_menu:
 X                    case 2:
 N                    {
-W "..\drive\key.c" 980 25 function "MENU_SET" declared implicitly
+W "..\drive\key.c" 981 25 function "MENU_SET" declared implicitly
 N                        MENU_SET();
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51566,7 +51527,7 @@ N                    }
 N                    case face_set:
 X                    case 5:
 N                    {
-W "..\drive\key.c" 987 25 function "PARA_SET" declared implicitly
+W "..\drive\key.c" 988 25 function "PARA_SET" declared implicitly
 N                        PARA_SET();  //参数设置
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51578,7 +51539,7 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 996 29 function "OC_SET" declared implicitly
+W "..\drive\key.c" 997 29 function "OC_SET" declared implicitly
 N                            OC_SET();
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -51588,7 +51549,7 @@ N                    }
 N                    case face_load:
 X                    case 4:
 N                    {
-W "..\drive\key.c" 1004 25 function "LOAD_SET" declared implicitly
+W "..\drive\key.c" 1005 25 function "LOAD_SET" declared implicitly
 N                        LOAD_SET();
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51597,7 +51558,7 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 1011 25 function "CDC_SET" declared implicitly
+W "..\drive\key.c" 1012 25 function "CDC_SET" declared implicitly
 N                        CDC_SET();
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51606,7 +51567,7 @@ N                    }
 N                    case face_sys_info:
 X                    case 7:
 N                    {
-W "..\drive\key.c" 1018 25 function "CFM_PASS" declared implicitly
+W "..\drive\key.c" 1019 25 function "CFM_PASS" declared implicitly
 N                        CFM_PASS();
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51690,7 +51651,7 @@ N                        WM_DeleteWindow(load_wind);
 N                        WM_DeleteWindow(hWinsysinfo);
 N                        WM_DeleteWindow(hWincdc);
 N                        WM_DeleteWindow(hWinset);
-W "..\drive\key.c" 1095 25 function "CreateCDC" declared implicitly
+W "..\drive\key.c" 1096 25 function "CreateCDC" declared implicitly
 N                        CreateCDC();
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣噿
@@ -51983,7 +51944,7 @@ N                    WM_DeleteWindow(load_wind);
 N                    WM_DeleteWindow(hWinsysinfo);
 N                    WM_DeleteWindow(hWincdc);
 N                    WM_DeleteWindow(hWinset);
-W "..\drive\key.c" 1350 21 function "CreateCDC" declared implicitly
+W "..\drive\key.c" 1351 21 function "CreateCDC" declared implicitly
 N                    CreateCDC();                
 N                    KeyCounter = 0;
 N                    BEEP_Tiggr();//触发蜂鸣噿
@@ -52014,7 +51975,7 @@ N                    WM_DeleteWindow(load_wind);
 N                    WM_DeleteWindow(hWinsysinfo);
 N                    WM_DeleteWindow(hWincdc);
 N                    WM_DeleteWindow(hWinset);
-W "..\drive\key.c" 1378 21 function "Createsysinfo" declared implicitly
+W "..\drive\key.c" 1379 21 function "Createsysinfo" declared implicitly
 N                    Createsysinfo();
 N                    KeyCounter = 0;
 N                    BEEP_Tiggr();//触发蜂鸣噿

@@ -691,7 +691,7 @@ void MENU_SET(void)
 
 
 
-void INPUT_POW(char* num);            
+          
 void INPUT_POW(char* num){    
     switch(set_sw){
     case set_18:

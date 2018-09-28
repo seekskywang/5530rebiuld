@@ -549,7 +549,7 @@ void LOAD_SET(void) {
 }
 
 
-void INPUT_LOAD(char* num);            
+          
 void INPUT_LOAD(char* num){    
     switch(set_sw){
         case set_25:

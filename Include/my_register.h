@@ -19,6 +19,12 @@ void Write_oct(void);
 void Write_alarm(void);
 void Write_btype(void);
 void Write_info(void);
+void INPUT_POW(char* num);  
+void INPUT_NUM(char* num); 
+void INPUT_CDC(char* num); 
+void INPUT_C(char* num);  
+void INPUT_LOAD(char* num);  
+void INPUT_INFO(vu8 num);  
 
 //=============================================================================
 #define NOP   __nop();	  //ø’÷∏¡Ó

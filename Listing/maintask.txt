@@ -59,95 +59,90 @@
 00005e  6020              STR      r0,[r4,#0]  ; flagA
 ;;;61     	while (1)
 ;;;62     	{
-;;;63     //         sLCD_WR_REG(0xf1);
-;;;64     //         read1963 =sLCD_Read_Data();
-;;;65     //         if(read1963 != 0x03)
-;;;66     //         {
-;;;67     //             LCD_Initializtion();
-;;;68     //         }
-;;;69     		DAC_SetChannel1Data(DAC_Align_12b_R,Contr_Laod);//负载DAC控制
+;;;63     
+;;;64     		DAC_SetChannel1Data(DAC_Align_12b_R,Contr_Laod);//负载DAC控制
 000060  4e2b              LDR      r6,|L1.272|
-;;;70     		TIM_SetCompare1(TIM2,Contr_Current);//电源电流控制
+;;;65     		TIM_SetCompare1(TIM2,Contr_Current);//电源电流控制
 000062  4f2c              LDR      r7,|L1.276|
-;;;71     		TIM_SetCompare2(TIM2,Contr_Voltage);//电源电压控制
+;;;66     		TIM_SetCompare2(TIM2,Contr_Voltage);//电源电压控制
 000064  f8df80b0          LDR      r8,|L1.280|
-;;;72     		if(Flag_DAC_OFF==0)
+;;;67     		if(Flag_DAC_OFF==0)
 000068  f8df90b0          LDR      r9,|L1.284|
-00006c  f04f4580          MOV      r5,#0x40000000        ;70
+00006c  f04f4580          MOV      r5,#0x40000000        ;65
                   |L1.112|
-000070  8831              LDRH     r1,[r6,#0]            ;69  ; Contr_Laod
-000072  2000              MOVS     r0,#0                 ;69
+000070  8831              LDRH     r1,[r6,#0]            ;64  ; Contr_Laod
+000072  2000              MOVS     r0,#0                 ;64
 000074  f7fffffe          BL       DAC_SetChannel1Data
-000078  8839              LDRH     r1,[r7,#0]            ;70  ; Contr_Current
-00007a  4628              MOV      r0,r5                 ;70
+000078  8839              LDRH     r1,[r7,#0]            ;65  ; Contr_Current
+00007a  4628              MOV      r0,r5                 ;65
 00007c  f7fffffe          BL       TIM_SetCompare1
-000080  f8b81000          LDRH     r1,[r8,#0]            ;71  ; Contr_Voltage
-000084  4628              MOV      r0,r5                 ;71
+000080  f8b81000          LDRH     r1,[r8,#0]            ;66  ; Contr_Voltage
+000084  4628              MOV      r0,r5                 ;66
 000086  f7fffffe          BL       TIM_SetCompare2
 00008a  f8d90000          LDR      r0,[r9,#0]  ; flagB
 00008e  0700              LSLS     r0,r0,#28
 000090  d401              BMI      |L1.150|
-;;;73     		{
-;;;74     			Transformation_ADC();
+;;;68     		{
+;;;69     			Transformation_ADC();
 000092  f7fffffe          BL       Transformation_ADC
                   |L1.150|
-;;;75     		}
-;;;76     		if(Flag_ADC_Full==1)
+;;;70     		}
+;;;71     		if(Flag_ADC_Full==1)
 000096  6820              LDR      r0,[r4,#0]  ; flagA
 000098  0781              LSLS     r1,r0,#30
 00009a  d504              BPL      |L1.166|
-;;;77     		{
-;;;78     			Flag_ADC_Full=0;
+;;;72     		{
+;;;73     			Flag_ADC_Full=0;
 00009c  f0200002          BIC      r0,r0,#2
 0000a0  6020              STR      r0,[r4,#0]  ; flagA
-;;;79     			ADC_CH_Scan();//ADC扫描
+;;;74     			ADC_CH_Scan();//ADC扫描
 0000a2  f7fffffe          BL       ADC_CH_Scan
                   |L1.166|
-;;;80     		}
-;;;81     		if(UART_Buffer_Rece_flag==1)
+;;;75     		}
+;;;76     		if(UART_Buffer_Rece_flag==1)
 0000a6  6821              LDR      r1,[r4,#0]  ; flagA
 0000a8  0688              LSLS     r0,r1,#26
 0000aa  d504              BPL      |L1.182|
-;;;82     		{
-;;;83     			UART_Buffer_Rece_flag=0;
+;;;77     		{
+;;;78     			UART_Buffer_Rece_flag=0;
 0000ac  f0210020          BIC      r0,r1,#0x20
 0000b0  6020              STR      r0,[r4,#0]  ; flagA
-;;;84     			UART_Action();
+;;;79     			UART_Action();
 0000b2  f7fffffe          BL       UART_Action
                   |L1.182|
-;;;85     		}
-;;;86     		if(Flag_Key_Scan==1)
+;;;80     		}
+;;;81     		if(Flag_Key_Scan==1)
 0000b6  6821              LDR      r1,[r4,#0]  ; flagA
 0000b8  0708              LSLS     r0,r1,#28
 0000ba  d50a              BPL      |L1.210|
-;;;87     		{
-;;;88     			Flag_Key_Scan=0;
+;;;82     		{
+;;;83     			Flag_Key_Scan=0;
 0000bc  f0210008          BIC      r0,r1,#8
 0000c0  6020              STR      r0,[r4,#0]  ; flagA
-;;;89     			NewKey=TM1650_Read_KEY();
+;;;84     			NewKey=TM1650_Read_KEY();
 0000c2  f7fffffe          BL       TM1650_Read_KEY
 0000c6  4916              LDR      r1,|L1.288|
 0000c8  7008              STRB     r0,[r1,#0]
-;;;90     			Flag_Key_Scan = 1;
+;;;85     			Flag_Key_Scan = 1;
 0000ca  6820              LDR      r0,[r4,#0]  ; flagA
 0000cc  f0400008          ORR      r0,r0,#8
 0000d0  6020              STR      r0,[r4,#0]  ; flagA
                   |L1.210|
-;;;91     		}
-;;;92     		Key_Funtion();//按键处理
+;;;86     		}
+;;;87     		Key_Funtion();//按键处理
 0000d2  f7fffffe          BL       Key_Funtion
-;;;93     		Temp_Comapre();//风扇控制
+;;;88     		Temp_Comapre();//风扇控制
 0000d6  f7fffffe          BL       Temp_Comapre
-;;;94     		BEEP_Ring();//蜂鸣器控制
+;;;89     		BEEP_Ring();//蜂鸣器控制
 0000da  f7fffffe          BL       BEEP_Ring
-;;;95     		GUI_Delay(2);//GUI刷新
+;;;90     		GUI_Delay(2);//GUI刷新
 0000de  2002              MOVS     r0,#2
 0000e0  f7fffffe          BL       GUI_Delay
 0000e4  e7c4              B        |L1.112|
-;;;96     	}
-;;;97       
-;;;98     }
-;;;99     /***************************** ���������� www.armfly.com (END OF FILE) *********************************/
+;;;91     	}
+;;;92       
+;;;93     }
+;;;94     /***************************** ���������� www.armfly.com (END OF FILE) *********************************/
                           ENDP
 
 0000e6  0000              DCW      0x0000

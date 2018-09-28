@@ -13,6 +13,7 @@ void sLCD_WR_Data(unsigned int val);
 vu16 sLCD_Read_Data(void);
 
 void LCD_Initializtion(void);
+void sLCD_Init(void);
 void LCD_SetPoint(vu16 x,vu16 y,vu16 c);
 vu16 LCD_GetPoint(vu16 x, vu16 y);
 

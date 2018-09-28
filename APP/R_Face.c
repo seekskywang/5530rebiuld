@@ -1483,7 +1483,7 @@ void OC_SET(void) {
 }
 
 //内阻页面数字输入
-void INPUT_C(char* num);            
+          
 void INPUT_C(char* num){
     switch(set_sw)
     {

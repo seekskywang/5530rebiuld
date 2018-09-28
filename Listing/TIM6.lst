@@ -34719,6 +34719,12 @@ Nvoid Write_oct(void);
 Nvoid Write_alarm(void);
 Nvoid Write_btype(void);
 Nvoid Write_info(void);
+Nvoid INPUT_POW(char* num);  
+Nvoid INPUT_NUM(char* num); 
+Nvoid INPUT_CDC(char* num); 
+Nvoid INPUT_C(char* num);  
+Nvoid INPUT_LOAD(char* num);  
+Nvoid INPUT_INFO(vu8 num);  
 N
 N//=============================================================================
 N#define NOP   __nop();	  //空指令
@@ -35221,13 +35227,49 @@ N//吱时欠 3 讗讖鼐媳诏私
 Nvoid TIM3_IRQHandler(void)
 N{
 N    static vu16 count1ms;
-N    
+W "..\drive\TIM6.c" 80 12 explicit type is missing ("int" assumed)
+N    static resetcount;
+W "..\drive\TIM6.c" 81 12 explicit type is missing ("int" assumed)
+N    static read1963;
+W "..\drive\TIM6.c" 82 12 explicit type is missing ("int" assumed)
+N    static scancount;
 N    
 N    if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) //缨远讗讖
 X    if(TIM_GetITStatus(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)),((uint16_t)0x0001))==SET) 
 N    {
 N        TIM_ClearITPendingBit(TIM3,TIM_IT_Update); //去越讗讖要志位
 X        TIM_ClearITPendingBit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)),((uint16_t)0x0001)); 
+N        
+N        if(scancount == 1000)
+N        {
+W "..\drive\TIM6.c" 90 13 function "sLCD_WR_REG" declared implicitly
+N            sLCD_WR_REG(0xf1);
+W "..\drive\TIM6.c" 91 23 function "sLCD_Read_Data" declared implicitly
+N            read1963 =sLCD_Read_Data();
+N            scancount = 0;
+N        }else{
+N            scancount++;
+N        }
+N         if(read1963 != 0x03)
+N         {
+N             if(resetcount == 2000)
+N             {
+W "..\drive\TIM6.c" 100 18 function "LCD_Initializtion" declared implicitly
+N                 LCD_Initializtion();
+W "..\drive\TIM6.c" 101 18 function "GUI_Init" declared implicitly
+N                 GUI_Init();
+W "..\drive\TIM6.c" 102 18 function "GUI_Clear" declared implicitly
+N                 GUI_Clear();//娓呭睆
+N                 resetcount = 0;
+N             }else{
+N                 resetcount++;
+N             }
+N//             sLCD_Init();
+N//             GUI_Init();
+N//             WM_SetDesktopColor(GUI_BLUE);  
+N//             GUI_Clear();//娓呭睆
+N            
+N         }
 N        switch(page_sw)
 N        {
 N            case face_menu:
