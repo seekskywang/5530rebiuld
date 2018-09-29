@@ -1603,18 +1603,19 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_54);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-            SET_Voltage = cdc_cv;
+            if(pow_step == step1)
+            {
+                SET_Voltage = opv1;
+            }else if(pow_step == step2){
+                SET_Voltage = opv2;
+            }else if(pow_step == step3){
+                SET_Voltage = opv3;
+            }
+//            SET_Voltage = opv1;
             dis_output_v = (float)SET_Voltage/100;
             sprintf(buf,"%.2f",dis_output_v);
             TEXT_SetText(hItem,buf);
-            if(pow_step == step1)
-            {
-                opv1 = SET_Voltage;
-            }else if(pow_step == step2){
-                opv2 = SET_Voltage;
-            }else if(pow_step == step3){
-                opv3 = SET_Voltage;
-            }
+            
             
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_50);
             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
@@ -1652,7 +1653,15 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_55);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
-            SET_Current = cdc_cc;
+            if(cur_step == step1)
+            {
+                SET_Current = opc1;
+            }else if(cur_step == step2){
+                SET_Current = opc2;
+            }else if(cur_step == step3){
+                SET_Current = opc3;
+            }
+//            SET_Current = cdc_cc;
             if(SET_Current > 5000)
             {
                 SET_Current = 5000;               
@@ -1661,14 +1670,7 @@ void CDC_SET(void)
             sprintf(buf,"%.2f",dis_output_c);
             TEXT_SetText(hItem,buf);
             
-            if(cur_step == step1)
-            {
-                opc1 = SET_Current;
-            }else if(cur_step == step2){
-                opc2 = SET_Current;
-            }else if(cur_step == step3){
-                opc3 = SET_Current;
-            }
+            
             
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_51);
             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
@@ -1941,10 +1943,18 @@ void INPUT_CDC(char* num){
             WM_HWIN hItem;
 //            WM_InvalidateWindow(hWincdc);
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_54);
+            
             switch(bit){
                 case 1:
                 {
-                    cdc_cv = atoi(num) * 100;
+                    if(pow_step == step1)
+                    {
+                        opv1 = atoi(num) * 100;
+                    }else if(pow_step == step2){
+                        opv2 = atoi(num) * 100;
+                    }else if(pow_step == step3){
+                        opv3 = atoi(num) * 100;
+                    }
                     strcat(set_limit,num);            
                     TEXT_SetText(hItem,set_limit);
                     bit = 2;
@@ -1958,7 +1968,15 @@ void INPUT_CDC(char* num){
                     {
                         dot_flag = 1;
                     }else{
-                        cdc_cv = cdc_cv * 10 + atoi(num) * 100;
+                        if(pow_step == step1)
+                        {
+                            opv1 = opv1 * 10 + atoi(num) * 100;
+                        }else if(pow_step == step2){
+                            opv2 = opv2 * 10 + atoi(num) * 100;
+                        }else if(pow_step == step3){
+                           opv3 = opv3 * 10 + atoi(num) * 100;
+                        }
+                        
                     }
                     bit = 3;
                     break;
@@ -1973,10 +1991,26 @@ void INPUT_CDC(char* num){
                         {                            
                             dot_flag = 2;
                         }else{
-                            cdc_cv = /*3000*/ 6000;
+                            if(pow_step == step1)
+                            {
+                               opv1 = /*3000*/ 6000;
+                            }else if(pow_step == step2){
+                                opv2 = /*3000*/ 6000;
+                            }else if(pow_step == step3){
+                               opv3 =  /*3000*/ 6000;
+                            }
+                            
                         }
                     }else{
-                        cdc_cv = cdc_cv + atoi(num) * 10;
+                        if(pow_step == step1)
+                            {
+                               opv1 = opv1 + atoi(num) * 10;
+                            }else if(pow_step == step2){
+                                opv2 = opv2 + atoi(num) * 10;
+                            }else if(pow_step == step3){
+                               opv3 = opv3 + atoi(num) * 10;
+                            }
+                        
                     }
                                        
                     bit = 4;
@@ -1988,11 +2022,33 @@ void INPUT_CDC(char* num){
                     TEXT_SetText(hItem,set_limit);
                     if(dot_flag == 0)
                     {
-                        cdc_cv = /*3000*/ 6000;
+                        if(pow_step == step1)
+                            {
+                               opv1 = /*3000*/ 6000;
+                            }else if(pow_step == step2){
+                                opv2 = /*3000*/ 6000;
+                            }else if(pow_step == step3){
+                               opv3 =  /*3000*/ 6000;
+                            }
                     }else if(dot_flag == 2){
-                        cdc_cv = cdc_cv + atoi(num) * 10;
+                        if(pow_step == step1)
+                            {
+                               opv1 = opv1 + atoi(num) * 10;
+                            }else if(pow_step == step2){
+                                opv2 = opv2 + atoi(num) * 10;
+                            }else if(pow_step == step3){
+                               opv3 = opv3 + atoi(num) * 10;
+                            }
                     }else{
-                        cdc_cv = cdc_cv + atoi(num);
+                        if(pow_step == step1)
+                            {
+                               opv1 = opv1 + atoi(num);
+                            }else if(pow_step == step2){
+                                opv2 = opv2 + atoi(num);
+                            }else if(pow_step == step3){
+                               opv3 = opv3 + atoi(num);
+                            }
+//                        cdc_cv = cdc_cv + atoi(num);
                     }
                                        
                     bit = 5;
@@ -2004,11 +2060,34 @@ void INPUT_CDC(char* num){
                     TEXT_SetText(hItem,set_limit);
                     if(dot_flag == 0)
                     {
-                        cdc_cv = /*3000*/ 6000;
+                        if(pow_step == step1)
+                            {
+                               opv1 = /*3000*/ 6000;
+                            }else if(pow_step == step2){
+                                opv2 = /*3000*/ 6000;
+                            }else if(pow_step == step3){
+                               opv3 =  /*3000*/ 6000;
+                            }
                     }else if(dot_flag == 1){
-                        cdc_cv = cdc_cv;
+                        if(pow_step == step1)
+                            {
+                               opv1 = opv1;
+                            }else if(pow_step == step2){
+                                opv2 =opv2;
+                            }else if(pow_step == step3){
+                               opv3 =  opv3;
+                            }
+//                        cdc_cv = cdc_cv;
                     }else{
-                        cdc_cv = cdc_cv + atoi(num);
+                        if(pow_step == step1)
+                            {
+                               opv1 = opv1 + atoi(num);
+                            }else if(pow_step == step2){
+                                opv2 = opv2 + atoi(num);
+                            }else if(pow_step == step3){
+                               opv3 = opv3 + atoi(num);
+                            }
+//                        cdc_cv = cdc_cv + atoi(num);
                     }
                                        
                     bit = 1;
@@ -2025,7 +2104,14 @@ void INPUT_CDC(char* num){
             switch(bit){
                 case 1:
                 {
-                    cdc_cc = atoi(num) * 1000;
+                    if(cur_step == step1)
+                    {
+                        opc1 = atoi(num) * 1000;
+                    }else if(cur_step == step2){
+                        opc2 = atoi(num) * 1000;
+                    }else if(cur_step == step3){
+                        opc3 = atoi(num) * 1000;
+                    }
                     strcat(set_limit,num);            
                     TEXT_SetText(hItem,set_limit);
                     bit = 2;
@@ -2039,7 +2125,15 @@ void INPUT_CDC(char* num){
                     {
                         dot_flag = 1;
                     }else{
-                        cdc_cc = cdc_cc * 10 + atoi(num) * 1000;
+                        if(cur_step == step1)
+                        {
+                            opc1 = opc1 * 10 + atoi(num) * 1000;
+                        }else if(cur_step == step2){
+                            opc2 = opc2 * 10 + atoi(num) * 1000;
+                        }else if(cur_step == step3){
+                            opc2 = opc2 * 10 + atoi(num) * 1000;
+                        }
+//                        opc1 = opc1 * 10 + atoi(num) * 1000;
                     }
                     bit = 3;
                     break;
@@ -2054,10 +2148,25 @@ void INPUT_CDC(char* num){
                         {                            
                             dot_flag = 2;
                         }else{
-                            cdc_cc = 5000;
+                            if(cur_step == step1)
+                            {
+                                opc1 = 5000;
+                            }else if(cur_step == step2){
+                                opc2 = 5000;
+                            }else if(cur_step == step3){
+                                opc3 = 5000;
+                            }
                         }
                     }else{
-                        cdc_cc = cdc_cc + atoi(num) * 100;
+//                        opc1 = opc1 + atoi(num) * 100;
+                        if(cur_step == step1)
+                        {
+                            opc1 = opc1 + atoi(num) * 100;
+                        }else if(cur_step == step2){
+                            opc2 = opc2 + atoi(num) * 100;
+                        }else if(cur_step == step3){
+                            opc3 = opc3 + atoi(num) * 100;
+                        }
                     }
                                        
                     bit = 4;
@@ -2069,11 +2178,32 @@ void INPUT_CDC(char* num){
                     TEXT_SetText(hItem,set_limit);
                     if(dot_flag == 0)
                     {
-                        cdc_cc = 5000;
+                        if(cur_step == step1)
+                        {
+                            opc1 = 5000;
+                        }else if(cur_step == step2){
+                            opc2 = 5000;
+                        }else if(cur_step == step3){
+                            opc3 = 5000;
+                        }
                     }else if(dot_flag == 2){
-                        cdc_cc = cdc_cc + atoi(num) * 100;
+                        if(cur_step == step1)
+                        {
+                            opc1 = opc1 + atoi(num) * 100;
+                        }else if(cur_step == step2){
+                            opc2 = opc2 + atoi(num) * 100;
+                        }else if(cur_step == step3){
+                            opc3 = opc3 + atoi(num) * 100;
+                        }
                     }else{
-                        cdc_cc = cdc_cc + atoi(num) * 10;
+                        if(cur_step == step1)
+                        {
+                            opc1 = opc1 + atoi(num) * 10;
+                        }else if(cur_step == step2){
+                            opc2 = opc2 + atoi(num) * 10;
+                        }else if(cur_step == step3){
+                            opc3 = opc3 + atoi(num) * 10;
+                        }
                     }
                                        
                     bit = 5;
@@ -2085,11 +2215,32 @@ void INPUT_CDC(char* num){
                     TEXT_SetText(hItem,set_limit);
                     if(dot_flag == 0)
                     {
-                        cdc_cc = 5000;
+                       if(cur_step == step1)
+                        {
+                            opc1 = 5000;
+                        }else if(cur_step == step2){
+                            opc2 = 5000;
+                        }else if(cur_step == step3){
+                            opc3 = 5000;
+                        }
                     }else if(dot_flag == 1){
-                        cdc_cc = cdc_cc;
+                        if(cur_step == step1)
+                        {
+                            opc1 = opc1;
+                        }else if(cur_step == step2){
+                            opc2 = opc2;
+                        }else if(cur_step == step3){
+                            opc3 = opc3;
+                        }
                     }else{
-                        cdc_cc = cdc_cc + atoi(num) * 10;
+                       if(cur_step == step1)
+                        {
+                            opc1 = opc1 + atoi(num) * 10;
+                        }else if(cur_step == step2){
+                            opc2 = opc2 + atoi(num) * 10;
+                        }else if(cur_step == step3){
+                            opc3 = opc3 + atoi(num) * 10;
+                        }
                     }
                                        
                     bit = 1;

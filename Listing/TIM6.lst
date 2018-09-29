@@ -35156,6 +35156,7 @@ Nvoid TIM3_Int_Init(u16 arr,u16 psc);
 Nvoid TIM3_IRQHandler(void);
 N#endif
 L 14 "..\drive\TIM6.c" 2
+Nvu8 resetflag;
 N/*****************************************************************/
 N/*****************************************************************/
 N// void TIM6_Config(void)
@@ -35228,11 +35229,11 @@ N//֨ʱǷ 3 א׏ؾϱگ˽
 Nvoid TIM3_IRQHandler(void)
 N{
 N    static vu16 count1ms;
-W "..\drive\TIM6.c" 80 12 explicit type is missing ("int" assumed)
-N    static resetcount;
 W "..\drive\TIM6.c" 81 12 explicit type is missing ("int" assumed)
-N    static read1963;
+N    static resetcount;
 W "..\drive\TIM6.c" 82 12 explicit type is missing ("int" assumed)
+N    static read1963;
+W "..\drive\TIM6.c" 83 12 explicit type is missing ("int" assumed)
 N    static scancount;
 N    
 N    if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) //ӧԶא׏
@@ -35241,59 +35242,48 @@ N    {
 N        TIM_ClearITPendingBit(TIM3,TIM_IT_Update); //ȥԽא׏Ҫ־λ
 X        TIM_ClearITPendingBit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)),((uint16_t)0x0001)); 
 N        
-N        if(scancount == 1000)
+N        if(page_sw != face_starter)
+X        if(page_sw != 6)
 N        {
-W "..\drive\TIM6.c" 90 13 function "sLCD_WR_REG" declared implicitly
-N            sLCD_WR_REG(0xf1);
-W "..\drive\TIM6.c" 91 23 function "sLCD_Read_Data" declared implicitly
-N            read1963 =sLCD_Read_Data();
-N            scancount = 0;
-N        }else{
-N            scancount++;
-N        }
-N         if(read1963 != 0x03)
-N         {
-N             if(resetcount == 2000)
+N             if(resetflag == 1)
 N             {
-W "..\drive\TIM6.c" 100 18 function "LCD_Initializtion" declared implicitly
-N                 LCD_Initializtion();
-W "..\drive\TIM6.c" 101 18 function "GUI_Init" declared implicitly
-N                 GUI_Init();
-N                 if(page_sw == face_menu)
-X                 if(page_sw == 2)
+N                 if(resetcount == 1000)
 N                 {
-W "..\drive\TIM6.c" 104 22 function "ResetPow" declared implicitly
-N                     ResetPow();
-N                 }else if(page_sw == face_cdc){
-X                 }else if(page_sw == 1){
-W "..\drive\TIM6.c" 106 22 function "ResetCDC" declared implicitly
-N                     ResetCDC();
-N                 }else if(page_sw == face_r){
-X                 }else if(page_sw == 3){
-W "..\drive\TIM6.c" 108 22 function "ResetR" declared implicitly
-N                     ResetR();
-N                 }else if(page_sw == face_load){
-X                 }else if(page_sw == 4){
-W "..\drive\TIM6.c" 110 22 function "ResetLoad" declared implicitly
-N                     ResetLoad();
-N                 }else if(page_sw == face_graph){
-X                 }else if(page_sw == 0){
-W "..\drive\TIM6.c" 112 22 function "ResetG" declared implicitly
-N                     ResetG();
-N                 }else if(page_sw == face_set){
-X                 }else if(page_sw == 5){
-W "..\drive\TIM6.c" 114 22 function "ResetSET" declared implicitly
-N                     ResetSET();
-N                 }
-N                 resetcount = 0;
-N             }else{
-N                 resetcount++;
+W "..\drive\TIM6.c" 95 22 function "LCD_Initializtion" declared implicitly
+N                     LCD_Initializtion();
+W "..\drive\TIM6.c" 96 22 function "GUI_Init" declared implicitly
+N                     GUI_Init();
+N                     if(page_sw == face_menu)
+X                     if(page_sw == 2)
+N                     {
+W "..\drive\TIM6.c" 99 26 function "ResetPow" declared implicitly
+N                         ResetPow();
+N                     }else if(page_sw == face_cdc){
+X                     }else if(page_sw == 1){
+W "..\drive\TIM6.c" 101 26 function "ResetCDC" declared implicitly
+N                         ResetCDC();
+N                     }else if(page_sw == face_r){
+X                     }else if(page_sw == 3){
+W "..\drive\TIM6.c" 103 26 function "ResetR" declared implicitly
+N                         ResetR();
+N                     }else if(page_sw == face_load){
+X                     }else if(page_sw == 4){
+W "..\drive\TIM6.c" 105 26 function "ResetLoad" declared implicitly
+N                         ResetLoad();
+N                     }else if(page_sw == face_graph){
+X                     }else if(page_sw == 0){
+W "..\drive\TIM6.c" 107 26 function "ResetG" declared implicitly
+N                         ResetG();
+N                     }else if(page_sw == face_set){
+X                     }else if(page_sw == 5){
+W "..\drive\TIM6.c" 109 26 function "ResetSET" declared implicitly
+N                         ResetSET();
+N                     }
+N                     resetcount = 0;
+N                 }else{
+N                     resetcount++;
+N                 }                
 N             }
-N//             sLCD_Init();
-N//             GUI_Init();
-N//             WM_SetDesktopColor(GUI_BLUE);  
-N//             GUI_Clear();//清屏
-N            
 N         }
 N        switch(page_sw)
 N        {
@@ -35417,4 +35407,6 @@ N            }break;
 N        }
 N    }    
 N    
+W "..\drive\TIM6.c" 82 12 variable "read1963" was declared but never referenced
+W "..\drive\TIM6.c" 83 12 variable "scancount" was declared but never referenced
 N}

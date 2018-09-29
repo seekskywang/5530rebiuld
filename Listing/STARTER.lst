@@ -50135,7 +50135,8 @@ NWM_HWIN CreateSTARTER(void);
 XGUI_HWIN CreateSTARTER(void);
 NWM_HWIN CreateSTARTER(void) {
 XGUI_HWIN CreateSTARTER(void) {
-N//  page_sw = face_starter;
+N  page_sw = face_starter;
+X  page_sw = 6;
 N  hWinstarter  = GUI_CreateDialogBox(_aDialogCreate6, GUI_COUNTOF(_aDialogCreate6), _cbDialog, WM_HBKWIN, 0, 0);
 X  hWinstarter  = GUI_CreateDialogBox(_aDialogCreate6, (sizeof(_aDialogCreate6) / sizeof(_aDialogCreate6[0])), _cbDialog, WM_GetDesktopWindow(), 0, 0);
 N  return hWinstarter;

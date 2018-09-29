@@ -11,6 +11,7 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx.h"
 #include "tim6.h"
+vu8 resetflag;
 /*****************************************************************/
 /*****************************************************************/
 // void TIM6_Config(void)
@@ -85,43 +86,33 @@ void TIM3_IRQHandler(void)
     {
         TIM_ClearITPendingBit(TIM3,TIM_IT_Update); //ȥԽא׏Ҫ־λ
         
-        if(scancount == 1000)
+        if(page_sw != face_starter)
         {
-            sLCD_WR_REG(0xf1);
-            read1963 =sLCD_Read_Data();
-            scancount = 0;
-        }else{
-            scancount++;
-        }
-         if(read1963 != 0x03)
-         {
-             if(resetcount == 2000)
+             if(resetflag == 1)
              {
-                 LCD_Initializtion();
-                 GUI_Init();
-                 if(page_sw == face_menu)
+                 if(resetcount == 1000)
                  {
-                     ResetPow();
-                 }else if(page_sw == face_cdc){
-                     ResetCDC();
-                 }else if(page_sw == face_r){
-                     ResetR();
-                 }else if(page_sw == face_load){
-                     ResetLoad();
-                 }else if(page_sw == face_graph){
-                     ResetG();
-                 }else if(page_sw == face_set){
-                     ResetSET();
-                 }
-                 resetcount = 0;
-             }else{
-                 resetcount++;
+                     LCD_Initializtion();
+                     GUI_Init();
+                     if(page_sw == face_menu)
+                     {
+                         ResetPow();
+                     }else if(page_sw == face_cdc){
+                         ResetCDC();
+                     }else if(page_sw == face_r){
+                         ResetR();
+                     }else if(page_sw == face_load){
+                         ResetLoad();
+                     }else if(page_sw == face_graph){
+                         ResetG();
+                     }else if(page_sw == face_set){
+                         ResetSET();
+                     }
+                     resetcount = 0;
+                 }else{
+                     resetcount++;
+                 }                
              }
-//             sLCD_Init();
-//             GUI_Init();
-//             WM_SetDesktopColor(GUI_BLUE);  
-//             GUI_Clear();//清屏
-            
          }
         switch(page_sw)
         {

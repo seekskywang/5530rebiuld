@@ -5,180 +5,239 @@
                           AREA ||i.MainTask||, CODE, READONLY, ALIGN=2
 
                   MainTask PROC
-;;;40     */
-;;;41     void MainTask(void) 
+;;;41     */
+;;;42     void MainTask(void) 
 000000  f7fffffe          BL       GUI_Init
-;;;42     { 
-;;;43         static vu16 read1963;
-;;;44     //	unsigned char  ucKeyCode;
-;;;45     	GUI_Init();
-;;;46     	WM_SetDesktopColor(GUI_BLUE);  
+;;;43     { 
+;;;44         static resetcount;
+;;;45         static read1963;
+;;;46         static scancount;
+;;;47     //	unsigned char  ucKeyCode;
+;;;48     	GUI_Init();
+;;;49     	WM_SetDesktopColor(GUI_BLUE);  
 000004  f44f007f          MOV      r0,#0xff0000
 000008  f7fffffe          BL       WM_SetDesktopColor
-;;;47     	GUI_Clear();//清屏
+;;;50     	GUI_Clear();//清屏
 00000c  f7fffffe          BL       GUI_Clear
-;;;48     	WM_SetCreateFlags(WM_CF_MEMDEV);
+;;;51     	WM_SetCreateFlags(WM_CF_MEMDEV);
 000010  2004              MOVS     r0,#4
 000012  f7fffffe          BL       WM_SetCreateFlags
-;;;49     	PROGBAR_SetDefaultSkin(PROGBAR_SKIN_FLEX);
-000016  4834              LDR      r0,|L1.232|
+;;;52     	PROGBAR_SetDefaultSkin(PROGBAR_SKIN_FLEX);
+000016  4842              LDR      r0,|L1.288|
 000018  f7fffffe          BL       PROGBAR_SetDefaultSkin
-;;;50     	FRAMEWIN_SetDefaultSkin(FRAMEWIN_SKIN_FLEX);
-00001c  4833              LDR      r0,|L1.236|
+;;;53     	FRAMEWIN_SetDefaultSkin(FRAMEWIN_SKIN_FLEX);
+00001c  4841              LDR      r0,|L1.292|
 00001e  f7fffffe          BL       FRAMEWIN_SetDefaultSkin
-;;;51     	PROGBAR_SetDefaultSkin(PROGBAR_SKIN_FLEX);
-000022  4831              LDR      r0,|L1.232|
+;;;54     	PROGBAR_SetDefaultSkin(PROGBAR_SKIN_FLEX);
+000022  483f              LDR      r0,|L1.288|
 000024  f7fffffe          BL       PROGBAR_SetDefaultSkin
-;;;52     	BUTTON_SetDefaultSkin(BUTTON_SKIN_FLEX);
-000028  4831              LDR      r0,|L1.240|
+;;;55     	BUTTON_SetDefaultSkin(BUTTON_SKIN_FLEX);
+000028  483f              LDR      r0,|L1.296|
 00002a  f7fffffe          BL       BUTTON_SetDefaultSkin
-;;;53     	CHECKBOX_SetDefaultSkin(CHECKBOX_SKIN_FLEX);
-00002e  4831              LDR      r0,|L1.244|
+;;;56     	CHECKBOX_SetDefaultSkin(CHECKBOX_SKIN_FLEX);
+00002e  483f              LDR      r0,|L1.300|
 000030  f7fffffe          BL       CHECKBOX_SetDefaultSkin
-;;;54     	DROPDOWN_SetDefaultSkin(DROPDOWN_SKIN_FLEX);
-000034  4830              LDR      r0,|L1.248|
+;;;57     	DROPDOWN_SetDefaultSkin(DROPDOWN_SKIN_FLEX);
+000034  483e              LDR      r0,|L1.304|
 000036  f7fffffe          BL       DROPDOWN_SetDefaultSkin
-;;;55     	SCROLLBAR_SetDefaultSkin(SCROLLBAR_SKIN_FLEX);
-00003a  4830              LDR      r0,|L1.252|
+;;;58     	SCROLLBAR_SetDefaultSkin(SCROLLBAR_SKIN_FLEX);
+00003a  483e              LDR      r0,|L1.308|
 00003c  f7fffffe          BL       SCROLLBAR_SetDefaultSkin
-;;;56     	SLIDER_SetDefaultSkin(SLIDER_SKIN_FLEX);
-000040  482f              LDR      r0,|L1.256|
+;;;59     	SLIDER_SetDefaultSkin(SLIDER_SKIN_FLEX);
+000040  483d              LDR      r0,|L1.312|
 000042  f7fffffe          BL       SLIDER_SetDefaultSkin
-;;;57     	HEADER_SetDefaultSkin(HEADER_SKIN_FLEX);
-000046  482f              LDR      r0,|L1.260|
+;;;60     	HEADER_SetDefaultSkin(HEADER_SKIN_FLEX);
+000046  483d              LDR      r0,|L1.316|
 000048  f7fffffe          BL       HEADER_SetDefaultSkin
-;;;58     	RADIO_SetDefaultSkin(RADIO_SKIN_FLEX);
-00004c  482e              LDR      r0,|L1.264|
+;;;61     	RADIO_SetDefaultSkin(RADIO_SKIN_FLEX);
+00004c  483c              LDR      r0,|L1.320|
 00004e  f7fffffe          BL       RADIO_SetDefaultSkin
-;;;59         CreateSTARTER();
+;;;62         CreateSTARTER();
 000052  f7fffffe          BL       CreateSTARTER
-;;;60     //	CreateR();//开机进入内阻测试界面
-;;;61     	Flag_Swtich_ON=0;
-000056  4c2d              LDR      r4,|L1.268|
+;;;63     //	CreateR();//开机进入内阻测试界面
+;;;64     	Flag_Swtich_ON=0;
+000056  4c3b              LDR      r4,|L1.324|
 000058  6820              LDR      r0,[r4,#0]  ; flagA
 00005a  f0200040          BIC      r0,r0,#0x40
 00005e  6020              STR      r0,[r4,#0]  ; flagA
-;;;62     	while (1)
-;;;63     	{
-;;;64     //         TM1650_SET_LED(0x68,0x70);//FAIL灯
-;;;65     //         GPIO_SetBits(GPIOD,GPIO_Pin_12);//
-;;;66             
-;;;67     		DAC_SetChannel1Data(DAC_Align_12b_R,Contr_Laod);//负载DAC控制
-000060  4e2b              LDR      r6,|L1.272|
-;;;68     		TIM_SetCompare1(TIM2,Contr_Current);//电源电流控制
-000062  4f2c              LDR      r7,|L1.276|
-;;;69     		TIM_SetCompare2(TIM2,Contr_Voltage);//电源电压控制
-000064  f8df80b0          LDR      r8,|L1.280|
-;;;70     		if(Flag_DAC_OFF==0)
-000068  f8df90b0          LDR      r9,|L1.284|
-00006c  f04f4580          MOV      r5,#0x40000000        ;68
-                  |L1.112|
-000070  8831              LDRH     r1,[r6,#0]            ;67  ; Contr_Laod
-000072  2000              MOVS     r0,#0                 ;67
-000074  f7fffffe          BL       DAC_SetChannel1Data
-000078  8839              LDRH     r1,[r7,#0]            ;68  ; Contr_Current
-00007a  4628              MOV      r0,r5                 ;68
-00007c  f7fffffe          BL       TIM_SetCompare1
-000080  f8b81000          LDRH     r1,[r8,#0]            ;69  ; Contr_Voltage
-000084  4628              MOV      r0,r5                 ;69
-000086  f7fffffe          BL       TIM_SetCompare2
-00008a  f8d90000          LDR      r0,[r9,#0]  ; flagB
-00008e  0700              LSLS     r0,r0,#28
-000090  d401              BMI      |L1.150|
-;;;71     		{
-;;;72     			Transformation_ADC();
-000092  f7fffffe          BL       Transformation_ADC
-                  |L1.150|
-;;;73     		}
-;;;74     		if(Flag_ADC_Full==1)
-000096  6820              LDR      r0,[r4,#0]  ; flagA
-000098  0781              LSLS     r1,r0,#30
-00009a  d504              BPL      |L1.166|
-;;;75     		{
-;;;76     			Flag_ADC_Full=0;
-00009c  f0200002          BIC      r0,r0,#2
-0000a0  6020              STR      r0,[r4,#0]  ; flagA
-;;;77     			ADC_CH_Scan();//ADC扫描
-0000a2  f7fffffe          BL       ADC_CH_Scan
+;;;65     	while (1)
+;;;66     	{
+;;;67     //         TM1650_SET_LED(0x68,0x70);//FAIL灯
+;;;68     //         GPIO_SetBits(GPIOD,GPIO_Pin_12);//
+;;;69             if(page_sw != face_starter)
+000060  f8df90e4          LDR      r9,|L1.328|
+;;;70             {
+;;;71                 if(scancount == 10)
+000064  4f39              LDR      r7,|L1.332|
+;;;72                 {
+;;;73                     sLCD_WR_REG(0xf1);
+;;;74                     read1963 =sLCD_Read_Data();
+;;;75                     scancount = 0;
+;;;76                 }else{
+;;;77                     scancount++;
+;;;78                 }
+;;;79                  if(read1963 != 0x03)
+;;;80                  {
+;;;81                      resetflag = 1;               
+000066  4e3a              LDR      r6,|L1.336|
+;;;82                  }else{
+;;;83                      resetflag = 0; 
+;;;84                  }
+;;;85              }
+;;;86     		DAC_SetChannel1Data(DAC_Align_12b_R,Contr_Laod);//负载DAC控制
+000068  f8dfa0e8          LDR      r10,|L1.340|
+;;;87     		TIM_SetCompare1(TIM2,Contr_Current);//电源电流控制
+00006c  f8dfb0e8          LDR      r11,|L1.344|
+000070  2500              MOVS     r5,#0                 ;75
+000072  f04f4880          MOV      r8,#0x40000000
+                  |L1.118|
+000076  f8990000          LDRB     r0,[r9,#0]            ;69  ; page_sw
+00007a  2806              CMP      r0,#6                 ;69
+00007c  d013              BEQ      |L1.166|
+00007e  6878              LDR      r0,[r7,#4]            ;71  ; scancount
+000080  280a              CMP      r0,#0xa               ;71
+000082  d007              BEQ      |L1.148|
+000084  1c40              ADDS     r0,r0,#1              ;77
+000086  6078              STR      r0,[r7,#4]            ;77  ; scancount
+                  |L1.136|
+000088  6838              LDR      r0,[r7,#0]            ;79  ; read1963
+00008a  2803              CMP      r0,#3                 ;79
+00008c  d00a              BEQ      |L1.164|
+00008e  2001              MOVS     r0,#1                 ;81
+000090  7030              STRB     r0,[r6,#0]            ;81
+000092  e008              B        |L1.166|
+                  |L1.148|
+000094  20f1              MOVS     r0,#0xf1              ;73
+000096  f7fffffe          BL       sLCD_WR_REG
+00009a  f7fffffe          BL       sLCD_Read_Data
+00009e  6038              STR      r0,[r7,#0]            ;74  ; read1963
+0000a0  607d              STR      r5,[r7,#4]            ;75  ; scancount
+0000a2  e7f1              B        |L1.136|
+                  |L1.164|
+0000a4  7035              STRB     r5,[r6,#0]            ;83
                   |L1.166|
-;;;78     		}
-;;;79     		if(UART_Buffer_Rece_flag==1)
-0000a6  6821              LDR      r1,[r4,#0]  ; flagA
-0000a8  0688              LSLS     r0,r1,#26
-0000aa  d504              BPL      |L1.182|
-;;;80     		{
-;;;81     			UART_Buffer_Rece_flag=0;
-0000ac  f0210020          BIC      r0,r1,#0x20
-0000b0  6020              STR      r0,[r4,#0]  ; flagA
-;;;82     			UART_Action();
-0000b2  f7fffffe          BL       UART_Action
-                  |L1.182|
-;;;83     		}
-;;;84     		if(Flag_Key_Scan==1)
-0000b6  6821              LDR      r1,[r4,#0]  ; flagA
-0000b8  0708              LSLS     r0,r1,#28
-0000ba  d50a              BPL      |L1.210|
-;;;85     		{
-;;;86     			Flag_Key_Scan=0;
-0000bc  f0210008          BIC      r0,r1,#8
-0000c0  6020              STR      r0,[r4,#0]  ; flagA
-;;;87     			NewKey=TM1650_Read_KEY();
-0000c2  f7fffffe          BL       TM1650_Read_KEY
-0000c6  4916              LDR      r1,|L1.288|
-0000c8  7008              STRB     r0,[r1,#0]
-;;;88     			Flag_Key_Scan = 1;
-0000ca  6820              LDR      r0,[r4,#0]  ; flagA
-0000cc  f0400008          ORR      r0,r0,#8
-0000d0  6020              STR      r0,[r4,#0]  ; flagA
-                  |L1.210|
-;;;89     		}
-;;;90     		Key_Funtion();//按键处理
-0000d2  f7fffffe          BL       Key_Funtion
-;;;91     		Temp_Comapre();//风扇控制
-0000d6  f7fffffe          BL       Temp_Comapre
-;;;92     		BEEP_Ring();//蜂鸣器控制
-0000da  f7fffffe          BL       BEEP_Ring
-;;;93     		GUI_Delay(2);//GUI刷新
-0000de  2002              MOVS     r0,#2
-0000e0  f7fffffe          BL       GUI_Delay
-0000e4  e7c4              B        |L1.112|
-;;;94     	}
-;;;95       
-;;;96     }
-;;;97     /***************************** ���������� www.armfly.com (END OF FILE) *********************************/
+0000a6  f8ba1000          LDRH     r1,[r10,#0]           ;86  ; Contr_Laod
+0000aa  2000              MOVS     r0,#0                 ;86
+0000ac  f7fffffe          BL       DAC_SetChannel1Data
+0000b0  f8bb1000          LDRH     r1,[r11,#0]  ; Contr_Current
+0000b4  4640              MOV      r0,r8
+0000b6  f7fffffe          BL       TIM_SetCompare1
+;;;88     		TIM_SetCompare2(TIM2,Contr_Voltage);//电源电压控制
+0000ba  4828              LDR      r0,|L1.348|
+0000bc  8801              LDRH     r1,[r0,#0]  ; Contr_Voltage
+0000be  4640              MOV      r0,r8
+0000c0  f7fffffe          BL       TIM_SetCompare2
+;;;89     		if(Flag_DAC_OFF==0)
+0000c4  4826              LDR      r0,|L1.352|
+0000c6  6800              LDR      r0,[r0,#0]  ; flagB
+0000c8  0700              LSLS     r0,r0,#28
+0000ca  d401              BMI      |L1.208|
+;;;90     		{
+;;;91     			Transformation_ADC();
+0000cc  f7fffffe          BL       Transformation_ADC
+                  |L1.208|
+;;;92     		}
+;;;93     		if(Flag_ADC_Full==1)
+0000d0  6820              LDR      r0,[r4,#0]  ; flagA
+0000d2  0781              LSLS     r1,r0,#30
+0000d4  d504              BPL      |L1.224|
+;;;94     		{
+;;;95     			Flag_ADC_Full=0;
+0000d6  f0200002          BIC      r0,r0,#2
+0000da  6020              STR      r0,[r4,#0]  ; flagA
+;;;96     			ADC_CH_Scan();//ADC扫描
+0000dc  f7fffffe          BL       ADC_CH_Scan
+                  |L1.224|
+;;;97     		}
+;;;98     		if(UART_Buffer_Rece_flag==1)
+0000e0  6820              LDR      r0,[r4,#0]  ; flagA
+0000e2  0681              LSLS     r1,r0,#26
+0000e4  d504              BPL      |L1.240|
+;;;99     		{
+;;;100    			UART_Buffer_Rece_flag=0;
+0000e6  f0200020          BIC      r0,r0,#0x20
+0000ea  6020              STR      r0,[r4,#0]  ; flagA
+;;;101    			UART_Action();
+0000ec  f7fffffe          BL       UART_Action
+                  |L1.240|
+;;;102    		}
+;;;103    		if(Flag_Key_Scan==1)
+0000f0  6820              LDR      r0,[r4,#0]  ; flagA
+0000f2  0701              LSLS     r1,r0,#28
+0000f4  d50a              BPL      |L1.268|
+;;;104    		{
+;;;105    			Flag_Key_Scan=0;
+0000f6  f0200008          BIC      r0,r0,#8
+0000fa  6020              STR      r0,[r4,#0]  ; flagA
+;;;106    			NewKey=TM1650_Read_KEY();
+0000fc  f7fffffe          BL       TM1650_Read_KEY
+000100  4918              LDR      r1,|L1.356|
+000102  7008              STRB     r0,[r1,#0]
+;;;107    			Flag_Key_Scan = 1;
+000104  6820              LDR      r0,[r4,#0]  ; flagA
+000106  f0400008          ORR      r0,r0,#8
+00010a  6020              STR      r0,[r4,#0]  ; flagA
+                  |L1.268|
+;;;108    		}
+;;;109    		Key_Funtion();//按键处理
+00010c  f7fffffe          BL       Key_Funtion
+;;;110    		Temp_Comapre();//风扇控制
+000110  f7fffffe          BL       Temp_Comapre
+;;;111    		BEEP_Ring();//蜂鸣器控制
+000114  f7fffffe          BL       BEEP_Ring
+;;;112    		GUI_Delay(2);//GUI刷新
+000118  2002              MOVS     r0,#2
+00011a  f7fffffe          BL       GUI_Delay
+00011e  e7aa              B        |L1.118|
+;;;113    	}
+;;;114      
+;;;115    }
+;;;116    /***************************** ���������� www.armfly.com (END OF FILE) *********************************/
                           ENDP
 
-0000e6  0000              DCW      0x0000
-                  |L1.232|
-                          DCD      PROGBAR_DrawSkinFlex
-                  |L1.236|
-                          DCD      FRAMEWIN_DrawSkinFlex
-                  |L1.240|
-                          DCD      BUTTON_DrawSkinFlex
-                  |L1.244|
-                          DCD      CHECKBOX_DrawSkinFlex
-                  |L1.248|
-                          DCD      DROPDOWN_DrawSkinFlex
-                  |L1.252|
-                          DCD      SCROLLBAR_DrawSkinFlex
-                  |L1.256|
-                          DCD      SLIDER_DrawSkinFlex
-                  |L1.260|
-                          DCD      HEADER_DrawSkinFlex
-                  |L1.264|
-                          DCD      RADIO_DrawSkinFlex
-                  |L1.268|
-                          DCD      flagA
-                  |L1.272|
-                          DCD      Contr_Laod
-                  |L1.276|
-                          DCD      Contr_Current
-                  |L1.280|
-                          DCD      Contr_Voltage
-                  |L1.284|
-                          DCD      flagB
                   |L1.288|
+                          DCD      PROGBAR_DrawSkinFlex
+                  |L1.292|
+                          DCD      FRAMEWIN_DrawSkinFlex
+                  |L1.296|
+                          DCD      BUTTON_DrawSkinFlex
+                  |L1.300|
+                          DCD      CHECKBOX_DrawSkinFlex
+                  |L1.304|
+                          DCD      DROPDOWN_DrawSkinFlex
+                  |L1.308|
+                          DCD      SCROLLBAR_DrawSkinFlex
+                  |L1.312|
+                          DCD      SLIDER_DrawSkinFlex
+                  |L1.316|
+                          DCD      HEADER_DrawSkinFlex
+                  |L1.320|
+                          DCD      RADIO_DrawSkinFlex
+                  |L1.324|
+                          DCD      flagA
+                  |L1.328|
+                          DCD      page_sw
+                  |L1.332|
+                          DCD      ||.data||
+                  |L1.336|
+                          DCD      resetflag
+                  |L1.340|
+                          DCD      Contr_Laod
+                  |L1.344|
+                          DCD      Contr_Current
+                  |L1.348|
+                          DCD      Contr_Voltage
+                  |L1.352|
+                          DCD      flagB
+                  |L1.356|
                           DCD      NewKey
+
+                          AREA ||.data||, DATA, ALIGN=2
+
+                  read1963
+                          DCD      0x00000000
+                  scancount
+                          DCD      0x00000000
 
 ;*** Start embedded assembler ***
 

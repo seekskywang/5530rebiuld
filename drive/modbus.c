@@ -196,7 +196,7 @@ void Transformation_ADC(void)
 // 	else var32 = var32 + REG_ReadR_Offset;
 // 	var32 = var32 >> 12;
 	if (var32 < 5) var32 = 0;				  //40mV以下清零
-	R_VLUE = var32;
+	R_VLUE = var32/10000;
 	var32 = 0;	
 /*****************************稳压电源测量电流转换*******************************************/
 	var32 = Imon_value;

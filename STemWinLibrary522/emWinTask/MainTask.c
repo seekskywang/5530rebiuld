@@ -31,6 +31,7 @@ extern struct bitDefine
 extern GUI_CONST_STORAGE GUI_FONT GUI_FontHZ16;
 extern WM_HWIN CreateWindow(void);
 extern WM_HWIN CreateR(void);
+extern vu8 resetflag;
 /**********************************************************************************************************
 *	º¯ Êı Ãû: MainTask
 *	¹¦ÄÜËµÃ÷: GUIÖ÷º¯Êı
@@ -40,7 +41,9 @@ extern WM_HWIN CreateR(void);
 */
 void MainTask(void) 
 { 
-    static vu16 read1963;
+    static resetcount;
+    static read1963;
+    static scancount;
 //	unsigned char  ucKeyCode;
 	GUI_Init();
 	WM_SetDesktopColor(GUI_BLUE);  
@@ -63,7 +66,23 @@ void MainTask(void)
 	{
 //         TM1650_SET_LED(0x68,0x70);//FAILç¯
 //         GPIO_SetBits(GPIOD,GPIO_Pin_12);//
-        
+        if(page_sw != face_starter)
+        {
+            if(scancount == 10)
+            {
+                sLCD_WR_REG(0xf1);
+                read1963 =sLCD_Read_Data();
+                scancount = 0;
+            }else{
+                scancount++;
+            }
+             if(read1963 != 0x03)
+             {
+                 resetflag = 1;               
+             }else{
+                 resetflag = 0; 
+             }
+         }
 		DAC_SetChannel1Data(DAC_Align_12b_R,Contr_Laod);//è´Ÿè½½DACæ§åˆ¶
 		TIM_SetCompare1(TIM2,Contr_Current);//ç”µæºç”µæµæ§åˆ¶
 		TIM_SetCompare2(TIM2,Contr_Voltage);//ç”µæºç”µå‹æ§åˆ¶

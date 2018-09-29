@@ -54929,26 +54929,26 @@ N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透
 X            TEXT_SetBkColor(hItem,0xFFFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_WHITE);
 X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N            SET_Voltage = cdc_cv;
-X            Run_Control[1] = Run_Control[38];
+N            if(pow_step == step1)
+X            if(pow_step == 0)
+N            {
+N                SET_Voltage = opv1;
+X                Run_Control[1] = Run_Control[31];
+N            }else if(pow_step == step2){
+X            }else if(pow_step == 1){
+N                SET_Voltage = opv2;
+X                Run_Control[1] = Run_Control[32];
+N            }else if(pow_step == step3){
+X            }else if(pow_step == 2){
+N                SET_Voltage = opv3;
+X                Run_Control[1] = Run_Control[33];
+N            }
+N//            SET_Voltage = opv1;
 N            dis_output_v = (float)SET_Voltage/100;
 X            dis_output_v = (float)Run_Control[1]/100;
 N            sprintf(buf,"%.2f",dis_output_v);
 N            TEXT_SetText(hItem,buf);
-N            if(pow_step == step1)
-X            if(pow_step == 0)
-N            {
-N                opv1 = SET_Voltage;
-X                Run_Control[31] = Run_Control[1];
-N            }else if(pow_step == step2){
-X            }else if(pow_step == 1){
-N                opv2 = SET_Voltage;
-X                Run_Control[32] = Run_Control[1];
-N            }else if(pow_step == step3){
-X            }else if(pow_step == 2){
-N                opv3 = SET_Voltage;
-X                Run_Control[33] = Run_Control[1];
-N            }
+N            
 N            
 N            hItem = WM_GetDialogItem(hWincdc, ID_TEXT_50);
 X            hItem = WM_GetDialogItem(hWincdc, (0x800 + 0x6F));
@@ -55002,8 +55002,21 @@ N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透
 X            TEXT_SetBkColor(hItem,0xFFFFFFF);
 N            TEXT_SetTextColor(hItem, GUI_WHITE);
 X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
-N            SET_Current = cdc_cc;
-X            Run_Control[2] = Run_Control[39];
+N            if(cur_step == step1)
+X            if(cur_step == 0)
+N            {
+N                SET_Current = opc1;
+X                Run_Control[2] = Run_Control[34];
+N            }else if(cur_step == step2){
+X            }else if(cur_step == 1){
+N                SET_Current = opc2;
+X                Run_Control[2] = Run_Control[35];
+N            }else if(cur_step == step3){
+X            }else if(cur_step == 2){
+N                SET_Current = opc3;
+X                Run_Control[2] = Run_Control[36];
+N            }
+N//            SET_Current = cdc_cc;
 N            if(SET_Current > 5000)
 X            if(Run_Control[2] > 5000)
 N            {
@@ -55015,20 +55028,7 @@ X            dis_output_c = (float)Run_Control[2]/1000;
 N            sprintf(buf,"%.2f",dis_output_c);
 N            TEXT_SetText(hItem,buf);
 N            
-N            if(cur_step == step1)
-X            if(cur_step == 0)
-N            {
-N                opc1 = SET_Current;
-X                Run_Control[34] = Run_Control[2];
-N            }else if(cur_step == step2){
-X            }else if(cur_step == 1){
-N                opc2 = SET_Current;
-X                Run_Control[35] = Run_Control[2];
-N            }else if(cur_step == step3){
-X            }else if(cur_step == 2){
-N                opc3 = SET_Current;
-X                Run_Control[36] = Run_Control[2];
-N            }
+N            
 N            
 N            hItem = WM_GetDialogItem(hWincdc, ID_TEXT_51);
 X            hItem = WM_GetDialogItem(hWincdc, (0x800 + 0x70));
@@ -55419,11 +55419,24 @@ X            GUI_HWIN hItem;
 N//            WM_InvalidateWindow(hWincdc);
 N            hItem = WM_GetDialogItem(hWincdc, ID_TEXT_54);
 X            hItem = WM_GetDialogItem(hWincdc, (0x800 + 0x73));
+N            
 N            switch(bit){
 N                case 1:
 N                {
-N                    cdc_cv = atoi(num) * 100;
-X                    Run_Control[38] = atoi(num) * 100;
+N                    if(pow_step == step1)
+X                    if(pow_step == 0)
+N                    {
+N                        opv1 = atoi(num) * 100;
+X                        Run_Control[31] = atoi(num) * 100;
+N                    }else if(pow_step == step2){
+X                    }else if(pow_step == 1){
+N                        opv2 = atoi(num) * 100;
+X                        Run_Control[32] = atoi(num) * 100;
+N                    }else if(pow_step == step3){
+X                    }else if(pow_step == 2){
+N                        opv3 = atoi(num) * 100;
+X                        Run_Control[33] = atoi(num) * 100;
+N                    }
 N                    strcat(set_limit,num);            
 N                    TEXT_SetText(hItem,set_limit);
 N                    bit = 2;
@@ -55437,8 +55450,21 @@ N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
 N                    {
 N                        dot_flag = 1;
 N                    }else{
-N                        cdc_cv = cdc_cv * 10 + atoi(num) * 100;
-X                        Run_Control[38] = Run_Control[38] * 10 + atoi(num) * 100;
+N                        if(pow_step == step1)
+X                        if(pow_step == 0)
+N                        {
+N                            opv1 = opv1 * 10 + atoi(num) * 100;
+X                            Run_Control[31] = Run_Control[31] * 10 + atoi(num) * 100;
+N                        }else if(pow_step == step2){
+X                        }else if(pow_step == 1){
+N                            opv2 = opv2 * 10 + atoi(num) * 100;
+X                            Run_Control[32] = Run_Control[32] * 10 + atoi(num) * 100;
+N                        }else if(pow_step == step3){
+X                        }else if(pow_step == 2){
+N                           opv3 = opv3 * 10 + atoi(num) * 100;
+X                           Run_Control[33] = Run_Control[33] * 10 + atoi(num) * 100;
+N                        }
+N                        
 N                    }
 N                    bit = 3;
 N                    break;
@@ -55453,12 +55479,38 @@ N                        if(set_limit[2] == 0x2e)//判断输入是否为小数�
 N                        {                            
 N                            dot_flag = 2;
 N                        }else{
-N                            cdc_cv = /*3000*/ 6000;
-X                            Run_Control[38] =   6000;
+N                            if(pow_step == step1)
+X                            if(pow_step == 0)
+N                            {
+N                               opv1 = /*3000*/ 6000;
+X                               Run_Control[31] =   6000;
+N                            }else if(pow_step == step2){
+X                            }else if(pow_step == 1){
+N                                opv2 = /*3000*/ 6000;
+X                                Run_Control[32] =   6000;
+N                            }else if(pow_step == step3){
+X                            }else if(pow_step == 2){
+N                               opv3 =  /*3000*/ 6000;
+X                               Run_Control[33] =    6000;
+N                            }
+N                            
 N                        }
 N                    }else{
-N                        cdc_cv = cdc_cv + atoi(num) * 10;
-X                        Run_Control[38] = Run_Control[38] + atoi(num) * 10;
+N                        if(pow_step == step1)
+X                        if(pow_step == 0)
+N                            {
+N                               opv1 = opv1 + atoi(num) * 10;
+X                               Run_Control[31] = Run_Control[31] + atoi(num) * 10;
+N                            }else if(pow_step == step2){
+X                            }else if(pow_step == 1){
+N                                opv2 = opv2 + atoi(num) * 10;
+X                                Run_Control[32] = Run_Control[32] + atoi(num) * 10;
+N                            }else if(pow_step == step3){
+X                            }else if(pow_step == 2){
+N                               opv3 = opv3 + atoi(num) * 10;
+X                               Run_Control[33] = Run_Control[33] + atoi(num) * 10;
+N                            }
+N                        
 N                    }
 N                                       
 N                    bit = 4;
@@ -55470,14 +55522,51 @@ N                    strcat(set_limit,num);
 N                    TEXT_SetText(hItem,set_limit);
 N                    if(dot_flag == 0)
 N                    {
-N                        cdc_cv = /*3000*/ 6000;
-X                        Run_Control[38] =   6000;
+N                        if(pow_step == step1)
+X                        if(pow_step == 0)
+N                            {
+N                               opv1 = /*3000*/ 6000;
+X                               Run_Control[31] =   6000;
+N                            }else if(pow_step == step2){
+X                            }else if(pow_step == 1){
+N                                opv2 = /*3000*/ 6000;
+X                                Run_Control[32] =   6000;
+N                            }else if(pow_step == step3){
+X                            }else if(pow_step == 2){
+N                               opv3 =  /*3000*/ 6000;
+X                               Run_Control[33] =    6000;
+N                            }
 N                    }else if(dot_flag == 2){
-N                        cdc_cv = cdc_cv + atoi(num) * 10;
-X                        Run_Control[38] = Run_Control[38] + atoi(num) * 10;
+N                        if(pow_step == step1)
+X                        if(pow_step == 0)
+N                            {
+N                               opv1 = opv1 + atoi(num) * 10;
+X                               Run_Control[31] = Run_Control[31] + atoi(num) * 10;
+N                            }else if(pow_step == step2){
+X                            }else if(pow_step == 1){
+N                                opv2 = opv2 + atoi(num) * 10;
+X                                Run_Control[32] = Run_Control[32] + atoi(num) * 10;
+N                            }else if(pow_step == step3){
+X                            }else if(pow_step == 2){
+N                               opv3 = opv3 + atoi(num) * 10;
+X                               Run_Control[33] = Run_Control[33] + atoi(num) * 10;
+N                            }
 N                    }else{
-N                        cdc_cv = cdc_cv + atoi(num);
-X                        Run_Control[38] = Run_Control[38] + atoi(num);
+N                        if(pow_step == step1)
+X                        if(pow_step == 0)
+N                            {
+N                               opv1 = opv1 + atoi(num);
+X                               Run_Control[31] = Run_Control[31] + atoi(num);
+N                            }else if(pow_step == step2){
+X                            }else if(pow_step == 1){
+N                                opv2 = opv2 + atoi(num);
+X                                Run_Control[32] = Run_Control[32] + atoi(num);
+N                            }else if(pow_step == step3){
+X                            }else if(pow_step == 2){
+N                               opv3 = opv3 + atoi(num);
+X                               Run_Control[33] = Run_Control[33] + atoi(num);
+N                            }
+N//                        cdc_cv = cdc_cv + atoi(num);
 N                    }
 N                                       
 N                    bit = 5;
@@ -55489,14 +55578,52 @@ N                    strcat(set_limit,num);
 N                    TEXT_SetText(hItem,set_limit);
 N                    if(dot_flag == 0)
 N                    {
-N                        cdc_cv = /*3000*/ 6000;
-X                        Run_Control[38] =   6000;
+N                        if(pow_step == step1)
+X                        if(pow_step == 0)
+N                            {
+N                               opv1 = /*3000*/ 6000;
+X                               Run_Control[31] =   6000;
+N                            }else if(pow_step == step2){
+X                            }else if(pow_step == 1){
+N                                opv2 = /*3000*/ 6000;
+X                                Run_Control[32] =   6000;
+N                            }else if(pow_step == step3){
+X                            }else if(pow_step == 2){
+N                               opv3 =  /*3000*/ 6000;
+X                               Run_Control[33] =    6000;
+N                            }
 N                    }else if(dot_flag == 1){
-N                        cdc_cv = cdc_cv;
-X                        Run_Control[38] = Run_Control[38];
+N                        if(pow_step == step1)
+X                        if(pow_step == 0)
+N                            {
+N                               opv1 = opv1;
+X                               Run_Control[31] = Run_Control[31];
+N                            }else if(pow_step == step2){
+X                            }else if(pow_step == 1){
+N                                opv2 =opv2;
+X                                Run_Control[32] =Run_Control[32];
+N                            }else if(pow_step == step3){
+X                            }else if(pow_step == 2){
+N                               opv3 =  opv3;
+X                               Run_Control[33] =  Run_Control[33];
+N                            }
+N//                        cdc_cv = cdc_cv;
 N                    }else{
-N                        cdc_cv = cdc_cv + atoi(num);
-X                        Run_Control[38] = Run_Control[38] + atoi(num);
+N                        if(pow_step == step1)
+X                        if(pow_step == 0)
+N                            {
+N                               opv1 = opv1 + atoi(num);
+X                               Run_Control[31] = Run_Control[31] + atoi(num);
+N                            }else if(pow_step == step2){
+X                            }else if(pow_step == 1){
+N                                opv2 = opv2 + atoi(num);
+X                                Run_Control[32] = Run_Control[32] + atoi(num);
+N                            }else if(pow_step == step3){
+X                            }else if(pow_step == 2){
+N                               opv3 = opv3 + atoi(num);
+X                               Run_Control[33] = Run_Control[33] + atoi(num);
+N                            }
+N//                        cdc_cv = cdc_cv + atoi(num);
 N                    }
 N                                       
 N                    bit = 1;
@@ -55516,8 +55643,20 @@ X            hItem = WM_GetDialogItem(hWincdc, (0x800 + 0x74));
 N            switch(bit){
 N                case 1:
 N                {
-N                    cdc_cc = atoi(num) * 1000;
-X                    Run_Control[39] = atoi(num) * 1000;
+N                    if(cur_step == step1)
+X                    if(cur_step == 0)
+N                    {
+N                        opc1 = atoi(num) * 1000;
+X                        Run_Control[34] = atoi(num) * 1000;
+N                    }else if(cur_step == step2){
+X                    }else if(cur_step == 1){
+N                        opc2 = atoi(num) * 1000;
+X                        Run_Control[35] = atoi(num) * 1000;
+N                    }else if(cur_step == step3){
+X                    }else if(cur_step == 2){
+N                        opc3 = atoi(num) * 1000;
+X                        Run_Control[36] = atoi(num) * 1000;
+N                    }
 N                    strcat(set_limit,num);            
 N                    TEXT_SetText(hItem,set_limit);
 N                    bit = 2;
@@ -55531,8 +55670,21 @@ N                    if(set_limit[1] == 0x2e)//判断输入是否为小数点
 N                    {
 N                        dot_flag = 1;
 N                    }else{
-N                        cdc_cc = cdc_cc * 10 + atoi(num) * 1000;
-X                        Run_Control[39] = Run_Control[39] * 10 + atoi(num) * 1000;
+N                        if(cur_step == step1)
+X                        if(cur_step == 0)
+N                        {
+N                            opc1 = opc1 * 10 + atoi(num) * 1000;
+X                            Run_Control[34] = Run_Control[34] * 10 + atoi(num) * 1000;
+N                        }else if(cur_step == step2){
+X                        }else if(cur_step == 1){
+N                            opc2 = opc2 * 10 + atoi(num) * 1000;
+X                            Run_Control[35] = Run_Control[35] * 10 + atoi(num) * 1000;
+N                        }else if(cur_step == step3){
+X                        }else if(cur_step == 2){
+N                            opc2 = opc2 * 10 + atoi(num) * 1000;
+X                            Run_Control[35] = Run_Control[35] * 10 + atoi(num) * 1000;
+N                        }
+N//                        opc1 = opc1 * 10 + atoi(num) * 1000;
 N                    }
 N                    bit = 3;
 N                    break;
@@ -55547,12 +55699,37 @@ N                        if(set_limit[2] == 0x2e)//判断输入是否为小数�
 N                        {                            
 N                            dot_flag = 2;
 N                        }else{
-N                            cdc_cc = 5000;
-X                            Run_Control[39] = 5000;
+N                            if(cur_step == step1)
+X                            if(cur_step == 0)
+N                            {
+N                                opc1 = 5000;
+X                                Run_Control[34] = 5000;
+N                            }else if(cur_step == step2){
+X                            }else if(cur_step == 1){
+N                                opc2 = 5000;
+X                                Run_Control[35] = 5000;
+N                            }else if(cur_step == step3){
+X                            }else if(cur_step == 2){
+N                                opc3 = 5000;
+X                                Run_Control[36] = 5000;
+N                            }
 N                        }
 N                    }else{
-N                        cdc_cc = cdc_cc + atoi(num) * 100;
-X                        Run_Control[39] = Run_Control[39] + atoi(num) * 100;
+N//                        opc1 = opc1 + atoi(num) * 100;
+N                        if(cur_step == step1)
+X                        if(cur_step == 0)
+N                        {
+N                            opc1 = opc1 + atoi(num) * 100;
+X                            Run_Control[34] = Run_Control[34] + atoi(num) * 100;
+N                        }else if(cur_step == step2){
+X                        }else if(cur_step == 1){
+N                            opc2 = opc2 + atoi(num) * 100;
+X                            Run_Control[35] = Run_Control[35] + atoi(num) * 100;
+N                        }else if(cur_step == step3){
+X                        }else if(cur_step == 2){
+N                            opc3 = opc3 + atoi(num) * 100;
+X                            Run_Control[36] = Run_Control[36] + atoi(num) * 100;
+N                        }
 N                    }
 N                                       
 N                    bit = 4;
@@ -55564,14 +55741,50 @@ N                    strcat(set_limit,num);
 N                    TEXT_SetText(hItem,set_limit);
 N                    if(dot_flag == 0)
 N                    {
-N                        cdc_cc = 5000;
-X                        Run_Control[39] = 5000;
+N                        if(cur_step == step1)
+X                        if(cur_step == 0)
+N                        {
+N                            opc1 = 5000;
+X                            Run_Control[34] = 5000;
+N                        }else if(cur_step == step2){
+X                        }else if(cur_step == 1){
+N                            opc2 = 5000;
+X                            Run_Control[35] = 5000;
+N                        }else if(cur_step == step3){
+X                        }else if(cur_step == 2){
+N                            opc3 = 5000;
+X                            Run_Control[36] = 5000;
+N                        }
 N                    }else if(dot_flag == 2){
-N                        cdc_cc = cdc_cc + atoi(num) * 100;
-X                        Run_Control[39] = Run_Control[39] + atoi(num) * 100;
+N                        if(cur_step == step1)
+X                        if(cur_step == 0)
+N                        {
+N                            opc1 = opc1 + atoi(num) * 100;
+X                            Run_Control[34] = Run_Control[34] + atoi(num) * 100;
+N                        }else if(cur_step == step2){
+X                        }else if(cur_step == 1){
+N                            opc2 = opc2 + atoi(num) * 100;
+X                            Run_Control[35] = Run_Control[35] + atoi(num) * 100;
+N                        }else if(cur_step == step3){
+X                        }else if(cur_step == 2){
+N                            opc3 = opc3 + atoi(num) * 100;
+X                            Run_Control[36] = Run_Control[36] + atoi(num) * 100;
+N                        }
 N                    }else{
-N                        cdc_cc = cdc_cc + atoi(num) * 10;
-X                        Run_Control[39] = Run_Control[39] + atoi(num) * 10;
+N                        if(cur_step == step1)
+X                        if(cur_step == 0)
+N                        {
+N                            opc1 = opc1 + atoi(num) * 10;
+X                            Run_Control[34] = Run_Control[34] + atoi(num) * 10;
+N                        }else if(cur_step == step2){
+X                        }else if(cur_step == 1){
+N                            opc2 = opc2 + atoi(num) * 10;
+X                            Run_Control[35] = Run_Control[35] + atoi(num) * 10;
+N                        }else if(cur_step == step3){
+X                        }else if(cur_step == 2){
+N                            opc3 = opc3 + atoi(num) * 10;
+X                            Run_Control[36] = Run_Control[36] + atoi(num) * 10;
+N                        }
 N                    }
 N                                       
 N                    bit = 5;
@@ -55583,14 +55796,50 @@ N                    strcat(set_limit,num);
 N                    TEXT_SetText(hItem,set_limit);
 N                    if(dot_flag == 0)
 N                    {
-N                        cdc_cc = 5000;
-X                        Run_Control[39] = 5000;
+N                       if(cur_step == step1)
+X                       if(cur_step == 0)
+N                        {
+N                            opc1 = 5000;
+X                            Run_Control[34] = 5000;
+N                        }else if(cur_step == step2){
+X                        }else if(cur_step == 1){
+N                            opc2 = 5000;
+X                            Run_Control[35] = 5000;
+N                        }else if(cur_step == step3){
+X                        }else if(cur_step == 2){
+N                            opc3 = 5000;
+X                            Run_Control[36] = 5000;
+N                        }
 N                    }else if(dot_flag == 1){
-N                        cdc_cc = cdc_cc;
-X                        Run_Control[39] = Run_Control[39];
+N                        if(cur_step == step1)
+X                        if(cur_step == 0)
+N                        {
+N                            opc1 = opc1;
+X                            Run_Control[34] = Run_Control[34];
+N                        }else if(cur_step == step2){
+X                        }else if(cur_step == 1){
+N                            opc2 = opc2;
+X                            Run_Control[35] = Run_Control[35];
+N                        }else if(cur_step == step3){
+X                        }else if(cur_step == 2){
+N                            opc3 = opc3;
+X                            Run_Control[36] = Run_Control[36];
+N                        }
 N                    }else{
-N                        cdc_cc = cdc_cc + atoi(num) * 10;
-X                        Run_Control[39] = Run_Control[39] + atoi(num) * 10;
+N                       if(cur_step == step1)
+X                       if(cur_step == 0)
+N                        {
+N                            opc1 = opc1 + atoi(num) * 10;
+X                            Run_Control[34] = Run_Control[34] + atoi(num) * 10;
+N                        }else if(cur_step == step2){
+X                        }else if(cur_step == 1){
+N                            opc2 = opc2 + atoi(num) * 10;
+X                            Run_Control[35] = Run_Control[35] + atoi(num) * 10;
+N                        }else if(cur_step == step3){
+X                        }else if(cur_step == 2){
+N                            opc3 = opc3 + atoi(num) * 10;
+X                            Run_Control[36] = Run_Control[36] + atoi(num) * 10;
+N                        }
 N                    }
 N                                       
 N                    bit = 1;

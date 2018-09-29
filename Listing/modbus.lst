@@ -35853,8 +35853,8 @@ N// 	}
 N// 	else var32 = var32 + REG_ReadR_Offset;
 N// 	var32 = var32 >> 12;
 N	if (var32 < 5) var32 = 0;				  //40mV以下清零
-N	R_VLUE = var32;
-X	Run_Control[13] = var32;
+N	R_VLUE = var32/10000;
+X	Run_Control[13] = var32/10000;
 N	var32 = 0;	
 N/*****************************稳压电源测量电流转换*******************************************/
 N	var32 = Imon_value;

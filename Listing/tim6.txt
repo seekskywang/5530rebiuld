@@ -5,521 +5,500 @@
                           AREA ||i.TIM3_IRQHandler||, CODE, READONLY, ALIGN=2
 
                   TIM3_IRQHandler PROC
-;;;76     //֨ʱǷ 3 א׏ؾϱگ˽
-;;;77     void TIM3_IRQHandler(void)
+;;;77     //֨ʱǷ 3 א׏ؾϱگ˽
+;;;78     void TIM3_IRQHandler(void)
 000000  e92d47f0          PUSH     {r4-r10,lr}
-;;;78     {
+;;;79     {
 000004  ed2d8b02          VPUSH    {d8}
-;;;79         static vu16 count1ms;
-;;;80         static resetcount;
-;;;81         static read1963;
-;;;82         static scancount;
-;;;83         
-;;;84         if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) //ӧԶא׏
+;;;80         static vu16 count1ms;
+;;;81         static resetcount;
+;;;82         static read1963;
+;;;83         static scancount;
+;;;84         
+;;;85         if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) //ӧԶא׏
 000008  2101              MOVS     r1,#1
-00000a  4c9b              LDR      r4,|L1.632|
+00000a  4c95              LDR      r4,|L1.608|
 00000c  4620              MOV      r0,r4
 00000e  f7fffffe          BL       TIM_GetITStatus
 000012  2801              CMP      r0,#1
-000014  d167              BNE      |L1.230|
-;;;85         {
-;;;86             TIM_ClearITPendingBit(TIM3,TIM_IT_Update); //ȥԽא׏Ҫ־λ
+000014  d15c              BNE      |L1.208|
+;;;86         {
+;;;87             TIM_ClearITPendingBit(TIM3,TIM_IT_Update); //ȥԽא׏Ҫ־λ
 000016  2101              MOVS     r1,#1
 000018  4620              MOV      r0,r4
 00001a  f7fffffe          BL       TIM_ClearITPendingBit
-;;;87             
-;;;88             if(scancount == 1000)
-00001e  4c97              LDR      r4,|L1.636|
-000020  f44f777a          MOV      r7,#0x3e8
-;;;89             {
-;;;90                 sLCD_WR_REG(0xf1);
-;;;91                 read1963 =sLCD_Read_Data();
-;;;92                 scancount = 0;
-000024  2500              MOVS     r5,#0
-000026  68e0              LDR      r0,[r4,#0xc]          ;88  ; scancount
-000028  42b8              CMP      r0,r7                 ;88
-00002a  d107              BNE      |L1.60|
-00002c  20f1              MOVS     r0,#0xf1              ;90
-00002e  f7fffffe          BL       sLCD_WR_REG
-000032  f7fffffe          BL       sLCD_Read_Data
-000036  60a0              STR      r0,[r4,#8]            ;91  ; read1963
-000038  60e5              STR      r5,[r4,#0xc]  ; scancount
-00003a  e001              B        |L1.64|
-                  |L1.60|
-;;;93             }else{
-;;;94                 scancount++;
-00003c  1c40              ADDS     r0,r0,#1
-00003e  60e0              STR      r0,[r4,#0xc]  ; scancount
-                  |L1.64|
-;;;95             }
-;;;96              if(read1963 != 0x03)
-000040  68a0              LDR      r0,[r4,#8]  ; read1963
-;;;97              {
-;;;98                  if(resetcount == 2000)
-;;;99                  {
-;;;100                     LCD_Initializtion();
-;;;101                     GUI_Init();
-;;;102                     if(page_sw == face_menu)
-000042  4e8f              LDR      r6,|L1.640|
-000044  2803              CMP      r0,#3                 ;96
-000046  d005              BEQ      |L1.84|
-000048  6860              LDR      r0,[r4,#4]            ;98  ; resetcount
-00004a  f5b06ffa          CMP      r0,#0x7d0             ;98
-00004e  d01a              BEQ      |L1.134|
-;;;103                     {
-;;;104                         ResetPow();
-;;;105                     }else if(page_sw == face_cdc){
-;;;106                         ResetCDC();
-;;;107                     }else if(page_sw == face_r){
-;;;108                         ResetR();
-;;;109                     }else if(page_sw == face_load){
-;;;110                         ResetLoad();
-;;;111                     }else if(page_sw == face_graph){
-;;;112                         ResetG();
-;;;113                     }else if(page_sw == face_set){
-;;;114                         ResetSET();
-;;;115                     }
-;;;116                     resetcount = 0;
-;;;117                 }else{
-;;;118                     resetcount++;
-000050  1c40              ADDS     r0,r0,#1
-000052  6060              STR      r0,[r4,#4]  ; resetcount
-                  |L1.84|
-;;;119                 }
-;;;120    //             sLCD_Init();
-;;;121    //             GUI_Init();
-;;;122    //             WM_SetDesktopColor(GUI_BLUE);  
-;;;123    //             GUI_Clear();//清屏
-;;;124                
-;;;125             }
-;;;126            switch(page_sw)
-000054  f8969000          LDRB     r9,[r6,#0]  ; page_sw
-;;;127            {
-;;;128                case face_menu:
-;;;129                {                
-;;;130                    if(pow_sw == pow_on)
-000058  f8dfc228          LDR      r12,|L1.644|
-;;;131                    {
-;;;132                        count1ms++;
-;;;133                        if(count1ms == 1000)
-;;;134                        {
-;;;135                            bc_raw += DISS_POW_Current * 1000 * 1/3600;
-00005c  488a              LDR      r0,|L1.648|
-;;;136                            count1ms = 0;
-;;;137                        }
-;;;138                    }else{
-;;;139                        bc_raw = 0;
-;;;140                        count1ms = 0;
-;;;141                    }
-;;;142                }break;
-;;;143                case face_cdc:
-;;;144                {
-;;;145                    if(mode_sw == mode_pow && cdc_sw == cdc_on)
-;;;146                    {
-;;;147                        count1ms++;
-;;;148                        if(count1ms == 1000)
-;;;149                        {
-;;;150                            bc_raw += DISS_POW_Current * 1000 * 1/3600;
-;;;151                            count1ms = 0;
-;;;152                        }
-;;;153                    }else if(cdc_sw == cdc_off){
-;;;154                        bc_raw = 0;
-;;;155                        count1ms = 0;
-;;;156                    }
-;;;157                }break;
-;;;158                case face_load:
-;;;159                {
-;;;160                    if(load_sw == load_on)
-00005e  4b8b              LDR      r3,|L1.652|
-;;;161                    {
-;;;162                        count1ms++;
-;;;163                        if(count1ms == 1000)
-;;;164                        {
-;;;165                            bc_raw += DISS_Current * 1000 * 1/3600;
-000060  f8df822c          LDR      r8,|L1.656|
-000064  4a8b              LDR      r2,|L1.660|
-000066  498c              LDR      r1,|L1.664|
-000068  ed9f8a8c          VLDR     s16,|L1.668|
-00006c  eddf8a8c          VLDR     s17,|L1.672|
-000070  4e8c              LDR      r6,|L1.676|
-000072  ed9f0a8d          VLDR     s0,|L1.680|
-000076  f1b90f05          CMP      r9,#5                 ;126
-00007a  d234              BCS      |L1.230|
-00007c  e8dff009          TBB      [pc,r9]               ;126
-000080  874b2ce7          DCB      0x87,0x4b,0x2c,0xe7
-000084  6c00              DCB      0x6c,0x00
-                  |L1.134|
-000086  f7fffffe          BL       LCD_Initializtion
-00008a  f7fffffe          BL       GUI_Init
-00008e  7830              LDRB     r0,[r6,#0]            ;102  ; page_sw
-000090  2802              CMP      r0,#2                 ;102
-000092  d00e              BEQ      |L1.178|
-000094  7830              LDRB     r0,[r6,#0]            ;105  ; page_sw
-000096  2801              CMP      r0,#1                 ;105
-000098  d00e              BEQ      |L1.184|
-00009a  7830              LDRB     r0,[r6,#0]            ;107  ; page_sw
-00009c  2803              CMP      r0,#3                 ;107
-00009e  d00e              BEQ      |L1.190|
-0000a0  7830              LDRB     r0,[r6,#0]            ;109  ; page_sw
-0000a2  2804              CMP      r0,#4                 ;109
-0000a4  d00e              BEQ      |L1.196|
-0000a6  7830              LDRB     r0,[r6,#0]            ;111  ; page_sw
-0000a8  b178              CBZ      r0,|L1.202|
-0000aa  7830              LDRB     r0,[r6,#0]            ;113  ; page_sw
-0000ac  2805              CMP      r0,#5                 ;113
-0000ae  d00f              BEQ      |L1.208|
-0000b0  e010              B        |L1.212|
-                  |L1.178|
-0000b2  f7fffffe          BL       ResetPow
-0000b6  e00d              B        |L1.212|
-                  |L1.184|
-0000b8  f7fffffe          BL       ResetCDC
-0000bc  e00a              B        |L1.212|
-                  |L1.190|
-0000be  f7fffffe          BL       ResetR
-0000c2  e007              B        |L1.212|
-                  |L1.196|
-0000c4  f7fffffe          BL       ResetLoad
-0000c8  e004              B        |L1.212|
-                  |L1.202|
-0000ca  f7fffffe          BL       ResetG
-0000ce  e001              B        |L1.212|
+;;;88             
+;;;89             if(page_sw != face_starter)
+00001e  4e91              LDR      r6,|L1.612|
+000020  7830              LDRB     r0,[r6,#0]  ; page_sw
+;;;90             {
+;;;91                  if(resetflag == 1)
+;;;92                  {
+;;;93                      if(resetcount == 1000)
+;;;94                      {
+;;;95                          LCD_Initializtion();
+;;;96                          GUI_Init();
+;;;97                          if(page_sw == face_menu)
+;;;98                          {
+;;;99                              ResetPow();
+;;;100                         }else if(page_sw == face_cdc){
+;;;101                             ResetCDC();
+;;;102                         }else if(page_sw == face_r){
+;;;103                             ResetR();
+;;;104                         }else if(page_sw == face_load){
+;;;105                             ResetLoad();
+;;;106                         }else if(page_sw == face_graph){
+;;;107                             ResetG();
+;;;108                         }else if(page_sw == face_set){
+;;;109                             ResetSET();
+;;;110                         }
+;;;111                         resetcount = 0;
+000022  2500              MOVS     r5,#0
+000024  4c90              LDR      r4,|L1.616|
+000026  f44f777a          MOV      r7,#0x3e8             ;93
+00002a  2806              CMP      r0,#6                 ;89
+00002c  d030              BEQ      |L1.144|
+00002e  7820              LDRB     r0,[r4,#0]            ;91  ; resetflag
+000030  2801              CMP      r0,#1                 ;91
+000032  d12d              BNE      |L1.144|
+000034  6860              LDR      r0,[r4,#4]            ;93  ; resetcount
+000036  42b8              CMP      r0,r7                 ;93
+000038  d128              BNE      |L1.140|
+00003a  f7fffffe          BL       LCD_Initializtion
+00003e  f7fffffe          BL       GUI_Init
+000042  7830              LDRB     r0,[r6,#0]            ;97  ; page_sw
+000044  2802              CMP      r0,#2                 ;97
+000046  d00e              BEQ      |L1.102|
+000048  7830              LDRB     r0,[r6,#0]            ;100  ; page_sw
+00004a  2801              CMP      r0,#1                 ;100
+00004c  d00e              BEQ      |L1.108|
+00004e  7830              LDRB     r0,[r6,#0]            ;102  ; page_sw
+000050  2803              CMP      r0,#3                 ;102
+000052  d00e              BEQ      |L1.114|
+000054  7830              LDRB     r0,[r6,#0]            ;104  ; page_sw
+000056  2804              CMP      r0,#4                 ;104
+000058  d00e              BEQ      |L1.120|
+00005a  7830              LDRB     r0,[r6,#0]            ;106  ; page_sw
+00005c  b178              CBZ      r0,|L1.126|
+00005e  7830              LDRB     r0,[r6,#0]            ;108  ; page_sw
+000060  2805              CMP      r0,#5                 ;108
+000062  d00f              BEQ      |L1.132|
+000064  e010              B        |L1.136|
+                  |L1.102|
+000066  f7fffffe          BL       ResetPow
+00006a  e00d              B        |L1.136|
+                  |L1.108|
+00006c  f7fffffe          BL       ResetCDC
+000070  e00a              B        |L1.136|
+                  |L1.114|
+000072  f7fffffe          BL       ResetR
+000076  e007              B        |L1.136|
+                  |L1.120|
+000078  f7fffffe          BL       ResetLoad
+00007c  e004              B        |L1.136|
+                  |L1.126|
+00007e  f7fffffe          BL       ResetG
+000082  e001              B        |L1.136|
+                  |L1.132|
+000084  f7fffffe          BL       ResetSET
+                  |L1.136|
+000088  6065              STR      r5,[r4,#4]  ; resetcount
+00008a  e001              B        |L1.144|
+                  |L1.140|
+;;;112                     }else{
+;;;113                         resetcount++;
+00008c  1c40              ADDS     r0,r0,#1
+00008e  6060              STR      r0,[r4,#4]  ; resetcount
+                  |L1.144|
+;;;114                     }                
+;;;115                 }
+;;;116             }
+;;;117            switch(page_sw)
+000090  f8969000          LDRB     r9,[r6,#0]  ; page_sw
+;;;118            {
+;;;119                case face_menu:
+;;;120                {                
+;;;121                    if(pow_sw == pow_on)
+000094  f8dfc1d4          LDR      r12,|L1.620|
+;;;122                    {
+;;;123                        count1ms++;
+;;;124                        if(count1ms == 1000)
+;;;125                        {
+;;;126                            bc_raw += DISS_POW_Current * 1000 * 1/3600;
+000098  4875              LDR      r0,|L1.624|
+;;;127                            count1ms = 0;
+;;;128                        }
+;;;129                    }else{
+;;;130                        bc_raw = 0;
+;;;131                        count1ms = 0;
+;;;132                    }
+;;;133                }break;
+;;;134                case face_cdc:
+;;;135                {
+;;;136                    if(mode_sw == mode_pow && cdc_sw == cdc_on)
+;;;137                    {
+;;;138                        count1ms++;
+;;;139                        if(count1ms == 1000)
+;;;140                        {
+;;;141                            bc_raw += DISS_POW_Current * 1000 * 1/3600;
+;;;142                            count1ms = 0;
+;;;143                        }
+;;;144                    }else if(cdc_sw == cdc_off){
+;;;145                        bc_raw = 0;
+;;;146                        count1ms = 0;
+;;;147                    }
+;;;148                }break;
+;;;149                case face_load:
+;;;150                {
+;;;151                    if(load_sw == load_on)
+00009a  4b76              LDR      r3,|L1.628|
+;;;152                    {
+;;;153                        count1ms++;
+;;;154                        if(count1ms == 1000)
+;;;155                        {
+;;;156                            bc_raw += DISS_Current * 1000 * 1/3600;
+00009c  f8df81d8          LDR      r8,|L1.632|
+0000a0  4a76              LDR      r2,|L1.636|
+0000a2  4977              LDR      r1,|L1.640|
+0000a4  ed9f8a77          VLDR     s16,|L1.644|
+0000a8  eddf8a77          VLDR     s17,|L1.648|
+0000ac  4e77              LDR      r6,|L1.652|
+0000ae  ed9f0a78          VLDR     s0,|L1.656|
+0000b2  f1b90f05          CMP      r9,#5                 ;117
+0000b6  d20b              BCS      |L1.208|
+0000b8  e8dff009          TBB      [pc,r9]               ;117
+0000bc  5e2203be          DCB      0x5e,0x22,0x03,0xbe
+0000c0  4300              DCB      0x43,0x00
+0000c2  f89c1000          LDRB     r1,[r12,#0]           ;121  ; pow_sw
+0000c6  2901              CMP      r1,#1                 ;121
+0000c8  d006              BEQ      |L1.216|
+0000ca  ed860a00          VSTR     s0,[r6,#0]            ;130
+0000ce  8065              STRH     r5,[r4,#2]            ;131
                   |L1.208|
-0000d0  f7fffffe          BL       ResetSET
-                  |L1.212|
-0000d4  6065              STR      r5,[r4,#4]            ;116  ; resetcount
-0000d6  e7bd              B        |L1.84|
-0000d8  f89c1000          LDRB     r1,[r12,#0]           ;130  ; pow_sw
-0000dc  2901              CMP      r1,#1                 ;130
-0000de  d006              BEQ      |L1.238|
-0000e0  ed860a00          VSTR     s0,[r6,#0]            ;139
-0000e4  8025              STRH     r5,[r4,#0]            ;140
-                  |L1.230|
-;;;166                            count1ms = 0;
-;;;167                        }
-;;;168                    }else{
-;;;169                        bc_raw = 0;
-;;;170                        count1ms = 0;
-;;;171                    }
-;;;172                }break;
-;;;173                case face_graph:
-;;;174                {
-;;;175                    if(mode_sw == mode_pow)
-;;;176                    {
-;;;177                        if(pow_sw == pow_on)
-;;;178                        {
-;;;179                            count1ms++;
-;;;180                            if(count1ms == 1000)
-;;;181                            {
-;;;182                                bc_raw += DISS_POW_Current * 1000 * 1/3600;
-;;;183                                count1ms = 0;
-;;;184                            }
-;;;185                        }else if(mode_sw == mode_pow && cdc_sw == cdc_on)
-;;;186                        {
-;;;187                            count1ms++;
-;;;188                            if(count1ms == 1000)
-;;;189                            {
-;;;190                                bc_raw += DISS_POW_Current * 1000 * 1/3600;
-;;;191                                count1ms = 0;
-;;;192                            }
-;;;193                        }
-;;;194                        else{
-;;;195                            bc_raw = 0;
-;;;196                            count1ms = 0;
-;;;197                        }
-;;;198                    }               
-;;;199                    
-;;;200                    if(mode_sw == mode_load)
-;;;201                    {
-;;;202                        if(load_sw == load_on)
-;;;203                        {
-;;;204                            count1ms++;
-;;;205                            if(count1ms == 1000)
-;;;206                            {
-;;;207                                GPIO_ResetBits(GPIOC,GPIO_Pin_1);
-;;;208                                bc_raw += DISS_Current * 1000 * 1/3600;
-;;;209                                count1ms = 0;
-;;;210                            }
-;;;211                        }else{
-;;;212                            bc_raw = 0;
-;;;213                            count1ms = 0;
-;;;214                        }
-;;;215                    }
-;;;216                }break;
-;;;217                case face_r:
-;;;218                {                               
-;;;219                    if(oct_sw == oct_on && para_set2 == set_2_on)
-;;;220                        {
-;;;221                            count1ms ++;
-;;;222                            if(count1ms == steptime)
-;;;223                            {
-;;;224                                OC_ADD();
-;;;225                                count1ms = 0;
-;;;226                            }
-;;;227                        }  
-;;;228                }break;
-;;;229            }
-;;;230        }    
-;;;231        
-;;;232    }
-0000e6  ecbd8b02          VPOP     {d8}
-0000ea  e8bd87f0          POP      {r4-r10,pc}
-                  |L1.238|
-0000ee  8821              LDRH     r1,[r4,#0]            ;132  ; count1ms
-0000f0  1c49              ADDS     r1,r1,#1              ;132
-0000f2  8021              STRH     r1,[r4,#0]            ;132
-0000f4  8821              LDRH     r1,[r4,#0]            ;133  ; count1ms
-0000f6  42b9              CMP      r1,r7                 ;133
-0000f8  d1f5              BNE      |L1.230|
-0000fa  ed900a00          VLDR     s0,[r0,#0]            ;135
-0000fe  ee200a08          VMUL.F32 s0,s0,s16             ;135
-000102  eec00a28          VDIV.F32 s1,s0,s17             ;135
-000106  ed960a00          VLDR     s0,[r6,#0]            ;135
-00010a  ee300a80          VADD.F32 s0,s1,s0              ;135
-00010e  ed860a00          VSTR     s0,[r6,#0]            ;135
-000112  8025              STRH     r5,[r4,#0]            ;136
-                  |L1.276|
-000114  e7e7              B        |L1.230|
-000116  7809              LDRB     r1,[r1,#0]            ;145  ; mode_sw
-000118  2903              CMP      r1,#3                 ;145
-00011a  d102              BNE      |L1.290|
-00011c  7811              LDRB     r1,[r2,#0]            ;145  ; cdc_sw
-00011e  2901              CMP      r1,#1                 ;145
-000120  d006              BEQ      |L1.304|
-                  |L1.290|
-000122  7810              LDRB     r0,[r2,#0]            ;153  ; cdc_sw
-000124  2800              CMP      r0,#0                 ;153
-000126  d1de              BNE      |L1.230|
-000128  ed860a00          VSTR     s0,[r6,#0]            ;154
-00012c  8025              STRH     r5,[r4,#0]            ;155
-00012e  e7da              B        |L1.230|
-                  |L1.304|
-000130  8821              LDRH     r1,[r4,#0]            ;147  ; count1ms
-000132  1c49              ADDS     r1,r1,#1              ;147
-000134  8021              STRH     r1,[r4,#0]            ;147
-000136  8821              LDRH     r1,[r4,#0]            ;148  ; count1ms
-000138  42b9              CMP      r1,r7                 ;148
-00013a  d1d4              BNE      |L1.230|
-00013c  ed900a00          VLDR     s0,[r0,#0]            ;150
-000140  ee200a08          VMUL.F32 s0,s0,s16             ;150
-000144  eec00a28          VDIV.F32 s1,s0,s17             ;150
-000148  ed960a00          VLDR     s0,[r6,#0]            ;150
-00014c  ee300a80          VADD.F32 s0,s1,s0              ;150
-000150  ed860a00          VSTR     s0,[r6,#0]            ;150
-000154  8025              STRH     r5,[r4,#0]            ;151
-                  |L1.342|
-000156  e7c6              B        |L1.230|
-000158  7818              LDRB     r0,[r3,#0]            ;160  ; load_sw
-00015a  2801              CMP      r0,#1                 ;160
-00015c  d003              BEQ      |L1.358|
-00015e  ed860a00          VSTR     s0,[r6,#0]            ;169
-000162  8025              STRH     r5,[r4,#0]            ;170
-                  |L1.356|
-000164  e7bf              B        |L1.230|
-                  |L1.358|
-000166  8820              LDRH     r0,[r4,#0]            ;162  ; count1ms
-000168  1c40              ADDS     r0,r0,#1              ;162
-00016a  8020              STRH     r0,[r4,#0]            ;162
-00016c  8820              LDRH     r0,[r4,#0]            ;163  ; count1ms
-00016e  42b8              CMP      r0,r7                 ;163
-000170  d1b9              BNE      |L1.230|
-000172  ed980a00          VLDR     s0,[r8,#0]            ;165
-000176  ee200a08          VMUL.F32 s0,s0,s16             ;165
-00017a  eec00a28          VDIV.F32 s1,s0,s17             ;165
-00017e  ed960a00          VLDR     s0,[r6,#0]            ;165
-000182  ee300a80          VADD.F32 s0,s1,s0              ;165
-000186  ed860a00          VSTR     s0,[r6,#0]            ;165
-00018a  8025              STRH     r5,[r4,#0]            ;166
-                  |L1.396|
-00018c  e7ab              B        |L1.230|
-00018e  f8919000          LDRB     r9,[r1,#0]            ;175  ; mode_sw
-000192  f1b90f03          CMP      r9,#3                 ;175
-000196  d124              BNE      |L1.482|
-000198  f89cc000          LDRB     r12,[r12,#0]          ;177  ; pow_sw
-00019c  f1bc0f01          CMP      r12,#1                ;177
-0001a0  d005              BEQ      |L1.430|
-0001a2  f891c000          LDRB     r12,[r1,#0]           ;185  ; mode_sw
-0001a6  f1bc0f03          CMP      r12,#3                ;185
-0001aa  d014              BEQ      |L1.470|
-0001ac  e016              B        |L1.476|
-                  |L1.430|
-0001ae  8822              LDRH     r2,[r4,#0]            ;179  ; count1ms
-0001b0  1c52              ADDS     r2,r2,#1              ;179
-0001b2  8022              STRH     r2,[r4,#0]            ;179
-0001b4  8822              LDRH     r2,[r4,#0]            ;180  ; count1ms
-0001b6  42ba              CMP      r2,r7                 ;180
-0001b8  d113              BNE      |L1.482|
-0001ba  edd00a00          VLDR     s1,[r0,#0]            ;182
-0001be  ee201a88          VMUL.F32 s2,s1,s16             ;182
-0001c2  eec10a28          VDIV.F32 s1,s2,s17             ;182
-0001c6  ed961a00          VLDR     s2,[r6,#0]            ;182
-0001ca  ee700a81          VADD.F32 s1,s1,s2              ;182
-0001ce  edc60a00          VSTR     s1,[r6,#0]            ;182
-0001d2  8025              STRH     r5,[r4,#0]            ;183
-0001d4  e005              B        |L1.482|
-                  |L1.470|
-0001d6  7812              LDRB     r2,[r2,#0]            ;185  ; cdc_sw
-0001d8  2a01              CMP      r2,#1                 ;185
-0001da  d00c              BEQ      |L1.502|
-                  |L1.476|
-0001dc  ed860a00          VSTR     s0,[r6,#0]            ;195
-0001e0  8025              STRH     r5,[r4,#0]            ;196
-                  |L1.482|
-0001e2  7808              LDRB     r0,[r1,#0]            ;200  ; mode_sw
-0001e4  2802              CMP      r0,#2                 ;200
-0001e6  d195              BNE      |L1.276|
-0001e8  7818              LDRB     r0,[r3,#0]            ;202  ; load_sw
-0001ea  2801              CMP      r0,#1                 ;202
-0001ec  d017              BEQ      |L1.542|
-0001ee  ed860a00          VSTR     s0,[r6,#0]            ;212
-0001f2  8025              STRH     r5,[r4,#0]            ;213
-0001f4  e777              B        |L1.230|
-                  |L1.502|
-0001f6  8822              LDRH     r2,[r4,#0]            ;187  ; count1ms
-0001f8  1c52              ADDS     r2,r2,#1              ;187
-0001fa  8022              STRH     r2,[r4,#0]            ;187
-0001fc  8822              LDRH     r2,[r4,#0]            ;188  ; count1ms
-0001fe  42ba              CMP      r2,r7                 ;188
-000200  d1ef              BNE      |L1.482|
-000202  edd00a00          VLDR     s1,[r0,#0]            ;190
-000206  ee201a88          VMUL.F32 s2,s1,s16             ;190
-00020a  eec10a28          VDIV.F32 s1,s2,s17             ;190
-00020e  ed961a00          VLDR     s2,[r6,#0]            ;190
-000212  ee700a81          VADD.F32 s1,s1,s2              ;190
-000216  edc60a00          VSTR     s1,[r6,#0]            ;190
-00021a  8025              STRH     r5,[r4,#0]            ;191
-00021c  e7e1              B        |L1.482|
-                  |L1.542|
-00021e  8820              LDRH     r0,[r4,#0]            ;204  ; count1ms
-000220  1c40              ADDS     r0,r0,#1              ;204
-000222  8020              STRH     r0,[r4,#0]            ;204
-000224  8820              LDRH     r0,[r4,#0]            ;205  ; count1ms
-000226  42b8              CMP      r0,r7                 ;205
-000228  d195              BNE      |L1.342|
-00022a  2102              MOVS     r1,#2                 ;207
-00022c  481f              LDR      r0,|L1.684|
-00022e  f7fffffe          BL       GPIO_ResetBits
-000232  ed980a00          VLDR     s0,[r8,#0]            ;208
-000236  ee200a08          VMUL.F32 s0,s0,s16             ;208
-00023a  eec00a28          VDIV.F32 s1,s0,s17             ;208
-00023e  ed960a00          VLDR     s0,[r6,#0]            ;208
-000242  ee300a80          VADD.F32 s0,s1,s0              ;208
-000246  ed860a00          VSTR     s0,[r6,#0]            ;208
-00024a  8025              STRH     r5,[r4,#0]            ;209
-00024c  e74b              B        |L1.230|
-00024e  4818              LDR      r0,|L1.688|
-000250  7800              LDRB     r0,[r0,#0]            ;219  ; oct_sw
-000252  2801              CMP      r0,#1                 ;219
-000254  d186              BNE      |L1.356|
-000256  4817              LDR      r0,|L1.692|
-000258  7800              LDRB     r0,[r0,#0]            ;219  ; para_set2
-00025a  28ff              CMP      r0,#0xff              ;219
-00025c  d196              BNE      |L1.396|
-00025e  8820              LDRH     r0,[r4,#0]            ;221  ; count1ms
-000260  1c40              ADDS     r0,r0,#1              ;221
-000262  8020              STRH     r0,[r4,#0]            ;221
-000264  8820              LDRH     r0,[r4,#0]            ;222  ; count1ms
-000266  4914              LDR      r1,|L1.696|
-000268  8809              LDRH     r1,[r1,#0]            ;222  ; steptime
-00026a  4288              CMP      r0,r1                 ;222
-00026c  d18e              BNE      |L1.396|
-00026e  f7fffffe          BL       OC_ADD
-000272  8025              STRH     r5,[r4,#0]            ;225
-000274  e737              B        |L1.230|
+;;;157                            count1ms = 0;
+;;;158                        }
+;;;159                    }else{
+;;;160                        bc_raw = 0;
+;;;161                        count1ms = 0;
+;;;162                    }
+;;;163                }break;
+;;;164                case face_graph:
+;;;165                {
+;;;166                    if(mode_sw == mode_pow)
+;;;167                    {
+;;;168                        if(pow_sw == pow_on)
+;;;169                        {
+;;;170                            count1ms++;
+;;;171                            if(count1ms == 1000)
+;;;172                            {
+;;;173                                bc_raw += DISS_POW_Current * 1000 * 1/3600;
+;;;174                                count1ms = 0;
+;;;175                            }
+;;;176                        }else if(mode_sw == mode_pow && cdc_sw == cdc_on)
+;;;177                        {
+;;;178                            count1ms++;
+;;;179                            if(count1ms == 1000)
+;;;180                            {
+;;;181                                bc_raw += DISS_POW_Current * 1000 * 1/3600;
+;;;182                                count1ms = 0;
+;;;183                            }
+;;;184                        }
+;;;185                        else{
+;;;186                            bc_raw = 0;
+;;;187                            count1ms = 0;
+;;;188                        }
+;;;189                    }               
+;;;190                    
+;;;191                    if(mode_sw == mode_load)
+;;;192                    {
+;;;193                        if(load_sw == load_on)
+;;;194                        {
+;;;195                            count1ms++;
+;;;196                            if(count1ms == 1000)
+;;;197                            {
+;;;198                                GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+;;;199                                bc_raw += DISS_Current * 1000 * 1/3600;
+;;;200                                count1ms = 0;
+;;;201                            }
+;;;202                        }else{
+;;;203                            bc_raw = 0;
+;;;204                            count1ms = 0;
+;;;205                        }
+;;;206                    }
+;;;207                }break;
+;;;208                case face_r:
+;;;209                {                               
+;;;210                    if(oct_sw == oct_on && para_set2 == set_2_on)
+;;;211                        {
+;;;212                            count1ms ++;
+;;;213                            if(count1ms == steptime)
+;;;214                            {
+;;;215                                OC_ADD();
+;;;216                                count1ms = 0;
+;;;217                            }
+;;;218                        }  
+;;;219                }break;
+;;;220            }
+;;;221        }    
+;;;222        
+;;;223    }
+0000d0  ecbd8b02          VPOP     {d8}
+0000d4  e8bd87f0          POP      {r4-r10,pc}
+                  |L1.216|
+0000d8  8861              LDRH     r1,[r4,#2]            ;123  ; count1ms
+0000da  1c49              ADDS     r1,r1,#1              ;123
+0000dc  8061              STRH     r1,[r4,#2]            ;123
+0000de  8861              LDRH     r1,[r4,#2]            ;124  ; count1ms
+0000e0  42b9              CMP      r1,r7                 ;124
+0000e2  d1f5              BNE      |L1.208|
+0000e4  ed900a00          VLDR     s0,[r0,#0]            ;126
+0000e8  ee200a08          VMUL.F32 s0,s0,s16             ;126
+0000ec  eec00a28          VDIV.F32 s1,s0,s17             ;126
+0000f0  ed960a00          VLDR     s0,[r6,#0]            ;126
+0000f4  ee300a80          VADD.F32 s0,s1,s0              ;126
+0000f8  ed860a00          VSTR     s0,[r6,#0]            ;126
+0000fc  8065              STRH     r5,[r4,#2]            ;127
+                  |L1.254|
+0000fe  e7e7              B        |L1.208|
+000100  7809              LDRB     r1,[r1,#0]            ;136  ; mode_sw
+000102  2903              CMP      r1,#3                 ;136
+000104  d102              BNE      |L1.268|
+000106  7811              LDRB     r1,[r2,#0]            ;136  ; cdc_sw
+000108  2901              CMP      r1,#1                 ;136
+00010a  d006              BEQ      |L1.282|
+                  |L1.268|
+00010c  7810              LDRB     r0,[r2,#0]            ;144  ; cdc_sw
+00010e  2800              CMP      r0,#0                 ;144
+000110  d1de              BNE      |L1.208|
+000112  ed860a00          VSTR     s0,[r6,#0]            ;145
+000116  8065              STRH     r5,[r4,#2]            ;146
+000118  e7da              B        |L1.208|
+                  |L1.282|
+00011a  8861              LDRH     r1,[r4,#2]            ;138  ; count1ms
+00011c  1c49              ADDS     r1,r1,#1              ;138
+00011e  8061              STRH     r1,[r4,#2]            ;138
+000120  8861              LDRH     r1,[r4,#2]            ;139  ; count1ms
+000122  42b9              CMP      r1,r7                 ;139
+000124  d1d4              BNE      |L1.208|
+000126  ed900a00          VLDR     s0,[r0,#0]            ;141
+00012a  ee200a08          VMUL.F32 s0,s0,s16             ;141
+00012e  eec00a28          VDIV.F32 s1,s0,s17             ;141
+000132  ed960a00          VLDR     s0,[r6,#0]            ;141
+000136  ee300a80          VADD.F32 s0,s1,s0              ;141
+00013a  ed860a00          VSTR     s0,[r6,#0]            ;141
+00013e  8065              STRH     r5,[r4,#2]            ;142
+                  |L1.320|
+000140  e7c6              B        |L1.208|
+000142  7818              LDRB     r0,[r3,#0]            ;151  ; load_sw
+000144  2801              CMP      r0,#1                 ;151
+000146  d003              BEQ      |L1.336|
+000148  ed860a00          VSTR     s0,[r6,#0]            ;160
+00014c  8065              STRH     r5,[r4,#2]            ;161
+                  |L1.334|
+00014e  e7bf              B        |L1.208|
+                  |L1.336|
+000150  8860              LDRH     r0,[r4,#2]            ;153  ; count1ms
+000152  1c40              ADDS     r0,r0,#1              ;153
+000154  8060              STRH     r0,[r4,#2]            ;153
+000156  8860              LDRH     r0,[r4,#2]            ;154  ; count1ms
+000158  42b8              CMP      r0,r7                 ;154
+00015a  d1b9              BNE      |L1.208|
+00015c  ed980a00          VLDR     s0,[r8,#0]            ;156
+000160  ee600a08          VMUL.F32 s1,s0,s16             ;156
+000164  ee800aa8          VDIV.F32 s0,s1,s17             ;156
+000168  edd60a00          VLDR     s1,[r6,#0]            ;156
+00016c  ee300a20          VADD.F32 s0,s0,s1              ;156
+000170  ed860a00          VSTR     s0,[r6,#0]            ;156
+000174  8065              STRH     r5,[r4,#2]            ;157
+                  |L1.374|
+000176  e7ab              B        |L1.208|
+000178  f8919000          LDRB     r9,[r1,#0]            ;166  ; mode_sw
+00017c  f1b90f03          CMP      r9,#3                 ;166
+000180  d124              BNE      |L1.460|
+000182  f89cc000          LDRB     r12,[r12,#0]          ;168  ; pow_sw
+000186  f1bc0f01          CMP      r12,#1                ;168
+00018a  d005              BEQ      |L1.408|
+00018c  f891c000          LDRB     r12,[r1,#0]           ;176  ; mode_sw
+000190  f1bc0f03          CMP      r12,#3                ;176
+000194  d014              BEQ      |L1.448|
+000196  e016              B        |L1.454|
+                  |L1.408|
+000198  8862              LDRH     r2,[r4,#2]            ;170  ; count1ms
+00019a  1c52              ADDS     r2,r2,#1              ;170
+00019c  8062              STRH     r2,[r4,#2]            ;170
+00019e  8862              LDRH     r2,[r4,#2]            ;171  ; count1ms
+0001a0  42ba              CMP      r2,r7                 ;171
+0001a2  d113              BNE      |L1.460|
+0001a4  edd00a00          VLDR     s1,[r0,#0]            ;173
+0001a8  ee201a88          VMUL.F32 s2,s1,s16             ;173
+0001ac  eec10a28          VDIV.F32 s1,s2,s17             ;173
+0001b0  ed961a00          VLDR     s2,[r6,#0]            ;173
+0001b4  ee700a81          VADD.F32 s1,s1,s2              ;173
+0001b8  edc60a00          VSTR     s1,[r6,#0]            ;173
+0001bc  8065              STRH     r5,[r4,#2]            ;174
+0001be  e005              B        |L1.460|
+                  |L1.448|
+0001c0  7812              LDRB     r2,[r2,#0]            ;176  ; cdc_sw
+0001c2  2a01              CMP      r2,#1                 ;176
+0001c4  d00c              BEQ      |L1.480|
+                  |L1.454|
+0001c6  ed860a00          VSTR     s0,[r6,#0]            ;186
+0001ca  8065              STRH     r5,[r4,#2]            ;187
+                  |L1.460|
+0001cc  7808              LDRB     r0,[r1,#0]            ;191  ; mode_sw
+0001ce  2802              CMP      r0,#2                 ;191
+0001d0  d195              BNE      |L1.254|
+0001d2  7818              LDRB     r0,[r3,#0]            ;193  ; load_sw
+0001d4  2801              CMP      r0,#1                 ;193
+0001d6  d017              BEQ      |L1.520|
+0001d8  ed860a00          VSTR     s0,[r6,#0]            ;203
+0001dc  8065              STRH     r5,[r4,#2]            ;204
+0001de  e777              B        |L1.208|
+                  |L1.480|
+0001e0  8862              LDRH     r2,[r4,#2]            ;178  ; count1ms
+0001e2  1c52              ADDS     r2,r2,#1              ;178
+0001e4  8062              STRH     r2,[r4,#2]            ;178
+0001e6  8862              LDRH     r2,[r4,#2]            ;179  ; count1ms
+0001e8  42ba              CMP      r2,r7                 ;179
+0001ea  d1ef              BNE      |L1.460|
+0001ec  edd00a00          VLDR     s1,[r0,#0]            ;181
+0001f0  ee201a88          VMUL.F32 s2,s1,s16             ;181
+0001f4  eec10a28          VDIV.F32 s1,s2,s17             ;181
+0001f8  ed961a00          VLDR     s2,[r6,#0]            ;181
+0001fc  ee700a81          VADD.F32 s1,s1,s2              ;181
+000200  edc60a00          VSTR     s1,[r6,#0]            ;181
+000204  8065              STRH     r5,[r4,#2]            ;182
+000206  e7e1              B        |L1.460|
+                  |L1.520|
+000208  8860              LDRH     r0,[r4,#2]            ;195  ; count1ms
+00020a  1c40              ADDS     r0,r0,#1              ;195
+00020c  8060              STRH     r0,[r4,#2]            ;195
+00020e  8860              LDRH     r0,[r4,#2]            ;196  ; count1ms
+000210  42b8              CMP      r0,r7                 ;196
+000212  d195              BNE      |L1.320|
+000214  2102              MOVS     r1,#2                 ;198
+000216  481f              LDR      r0,|L1.660|
+000218  f7fffffe          BL       GPIO_ResetBits
+00021c  ed980a00          VLDR     s0,[r8,#0]            ;199
+000220  ee200a08          VMUL.F32 s0,s0,s16             ;199
+000224  eec00a28          VDIV.F32 s1,s0,s17             ;199
+000228  ed960a00          VLDR     s0,[r6,#0]            ;199
+00022c  ee300a80          VADD.F32 s0,s1,s0              ;199
+000230  ed860a00          VSTR     s0,[r6,#0]            ;199
+000234  8065              STRH     r5,[r4,#2]            ;200
+000236  e74b              B        |L1.208|
+000238  4817              LDR      r0,|L1.664|
+00023a  7800              LDRB     r0,[r0,#0]            ;210  ; oct_sw
+00023c  2801              CMP      r0,#1                 ;210
+00023e  d186              BNE      |L1.334|
+000240  4816              LDR      r0,|L1.668|
+000242  7800              LDRB     r0,[r0,#0]            ;210  ; para_set2
+000244  28ff              CMP      r0,#0xff              ;210
+000246  d196              BNE      |L1.374|
+000248  8860              LDRH     r0,[r4,#2]            ;212  ; count1ms
+00024a  1c40              ADDS     r0,r0,#1              ;212
+00024c  8060              STRH     r0,[r4,#2]            ;212
+00024e  8860              LDRH     r0,[r4,#2]            ;213  ; count1ms
+000250  4913              LDR      r1,|L1.672|
+000252  8809              LDRH     r1,[r1,#0]            ;213  ; steptime
+000254  4288              CMP      r0,r1                 ;213
+000256  d18e              BNE      |L1.374|
+000258  f7fffffe          BL       OC_ADD
+00025c  8065              STRH     r5,[r4,#2]            ;216
+00025e  e737              B        |L1.208|
                           ENDP
 
-000276  0000              DCW      0x0000
-                  |L1.632|
+                  |L1.608|
                           DCD      0x40000400
-                  |L1.636|
-                          DCD      ||.data||
-                  |L1.640|
+                  |L1.612|
                           DCD      page_sw
-                  |L1.644|
+                  |L1.616|
+                          DCD      ||.data||
+                  |L1.620|
                           DCD      pow_sw
-                  |L1.648|
+                  |L1.624|
                           DCD      DISS_POW_Current
-                  |L1.652|
+                  |L1.628|
                           DCD      load_sw
-                  |L1.656|
+                  |L1.632|
                           DCD      DISS_Current
-                  |L1.660|
+                  |L1.636|
                           DCD      cdc_sw
-                  |L1.664|
+                  |L1.640|
                           DCD      mode_sw
-                  |L1.668|
-00029c  447a0000          DCFS     0x447a0000 ; 1000
-                  |L1.672|
-0002a0  45610000          DCFS     0x45610000 ; 3600
-                  |L1.676|
+                  |L1.644|
+000284  447a0000          DCFS     0x447a0000 ; 1000
+                  |L1.648|
+000288  45610000          DCFS     0x45610000 ; 3600
+                  |L1.652|
                           DCD      bc_raw
-                  |L1.680|
-0002a8  00000000          DCFS     0x00000000 ; 0
-                  |L1.684|
+                  |L1.656|
+000290  00000000          DCFS     0x00000000 ; 0
+                  |L1.660|
                           DCD      0x40020800
-                  |L1.688|
+                  |L1.664|
                           DCD      oct_sw
-                  |L1.692|
+                  |L1.668|
                           DCD      para_set2
-                  |L1.696|
+                  |L1.672|
                           DCD      steptime
 
                           AREA ||i.TIM3_Int_Init||, CODE, READONLY, ALIGN=2
 
                   TIM3_Int_Init PROC
-;;;56     
-;;;57     void TIM3_Int_Init(u16 arr,u16 psc)
+;;;57     
+;;;58     void TIM3_Int_Init(u16 arr,u16 psc)
 000000  b57f              PUSH     {r0-r6,lr}
-;;;58     {
+;;;59     {
 000002  4604              MOV      r4,r0
 000004  460d              MOV      r5,r1
-;;;59         TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
-;;;60         NVIC_InitTypeDef NVIC_InitStructure;
-;;;61         
-;;;62         RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE); //ÙʹŜ TIM3 ʱד
+;;;60         TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+;;;61         NVIC_InitTypeDef NVIC_InitStructure;
+;;;62         
+;;;63         RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE); //ÙʹŜ TIM3 ʱד
 000006  2101              MOVS     r1,#1
 000008  2002              MOVS     r0,#2
 00000a  f7fffffe          BL       RCC_APB1PeriphClockCmd
-;;;63         TIM_TimeBaseInitStructure.TIM_Period = arr; //ؔ֯טװ՘ֵ
+;;;64         TIM_TimeBaseInitStructure.TIM_Period = arr; //ؔ֯טװ՘ֵ
 00000e  9402              STR      r4,[sp,#8]
-;;;64         TIM_TimeBaseInitStructure.TIM_Prescaler=psc; //֨ʱǷؖƵ
+;;;65         TIM_TimeBaseInitStructure.TIM_Prescaler=psc; //֨ʱǷؖƵ
 000010  f8ad5004          STRH     r5,[sp,#4]
-;;;65         TIM_TimeBaseInitStructure.TIM_CounterMode=TIM_CounterMode_Up; //вʏ݆˽ģʽ
+;;;66         TIM_TimeBaseInitStructure.TIM_CounterMode=TIM_CounterMode_Up; //вʏ݆˽ģʽ
 000014  2000              MOVS     r0,#0
 000016  f8ad0006          STRH     r0,[sp,#6]
-;;;66         TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;
+;;;67         TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;
 00001a  f8ad000c          STRH     r0,[sp,#0xc]
-;;;67         TIM_TimeBaseInit(TIM3,&TIM_TimeBaseInitStructure);// ÚԵʼۯ֨ʱǷ TIM3
+;;;68         TIM_TimeBaseInit(TIM3,&TIM_TimeBaseInitStructure);// ÚԵʼۯ֨ʱǷ TIM3
 00001e  4c0e              LDR      r4,|L2.88|
 000020  a901              ADD      r1,sp,#4
 000022  4620              MOV      r0,r4
 000024  f7fffffe          BL       TIM_TimeBaseInit
-;;;68         TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE); //ÛՊѭ֨ʱǷ 3 ټтא׏
+;;;69         TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE); //ÛՊѭ֨ʱǷ 3 ټтא׏
 000028  2201              MOVS     r2,#1
 00002a  4611              MOV      r1,r2
 00002c  4620              MOV      r0,r4
 00002e  f7fffffe          BL       TIM_ITConfig
-;;;69         NVIC_InitStructure.NVIC_IRQChannel=TIM3_IRQn; //֨ʱǷ 3 א׏
+;;;70         NVIC_InitStructure.NVIC_IRQChannel=TIM3_IRQn; //֨ʱǷ 3 א׏
 000032  211d              MOVS     r1,#0x1d
 000034  f88d1000          STRB     r1,[sp,#0]
-;;;70         NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0x01; //ȀռԅЈܶ 1
+;;;71         NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0x01; //ȀռԅЈܶ 1
 000038  2101              MOVS     r1,#1
 00003a  f88d1001          STRB     r1,[sp,#1]
-;;;71         NVIC_InitStructure.NVIC_IRQChannelSubPriority=0x03; //ЬӦԅЈܶ 3
+;;;72         NVIC_InitStructure.NVIC_IRQChannelSubPriority=0x03; //ЬӦԅЈܶ 3
 00003e  2203              MOVS     r2,#3
 000040  f88d2002          STRB     r2,[sp,#2]
-;;;72         NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
+;;;73         NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
 000044  f88d1003          STRB     r1,[sp,#3]
-;;;73         NVIC_Init(&NVIC_InitStructure);// ÜԵʼۯ NVIC
+;;;74         NVIC_Init(&NVIC_InitStructure);// ÜԵʼۯ NVIC
 000048  4668              MOV      r0,sp
 00004a  f7fffffe          BL       NVIC_Init
-;;;74         TIM_Cmd(TIM3,ENABLE); //ÝʹŜ֨ʱǷ 3
+;;;75         TIM_Cmd(TIM3,ENABLE); //ÝʹŜ֨ʱǷ 3
 00004e  2101              MOVS     r1,#1
 000050  4620              MOV      r0,r4
 000052  f7fffffe          BL       TIM_Cmd
-;;;75     }
+;;;76     }
 000056  bd7f              POP      {r0-r6,pc}
-;;;76     //֨ʱǷ 3 א׏ؾϱگ˽
+;;;77     //֨ʱǷ 3 א׏ؾϱگ˽
                           ENDP
 
                   |L2.88|
@@ -527,13 +506,11 @@
 
                           AREA ||.data||, DATA, ALIGN=2
 
+                  resetflag
+000000  0000              DCB      0x00,0x00
                   count1ms
-000000  00000000          DCB      0x00,0x00,0x00,0x00
+000002  0000              DCB      0x00,0x00
                   resetcount
-                          DCD      0x00000000
-                  read1963
-                          DCD      0x00000000
-                  scancount
                           DCD      0x00000000
 
 ;*** Start embedded assembler ***

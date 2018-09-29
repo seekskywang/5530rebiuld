@@ -50446,6 +50446,7 @@ Nextern WM_HWIN CreateWindow(void);
 Xextern GUI_HWIN CreateWindow(void);
 Nextern WM_HWIN CreateR(void);
 Xextern GUI_HWIN CreateR(void);
+Nextern vu8 resetflag;
 N/**********************************************************************************************************
 N*	º¯ Êı Ãû: MainTask
 N*	¹¦ÄÜËµÃ÷: GUIÖ÷º¯Êı
@@ -50455,7 +50456,12 @@ N*******************************************************************************
 N*/
 Nvoid MainTask(void) 
 N{ 
-N    static vu16 read1963;
+W "..\STemWinLibrary522\emWinTask\MainTask.c" 44 12 explicit type is missing ("int" assumed)
+N    static resetcount;
+W "..\STemWinLibrary522\emWinTask\MainTask.c" 45 12 explicit type is missing ("int" assumed)
+N    static read1963;
+W "..\STemWinLibrary522\emWinTask\MainTask.c" 46 12 explicit type is missing ("int" assumed)
+N    static scancount;
 N//	unsigned char  ucKeyCode;
 N	GUI_Init();
 N	WM_SetDesktopColor(GUI_BLUE);  
@@ -50483,7 +50489,7 @@ N	HEADER_SetDefaultSkin(HEADER_SKIN_FLEX);
 X	HEADER_SetDefaultSkin(HEADER_DrawSkinFlex);
 N	RADIO_SetDefaultSkin(RADIO_SKIN_FLEX);
 X	RADIO_SetDefaultSkin(RADIO_DrawSkinFlex);
-W "..\STemWinLibrary522\emWinTask\MainTask.c" 59 5 function "CreateSTARTER" declared implicitly
+W "..\STemWinLibrary522\emWinTask\MainTask.c" 62 5 function "CreateSTARTER" declared implicitly
 N    CreateSTARTER();
 N//	CreateR();//å¼€æœºè¿›å…¥å†…é˜»æµ‹è¯•ç•Œé¢
 N	Flag_Swtich_ON=0;
@@ -50492,7 +50498,24 @@ N	while (1)
 N	{
 N//         TM1650_SET_LED(0x68,0x70);//FAILç¯
 N//         GPIO_SetBits(GPIOD,GPIO_Pin_12);//
-N        
+N        if(page_sw != face_starter)
+X        if(page_sw != 6)
+N        {
+N            if(scancount == 10)
+N            {
+N                sLCD_WR_REG(0xf1);
+N                read1963 =sLCD_Read_Data();
+N                scancount = 0;
+N            }else{
+N                scancount++;
+N            }
+N             if(read1963 != 0x03)
+N             {
+N                 resetflag = 1;               
+N             }else{
+N                 resetflag = 0; 
+N             }
+N         }
 N		DAC_SetChannel1Data(DAC_Align_12b_R,Contr_Laod);//è´Ÿè½½DACæ§åˆ¶
 X		DAC_SetChannel1Data(((uint32_t)0x00000000),Contr_Laod);
 N		TIM_SetCompare1(TIM2,Contr_Current);//ç”µæºç”µæµæ§åˆ¶
@@ -50533,5 +50556,6 @@ N		BEEP_Ring();//èœ‚é¸£å™¨æ§åˆ¶
 N		GUI_Delay(2);//GUIåˆ·æ–°
 N	}
 N  
+W "..\STemWinLibrary522\emWinTask\MainTask.c" 44 12 variable "resetcount" was declared but never referenced
 N}
 N/***************************** °²¸»À³µç×Ó www.armfly.com (END OF FILE) *********************************/
