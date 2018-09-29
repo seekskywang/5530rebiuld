@@ -48561,6 +48561,7 @@ Nvoid INPUT_C(char* num);
 Nvoid INPUT_LOAD(char* num);  
 Nvoid INPUT_INFO(vu8 num);  
 N
+N
 N//=============================================================================
 N#define NOP   __nop();	  //ø’÷∏¡Ó
 N
@@ -48999,6 +49000,7 @@ Svoid INPUT_CDC(char* num);
 Svoid INPUT_C(char* num);  
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
+S
 S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -51425,6 +51427,7 @@ Svoid INPUT_C(char* num);
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
 S
+S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
 S
@@ -53002,6 +53005,13 @@ N  pass = 0;
 N  TM1650_SET_LED(0x68,0x70);
 N  GPIO_ResetBits(GPIOD,GPIO_Pin_12);//ÁÅ≠ÁÅØ
 X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
+N  load_wind = GUI_CreateDialogBox(_aDialogCreate2, GUI_COUNTOF(_aDialogCreate2), _cbDialog2, WM_HBKWIN, 0, 0);
+X  load_wind = GUI_CreateDialogBox(_aDialogCreate2, (sizeof(_aDialogCreate2) / sizeof(_aDialogCreate2[0])), _cbDialog2, WM_GetDesktopWindow(), 0, 0);
+N  return load_wind;
+N}
+N
+NWM_HWIN ResetLoad(void) {
+XGUI_HWIN ResetLoad(void) {
 N  load_wind = GUI_CreateDialogBox(_aDialogCreate2, GUI_COUNTOF(_aDialogCreate2), _cbDialog2, WM_HBKWIN, 0, 0);
 X  load_wind = GUI_CreateDialogBox(_aDialogCreate2, (sizeof(_aDialogCreate2) / sizeof(_aDialogCreate2[0])), _cbDialog2, WM_GetDesktopWindow(), 0, 0);
 N  return load_wind;

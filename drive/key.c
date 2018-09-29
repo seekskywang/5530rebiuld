@@ -22,6 +22,7 @@ extern WM_HWIN CreateWindow2(void);
 extern WM_HWIN CreateWindow(void);
 extern WM_HWIN CreateG(void);
 extern WM_HWIN CreateSET(void);
+extern WM_HWIN ResetPow(void);
 extern WM_HWIN hWinWind;
 extern WM_HWIN hWinR;
 extern WM_HWIN load_wind;//负载界面句柄
@@ -791,7 +792,7 @@ void Key_Funtion(void)
 			
 			case KEY_ESC :
 			{
-                LCD_Initializtion();
+//                LCD_Initializtion();
 //                 GUI_Init();
 //                 GUI_Clear();//清屏
 //                timer_sw = 0;

@@ -48611,6 +48611,7 @@ Nvoid INPUT_C(char* num);
 Nvoid INPUT_LOAD(char* num);  
 Nvoid INPUT_INFO(vu8 num);  
 N
+N
 N//=============================================================================
 N#define NOP   __nop();	  //��ָ��
 N
@@ -49083,6 +49084,7 @@ Svoid INPUT_C(char* num);
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
 S
+S
 S//=============================================================================
 S#define NOP   __nop();	  //��ָ��
 S
@@ -49543,6 +49545,7 @@ Svoid INPUT_C(char* num);
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
 S
+S
 S//=============================================================================
 S#define NOP   __nop();	  //��ָ��
 S
@@ -50002,6 +50005,7 @@ Svoid INPUT_CDC(char* num);
 Svoid INPUT_C(char* num);  
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
+S
 S
 S//=============================================================================
 S#define NOP   __nop();	  //��ָ��
@@ -50479,12 +50483,16 @@ N	HEADER_SetDefaultSkin(HEADER_SKIN_FLEX);
 X	HEADER_SetDefaultSkin(HEADER_DrawSkinFlex);
 N	RADIO_SetDefaultSkin(RADIO_SKIN_FLEX);
 X	RADIO_SetDefaultSkin(RADIO_DrawSkinFlex);
-N	CreateR();//开机进入内阻测试界面
+W "..\STemWinLibrary522\emWinTask\MainTask.c" 59 5 function "CreateSTARTER" declared implicitly
+N    CreateSTARTER();
+N//	CreateR();//开机进入内阻测试界面
 N	Flag_Swtich_ON=0;
 X	(flagA . bit6)=0;
 N	while (1)
 N	{
-N
+N//         TM1650_SET_LED(0x68,0x70);//FAIL灯
+N//         GPIO_SetBits(GPIOD,GPIO_Pin_12);//
+N        
 N		DAC_SetChannel1Data(DAC_Align_12b_R,Contr_Laod);//负载DAC控制
 X		DAC_SetChannel1Data(((uint32_t)0x00000000),Contr_Laod);
 N		TIM_SetCompare1(TIM2,Contr_Current);//电源电流控制

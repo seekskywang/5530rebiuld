@@ -975,8 +975,8 @@ WM_HWIN CreateCDC(void) {
   set_sw = set_26;
   pass = 0;
   track = face_cdc;
-  SET_Voltage = cdc_cv;
-  SET_Current = cdc_cc;
+  SET_Voltage = opv1;
+  SET_Current = opc1;
   SET_Current_Laod = cdc_dc;
   TM1650_SET_LED(0x68,0x70);
   GPIO_ResetBits(GPIOD,GPIO_Pin_12);//ÃðµÆ
@@ -984,6 +984,12 @@ WM_HWIN CreateCDC(void) {
   hWincdc = GUI_CreateDialogBox(_aDialogCreate4, GUI_COUNTOF(_aDialogCreate4), _cbDialog, WM_HBKWIN, 0, 0);
   return hWincdc;
 }
+
+WM_HWIN ResetCDC(void) {
+  hWincdc = GUI_CreateDialogBox(_aDialogCreate4, GUI_COUNTOF(_aDialogCreate4), _cbDialog, WM_HBKWIN, 0, 0);
+  return hWincdc;
+}
+
 
 void CDC_OP_DOWN(void);
 void CDC_OP_DOWN(void)

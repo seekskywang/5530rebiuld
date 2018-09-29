@@ -99,7 +99,20 @@ void TIM3_IRQHandler(void)
              {
                  LCD_Initializtion();
                  GUI_Init();
-                 GUI_Clear();//清屏
+                 if(page_sw == face_menu)
+                 {
+                     ResetPow();
+                 }else if(page_sw == face_cdc){
+                     ResetCDC();
+                 }else if(page_sw == face_r){
+                     ResetR();
+                 }else if(page_sw == face_load){
+                     ResetLoad();
+                 }else if(page_sw == face_graph){
+                     ResetG();
+                 }else if(page_sw == face_set){
+                     ResetSET();
+                 }
                  resetcount = 0;
              }else{
                  resetcount++;

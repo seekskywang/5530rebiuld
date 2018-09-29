@@ -34727,6 +34727,7 @@ Nvoid INPUT_C(char* num);
 Nvoid INPUT_LOAD(char* num);  
 Nvoid INPUT_INFO(vu8 num);  
 N
+N
 N//=============================================================================
 N#define NOP   __nop();	  //空指令
 N
@@ -35213,6 +35214,7 @@ Svoid INPUT_CDC(char* num);
 Svoid INPUT_C(char* num);  
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
+S
 S
 S//=============================================================================
 S#define NOP   __nop();	  //空指令
@@ -35837,22 +35839,19 @@ N	DISS_POW_Voltage=DISS_POW_Voltage/100;//计算显示电压
 N	var32 = 0;
 N/*****************************内阻值转换*******************************************/
 N	var32 = Rmon_value;
-N	var32 = var32 * REG_CorrectionR;  
-X	var32 = var32 * Correct_Parametet[3];  
-N	if ((Polar1 & 0x04) == 0x04)		  
-X	if ((Correct_Parametet[9] & 0x04) == 0x04)		  
-N	{
-N		if (var32 < REG_ReadR_Offset) 
-X		if (var32 < Correct_Strong[3]) 
+N	var32 = var32 * 5844;  
+N// 	if ((Polar1 & 0x04) == 0x04)		  
+N// 	{
+N		if (var32 < 28571) 
 N		{
 N			var32 = 0;
 N		}
-N		else var32 = var32 - REG_ReadR_Offset;
-X		else var32 = var32 - Correct_Strong[3];
-N	}
-N	else var32 = var32 + REG_ReadR_Offset;
-X	else var32 = var32 + Correct_Strong[3];
-N	var32 = var32 >> 12;
+N		else {
+N            var32 = var32 - 28571;
+N        }
+N// 	}
+N// 	else var32 = var32 + REG_ReadR_Offset;
+N// 	var32 = var32 >> 12;
 N	if (var32 < 5) var32 = 0;				  //40mV以下清零
 N	R_VLUE = var32;
 X	Run_Control[13] = var32;

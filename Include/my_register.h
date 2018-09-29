@@ -26,6 +26,7 @@ void INPUT_C(char* num);
 void INPUT_LOAD(char* num);  
 void INPUT_INFO(vu8 num);  
 
+
 //=============================================================================
 #define NOP   __nop();	  //ø’÷∏¡Ó
 

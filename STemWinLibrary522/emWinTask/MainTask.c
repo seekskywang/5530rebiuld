@@ -56,11 +56,14 @@ void MainTask(void)
 	SLIDER_SetDefaultSkin(SLIDER_SKIN_FLEX);
 	HEADER_SetDefaultSkin(HEADER_SKIN_FLEX);
 	RADIO_SetDefaultSkin(RADIO_SKIN_FLEX);
-	CreateR();//开机进入内阻测试界面
+    CreateSTARTER();
+//	CreateR();//开机进入内阻测试界面
 	Flag_Swtich_ON=0;
 	while (1)
 	{
-
+//         TM1650_SET_LED(0x68,0x70);//FAIL灯
+//         GPIO_SetBits(GPIOD,GPIO_Pin_12);//
+        
 		DAC_SetChannel1Data(DAC_Align_12b_R,Contr_Laod);//负载DAC控制
 		TIM_SetCompare1(TIM2,Contr_Current);//电源电流控制
 		TIM_SetCompare2(TIM2,Contr_Voltage);//电源电压控制

@@ -34726,6 +34726,7 @@ Nvoid INPUT_C(char* num);
 Nvoid INPUT_LOAD(char* num);  
 Nvoid INPUT_INFO(vu8 num);  
 N
+N
 N//=============================================================================
 N#define NOP   __nop();	  //ø’÷∏¡Ó
 N

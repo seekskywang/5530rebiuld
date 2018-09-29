@@ -48563,6 +48563,7 @@ Nvoid INPUT_C(char* num);
 Nvoid INPUT_LOAD(char* num);  
 Nvoid INPUT_INFO(vu8 num);  
 N
+N
 N//=============================================================================
 N#define NOP   __nop();	  //ø’÷∏¡Ó
 N
@@ -48996,6 +48997,7 @@ Svoid INPUT_CDC(char* num);
 Svoid INPUT_C(char* num);  
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
+S
 S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -49435,6 +49437,7 @@ Svoid INPUT_CDC(char* num);
 Svoid INPUT_C(char* num);  
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
+S
 S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -51861,6 +51864,7 @@ Svoid INPUT_C(char* num);
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
 S
+S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
 S
@@ -54071,10 +54075,10 @@ X  set_sw = 25;
 N  pass = 0;
 N  track = face_cdc;
 X  track = 1;
-N  SET_Voltage = cdc_cv;
-X  Run_Control[1] = Run_Control[38];
-N  SET_Current = cdc_cc;
-X  Run_Control[2] = Run_Control[39];
+N  SET_Voltage = opv1;
+X  Run_Control[1] = Run_Control[31];
+N  SET_Current = opc1;
+X  Run_Control[2] = Run_Control[34];
 N  SET_Current_Laod = cdc_dc;
 X  Run_Control[4] = Run_Control[41];
 N  TM1650_SET_LED(0x68,0x70);
@@ -54085,6 +54089,14 @@ N  hWincdc = GUI_CreateDialogBox(_aDialogCreate4, GUI_COUNTOF(_aDialogCreate4), 
 X  hWincdc = GUI_CreateDialogBox(_aDialogCreate4, (sizeof(_aDialogCreate4) / sizeof(_aDialogCreate4[0])), _cbDialog, WM_GetDesktopWindow(), 0, 0);
 N  return hWincdc;
 N}
+N
+NWM_HWIN ResetCDC(void) {
+XGUI_HWIN ResetCDC(void) {
+N  hWincdc = GUI_CreateDialogBox(_aDialogCreate4, GUI_COUNTOF(_aDialogCreate4), _cbDialog, WM_HBKWIN, 0, 0);
+X  hWincdc = GUI_CreateDialogBox(_aDialogCreate4, (sizeof(_aDialogCreate4) / sizeof(_aDialogCreate4[0])), _cbDialog, WM_GetDesktopWindow(), 0, 0);
+N  return hWincdc;
+N}
+N
 N
 Nvoid CDC_OP_DOWN(void);
 Nvoid CDC_OP_DOWN(void)

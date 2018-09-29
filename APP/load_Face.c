@@ -494,6 +494,11 @@ WM_HWIN CreateWindow2(void) {
   return load_wind;
 }
 
+WM_HWIN ResetLoad(void) {
+  load_wind = GUI_CreateDialogBox(_aDialogCreate2, GUI_COUNTOF(_aDialogCreate2), _cbDialog2, WM_HBKWIN, 0, 0);
+  return load_wind;
+}
+
 //负载界面设置确认
 void LOAD_SET(void);
 void LOAD_SET(void) {

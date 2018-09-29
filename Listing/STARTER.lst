@@ -48563,6 +48563,7 @@ Nvoid INPUT_C(char* num);
 Nvoid INPUT_LOAD(char* num);  
 Nvoid INPUT_INFO(vu8 num);  
 N
+N
 N//=============================================================================
 N#define NOP   __nop();	  //空指令
 N
@@ -49066,7 +49067,8 @@ N        if(starter == 0){
 N            starter = 1;
 N        }else{
 N            WM_DeleteWindow(hWinstarter);
-N//            CreateR();
+W "D:\外发资料\电池综合测试仪 2.1\APP\STARTER.c" 98 13 function "CreateR" declared implicitly
+N            CreateR();
 N        }
 N	}
 N	break;

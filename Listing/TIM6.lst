@@ -34726,6 +34726,7 @@ Nvoid INPUT_C(char* num);
 Nvoid INPUT_LOAD(char* num);  
 Nvoid INPUT_INFO(vu8 num);  
 N
+N
 N//=============================================================================
 N#define NOP   __nop();	  //ø’÷∏¡Ó
 N
@@ -35258,8 +35259,32 @@ W "..\drive\TIM6.c" 100 18 function "LCD_Initializtion" declared implicitly
 N                 LCD_Initializtion();
 W "..\drive\TIM6.c" 101 18 function "GUI_Init" declared implicitly
 N                 GUI_Init();
-W "..\drive\TIM6.c" 102 18 function "GUI_Clear" declared implicitly
-N                 GUI_Clear();//Ê∏ÖÂ±è
+N                 if(page_sw == face_menu)
+X                 if(page_sw == 2)
+N                 {
+W "..\drive\TIM6.c" 104 22 function "ResetPow" declared implicitly
+N                     ResetPow();
+N                 }else if(page_sw == face_cdc){
+X                 }else if(page_sw == 1){
+W "..\drive\TIM6.c" 106 22 function "ResetCDC" declared implicitly
+N                     ResetCDC();
+N                 }else if(page_sw == face_r){
+X                 }else if(page_sw == 3){
+W "..\drive\TIM6.c" 108 22 function "ResetR" declared implicitly
+N                     ResetR();
+N                 }else if(page_sw == face_load){
+X                 }else if(page_sw == 4){
+W "..\drive\TIM6.c" 110 22 function "ResetLoad" declared implicitly
+N                     ResetLoad();
+N                 }else if(page_sw == face_graph){
+X                 }else if(page_sw == 0){
+W "..\drive\TIM6.c" 112 22 function "ResetG" declared implicitly
+N                     ResetG();
+N                 }else if(page_sw == face_set){
+X                 }else if(page_sw == 5){
+W "..\drive\TIM6.c" 114 22 function "ResetSET" declared implicitly
+N                     ResetSET();
+N                 }
 N                 resetcount = 0;
 N             }else{
 N                 resetcount++;

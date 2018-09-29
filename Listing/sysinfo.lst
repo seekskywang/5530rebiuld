@@ -48563,6 +48563,7 @@ Nvoid INPUT_C(char* num);
 Nvoid INPUT_LOAD(char* num);  
 Nvoid INPUT_INFO(vu8 num);  
 N
+N
 N//=============================================================================
 N#define NOP   __nop();	  //��ָ��
 N
@@ -49001,6 +49002,7 @@ Svoid INPUT_CDC(char* num);
 Svoid INPUT_C(char* num);  
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
+S
 S
 S//=============================================================================
 S#define NOP   __nop();	  //��ָ��
@@ -51427,6 +51429,7 @@ Svoid INPUT_C(char* num);
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
 S
+S
 S//=============================================================================
 S#define NOP   __nop();	  //��ָ��
 S
@@ -52595,7 +52598,7 @@ N        }
 N        GUI_SetColor(0x00BFFFFF);
 N        GUI_SetFont(&GUI_Font24_1);
 N        GUI_DispStringAt("JK5530", 180, 50);
-N        GUI_DispStringAt("Ver:2.1", 180, 75);
+N        GUI_DispStringAt("Ver:2.2", 180, 75);
 N        //1.7版本修改内阻测试判断测试结束与下一次测试开始的逻辑
 N        //1.8版本修正内阻测试短路后激活电池问题，添加手动测试功能，修正内阻显示不稳定问题
 N        //2.0版本添加英文

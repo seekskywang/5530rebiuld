@@ -90,12 +90,12 @@ void TIM2_PWM_Config(void)
 /**************************************************************************************/
 void Temp_Comapre(void)	  //温度来控制风扇
 {
-	if(NTC_value<=3350)
+	if(NTC_value<=3500)
 	{
 		GPIO_SetBits(GPIOA,GPIO_Pin_2);//开启风扇
 		flag_FAN_ON=1;
 	}
-	else if(NTC_value>=3400)
+	else if(NTC_value>=3628)
 	{
 		GPIO_ResetBits(GPIOA,GPIO_Pin_2);//关闭风扇
 		flag_FAN_ON=0;

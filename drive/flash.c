@@ -373,13 +373,29 @@ void EEPROM_READ_Coeff(void)
 	set_sbs_c=set_sbs_c<<8;
 	set_sbs_c=set_sbs_c+EEPROM_READ_Byte(0x73);
     
-    cdc_cv=EEPROM_READ_Byte(0x76);
-	cdc_cv=cdc_cv<<8;
-	cdc_cv=cdc_cv+EEPROM_READ_Byte(0x77);
+    opv1=EEPROM_READ_Byte(0x76);
+	opv1=opv1<<8;
+	opv1=opv1+EEPROM_READ_Byte(0x77);
     
-    cdc_cc=EEPROM_READ_Byte(0x78);
-	cdc_cc=cdc_cc<<8;
-	cdc_cc=cdc_cc+EEPROM_READ_Byte(0x79);
+    opv2=EEPROM_READ_Byte(0x7C);
+	opv2=opv2<<8;
+	opv2=opv2+EEPROM_READ_Byte(0x7D);
+    
+    opv3=EEPROM_READ_Byte(0x7E);
+	opv3=opv3<<8;
+	opv3=opv3+EEPROM_READ_Byte(0x7F);
+    
+    opc1=EEPROM_READ_Byte(0x78);
+	opc1=opc1<<8;
+	opc1=opc1+EEPROM_READ_Byte(0x79);
+    
+    opc2=EEPROM_READ_Byte(0x80);
+	opc2=opc2<<8;
+	opc2=opc2+EEPROM_READ_Byte(0x81);
+    
+    opc3=EEPROM_READ_Byte(0x82);
+	opc3=opc3<<8;
+	opc3=opc3+EEPROM_READ_Byte(0x83);
     
     cdc_dc=EEPROM_READ_Byte(0x7A);
 	cdc_dc=cdc_dc<<8;
@@ -454,13 +470,29 @@ void Write_Limits(void)
 	EEPROM_WriteByte(0x72, data_8bit);
 	EEPROM_WriteByte(0x73, set_sbs_c);
     
-    data_8bit = cdc_cv >> 8;
+    data_8bit = opv1 >> 8;
 	EEPROM_WriteByte(0x76, data_8bit);
-	EEPROM_WriteByte(0x77, cdc_cv);
+	EEPROM_WriteByte(0x77, opv1);
     
-    data_8bit = cdc_cc >> 8;
+    data_8bit = opv2 >> 8;
+	EEPROM_WriteByte(0x7C, data_8bit);
+	EEPROM_WriteByte(0x7D, opv2);
+    
+    data_8bit = opv3 >> 8;
+	EEPROM_WriteByte(0x7E, data_8bit);
+	EEPROM_WriteByte(0x7F, opv3);
+    
+    data_8bit = opc1 >> 8;
 	EEPROM_WriteByte(0x78, data_8bit);
-	EEPROM_WriteByte(0x79, cdc_cc);
+	EEPROM_WriteByte(0x79, opc1);
+    
+    data_8bit = opc2 >> 8;
+	EEPROM_WriteByte(0x80, data_8bit);
+	EEPROM_WriteByte(0x81, opc2);
+    
+    data_8bit = opc3 >> 8;
+	EEPROM_WriteByte(0x82, data_8bit);
+	EEPROM_WriteByte(0x83, opc3);
     
     data_8bit = cdc_dc >> 8;
 	EEPROM_WriteByte(0x7A, data_8bit);

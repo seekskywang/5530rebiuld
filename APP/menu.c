@@ -500,6 +500,12 @@ WM_HWIN CreateWindow(void) {
   return hWinWind;
 }
 
+WM_HWIN ResetPow(void) {
+    hWinWind = GUI_CreateDialogBox(_aDialogCreate1, GUI_COUNTOF(_aDialogCreate1), _cbDialog, WM_HBKWIN, 0, 0);
+//    WM_InvalidateWindow(hWinWind);
+    return hWinWind;
+}
+
 
 void MENU_OP_DOWN(void);
 void MENU_OP_DOWN(void)
@@ -620,7 +626,7 @@ void MENU_SET(void)
         case set_18:
         {           
             WM_HWIN hItem;
-//            WM_InvalidateWindow(hWinWind);
+//            
             hItem = WM_GetDialogItem(hWinWind, ID_TEXT_41);
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);

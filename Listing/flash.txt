@@ -622,67 +622,67 @@
 ;;;310        month1 = EEPROM_READ_Byte(0x5E);
 000442  205e              MOVS     r0,#0x5e
 000444  f7fffffe          BL       EEPROM_READ_Byte
-000448  4977              LDR      r1,|L1.1576|
+000448  4991              LDR      r1,|L1.1680|
 00044a  7008              STRB     r0,[r1,#0]
 ;;;311        month2 = EEPROM_READ_Byte(0x5F);
 00044c  205f              MOVS     r0,#0x5f
 00044e  f7fffffe          BL       EEPROM_READ_Byte
-000452  4976              LDR      r1,|L1.1580|
+000452  4990              LDR      r1,|L1.1684|
 000454  7008              STRB     r0,[r1,#0]
 ;;;312        day1 = EEPROM_READ_Byte(0x60);
 000456  2060              MOVS     r0,#0x60
 000458  f7fffffe          BL       EEPROM_READ_Byte
-00045c  4974              LDR      r1,|L1.1584|
+00045c  498e              LDR      r1,|L1.1688|
 00045e  7008              STRB     r0,[r1,#0]
 ;;;313        day2 = EEPROM_READ_Byte(0x61);
 000460  2061              MOVS     r0,#0x61
 000462  f7fffffe          BL       EEPROM_READ_Byte
-000466  4973              LDR      r1,|L1.1588|
+000466  498d              LDR      r1,|L1.1692|
 000468  7008              STRB     r0,[r1,#0]
 ;;;314        code1 = EEPROM_READ_Byte(0x62);
 00046a  2062              MOVS     r0,#0x62
 00046c  f7fffffe          BL       EEPROM_READ_Byte
-000470  4971              LDR      r1,|L1.1592|
+000470  498b              LDR      r1,|L1.1696|
 000472  7008              STRB     r0,[r1,#0]
 ;;;315        code2 = EEPROM_READ_Byte(0x63);
 000474  2063              MOVS     r0,#0x63
 000476  f7fffffe          BL       EEPROM_READ_Byte
-00047a  4970              LDR      r1,|L1.1596|
+00047a  498a              LDR      r1,|L1.1700|
 00047c  7008              STRB     r0,[r1,#0]
 ;;;316        code3 = EEPROM_READ_Byte(0x64);
 00047e  2064              MOVS     r0,#0x64
 000480  f7fffffe          BL       EEPROM_READ_Byte
-000484  496e              LDR      r1,|L1.1600|
+000484  4988              LDR      r1,|L1.1704|
 000486  7008              STRB     r0,[r1,#0]
 ;;;317        code4 = EEPROM_READ_Byte(0x65);
 000488  2065              MOVS     r0,#0x65
 00048a  f7fffffe          BL       EEPROM_READ_Byte
-00048e  496d              LDR      r1,|L1.1604|
+00048e  4987              LDR      r1,|L1.1708|
 000490  7008              STRB     r0,[r1,#0]
 ;;;318        code5 = EEPROM_READ_Byte(0x66);
 000492  2066              MOVS     r0,#0x66
 000494  f7fffffe          BL       EEPROM_READ_Byte
-000498  496b              LDR      r1,|L1.1608|
+000498  4985              LDR      r1,|L1.1712|
 00049a  7008              STRB     r0,[r1,#0]
 ;;;319        code6 = EEPROM_READ_Byte(0x67);
 00049c  2067              MOVS     r0,#0x67
 00049e  f7fffffe          BL       EEPROM_READ_Byte
-0004a2  496a              LDR      r1,|L1.1612|
+0004a2  4984              LDR      r1,|L1.1716|
 0004a4  7008              STRB     r0,[r1,#0]
 ;;;320        code7 = EEPROM_READ_Byte(0x68);
 0004a6  2068              MOVS     r0,#0x68
 0004a8  f7fffffe          BL       EEPROM_READ_Byte
-0004ac  4968              LDR      r1,|L1.1616|
+0004ac  4982              LDR      r1,|L1.1720|
 0004ae  7008              STRB     r0,[r1,#0]
 ;;;321        code8 = EEPROM_READ_Byte(0x69);
 0004b0  2069              MOVS     r0,#0x69
 0004b2  f7fffffe          BL       EEPROM_READ_Byte
-0004b6  4967              LDR      r1,|L1.1620|
+0004b6  4981              LDR      r1,|L1.1724|
 0004b8  7008              STRB     r0,[r1,#0]
 ;;;322        steptime = EEPROM_READ_Byte(0x75);
 0004ba  2075              MOVS     r0,#0x75
 0004bc  f7fffffe          BL       EEPROM_READ_Byte
-0004c0  4965              LDR      r1,|L1.1624|
+0004c0  497f              LDR      r1,|L1.1728|
 0004c2  8008              STRH     r0,[r1,#0]
 ;;;323    // 	if(Beep_Flag==set_1_off)
 ;;;324    // 	{
@@ -695,18 +695,18 @@
 ;;;331    	t_lock=EEPROM_READ_Byte(0x30);
 0004c4  2030              MOVS     r0,#0x30
 0004c6  f7fffffe          BL       EEPROM_READ_Byte
-0004ca  4964              LDR      r1,|L1.1628|
+0004ca  497e              LDR      r1,|L1.1732|
 0004cc  7008              STRB     r0,[r1,#0]
 ;;;332    	/***************ׁѾַܺ֘*********************************/
 ;;;333    	ADDR=EEPROM_READ_Byte(0x31);
 0004ce  2031              MOVS     r0,#0x31
 0004d0  f7fffffe          BL       EEPROM_READ_Byte
-0004d4  4962              LDR      r1,|L1.1632|
+0004d4  497c              LDR      r1,|L1.1736|
 0004d6  7008              STRB     r0,[r1,#0]
 ;;;334    	OFFSET_Zore=EEPROM_READ_Byte(0x32);
 0004d8  2032              MOVS     r0,#0x32
 0004da  f7fffffe          BL       EEPROM_READ_Byte
-0004de  4961              LDR      r1,|L1.1636|
+0004de  497b              LDR      r1,|L1.1740|
 0004e0  7008              STRB     r0,[r1,#0]
 ;;;335    	if(OFFSET_Zore>10)
 0004e2  7808              LDRB     r0,[r1,#0]  ; OFFSET_Zore
@@ -854,88 +854,148 @@
 0005d4  4408              ADD      r0,r0,r1
 0005d6  8260              STRH     r0,[r4,#0x12]
 ;;;375        
-;;;376        cdc_cv=EEPROM_READ_Byte(0x76);
+;;;376        opv1=EEPROM_READ_Byte(0x76);
 0005d8  2076              MOVS     r0,#0x76
 0005da  f7fffffe          BL       EEPROM_READ_Byte
-0005de  8620              STRH     r0,[r4,#0x30]
-;;;377    	cdc_cv=cdc_cv<<8;
-0005e0  8e20              LDRH     r0,[r4,#0x30]  ; Run_Control
+0005de  8460              STRH     r0,[r4,#0x22]
+;;;377    	opv1=opv1<<8;
+0005e0  8c60              LDRH     r0,[r4,#0x22]  ; Run_Control
 0005e2  0200              LSLS     r0,r0,#8
-0005e4  8620              STRH     r0,[r4,#0x30]
-;;;378    	cdc_cv=cdc_cv+EEPROM_READ_Byte(0x77);
+0005e4  8460              STRH     r0,[r4,#0x22]
+;;;378    	opv1=opv1+EEPROM_READ_Byte(0x77);
 0005e6  2077              MOVS     r0,#0x77
 0005e8  f7fffffe          BL       EEPROM_READ_Byte
-0005ec  8e21              LDRH     r1,[r4,#0x30]  ; Run_Control
+0005ec  8c61              LDRH     r1,[r4,#0x22]  ; Run_Control
 0005ee  4408              ADD      r0,r0,r1
-0005f0  8620              STRH     r0,[r4,#0x30]
+0005f0  8460              STRH     r0,[r4,#0x22]
 ;;;379        
-;;;380        cdc_cc=EEPROM_READ_Byte(0x78);
-0005f2  2078              MOVS     r0,#0x78
+;;;380        opv2=EEPROM_READ_Byte(0x7C);
+0005f2  207c              MOVS     r0,#0x7c
 0005f4  f7fffffe          BL       EEPROM_READ_Byte
-0005f8  8660              STRH     r0,[r4,#0x32]
-;;;381    	cdc_cc=cdc_cc<<8;
-0005fa  8e60              LDRH     r0,[r4,#0x32]  ; Run_Control
+0005f8  84a0              STRH     r0,[r4,#0x24]
+;;;381    	opv2=opv2<<8;
+0005fa  8ca0              LDRH     r0,[r4,#0x24]  ; Run_Control
 0005fc  0200              LSLS     r0,r0,#8
-0005fe  8660              STRH     r0,[r4,#0x32]
-;;;382    	cdc_cc=cdc_cc+EEPROM_READ_Byte(0x79);
-000600  2079              MOVS     r0,#0x79
+0005fe  84a0              STRH     r0,[r4,#0x24]
+;;;382    	opv2=opv2+EEPROM_READ_Byte(0x7D);
+000600  207d              MOVS     r0,#0x7d
 000602  f7fffffe          BL       EEPROM_READ_Byte
-000606  8e61              LDRH     r1,[r4,#0x32]  ; Run_Control
+000606  8ca1              LDRH     r1,[r4,#0x24]  ; Run_Control
 000608  4408              ADD      r0,r0,r1
-00060a  8660              STRH     r0,[r4,#0x32]
+00060a  84a0              STRH     r0,[r4,#0x24]
 ;;;383        
-;;;384        cdc_dc=EEPROM_READ_Byte(0x7A);
-00060c  207a              MOVS     r0,#0x7a
+;;;384        opv3=EEPROM_READ_Byte(0x7E);
+00060c  207e              MOVS     r0,#0x7e
 00060e  f7fffffe          BL       EEPROM_READ_Byte
-000612  86e0              STRH     r0,[r4,#0x36]
-;;;385    	cdc_dc=cdc_dc<<8;
-000614  8ee0              LDRH     r0,[r4,#0x36]  ; Run_Control
+000612  84e0              STRH     r0,[r4,#0x26]
+;;;385    	opv3=opv3<<8;
+000614  8ce0              LDRH     r0,[r4,#0x26]  ; Run_Control
 000616  0200              LSLS     r0,r0,#8
-000618  86e0              STRH     r0,[r4,#0x36]
-;;;386    	cdc_dc=cdc_dc+EEPROM_READ_Byte(0x7B);
-00061a  207b              MOVS     r0,#0x7b
+000618  84e0              STRH     r0,[r4,#0x26]
+;;;386    	opv3=opv3+EEPROM_READ_Byte(0x7F);
+00061a  207f              MOVS     r0,#0x7f
 00061c  f7fffffe          BL       EEPROM_READ_Byte
-000620  8ee1              LDRH     r1,[r4,#0x36]  ; Run_Control
+000620  8ce1              LDRH     r1,[r4,#0x26]  ; Run_Control
 000622  4408              ADD      r0,r0,r1
-000624  86e0              STRH     r0,[r4,#0x36]
+000624  84e0              STRH     r0,[r4,#0x26]
 ;;;387        
-;;;388    
-;;;389    }
-000626  bd70              POP      {r4-r6,pc}
-;;;390    /****************************************************************************/
+;;;388        opc1=EEPROM_READ_Byte(0x78);
+000626  2078              MOVS     r0,#0x78
+000628  f7fffffe          BL       EEPROM_READ_Byte
+00062c  8520              STRH     r0,[r4,#0x28]
+;;;389    	opc1=opc1<<8;
+00062e  8d20              LDRH     r0,[r4,#0x28]  ; Run_Control
+000630  0200              LSLS     r0,r0,#8
+000632  8520              STRH     r0,[r4,#0x28]
+;;;390    	opc1=opc1+EEPROM_READ_Byte(0x79);
+000634  2079              MOVS     r0,#0x79
+000636  f7fffffe          BL       EEPROM_READ_Byte
+00063a  8d21              LDRH     r1,[r4,#0x28]  ; Run_Control
+00063c  4408              ADD      r0,r0,r1
+00063e  8520              STRH     r0,[r4,#0x28]
+;;;391        
+;;;392        opc2=EEPROM_READ_Byte(0x80);
+000640  2080              MOVS     r0,#0x80
+000642  f7fffffe          BL       EEPROM_READ_Byte
+000646  8560              STRH     r0,[r4,#0x2a]
+;;;393    	opc2=opc2<<8;
+000648  8d60              LDRH     r0,[r4,#0x2a]  ; Run_Control
+00064a  0200              LSLS     r0,r0,#8
+00064c  8560              STRH     r0,[r4,#0x2a]
+;;;394    	opc2=opc2+EEPROM_READ_Byte(0x81);
+00064e  2081              MOVS     r0,#0x81
+000650  f7fffffe          BL       EEPROM_READ_Byte
+000654  8d61              LDRH     r1,[r4,#0x2a]  ; Run_Control
+000656  4408              ADD      r0,r0,r1
+000658  8560              STRH     r0,[r4,#0x2a]
+;;;395        
+;;;396        opc3=EEPROM_READ_Byte(0x82);
+00065a  2082              MOVS     r0,#0x82
+00065c  f7fffffe          BL       EEPROM_READ_Byte
+000660  85a0              STRH     r0,[r4,#0x2c]
+;;;397    	opc3=opc3<<8;
+000662  8da0              LDRH     r0,[r4,#0x2c]  ; Run_Control
+000664  0200              LSLS     r0,r0,#8
+000666  85a0              STRH     r0,[r4,#0x2c]
+;;;398    	opc3=opc3+EEPROM_READ_Byte(0x83);
+000668  2083              MOVS     r0,#0x83
+00066a  f7fffffe          BL       EEPROM_READ_Byte
+00066e  8da1              LDRH     r1,[r4,#0x2c]  ; Run_Control
+000670  4408              ADD      r0,r0,r1
+000672  85a0              STRH     r0,[r4,#0x2c]
+;;;399        
+;;;400        cdc_dc=EEPROM_READ_Byte(0x7A);
+000674  207a              MOVS     r0,#0x7a
+000676  f7fffffe          BL       EEPROM_READ_Byte
+00067a  86e0              STRH     r0,[r4,#0x36]
+;;;401    	cdc_dc=cdc_dc<<8;
+00067c  8ee0              LDRH     r0,[r4,#0x36]  ; Run_Control
+00067e  0200              LSLS     r0,r0,#8
+000680  86e0              STRH     r0,[r4,#0x36]
+;;;402    	cdc_dc=cdc_dc+EEPROM_READ_Byte(0x7B);
+000682  207b              MOVS     r0,#0x7b
+000684  f7fffffe          BL       EEPROM_READ_Byte
+000688  8ee1              LDRH     r1,[r4,#0x36]  ; Run_Control
+00068a  4408              ADD      r0,r0,r1
+00068c  86e0              STRH     r0,[r4,#0x36]
+;;;403        
+;;;404    
+;;;405    }
+00068e  bd70              POP      {r4-r6,pc}
+;;;406    /****************************************************************************/
                           ENDP
 
-                  |L1.1576|
+                  |L1.1680|
                           DCD      month1
-                  |L1.1580|
+                  |L1.1684|
                           DCD      month2
-                  |L1.1584|
+                  |L1.1688|
                           DCD      day1
-                  |L1.1588|
+                  |L1.1692|
                           DCD      day2
-                  |L1.1592|
+                  |L1.1696|
                           DCD      code1
-                  |L1.1596|
+                  |L1.1700|
                           DCD      code2
-                  |L1.1600|
+                  |L1.1704|
                           DCD      code3
-                  |L1.1604|
+                  |L1.1708|
                           DCD      code4
-                  |L1.1608|
+                  |L1.1712|
                           DCD      code5
-                  |L1.1612|
+                  |L1.1716|
                           DCD      code6
-                  |L1.1616|
+                  |L1.1720|
                           DCD      code7
-                  |L1.1620|
+                  |L1.1724|
                           DCD      code8
-                  |L1.1624|
+                  |L1.1728|
                           DCD      steptime
-                  |L1.1628|
+                  |L1.1732|
                           DCD      t_lock
-                  |L1.1632|
+                  |L1.1736|
                           DCD      ADDR
-                  |L1.1636|
+                  |L1.1740|
                           DCD      OFFSET_Zore
 
                           AREA ||i.Flash_Write_all||, CODE, READONLY, ALIGN=2
@@ -1323,16 +1383,16 @@
                           AREA ||i.Wite_adress||, CODE, READONLY, ALIGN=2
 
                   Wite_adress PROC
-;;;530    /************************************************************************/
-;;;531    void Wite_adress(void)
+;;;562    /************************************************************************/
+;;;563    void Wite_adress(void)
 000000  4802              LDR      r0,|L3.12|
-;;;532    {
-;;;533    	EEPROM_WriteByte(0x31,ADDR);
+;;;564    {
+;;;565    	EEPROM_WriteByte(0x31,ADDR);
 000002  7801              LDRB     r1,[r0,#0]  ; ADDR
 000004  2031              MOVS     r0,#0x31
 000006  f7ffbffe          B.W      EEPROM_WriteByte
-;;;534    }
-;;;535    /******************* (C) COPYRIGHT 2015 AVER *****END OF FILE*************************/
+;;;566    }
+;;;567    /******************* (C) COPYRIGHT 2015 AVER *****END OF FILE*************************/
                           ENDP
 
 00000a  0000              DCW      0x0000
@@ -1342,202 +1402,250 @@
                           AREA ||i.Write_Limits||, CODE, READONLY, ALIGN=2
 
                   Write_Limits PROC
-;;;408    
-;;;409    void Write_Limits(void)
+;;;424    
+;;;425    void Write_Limits(void)
 000000  b510              PUSH     {r4,lr}
-;;;410    {
-;;;411        vu8 data_8bit;
-;;;412        
-;;;413    	data_8bit = set_max_v >> 8;
-000002  4c47              LDR      r4,|L4.288|
+;;;426    {
+;;;427        vu8 data_8bit;
+;;;428        
+;;;429    	data_8bit = set_max_v >> 8;
+000002  4c5b              LDR      r4,|L4.368|
 000004  8820              LDRH     r0,[r4,#0]  ; Run_Control
 000006  0a01              LSRS     r1,r0,#8
-;;;414    	EEPROM_WriteByte(0x47, data_8bit);
+;;;430    	EEPROM_WriteByte(0x47, data_8bit);
 000008  2047              MOVS     r0,#0x47
 00000a  f7fffffe          BL       EEPROM_WriteByte
-;;;415    	EEPROM_WriteByte(0x48, set_max_v);
+;;;431    	EEPROM_WriteByte(0x48, set_max_v);
 00000e  8820              LDRH     r0,[r4,#0]  ; Run_Control
 000010  b2c1              UXTB     r1,r0
 000012  2048              MOVS     r0,#0x48
 000014  f7fffffe          BL       EEPROM_WriteByte
-;;;416    	
-;;;417    	data_8bit = set_min_v >> 8;
+;;;432    	
+;;;433    	data_8bit = set_min_v >> 8;
 000018  8860              LDRH     r0,[r4,#2]  ; Run_Control
 00001a  0a01              LSRS     r1,r0,#8
-;;;418    	EEPROM_WriteByte(0x49, data_8bit);
+;;;434    	EEPROM_WriteByte(0x49, data_8bit);
 00001c  2049              MOVS     r0,#0x49
 00001e  f7fffffe          BL       EEPROM_WriteByte
-;;;419    	EEPROM_WriteByte(0x4A, set_min_v);
+;;;435    	EEPROM_WriteByte(0x4A, set_min_v);
 000022  8860              LDRH     r0,[r4,#2]  ; Run_Control
 000024  b2c1              UXTB     r1,r0
 000026  204a              MOVS     r0,#0x4a
 000028  f7fffffe          BL       EEPROM_WriteByte
-;;;420        
-;;;421        data_8bit = set_max_r >> 8;
+;;;436        
+;;;437        data_8bit = set_max_r >> 8;
 00002c  88a0              LDRH     r0,[r4,#4]  ; Run_Control
 00002e  0a01              LSRS     r1,r0,#8
-;;;422    	EEPROM_WriteByte(0x4B, data_8bit);
+;;;438    	EEPROM_WriteByte(0x4B, data_8bit);
 000030  204b              MOVS     r0,#0x4b
 000032  f7fffffe          BL       EEPROM_WriteByte
-;;;423    	EEPROM_WriteByte(0x4C, set_max_r);
+;;;439    	EEPROM_WriteByte(0x4C, set_max_r);
 000036  88a0              LDRH     r0,[r4,#4]  ; Run_Control
 000038  b2c1              UXTB     r1,r0
 00003a  204c              MOVS     r0,#0x4c
 00003c  f7fffffe          BL       EEPROM_WriteByte
-;;;424    	
-;;;425    	data_8bit = set_min_r >> 8;
+;;;440    	
+;;;441    	data_8bit = set_min_r >> 8;
 000040  88e0              LDRH     r0,[r4,#6]  ; Run_Control
 000042  0a01              LSRS     r1,r0,#8
-;;;426    	EEPROM_WriteByte(0x4D, data_8bit);
+;;;442    	EEPROM_WriteByte(0x4D, data_8bit);
 000044  204d              MOVS     r0,#0x4d
 000046  f7fffffe          BL       EEPROM_WriteByte
-;;;427    	EEPROM_WriteByte(0x4E, set_min_r);
+;;;443    	EEPROM_WriteByte(0x4E, set_min_r);
 00004a  88e0              LDRH     r0,[r4,#6]  ; Run_Control
 00004c  b2c1              UXTB     r1,r0
 00004e  204e              MOVS     r0,#0x4e
 000050  f7fffffe          BL       EEPROM_WriteByte
-;;;428        
-;;;429        data_8bit = set_max_c >> 8;
+;;;444        
+;;;445        data_8bit = set_max_c >> 8;
 000054  8920              LDRH     r0,[r4,#8]  ; Run_Control
 000056  0a01              LSRS     r1,r0,#8
-;;;430    	EEPROM_WriteByte(0x4F, data_8bit);
+;;;446    	EEPROM_WriteByte(0x4F, data_8bit);
 000058  204f              MOVS     r0,#0x4f
 00005a  f7fffffe          BL       EEPROM_WriteByte
-;;;431    	EEPROM_WriteByte(0x50, set_max_c);
+;;;447    	EEPROM_WriteByte(0x50, set_max_c);
 00005e  8920              LDRH     r0,[r4,#8]  ; Run_Control
 000060  b2c1              UXTB     r1,r0
 000062  2050              MOVS     r0,#0x50
 000064  f7fffffe          BL       EEPROM_WriteByte
-;;;432    	
-;;;433    	data_8bit = set_min_c >> 8;
+;;;448    	
+;;;449    	data_8bit = set_min_c >> 8;
 000068  8960              LDRH     r0,[r4,#0xa]  ; Run_Control
 00006a  0a01              LSRS     r1,r0,#8
-;;;434    	EEPROM_WriteByte(0x51, data_8bit);
+;;;450    	EEPROM_WriteByte(0x51, data_8bit);
 00006c  2051              MOVS     r0,#0x51
 00006e  f7fffffe          BL       EEPROM_WriteByte
-;;;435    	EEPROM_WriteByte(0x52, set_min_c);
+;;;451    	EEPROM_WriteByte(0x52, set_min_c);
 000072  8960              LDRH     r0,[r4,#0xa]  ; Run_Control
 000074  b2c1              UXTB     r1,r0
 000076  2052              MOVS     r0,#0x52
 000078  f7fffffe          BL       EEPROM_WriteByte
-;;;436        
-;;;437    	data_8bit = pow_v >> 8;
+;;;452        
+;;;453    	data_8bit = pow_v >> 8;
 00007c  8ea0              LDRH     r0,[r4,#0x34]  ; Run_Control
 00007e  0a01              LSRS     r1,r0,#8
-;;;438    	EEPROM_WriteByte(0x2A, data_8bit);
+;;;454    	EEPROM_WriteByte(0x2A, data_8bit);
 000080  202a              MOVS     r0,#0x2a
 000082  f7fffffe          BL       EEPROM_WriteByte
-;;;439    	EEPROM_WriteByte(0x2B, pow_v);
+;;;455    	EEPROM_WriteByte(0x2B, pow_v);
 000086  8ea0              LDRH     r0,[r4,#0x34]  ; Run_Control
 000088  b2c1              UXTB     r1,r0
 00008a  202b              MOVS     r0,#0x2b
 00008c  f7fffffe          BL       EEPROM_WriteByte
-;;;440    	
-;;;441    	data_8bit = pow_c >> 8;
+;;;456    	
+;;;457    	data_8bit = pow_c >> 8;
 000090  8f20              LDRH     r0,[r4,#0x38]  ; Run_Control
 000092  0a01              LSRS     r1,r0,#8
-;;;442    	EEPROM_WriteByte(0x2C, data_8bit);
+;;;458    	EEPROM_WriteByte(0x2C, data_8bit);
 000094  202c              MOVS     r0,#0x2c
 000096  f7fffffe          BL       EEPROM_WriteByte
-;;;443    	EEPROM_WriteByte(0x2D, pow_c);
+;;;459    	EEPROM_WriteByte(0x2D, pow_c);
 00009a  8f20              LDRH     r0,[r4,#0x38]  ; Run_Control
 00009c  b2c1              UXTB     r1,r0
 00009e  202d              MOVS     r0,#0x2d
 0000a0  f7fffffe          BL       EEPROM_WriteByte
-;;;444        
-;;;445        data_8bit = load_c >> 8;
+;;;460        
+;;;461        data_8bit = load_c >> 8;
 0000a4  8de0              LDRH     r0,[r4,#0x2e]  ; Run_Control
 0000a6  0a01              LSRS     r1,r0,#8
-;;;446    	EEPROM_WriteByte(0x53, data_8bit);
+;;;462    	EEPROM_WriteByte(0x53, data_8bit);
 0000a8  2053              MOVS     r0,#0x53
 0000aa  f7fffffe          BL       EEPROM_WriteByte
-;;;447    	EEPROM_WriteByte(0x54, load_c);
+;;;463    	EEPROM_WriteByte(0x54, load_c);
 0000ae  8de0              LDRH     r0,[r4,#0x2e]  ; Run_Control
 0000b0  b2c1              UXTB     r1,r0
 0000b2  2054              MOVS     r0,#0x54
 0000b4  f7fffffe          BL       EEPROM_WriteByte
-;;;448        
-;;;449        data_8bit = set_init_c >> 8;
+;;;464        
+;;;465        data_8bit = set_init_c >> 8;
 0000b8  8a20              LDRH     r0,[r4,#0x10]  ; Run_Control
 0000ba  0a01              LSRS     r1,r0,#8
-;;;450    	EEPROM_WriteByte(0x70, data_8bit);
+;;;466    	EEPROM_WriteByte(0x70, data_8bit);
 0000bc  2070              MOVS     r0,#0x70
 0000be  f7fffffe          BL       EEPROM_WriteByte
-;;;451    	EEPROM_WriteByte(0x71, set_init_c);
+;;;467    	EEPROM_WriteByte(0x71, set_init_c);
 0000c2  8a20              LDRH     r0,[r4,#0x10]  ; Run_Control
 0000c4  b2c1              UXTB     r1,r0
 0000c6  2071              MOVS     r0,#0x71
 0000c8  f7fffffe          BL       EEPROM_WriteByte
-;;;452        
-;;;453        data_8bit = set_sbs_c >> 8;
+;;;468        
+;;;469        data_8bit = set_sbs_c >> 8;
 0000cc  8a60              LDRH     r0,[r4,#0x12]  ; Run_Control
 0000ce  0a01              LSRS     r1,r0,#8
-;;;454    	EEPROM_WriteByte(0x72, data_8bit);
+;;;470    	EEPROM_WriteByte(0x72, data_8bit);
 0000d0  2072              MOVS     r0,#0x72
 0000d2  f7fffffe          BL       EEPROM_WriteByte
-;;;455    	EEPROM_WriteByte(0x73, set_sbs_c);
+;;;471    	EEPROM_WriteByte(0x73, set_sbs_c);
 0000d6  8a60              LDRH     r0,[r4,#0x12]  ; Run_Control
 0000d8  b2c1              UXTB     r1,r0
 0000da  2073              MOVS     r0,#0x73
 0000dc  f7fffffe          BL       EEPROM_WriteByte
-;;;456        
-;;;457        data_8bit = cdc_cv >> 8;
-0000e0  8e20              LDRH     r0,[r4,#0x30]  ; Run_Control
+;;;472        
+;;;473        data_8bit = opv1 >> 8;
+0000e0  8c60              LDRH     r0,[r4,#0x22]  ; Run_Control
 0000e2  0a01              LSRS     r1,r0,#8
-;;;458    	EEPROM_WriteByte(0x76, data_8bit);
+;;;474    	EEPROM_WriteByte(0x76, data_8bit);
 0000e4  2076              MOVS     r0,#0x76
 0000e6  f7fffffe          BL       EEPROM_WriteByte
-;;;459    	EEPROM_WriteByte(0x77, cdc_cv);
-0000ea  8e20              LDRH     r0,[r4,#0x30]  ; Run_Control
+;;;475    	EEPROM_WriteByte(0x77, opv1);
+0000ea  8c60              LDRH     r0,[r4,#0x22]  ; Run_Control
 0000ec  b2c1              UXTB     r1,r0
 0000ee  2077              MOVS     r0,#0x77
 0000f0  f7fffffe          BL       EEPROM_WriteByte
-;;;460        
-;;;461        data_8bit = cdc_cc >> 8;
-0000f4  8e60              LDRH     r0,[r4,#0x32]  ; Run_Control
+;;;476        
+;;;477        data_8bit = opv2 >> 8;
+0000f4  8ca0              LDRH     r0,[r4,#0x24]  ; Run_Control
 0000f6  0a01              LSRS     r1,r0,#8
-;;;462    	EEPROM_WriteByte(0x78, data_8bit);
-0000f8  2078              MOVS     r0,#0x78
+;;;478    	EEPROM_WriteByte(0x7C, data_8bit);
+0000f8  207c              MOVS     r0,#0x7c
 0000fa  f7fffffe          BL       EEPROM_WriteByte
-;;;463    	EEPROM_WriteByte(0x79, cdc_cc);
-0000fe  8e60              LDRH     r0,[r4,#0x32]  ; Run_Control
+;;;479    	EEPROM_WriteByte(0x7D, opv2);
+0000fe  8ca0              LDRH     r0,[r4,#0x24]  ; Run_Control
 000100  b2c1              UXTB     r1,r0
-000102  2079              MOVS     r0,#0x79
+000102  207d              MOVS     r0,#0x7d
 000104  f7fffffe          BL       EEPROM_WriteByte
-;;;464        
-;;;465        data_8bit = cdc_dc >> 8;
-000108  8ee0              LDRH     r0,[r4,#0x36]  ; Run_Control
+;;;480        
+;;;481        data_8bit = opv3 >> 8;
+000108  8ce0              LDRH     r0,[r4,#0x26]  ; Run_Control
 00010a  0a01              LSRS     r1,r0,#8
-;;;466    	EEPROM_WriteByte(0x7A, data_8bit);
-00010c  207a              MOVS     r0,#0x7a
+;;;482    	EEPROM_WriteByte(0x7E, data_8bit);
+00010c  207e              MOVS     r0,#0x7e
 00010e  f7fffffe          BL       EEPROM_WriteByte
-;;;467    	EEPROM_WriteByte(0x7B, cdc_dc);
-000112  8ee0              LDRH     r0,[r4,#0x36]  ; Run_Control
-000114  e8bd4010          POP      {r4,lr}
-000118  b2c1              UXTB     r1,r0
-00011a  207b              MOVS     r0,#0x7b
-00011c  f7ffbffe          B.W      EEPROM_WriteByte
-;;;468        
-;;;469    }
-;;;470    void Wrtite_Beep(void)//ѣզBEEP״ׁ̬FLASHא
+;;;483    	EEPROM_WriteByte(0x7F, opv3);
+000112  8ce0              LDRH     r0,[r4,#0x26]  ; Run_Control
+000114  b2c1              UXTB     r1,r0
+000116  207f              MOVS     r0,#0x7f
+000118  f7fffffe          BL       EEPROM_WriteByte
+;;;484        
+;;;485        data_8bit = opc1 >> 8;
+00011c  8d20              LDRH     r0,[r4,#0x28]  ; Run_Control
+00011e  0a01              LSRS     r1,r0,#8
+;;;486    	EEPROM_WriteByte(0x78, data_8bit);
+000120  2078              MOVS     r0,#0x78
+000122  f7fffffe          BL       EEPROM_WriteByte
+;;;487    	EEPROM_WriteByte(0x79, opc1);
+000126  8d20              LDRH     r0,[r4,#0x28]  ; Run_Control
+000128  b2c1              UXTB     r1,r0
+00012a  2079              MOVS     r0,#0x79
+00012c  f7fffffe          BL       EEPROM_WriteByte
+;;;488        
+;;;489        data_8bit = opc2 >> 8;
+000130  8d60              LDRH     r0,[r4,#0x2a]  ; Run_Control
+000132  0a01              LSRS     r1,r0,#8
+;;;490    	EEPROM_WriteByte(0x80, data_8bit);
+000134  2080              MOVS     r0,#0x80
+000136  f7fffffe          BL       EEPROM_WriteByte
+;;;491    	EEPROM_WriteByte(0x81, opc2);
+00013a  8d60              LDRH     r0,[r4,#0x2a]  ; Run_Control
+00013c  b2c1              UXTB     r1,r0
+00013e  2081              MOVS     r0,#0x81
+000140  f7fffffe          BL       EEPROM_WriteByte
+;;;492        
+;;;493        data_8bit = opc3 >> 8;
+000144  8da0              LDRH     r0,[r4,#0x2c]  ; Run_Control
+000146  0a01              LSRS     r1,r0,#8
+;;;494    	EEPROM_WriteByte(0x82, data_8bit);
+000148  2082              MOVS     r0,#0x82
+00014a  f7fffffe          BL       EEPROM_WriteByte
+;;;495    	EEPROM_WriteByte(0x83, opc3);
+00014e  8da0              LDRH     r0,[r4,#0x2c]  ; Run_Control
+000150  b2c1              UXTB     r1,r0
+000152  2083              MOVS     r0,#0x83
+000154  f7fffffe          BL       EEPROM_WriteByte
+;;;496        
+;;;497        data_8bit = cdc_dc >> 8;
+000158  8ee0              LDRH     r0,[r4,#0x36]  ; Run_Control
+00015a  0a01              LSRS     r1,r0,#8
+;;;498    	EEPROM_WriteByte(0x7A, data_8bit);
+00015c  207a              MOVS     r0,#0x7a
+00015e  f7fffffe          BL       EEPROM_WriteByte
+;;;499    	EEPROM_WriteByte(0x7B, cdc_dc);
+000162  8ee0              LDRH     r0,[r4,#0x36]  ; Run_Control
+000164  e8bd4010          POP      {r4,lr}
+000168  b2c1              UXTB     r1,r0
+00016a  207b              MOVS     r0,#0x7b
+00016c  f7ffbffe          B.W      EEPROM_WriteByte
+;;;500        
+;;;501    }
+;;;502    void Wrtite_Beep(void)//ѣզBEEP״ׁ̬FLASHא
                           ENDP
 
-                  |L4.288|
+                  |L4.368|
                           DCD      Run_Control+0x1c
 
                           AREA ||i.Write_alarm||, CODE, READONLY, ALIGN=2
 
                   Write_alarm PROC
-;;;508    /************************************************************************/
-;;;509    void Write_alarm(void)
+;;;540    /************************************************************************/
+;;;541    void Write_alarm(void)
 000000  4802              LDR      r0,|L5.12|
-;;;510    {
-;;;511    	EEPROM_WriteByte(0x56,para_set4);
+;;;542    {
+;;;543    	EEPROM_WriteByte(0x56,para_set4);
 000002  7801              LDRB     r1,[r0,#0]  ; para_set4
 000004  2056              MOVS     r0,#0x56
 000006  f7ffbffe          B.W      EEPROM_WriteByte
-;;;512    }
-;;;513    /************************************************************************/
+;;;544    }
+;;;545    /************************************************************************/
                           ENDP
 
 00000a  0000              DCW      0x0000
@@ -1547,23 +1655,23 @@
                           AREA ||i.Write_btype||, CODE, READONLY, ALIGN=2
 
                   Write_btype PROC
-;;;502    
-;;;503    void Write_btype(void)
+;;;534    
+;;;535    void Write_btype(void)
 000000  b510              PUSH     {r4,lr}
-;;;504    {
-;;;505    	EEPROM_WriteByte(0x57,b_type);
+;;;536    {
+;;;537    	EEPROM_WriteByte(0x57,b_type);
 000002  4806              LDR      r0,|L6.28|
 000004  7801              LDRB     r1,[r0,#0]  ; b_type
 000006  2057              MOVS     r0,#0x57
 000008  f7fffffe          BL       EEPROM_WriteByte
-;;;506        EEPROM_WriteByte(0x58,buffer);
+;;;538        EEPROM_WriteByte(0x58,buffer);
 00000c  4804              LDR      r0,|L6.32|
 00000e  7801              LDRB     r1,[r0,#0]  ; buffer
 000010  e8bd4010          POP      {r4,lr}
 000014  2058              MOVS     r0,#0x58
 000016  f7ffbffe          B.W      EEPROM_WriteByte
-;;;507    }
-;;;508    /************************************************************************/
+;;;539    }
+;;;540    /************************************************************************/
                           ENDP
 
 00001a  0000              DCW      0x0000
@@ -1575,98 +1683,98 @@
                           AREA ||i.Write_info||, CODE, READONLY, ALIGN=2
 
                   Write_info PROC
-;;;481    
-;;;482    void Write_info(void)
+;;;513    
+;;;514    void Write_info(void)
 000000  b510              PUSH     {r4,lr}
-;;;483    {
-;;;484    	EEPROM_WriteByte(0x5A,year1);
+;;;515    {
+;;;516    	EEPROM_WriteByte(0x5A,year1);
 000002  482b              LDR      r0,|L7.176|
 000004  8800              LDRH     r0,[r0,#0]  ; year1
 000006  b2c1              UXTB     r1,r0
 000008  205a              MOVS     r0,#0x5a
 00000a  f7fffffe          BL       EEPROM_WriteByte
-;;;485        EEPROM_WriteByte(0x5B,year2);
+;;;517        EEPROM_WriteByte(0x5B,year2);
 00000e  4829              LDR      r0,|L7.180|
 000010  8800              LDRH     r0,[r0,#0]  ; year2
 000012  b2c1              UXTB     r1,r0
 000014  205b              MOVS     r0,#0x5b
 000016  f7fffffe          BL       EEPROM_WriteByte
-;;;486        EEPROM_WriteByte(0x5C,year3);
+;;;518        EEPROM_WriteByte(0x5C,year3);
 00001a  4827              LDR      r0,|L7.184|
 00001c  8800              LDRH     r0,[r0,#0]  ; year3
 00001e  b2c1              UXTB     r1,r0
 000020  205c              MOVS     r0,#0x5c
 000022  f7fffffe          BL       EEPROM_WriteByte
-;;;487        EEPROM_WriteByte(0x5D,year4);
+;;;519        EEPROM_WriteByte(0x5D,year4);
 000026  4825              LDR      r0,|L7.188|
 000028  8800              LDRH     r0,[r0,#0]  ; year4
 00002a  b2c1              UXTB     r1,r0
 00002c  205d              MOVS     r0,#0x5d
 00002e  f7fffffe          BL       EEPROM_WriteByte
-;;;488        EEPROM_WriteByte(0x5E,month1);
+;;;520        EEPROM_WriteByte(0x5E,month1);
 000032  4823              LDR      r0,|L7.192|
 000034  7801              LDRB     r1,[r0,#0]  ; month1
 000036  205e              MOVS     r0,#0x5e
 000038  f7fffffe          BL       EEPROM_WriteByte
-;;;489        EEPROM_WriteByte(0x5F,month2);
+;;;521        EEPROM_WriteByte(0x5F,month2);
 00003c  4821              LDR      r0,|L7.196|
 00003e  7801              LDRB     r1,[r0,#0]  ; month2
 000040  205f              MOVS     r0,#0x5f
 000042  f7fffffe          BL       EEPROM_WriteByte
-;;;490        EEPROM_WriteByte(0x60,day1);
+;;;522        EEPROM_WriteByte(0x60,day1);
 000046  4820              LDR      r0,|L7.200|
 000048  7801              LDRB     r1,[r0,#0]  ; day1
 00004a  2060              MOVS     r0,#0x60
 00004c  f7fffffe          BL       EEPROM_WriteByte
-;;;491        EEPROM_WriteByte(0x61,day2);
+;;;523        EEPROM_WriteByte(0x61,day2);
 000050  481e              LDR      r0,|L7.204|
 000052  7801              LDRB     r1,[r0,#0]  ; day2
 000054  2061              MOVS     r0,#0x61
 000056  f7fffffe          BL       EEPROM_WriteByte
-;;;492        EEPROM_WriteByte(0x62,code1);
+;;;524        EEPROM_WriteByte(0x62,code1);
 00005a  481d              LDR      r0,|L7.208|
 00005c  7801              LDRB     r1,[r0,#0]  ; code1
 00005e  2062              MOVS     r0,#0x62
 000060  f7fffffe          BL       EEPROM_WriteByte
-;;;493        EEPROM_WriteByte(0x63,code2);
+;;;525        EEPROM_WriteByte(0x63,code2);
 000064  481b              LDR      r0,|L7.212|
 000066  7801              LDRB     r1,[r0,#0]  ; code2
 000068  2063              MOVS     r0,#0x63
 00006a  f7fffffe          BL       EEPROM_WriteByte
-;;;494        EEPROM_WriteByte(0x64,code3);
+;;;526        EEPROM_WriteByte(0x64,code3);
 00006e  481a              LDR      r0,|L7.216|
 000070  7801              LDRB     r1,[r0,#0]  ; code3
 000072  2064              MOVS     r0,#0x64
 000074  f7fffffe          BL       EEPROM_WriteByte
-;;;495        EEPROM_WriteByte(0x65,code4);
+;;;527        EEPROM_WriteByte(0x65,code4);
 000078  4818              LDR      r0,|L7.220|
 00007a  7801              LDRB     r1,[r0,#0]  ; code4
 00007c  2065              MOVS     r0,#0x65
 00007e  f7fffffe          BL       EEPROM_WriteByte
-;;;496        EEPROM_WriteByte(0x66,code5);
+;;;528        EEPROM_WriteByte(0x66,code5);
 000082  4817              LDR      r0,|L7.224|
 000084  7801              LDRB     r1,[r0,#0]  ; code5
 000086  2066              MOVS     r0,#0x66
 000088  f7fffffe          BL       EEPROM_WriteByte
-;;;497        EEPROM_WriteByte(0x67,code6);
+;;;529        EEPROM_WriteByte(0x67,code6);
 00008c  4815              LDR      r0,|L7.228|
 00008e  7801              LDRB     r1,[r0,#0]  ; code6
 000090  2067              MOVS     r0,#0x67
 000092  f7fffffe          BL       EEPROM_WriteByte
-;;;498        EEPROM_WriteByte(0x68,code7);
+;;;530        EEPROM_WriteByte(0x68,code7);
 000096  4814              LDR      r0,|L7.232|
 000098  7801              LDRB     r1,[r0,#0]  ; code7
 00009a  2068              MOVS     r0,#0x68
 00009c  f7fffffe          BL       EEPROM_WriteByte
-;;;499        EEPROM_WriteByte(0x69,code8);
+;;;531        EEPROM_WriteByte(0x69,code8);
 0000a0  4812              LDR      r0,|L7.236|
 0000a2  7801              LDRB     r1,[r0,#0]  ; code8
 0000a4  e8bd4010          POP      {r4,lr}
 0000a8  2069              MOVS     r0,#0x69
 0000aa  f7ffbffe          B.W      EEPROM_WriteByte
-;;;500        
-;;;501    }
-;;;502    
+;;;532        
+;;;533    }
+;;;534    
                           ENDP
 
 0000ae  0000              DCW      0x0000
@@ -1706,16 +1814,16 @@
                           AREA ||i.Write_oct||, CODE, READONLY, ALIGN=2
 
                   Write_oct PROC
-;;;513    /************************************************************************/
-;;;514    void Write_oct(void)
+;;;545    /************************************************************************/
+;;;546    void Write_oct(void)
 000000  4802              LDR      r0,|L8.12|
-;;;515    {
-;;;516    	EEPROM_WriteByte(0x55,para_set2);
+;;;547    {
+;;;548    	EEPROM_WriteByte(0x55,para_set2);
 000002  7801              LDRB     r1,[r0,#0]  ; para_set2
 000004  2055              MOVS     r0,#0x55
 000006  f7ffbffe          B.W      EEPROM_WriteByte
-;;;517    }
-;;;518    
+;;;549    }
+;;;550    
                           ENDP
 
 00000a  0000              DCW      0x0000
@@ -1725,23 +1833,23 @@
                           AREA ||i.Wrtite_Beep||, CODE, READONLY, ALIGN=2
 
                   Wrtite_Beep PROC
-;;;469    }
-;;;470    void Wrtite_Beep(void)//ѣզBEEP״ׁ̬FLASHא
+;;;501    }
+;;;502    void Wrtite_Beep(void)//ѣզBEEP״ׁ̬FLASHא
 000000  b510              PUSH     {r4,lr}
-;;;471    {
-;;;472    	EEPROM_WriteByte(0x2E, Beep_Flag);
+;;;503    {
+;;;504    	EEPROM_WriteByte(0x2E, Beep_Flag);
 000002  4806              LDR      r0,|L9.28|
 000004  7801              LDRB     r1,[r0,#0]  ; Beep_Flag
 000006  202e              MOVS     r0,#0x2e
 000008  f7fffffe          BL       EEPROM_WriteByte
-;;;473    	EEPROM_WriteByte(0x2F, t_beep);
+;;;505    	EEPROM_WriteByte(0x2F, t_beep);
 00000c  4804              LDR      r0,|L9.32|
 00000e  7801              LDRB     r1,[r0,#0]  ; t_beep
 000010  e8bd4010          POP      {r4,lr}
 000014  202f              MOVS     r0,#0x2f
 000016  f7ffbffe          B.W      EEPROM_WriteByte
-;;;474    }
-;;;475    /*****************************************************************************/
+;;;506    }
+;;;507    /*****************************************************************************/
                           ENDP
 
 00001a  0000              DCW      0x0000
@@ -1753,16 +1861,16 @@
                           AREA ||i.Wrtite_Lock||, CODE, READONLY, ALIGN=2
 
                   Wrtite_Lock PROC
-;;;524    /******************************************************************************/
-;;;525    void Wrtite_Lock(void)
+;;;556    /******************************************************************************/
+;;;557    void Wrtite_Lock(void)
 000000  4802              LDR      r0,|L10.12|
-;;;526    {
-;;;527    	EEPROM_WriteByte(0x30, t_lock);
+;;;558    {
+;;;559    	EEPROM_WriteByte(0x30, t_lock);
 000002  7801              LDRB     r1,[r0,#0]  ; t_lock
 000004  2030              MOVS     r0,#0x30
 000006  f7ffbffe          B.W      EEPROM_WriteByte
-;;;528    }
-;;;529    
+;;;560    }
+;;;561    
                           ENDP
 
 00000a  0000              DCW      0x0000
@@ -1772,23 +1880,23 @@
                           AREA ||i.Wrtite_S||, CODE, READONLY, ALIGN=2
 
                   Wrtite_S PROC
-;;;475    /*****************************************************************************/
-;;;476    void Wrtite_S(void)//ѣզBEEP״ׁ̬FLASHא
+;;;507    /*****************************************************************************/
+;;;508    void Wrtite_S(void)//ѣզBEEP״ׁ̬FLASHא
 000000  b510              PUSH     {r4,lr}
-;;;477    {
-;;;478    	EEPROM_WriteByte(0x59, para_set1);
+;;;509    {
+;;;510    	EEPROM_WriteByte(0x59, para_set1);
 000002  4806              LDR      r0,|L11.28|
 000004  7801              LDRB     r1,[r0,#0]  ; para_set1
 000006  2059              MOVS     r0,#0x59
 000008  f7fffffe          BL       EEPROM_WriteByte
-;;;479        EEPROM_WriteByte(0x74, lang);
+;;;511        EEPROM_WriteByte(0x74, lang);
 00000c  4804              LDR      r0,|L11.32|
 00000e  7801              LDRB     r1,[r0,#0]  ; lang
 000010  e8bd4010          POP      {r4,lr}
 000014  2074              MOVS     r0,#0x74
 000016  f7ffbffe          B.W      EEPROM_WriteByte
-;;;480    }
-;;;481    
+;;;512    }
+;;;513    
                           ENDP
 
 00001a  0000              DCW      0x0000
@@ -1800,40 +1908,40 @@
                           AREA ||i.Wrtite_SetVA||, CODE, READONLY, ALIGN=2
 
                   Wrtite_SetVA PROC
-;;;394    }
-;;;395    void Wrtite_SetVA(void)
+;;;410    }
+;;;411    void Wrtite_SetVA(void)
 000000  b510              PUSH     {r4,lr}
-;;;396    {
-;;;397    	vu8 data_8bit;
-;;;398      /*********************************************/
-;;;399    	data_8bit = SET_Voltage >> 8;
+;;;412    {
+;;;413    	vu8 data_8bit;
+;;;414      /*********************************************/
+;;;415    	data_8bit = SET_Voltage >> 8;
 000002  4c0b              LDR      r4,|L12.48|
 000004  8860              LDRH     r0,[r4,#2]  ; Run_Control
 000006  0a01              LSRS     r1,r0,#8
-;;;400    	EEPROM_WriteByte(0x2A, data_8bit);
+;;;416    	EEPROM_WriteByte(0x2A, data_8bit);
 000008  202a              MOVS     r0,#0x2a
 00000a  f7fffffe          BL       EEPROM_WriteByte
-;;;401    	EEPROM_WriteByte(0x2B, SET_Voltage);
+;;;417    	EEPROM_WriteByte(0x2B, SET_Voltage);
 00000e  8860              LDRH     r0,[r4,#2]  ; Run_Control
 000010  b2c1              UXTB     r1,r0
 000012  202b              MOVS     r0,#0x2b
 000014  f7fffffe          BL       EEPROM_WriteByte
-;;;402    	
-;;;403    	data_8bit = SET_Current >> 8;
+;;;418    	
+;;;419    	data_8bit = SET_Current >> 8;
 000018  88a0              LDRH     r0,[r4,#4]  ; Run_Control
 00001a  0a01              LSRS     r1,r0,#8
-;;;404    	EEPROM_WriteByte(0x2C, data_8bit);
+;;;420    	EEPROM_WriteByte(0x2C, data_8bit);
 00001c  202c              MOVS     r0,#0x2c
 00001e  f7fffffe          BL       EEPROM_WriteByte
-;;;405    	EEPROM_WriteByte(0x2D, SET_Current);
+;;;421    	EEPROM_WriteByte(0x2D, SET_Current);
 000022  88a0              LDRH     r0,[r4,#4]  ; Run_Control
 000024  e8bd4010          POP      {r4,lr}
 000028  b2c1              UXTB     r1,r0
 00002a  202d              MOVS     r0,#0x2d
 00002c  f7ffbffe          B.W      EEPROM_WriteByte
-;;;406    	/********************************************/
-;;;407    }
-;;;408    
+;;;422    	/********************************************/
+;;;423    }
+;;;424    
                           ENDP
 
                   |L12.48|
@@ -1842,16 +1950,16 @@
                           AREA ||i.Wrtite_Zore||, CODE, READONLY, ALIGN=2
 
                   Wrtite_Zore PROC
-;;;390    /****************************************************************************/
-;;;391    void Wrtite_Zore(void)
+;;;406    /****************************************************************************/
+;;;407    void Wrtite_Zore(void)
 000000  4802              LDR      r0,|L13.12|
-;;;392    {
-;;;393    	EEPROM_WriteByte(0x32, OFFSET_Zore);
+;;;408    {
+;;;409    	EEPROM_WriteByte(0x32, OFFSET_Zore);
 000002  7801              LDRB     r1,[r0,#0]  ; OFFSET_Zore
 000004  2032              MOVS     r0,#0x32
 000006  f7ffbffe          B.W      EEPROM_WriteByte
-;;;394    }
-;;;395    void Wrtite_SetVA(void)
+;;;410    }
+;;;411    void Wrtite_SetVA(void)
                           ENDP
 
 00000a  0000              DCW      0x0000
@@ -1861,17 +1969,17 @@
                           AREA ||i.Wrtite_step||, CODE, READONLY, ALIGN=2
 
                   Wrtite_step PROC
-;;;518    
-;;;519    void Wrtite_step(void)
+;;;550    
+;;;551    void Wrtite_step(void)
 000000  4802              LDR      r0,|L14.12|
-;;;520    {
-;;;521    	EEPROM_WriteByte(0x75, steptime);
+;;;552    {
+;;;553    	EEPROM_WriteByte(0x75, steptime);
 000002  8800              LDRH     r0,[r0,#0]  ; steptime
 000004  b2c1              UXTB     r1,r0
 000006  2075              MOVS     r0,#0x75
 000008  f7ffbffe          B.W      EEPROM_WriteByte
-;;;522    }
-;;;523    
+;;;554    }
+;;;555    
                           ENDP
 
                   |L14.12|

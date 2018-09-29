@@ -267,6 +267,11 @@ WM_HWIN CreateG(void) {
   return hWinG;
 }
 
+WM_HWIN ResetG(void) {
+  hWinG = GUI_CreateDialogBox(_aDialogCreate3, GUI_COUNTOF(_aDialogCreate3), _cbDialog, WM_HBKWIN, 0, 0);
+  return hWinG;
+}
+
 /*********************************************************************
 *
 *       DrawGraph

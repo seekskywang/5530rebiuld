@@ -34727,6 +34727,7 @@ Nvoid INPUT_C(char* num);
 Nvoid INPUT_LOAD(char* num);  
 Nvoid INPUT_INFO(vu8 num);  
 N
+N
 N//=============================================================================
 N#define NOP   __nop();	  //ø’÷∏¡Ó
 N
@@ -35164,6 +35165,7 @@ Svoid INPUT_CDC(char* num);
 Svoid INPUT_C(char* num);  
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
+S
 S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -36148,19 +36150,47 @@ X	Run_Control[23]=Run_Control[23]<<8;
 N	set_sbs_c=set_sbs_c+EEPROM_READ_Byte(0x73);
 X	Run_Control[23]=Run_Control[23]+EEPROM_READ_Byte(0x73);
 N    
-N    cdc_cv=EEPROM_READ_Byte(0x76);
-X    Run_Control[38]=EEPROM_READ_Byte(0x76);
-N	cdc_cv=cdc_cv<<8;
-X	Run_Control[38]=Run_Control[38]<<8;
-N	cdc_cv=cdc_cv+EEPROM_READ_Byte(0x77);
-X	Run_Control[38]=Run_Control[38]+EEPROM_READ_Byte(0x77);
+N    opv1=EEPROM_READ_Byte(0x76);
+X    Run_Control[31]=EEPROM_READ_Byte(0x76);
+N	opv1=opv1<<8;
+X	Run_Control[31]=Run_Control[31]<<8;
+N	opv1=opv1+EEPROM_READ_Byte(0x77);
+X	Run_Control[31]=Run_Control[31]+EEPROM_READ_Byte(0x77);
 N    
-N    cdc_cc=EEPROM_READ_Byte(0x78);
-X    Run_Control[39]=EEPROM_READ_Byte(0x78);
-N	cdc_cc=cdc_cc<<8;
-X	Run_Control[39]=Run_Control[39]<<8;
-N	cdc_cc=cdc_cc+EEPROM_READ_Byte(0x79);
-X	Run_Control[39]=Run_Control[39]+EEPROM_READ_Byte(0x79);
+N    opv2=EEPROM_READ_Byte(0x7C);
+X    Run_Control[32]=EEPROM_READ_Byte(0x7C);
+N	opv2=opv2<<8;
+X	Run_Control[32]=Run_Control[32]<<8;
+N	opv2=opv2+EEPROM_READ_Byte(0x7D);
+X	Run_Control[32]=Run_Control[32]+EEPROM_READ_Byte(0x7D);
+N    
+N    opv3=EEPROM_READ_Byte(0x7E);
+X    Run_Control[33]=EEPROM_READ_Byte(0x7E);
+N	opv3=opv3<<8;
+X	Run_Control[33]=Run_Control[33]<<8;
+N	opv3=opv3+EEPROM_READ_Byte(0x7F);
+X	Run_Control[33]=Run_Control[33]+EEPROM_READ_Byte(0x7F);
+N    
+N    opc1=EEPROM_READ_Byte(0x78);
+X    Run_Control[34]=EEPROM_READ_Byte(0x78);
+N	opc1=opc1<<8;
+X	Run_Control[34]=Run_Control[34]<<8;
+N	opc1=opc1+EEPROM_READ_Byte(0x79);
+X	Run_Control[34]=Run_Control[34]+EEPROM_READ_Byte(0x79);
+N    
+N    opc2=EEPROM_READ_Byte(0x80);
+X    Run_Control[35]=EEPROM_READ_Byte(0x80);
+N	opc2=opc2<<8;
+X	Run_Control[35]=Run_Control[35]<<8;
+N	opc2=opc2+EEPROM_READ_Byte(0x81);
+X	Run_Control[35]=Run_Control[35]+EEPROM_READ_Byte(0x81);
+N    
+N    opc3=EEPROM_READ_Byte(0x82);
+X    Run_Control[36]=EEPROM_READ_Byte(0x82);
+N	opc3=opc3<<8;
+X	Run_Control[36]=Run_Control[36]<<8;
+N	opc3=opc3+EEPROM_READ_Byte(0x83);
+X	Run_Control[36]=Run_Control[36]+EEPROM_READ_Byte(0x83);
 N    
 N    cdc_dc=EEPROM_READ_Byte(0x7A);
 X    Run_Control[41]=EEPROM_READ_Byte(0x7A);
@@ -36264,17 +36294,41 @@ N	EEPROM_WriteByte(0x72, data_8bit);
 N	EEPROM_WriteByte(0x73, set_sbs_c);
 X	EEPROM_WriteByte(0x73, Run_Control[23]);
 N    
-N    data_8bit = cdc_cv >> 8;
-X    data_8bit = Run_Control[38] >> 8;
+N    data_8bit = opv1 >> 8;
+X    data_8bit = Run_Control[31] >> 8;
 N	EEPROM_WriteByte(0x76, data_8bit);
-N	EEPROM_WriteByte(0x77, cdc_cv);
-X	EEPROM_WriteByte(0x77, Run_Control[38]);
+N	EEPROM_WriteByte(0x77, opv1);
+X	EEPROM_WriteByte(0x77, Run_Control[31]);
 N    
-N    data_8bit = cdc_cc >> 8;
-X    data_8bit = Run_Control[39] >> 8;
+N    data_8bit = opv2 >> 8;
+X    data_8bit = Run_Control[32] >> 8;
+N	EEPROM_WriteByte(0x7C, data_8bit);
+N	EEPROM_WriteByte(0x7D, opv2);
+X	EEPROM_WriteByte(0x7D, Run_Control[32]);
+N    
+N    data_8bit = opv3 >> 8;
+X    data_8bit = Run_Control[33] >> 8;
+N	EEPROM_WriteByte(0x7E, data_8bit);
+N	EEPROM_WriteByte(0x7F, opv3);
+X	EEPROM_WriteByte(0x7F, Run_Control[33]);
+N    
+N    data_8bit = opc1 >> 8;
+X    data_8bit = Run_Control[34] >> 8;
 N	EEPROM_WriteByte(0x78, data_8bit);
-N	EEPROM_WriteByte(0x79, cdc_cc);
-X	EEPROM_WriteByte(0x79, Run_Control[39]);
+N	EEPROM_WriteByte(0x79, opc1);
+X	EEPROM_WriteByte(0x79, Run_Control[34]);
+N    
+N    data_8bit = opc2 >> 8;
+X    data_8bit = Run_Control[35] >> 8;
+N	EEPROM_WriteByte(0x80, data_8bit);
+N	EEPROM_WriteByte(0x81, opc2);
+X	EEPROM_WriteByte(0x81, Run_Control[35]);
+N    
+N    data_8bit = opc3 >> 8;
+X    data_8bit = Run_Control[36] >> 8;
+N	EEPROM_WriteByte(0x82, data_8bit);
+N	EEPROM_WriteByte(0x83, opc3);
+X	EEPROM_WriteByte(0x83, Run_Control[36]);
 N    
 N    data_8bit = cdc_dc >> 8;
 X    data_8bit = Run_Control[41] >> 8;

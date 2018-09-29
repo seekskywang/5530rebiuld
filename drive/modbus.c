@@ -182,17 +182,19 @@ void Transformation_ADC(void)
 	var32 = 0;
 /*****************************内阻值转换*******************************************/
 	var32 = Rmon_value;
-	var32 = var32 * REG_CorrectionR;  
-	if ((Polar1 & 0x04) == 0x04)		  
-	{
-		if (var32 < REG_ReadR_Offset) 
+	var32 = var32 * 5844;  
+// 	if ((Polar1 & 0x04) == 0x04)		  
+// 	{
+		if (var32 < 28571) 
 		{
 			var32 = 0;
 		}
-		else var32 = var32 - REG_ReadR_Offset;
-	}
-	else var32 = var32 + REG_ReadR_Offset;
-	var32 = var32 >> 12;
+		else {
+            var32 = var32 - 28571;
+        }
+// 	}
+// 	else var32 = var32 + REG_ReadR_Offset;
+// 	var32 = var32 >> 12;
 	if (var32 < 5) var32 = 0;				  //40mV以下清零
 	R_VLUE = var32;
 	var32 = 0;	

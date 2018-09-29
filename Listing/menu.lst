@@ -48561,6 +48561,7 @@ Nvoid INPUT_C(char* num);
 Nvoid INPUT_LOAD(char* num);  
 Nvoid INPUT_INFO(vu8 num);  
 N
+N
 N//=============================================================================
 N#define NOP   __nop();	  //ø’÷∏¡Ó
 N
@@ -48999,6 +49000,7 @@ Svoid INPUT_CDC(char* num);
 Svoid INPUT_C(char* num);  
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
+S
 S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -51425,6 +51427,7 @@ Svoid INPUT_C(char* num);
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
 S
+S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
 S
@@ -53012,6 +53015,14 @@ X  hWinWind = GUI_CreateDialogBox(_aDialogCreate1, (sizeof(_aDialogCreate1) / si
 N  return hWinWind;
 N}
 N
+NWM_HWIN ResetPow(void) {
+XGUI_HWIN ResetPow(void) {
+N    hWinWind = GUI_CreateDialogBox(_aDialogCreate1, GUI_COUNTOF(_aDialogCreate1), _cbDialog, WM_HBKWIN, 0, 0);
+X    hWinWind = GUI_CreateDialogBox(_aDialogCreate1, (sizeof(_aDialogCreate1) / sizeof(_aDialogCreate1[0])), _cbDialog, WM_GetDesktopWindow(), 0, 0);
+N//    WM_InvalidateWindow(hWinWind);
+N    return hWinWind;
+N}
+N
 N
 Nvoid MENU_OP_DOWN(void);
 Nvoid MENU_OP_DOWN(void)
@@ -53178,7 +53189,7 @@ X        case 17:
 N        {           
 N            WM_HWIN hItem;
 X            GUI_HWIN hItem;
-N//            WM_InvalidateWindow(hWinWind);
+N//            
 N            hItem = WM_GetDialogItem(hWinWind, ID_TEXT_41);
 X            hItem = WM_GetDialogItem(hWinWind, (0x800 + 0x66));
 N            TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//ÈÄâÈ°πËÉåÊôØËâ≤ËÆæ‰∏∫ÈÄèÊòé

@@ -695,6 +695,11 @@ WM_HWIN CreateSET(void) {
   return hWinset;
 }
 
+WM_HWIN ResetSET(void) {
+  hWinset = GUI_CreateDialogBox(_aDialogCreate5, GUI_COUNTOF(_aDialogCreate5), _cbDialog, WM_HBKWIN, 0, 0);
+  return hWinset;
+}
+
 /*********************************************************************
 *
 *       设置界面选项切换
