@@ -41,9 +41,9 @@ extern vu8 resetflag;
 */
 void MainTask(void) 
 { 
-    static resetcount;
-    static read1963;
-    static scancount;
+//    static int resetcount;
+    static int read1963;
+    static int scancount;
 //	unsigned char  ucKeyCode;
 	GUI_Init();
 	WM_SetDesktopColor(GUI_BLUE);  

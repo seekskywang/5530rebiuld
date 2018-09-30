@@ -175,6 +175,7 @@ extern vu8 pause_flag;
 extern vu8 paused;
 extern vu8 finish;
 extern vu16 restart_time;
+extern vu8 set_loop_count;
 
 
 extern vu16 Run_Control[43];	
@@ -224,7 +225,7 @@ extern vu16 Run_Control[43];
 #define pow_c    					    Run_Control[42]
 
 
-extern float coff[6];
+extern vu16 coff[6];
 #define cov1    					    coff[0]
 #define cov2    					    coff[1]
 #define cov3    					    coff[2]

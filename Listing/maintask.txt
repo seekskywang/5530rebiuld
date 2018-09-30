@@ -9,9 +9,9 @@
 ;;;42     void MainTask(void) 
 000000  f7fffffe          BL       GUI_Init
 ;;;43     { 
-;;;44         static resetcount;
-;;;45         static read1963;
-;;;46         static scancount;
+;;;44     //    static int resetcount;
+;;;45         static int read1963;
+;;;46         static int scancount;
 ;;;47     //	unsigned char  ucKeyCode;
 ;;;48     	GUI_Init();
 ;;;49     	WM_SetDesktopColor(GUI_BLUE);  

@@ -48712,6 +48712,7 @@ Nextern vu8 pause_flag;
 Nextern vu8 paused;
 Nextern vu8 finish;
 Nextern vu16 restart_time;
+Nextern vu8 set_loop_count;
 N
 N
 Nextern vu16 Run_Control[43];	
@@ -48761,7 +48762,7 @@ N#define cdc_dc    					    Run_Control[41]
 N#define pow_c    					    Run_Control[42]
 N
 N
-Nextern float coff[6];
+Nextern vu16 coff[6];
 N#define cov1    					    coff[0]
 N#define cov2    					    coff[1]
 N#define cov3    					    coff[2]
@@ -49152,6 +49153,7 @@ Sextern vu8 pause_flag;
 Sextern vu8 paused;
 Sextern vu8 finish;
 Sextern vu16 restart_time;
+Sextern vu8 set_loop_count;
 S
 S
 Sextern vu16 Run_Control[43];	
@@ -49201,7 +49203,7 @@ S#define cdc_dc    					    Run_Control[41]
 S#define pow_c    					    Run_Control[42]
 S
 S
-Sextern float coff[6];
+Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
 S#define cov2    					    coff[1]
 S#define cov3    					    coff[2]
@@ -51578,6 +51580,7 @@ Sextern vu8 pause_flag;
 Sextern vu8 paused;
 Sextern vu8 finish;
 Sextern vu16 restart_time;
+Sextern vu8 set_loop_count;
 S
 S
 Sextern vu16 Run_Control[43];	
@@ -51627,7 +51630,7 @@ S#define cdc_dc    					    Run_Control[41]
 S#define pow_c    					    Run_Control[42]
 S
 S
-Sextern float coff[6];
+Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
 S#define cov2    					    coff[1]
 S#define cov3    					    coff[2]

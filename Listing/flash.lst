@@ -34876,6 +34876,7 @@ Nextern vu8 pause_flag;
 Nextern vu8 paused;
 Nextern vu8 finish;
 Nextern vu16 restart_time;
+Nextern vu8 set_loop_count;
 N
 N
 Nextern vu16 Run_Control[43];	
@@ -34925,7 +34926,7 @@ N#define cdc_dc    					    Run_Control[41]
 N#define pow_c    					    Run_Control[42]
 N
 N
-Nextern float coff[6];
+Nextern vu16 coff[6];
 N#define cov1    					    coff[0]
 N#define cov2    					    coff[1]
 N#define cov3    					    coff[2]
@@ -35315,6 +35316,7 @@ Sextern vu8 pause_flag;
 Sextern vu8 paused;
 Sextern vu8 finish;
 Sextern vu16 restart_time;
+Sextern vu8 set_loop_count;
 S
 S
 Sextern vu16 Run_Control[43];	
@@ -35364,7 +35366,7 @@ S#define cdc_dc    					    Run_Control[41]
 S#define pow_c    					    Run_Control[42]
 S
 S
-Sextern float coff[6];
+Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
 S#define cov2    					    coff[1]
 S#define cov3    					    coff[2]
@@ -36171,6 +36173,27 @@ X	Run_Control[33]=Run_Control[33]<<8;
 N	opv3=opv3+EEPROM_READ_Byte(0x7F);
 X	Run_Control[33]=Run_Control[33]+EEPROM_READ_Byte(0x7F);
 N    
+N    cov1=EEPROM_READ_Byte(0x86);
+X    coff[0]=EEPROM_READ_Byte(0x86);
+N	cov1=cov1<<8;
+X	coff[0]=coff[0]<<8;
+N	cov1=cov1+EEPROM_READ_Byte(0x87);
+X	coff[0]=coff[0]+EEPROM_READ_Byte(0x87);
+N    
+N    cov2=EEPROM_READ_Byte(0x88);
+X    coff[1]=EEPROM_READ_Byte(0x88);
+N	cov2=cov2<<8;
+X	coff[1]=coff[1]<<8;
+N	cov2=cov2+EEPROM_READ_Byte(0x89);
+X	coff[1]=coff[1]+EEPROM_READ_Byte(0x89);
+N    
+N    cov3=EEPROM_READ_Byte(0x8A);
+X    coff[2]=EEPROM_READ_Byte(0x8A);
+N	cov3=cov3<<8;
+X	coff[2]=coff[2]<<8;
+N	cov3=cov3+EEPROM_READ_Byte(0x8B);
+X	coff[2]=coff[2]+EEPROM_READ_Byte(0x8B);
+N    
 N    opc1=EEPROM_READ_Byte(0x78);
 X    Run_Control[34]=EEPROM_READ_Byte(0x78);
 N	opc1=opc1<<8;
@@ -36192,12 +36215,42 @@ X	Run_Control[36]=Run_Control[36]<<8;
 N	opc3=opc3+EEPROM_READ_Byte(0x83);
 X	Run_Control[36]=Run_Control[36]+EEPROM_READ_Byte(0x83);
 N    
+N    coc1=EEPROM_READ_Byte(0x8C);
+X    coff[3]=EEPROM_READ_Byte(0x8C);
+N	coc1=coc1<<8;
+X	coff[3]=coff[3]<<8;
+N	coc1=coc1+EEPROM_READ_Byte(0x8D);
+X	coff[3]=coff[3]+EEPROM_READ_Byte(0x8D);
+N    
+N    coc2=EEPROM_READ_Byte(0x8E);
+X    coff[4]=EEPROM_READ_Byte(0x8E);
+N	coc2=coc2<<8;
+X	coff[4]=coff[4]<<8;
+N	coc2=coc2+EEPROM_READ_Byte(0x8F);
+X	coff[4]=coff[4]+EEPROM_READ_Byte(0x8F);
+N    
+N    coc3=EEPROM_READ_Byte(0x90);
+X    coff[5]=EEPROM_READ_Byte(0x90);
+N	coc3=coc3<<8;
+X	coff[5]=coff[5]<<8;
+N	coc3=coc3+EEPROM_READ_Byte(0x91);
+X	coff[5]=coff[5]+EEPROM_READ_Byte(0x91);
+N    
+N    set_loop_count=EEPROM_READ_Byte(0x84);
+N    
 N    cdc_dc=EEPROM_READ_Byte(0x7A);
 X    Run_Control[41]=EEPROM_READ_Byte(0x7A);
 N	cdc_dc=cdc_dc<<8;
 X	Run_Control[41]=Run_Control[41]<<8;
 N	cdc_dc=cdc_dc+EEPROM_READ_Byte(0x7B);
 X	Run_Control[41]=Run_Control[41]+EEPROM_READ_Byte(0x7B);
+N    
+N    set_dc_cutoff_v=EEPROM_READ_Byte(0x92);
+X    Run_Control[27]=EEPROM_READ_Byte(0x92);
+N	set_dc_cutoff_v=set_dc_cutoff_v<<8;
+X	Run_Control[27]=Run_Control[27]<<8;
+N	set_dc_cutoff_v=set_dc_cutoff_v+EEPROM_READ_Byte(0x93);
+X	Run_Control[27]=Run_Control[27]+EEPROM_READ_Byte(0x93);
 N    
 N
 N}
@@ -36312,6 +36365,24 @@ N	EEPROM_WriteByte(0x7E, data_8bit);
 N	EEPROM_WriteByte(0x7F, opv3);
 X	EEPROM_WriteByte(0x7F, Run_Control[33]);
 N    
+N    data_8bit = cov1 >> 8;
+X    data_8bit = coff[0] >> 8;
+N	EEPROM_WriteByte(0x86, data_8bit);
+N	EEPROM_WriteByte(0x87, cov1);
+X	EEPROM_WriteByte(0x87, coff[0]);
+N    
+N    data_8bit = cov2 >> 8;
+X    data_8bit = coff[1] >> 8;
+N	EEPROM_WriteByte(0x88, data_8bit);
+N	EEPROM_WriteByte(0x89, cov2);
+X	EEPROM_WriteByte(0x89, coff[1]);
+N    
+N    data_8bit = cov3 >> 8;
+X    data_8bit = coff[2] >> 8;
+N	EEPROM_WriteByte(0x8A, data_8bit);
+N	EEPROM_WriteByte(0x8B, cov3);
+X	EEPROM_WriteByte(0x8B, coff[2]);
+N    
 N    data_8bit = opc1 >> 8;
 X    data_8bit = Run_Control[34] >> 8;
 N	EEPROM_WriteByte(0x78, data_8bit);
@@ -36330,11 +36401,39 @@ N	EEPROM_WriteByte(0x82, data_8bit);
 N	EEPROM_WriteByte(0x83, opc3);
 X	EEPROM_WriteByte(0x83, Run_Control[36]);
 N    
+N    data_8bit = coc1 >> 8;
+X    data_8bit = coff[3] >> 8;
+N	EEPROM_WriteByte(0x8C, data_8bit);
+N	EEPROM_WriteByte(0x8D, coc1);
+X	EEPROM_WriteByte(0x8D, coff[3]);
+N    
+N    data_8bit = coc2 >> 8;
+X    data_8bit = coff[4] >> 8;
+N	EEPROM_WriteByte(0x8E, data_8bit);
+N	EEPROM_WriteByte(0x8F, coc2);
+X	EEPROM_WriteByte(0x8F, coff[4]);
+N    
+N    data_8bit = coc3 >> 8;
+X    data_8bit = coff[5] >> 8;
+N	EEPROM_WriteByte(0x90, data_8bit);
+N	EEPROM_WriteByte(0x91, coc3);
+X	EEPROM_WriteByte(0x91, coff[5]);
+N    
+N	EEPROM_WriteByte(0x84, set_loop_count);
+N    
 N    data_8bit = cdc_dc >> 8;
 X    data_8bit = Run_Control[41] >> 8;
 N	EEPROM_WriteByte(0x7A, data_8bit);
 N	EEPROM_WriteByte(0x7B, cdc_dc);
 X	EEPROM_WriteByte(0x7B, Run_Control[41]);
+N    
+N    data_8bit = set_dc_cutoff_v >> 8;
+X    data_8bit = Run_Control[27] >> 8;
+N	EEPROM_WriteByte(0x92, data_8bit);
+N	EEPROM_WriteByte(0x93, set_dc_cutoff_v);
+X	EEPROM_WriteByte(0x93, Run_Control[27]);
+N    
+N
 N    
 N}
 Nvoid Wrtite_Beep(void)//ѣզBEEP״ׁ̬FLASHא

@@ -52,48 +52,56 @@ compiling BEEP.c...
 compiling bsp_SysTick.c...
 compiling DAC.c...
 compiling flash.c...
+..\drive\flash.c(400): error:  #20: identifier "set_loop_count" is undefined
+..\drive\flash.c(501): error:  #20: identifier "set_loop_count" is undefined
 compiling GPIO.c...
 compiling IIC_24C01.c...
 compiling iwdg.c...
 compiling key.c...
-..\drive\key.c(808): warning:  #223-D: function "SET_OP_LEFT" declared implicitly
-..\drive\key.c(817): warning:  #223-D: function "SYS_INFO_LEFT" declared implicitly
-..\drive\key.c(825): warning:  #223-D: function "CDC_OP_LEFT" declared implicitly
-..\drive\key.c(838): warning:  #223-D: function "SET_OP_RIGHT" declared implicitly
-..\drive\key.c(847): warning:  #223-D: function "SYS_INFO_RIGHT" declared implicitly
-..\drive\key.c(855): warning:  #223-D: function "CDC_OP_RIGHT" declared implicitly
-..\drive\key.c(870): warning:  #223-D: function "MENU_OP_UP" declared implicitly
-..\drive\key.c(882): warning:  #223-D: function "SET_OP_UP" declared implicitly
-..\drive\key.c(891): warning:  #223-D: function "OC_OP_UP" declared implicitly
-..\drive\key.c(900): warning:  #223-D: function "CDC_OP_UP" declared implicitly
-..\drive\key.c(909): warning:  #223-D: function "SYS_INFO_UP" declared implicitly
-..\drive\key.c(926): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
-..\drive\key.c(938): warning:  #223-D: function "SET_OP_DOWN" declared implicitly
-..\drive\key.c(947): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
-..\drive\key.c(955): warning:  #223-D: function "CDC_OP_DOWN" declared implicitly
-..\drive\key.c(964): warning:  #223-D: function "SYS_INFO_DOWN" declared implicitly
-..\drive\key.c(981): warning:  #223-D: function "MENU_SET" declared implicitly
-..\drive\key.c(988): warning:  #223-D: function "PARA_SET" declared implicitly
-..\drive\key.c(997): warning:  #223-D: function "OC_SET" declared implicitly
-..\drive\key.c(1005): warning:  #223-D: function "LOAD_SET" declared implicitly
-..\drive\key.c(1012): warning:  #223-D: function "CDC_SET" declared implicitly
-..\drive\key.c(1019): warning:  #223-D: function "CFM_PASS" declared implicitly
-..\drive\key.c(1096): warning:  #223-D: function "CreateCDC" declared implicitly
-..\drive\key.c(1351): warning:  #223-D: function "CreateCDC" declared implicitly
-..\drive\key.c(1379): warning:  #223-D: function "Createsysinfo" declared implicitly
+..\drive\key.c(809): warning:  #223-D: function "SET_OP_LEFT" declared implicitly
+..\drive\key.c(818): warning:  #223-D: function "SYS_INFO_LEFT" declared implicitly
+..\drive\key.c(826): warning:  #223-D: function "CDC_OP_LEFT" declared implicitly
+..\drive\key.c(839): warning:  #223-D: function "SET_OP_RIGHT" declared implicitly
+..\drive\key.c(848): warning:  #223-D: function "SYS_INFO_RIGHT" declared implicitly
+..\drive\key.c(856): warning:  #223-D: function "CDC_OP_RIGHT" declared implicitly
+..\drive\key.c(871): warning:  #223-D: function "MENU_OP_UP" declared implicitly
+..\drive\key.c(883): warning:  #223-D: function "SET_OP_UP" declared implicitly
+..\drive\key.c(892): warning:  #223-D: function "OC_OP_UP" declared implicitly
+..\drive\key.c(901): warning:  #223-D: function "CDC_OP_UP" declared implicitly
+..\drive\key.c(910): warning:  #223-D: function "SYS_INFO_UP" declared implicitly
+..\drive\key.c(927): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
+..\drive\key.c(939): warning:  #223-D: function "SET_OP_DOWN" declared implicitly
+..\drive\key.c(948): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
+..\drive\key.c(956): warning:  #223-D: function "CDC_OP_DOWN" declared implicitly
+..\drive\key.c(965): warning:  #223-D: function "SYS_INFO_DOWN" declared implicitly
+..\drive\key.c(982): warning:  #223-D: function "MENU_SET" declared implicitly
+..\drive\key.c(989): warning:  #223-D: function "PARA_SET" declared implicitly
+..\drive\key.c(998): warning:  #223-D: function "OC_SET" declared implicitly
+..\drive\key.c(1006): warning:  #223-D: function "LOAD_SET" declared implicitly
+..\drive\key.c(1013): warning:  #223-D: function "CDC_SET" declared implicitly
+..\drive\key.c(1020): warning:  #223-D: function "CFM_PASS" declared implicitly
+..\drive\key.c(1097): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1352): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1380): warning:  #223-D: function "Createsysinfo" declared implicitly
 compiling modbus.c...
 compiling ssd1963.c...
 ..\drive\ssd1963.c(168): warning:  #550-D: variable "FSMC_NORSRAMTimingInitStructure" was set but never used
 compiling TIM1.c...
 compiling TIM2.c...
 compiling TIM6.c...
-..\drive\TIM6.c(80): warning:  #260-D: explicit type is missing ("int" assumed)
 ..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
 ..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(90): warning:  #223-D: function "sLCD_WR_REG" declared implicitly
-..\drive\TIM6.c(91): warning:  #223-D: function "sLCD_Read_Data" declared implicitly
-..\drive\TIM6.c(100): warning:  #223-D: function "LCD_Initializtion" declared implicitly
-..\drive\TIM6.c(101): warning:  #223-D: function "GUI_Init" declared implicitly
+..\drive\TIM6.c(83): warning:  #260-D: explicit type is missing ("int" assumed)
+..\drive\TIM6.c(95): warning:  #223-D: function "LCD_Initializtion" declared implicitly
+..\drive\TIM6.c(96): warning:  #223-D: function "GUI_Init" declared implicitly
+..\drive\TIM6.c(99): warning:  #223-D: function "ResetPow" declared implicitly
+..\drive\TIM6.c(101): warning:  #223-D: function "ResetCDC" declared implicitly
+..\drive\TIM6.c(103): warning:  #223-D: function "ResetR" declared implicitly
+..\drive\TIM6.c(105): warning:  #223-D: function "ResetLoad" declared implicitly
+..\drive\TIM6.c(107): warning:  #223-D: function "ResetG" declared implicitly
+..\drive\TIM6.c(109): warning:  #223-D: function "ResetSET" declared implicitly
+..\drive\TIM6.c(82): warning:  #177-D: variable "read1963" was declared but never referenced
+..\drive\TIM6.c(83): warning:  #177-D: variable "scancount" was declared but never referenced
 compiling usart.c...
 compiling TM1650.c...
 compiling clock.c...
@@ -105,31 +113,37 @@ compiling GUIDRV_Template.c...
 ..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "lphys" was declared but never referenced
 compiling LCDConf_FlexColor_Template.c...
 compiling MainTask.c...
+..\STemWinLibrary522\emWinTask\MainTask.c(44): warning:  #260-D: explicit type is missing ("int" assumed)
+..\STemWinLibrary522\emWinTask\MainTask.c(45): warning:  #260-D: explicit type is missing ("int" assumed)
+..\STemWinLibrary522\emWinTask\MainTask.c(46): warning:  #260-D: explicit type is missing ("int" assumed)
+..\STemWinLibrary522\emWinTask\MainTask.c(62): warning:  #223-D: function "CreateSTARTER" declared implicitly
+..\STemWinLibrary522\emWinTask\MainTask.c(44): warning:  #177-D: variable "resetcount" was declared but never referenced
 compiling menu.c...
 compiling R_Face.c...
-..\APP\R_Face.c(334): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(369): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(374): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(386): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(390): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(464): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(493): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(628): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(656): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(715): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(715): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(736): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(736): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(757): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(757): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(778): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(778): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(799): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(799): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1778): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1792): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(273): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(308): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(313): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(325): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(329): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(403): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(432): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(567): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(595): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(654): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(654): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(675): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(675): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(717): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(717): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1722): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1736): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 compiling load_Face.c...
 compiling STARTER.c...
+D:\外发资料\电池综合测试仪 2.1\APP\STARTER.c(98): warning:  #223-D: function "CreateR" declared implicitly
 compiling graph.c...
 compiling c_dc.c...
 compiling settings.c...
@@ -154,110 +168,13 @@ compiling usbh_msc_core.c...
 compiling usbh_msc_scsi.c...
 compiling usb_bsp.c...
 compiling usbh_usr.c...
-linking...
-Program Size: Code=149248 RO-data=59000 RW-data=2172 ZI-data=34532  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 58 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.324V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
+Target not created
 Build target 'JK_BTSET'
 compiling flash.c...
-linking...
-Program Size: Code=149432 RO-data=59000 RW-data=2172 ZI-data=34532  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Build target 'JK_BTSET'
+..\drive\flash.c(400): error:  #20: identifier "set_loop_count" is undefined
+..\drive\flash.c(501): error:  #20: identifier "set_loop_count" is undefined
 compiling c_dc.c...
-linking...
-Program Size: Code=149432 RO-data=59000 RW-data=2172 ZI-data=34532  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.311V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling flash.c...
-linking...
-Program Size: Code=149432 RO-data=59000 RW-data=2172 ZI-data=34532  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Build target 'JK_BTSET'
-compiling menu.c...
-linking...
-Program Size: Code=149432 RO-data=59000 RW-data=2172 ZI-data=34532  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Target not created
 Build target 'JK_BTSET'
 compiling main.c...
 compiling stm32f4xx_it.c...
@@ -300,13 +217,19 @@ compiling ssd1963.c...
 compiling TIM1.c...
 compiling TIM2.c...
 compiling TIM6.c...
-..\drive\TIM6.c(80): warning:  #260-D: explicit type is missing ("int" assumed)
 ..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
 ..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(90): warning:  #223-D: function "sLCD_WR_REG" declared implicitly
-..\drive\TIM6.c(91): warning:  #223-D: function "sLCD_Read_Data" declared implicitly
-..\drive\TIM6.c(100): warning:  #223-D: function "LCD_Initializtion" declared implicitly
-..\drive\TIM6.c(101): warning:  #223-D: function "GUI_Init" declared implicitly
+..\drive\TIM6.c(83): warning:  #260-D: explicit type is missing ("int" assumed)
+..\drive\TIM6.c(95): warning:  #223-D: function "LCD_Initializtion" declared implicitly
+..\drive\TIM6.c(96): warning:  #223-D: function "GUI_Init" declared implicitly
+..\drive\TIM6.c(99): warning:  #223-D: function "ResetPow" declared implicitly
+..\drive\TIM6.c(101): warning:  #223-D: function "ResetCDC" declared implicitly
+..\drive\TIM6.c(103): warning:  #223-D: function "ResetR" declared implicitly
+..\drive\TIM6.c(105): warning:  #223-D: function "ResetLoad" declared implicitly
+..\drive\TIM6.c(107): warning:  #223-D: function "ResetG" declared implicitly
+..\drive\TIM6.c(109): warning:  #223-D: function "ResetSET" declared implicitly
+..\drive\TIM6.c(82): warning:  #177-D: variable "read1963" was declared but never referenced
+..\drive\TIM6.c(83): warning:  #177-D: variable "scancount" was declared but never referenced
 compiling usart.c...
 compiling TM1650.c...
 compiling clock.c...
@@ -316,845 +239,96 @@ compiling GUIDRV_Template.c...
 ..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "lphys" was declared but never referenced
 compiling LCDConf_FlexColor_Template.c...
 compiling MainTask.c...
+..\STemWinLibrary522\emWinTask\MainTask.c(44): warning:  #260-D: explicit type is missing ("int" assumed)
+..\STemWinLibrary522\emWinTask\MainTask.c(45): warning:  #260-D: explicit type is missing ("int" assumed)
+..\STemWinLibrary522\emWinTask\MainTask.c(46): warning:  #260-D: explicit type is missing ("int" assumed)
+..\STemWinLibrary522\emWinTask\MainTask.c(62): warning:  #223-D: function "CreateSTARTER" declared implicitly
+..\STemWinLibrary522\emWinTask\MainTask.c(44): warning:  #177-D: variable "resetcount" was declared but never referenced
 compiling menu.c...
 compiling R_Face.c...
-..\APP\R_Face.c(334): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(369): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(374): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(386): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(390): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(464): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(493): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(628): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(656): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(715): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(715): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(736): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(736): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(757): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(757): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(778): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(778): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(799): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(799): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1778): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1792): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(273): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(308): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(313): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(325): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(329): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(403): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(432): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(567): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(595): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(654): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(654): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(675): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(675): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(717): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(717): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1722): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1736): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 compiling load_Face.c...
-compiling STARTER.c...
-compiling graph.c...
-compiling c_dc.c...
-compiling settings.c...
-compiling sysinfo.c...
-..\APP\sysinfo.c(1398): warning:  #940-D: missing return statement at end of non-void function "CFM_PASS"
-linking...
-Program Size: Code=149432 RO-data=59000 RW-data=2172 ZI-data=34532  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 58 Warning(s).
-Build target 'JK_BTSET'
-compiling TIM6.c...
-..\drive\TIM6.c(80): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(90): warning:  #223-D: function "sLCD_WR_REG" declared implicitly
-..\drive\TIM6.c(91): warning:  #223-D: function "sLCD_Read_Data" declared implicitly
-..\drive\TIM6.c(100): warning:  #223-D: function "LCD_Initializtion" declared implicitly
-..\drive\TIM6.c(101): warning:  #223-D: function "GUI_Init" declared implicitly
-..\drive\TIM6.c(104): warning:  #223-D: function "ResetPow" declared implicitly
-linking...
-Program Size: Code=149496 RO-data=59000 RW-data=2172 ZI-data=34532  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 8 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.311V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling TIM6.c...
-..\drive\TIM6.c(80): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(90): warning:  #223-D: function "sLCD_WR_REG" declared implicitly
-..\drive\TIM6.c(91): warning:  #223-D: function "sLCD_Read_Data" declared implicitly
-..\drive\TIM6.c(100): warning:  #223-D: function "LCD_Initializtion" declared implicitly
-..\drive\TIM6.c(101): warning:  #223-D: function "GUI_Init" declared implicitly
-..\drive\TIM6.c(102): warning:  #223-D: function "GUI_Clear" declared implicitly
-linking...
-Program Size: Code=149440 RO-data=59000 RW-data=2172 ZI-data=34532  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 8 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.312V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling TIM6.c...
-..\drive\TIM6.c(80): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(90): warning:  #223-D: function "sLCD_WR_REG" declared implicitly
-..\drive\TIM6.c(91): warning:  #223-D: function "sLCD_Read_Data" declared implicitly
-..\drive\TIM6.c(100): warning:  #223-D: function "LCD_Initializtion" declared implicitly
-..\drive\TIM6.c(101): warning:  #223-D: function "GUI_Init" declared implicitly
-..\drive\TIM6.c(104): warning:  #223-D: function "ResetPow" declared implicitly
-linking...
-Program Size: Code=149488 RO-data=59000 RW-data=2172 ZI-data=34532  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 8 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.324V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-***JLink Error: Could not start CPU core. (ErrorCode: -1)
-***JLink Error: Can not read register 15 (R15) while CPU is running
-**JLink Warning: CPU could not be halted
-***JLink Error: Could not read memory location 0x20000000 when trying to clear soft RAM BP
-Could not start CPU core. (ErrorCode: -1)
-***JLink Error: Can not read register 20 (CFBP) while CPU is running
-**JLink Warning: CPU could not be halted
-***JLink Error: Could not start CPU core. (ErrorCode: -1)
-***JLink Error: CPU is not halted
-***JLink Error: Can not read register 15 (R15) while CPU is running
-**JLink Warning: CPU could not be halted
-***JLink Error: Could not read memory location 0x20000000 when trying to clear soft RAM BP
-Could not start CPU core. (ErrorCode: -1)
-Programming Failed!
-***JLink Error: Could not read memory location 0x20000000 when trying to clear soft RAM BP
-Build target 'JK_BTSET'
-linking...
-Program Size: Code=149488 RO-data=59000 RW-data=2172 ZI-data=34532  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.301V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling menu.c...
-linking...
-Program Size: Code=149496 RO-data=59000 RW-data=2172 ZI-data=34532  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.312V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling menu.c...
-linking...
-Program Size: Code=149488 RO-data=59000 RW-data=2172 ZI-data=34532  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.309V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling TIM6.c...
-..\drive\TIM6.c(80): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(90): warning:  #223-D: function "sLCD_WR_REG" declared implicitly
-..\drive\TIM6.c(91): warning:  #223-D: function "sLCD_Read_Data" declared implicitly
-..\drive\TIM6.c(100): warning:  #223-D: function "LCD_Initializtion" declared implicitly
-..\drive\TIM6.c(101): warning:  #223-D: function "GUI_Init" declared implicitly
-..\drive\TIM6.c(104): warning:  #223-D: function "ResetPow" declared implicitly
-..\drive\TIM6.c(106): warning:  #223-D: function "ResetCDC" declared implicitly
-..\drive\TIM6.c(108): warning:  #223-D: function "ResetR" declared implicitly
-..\drive\TIM6.c(110): warning:  #223-D: function "ResetLoad" declared implicitly
-..\drive\TIM6.c(112): warning:  #223-D: function "ResetG" declared implicitly
-..\drive\TIM6.c(114): warning:  #223-D: function "ResetSET" declared implicitly
-compiling R_Face.c...
-..\APP\R_Face.c(334): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(369): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(374): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(386): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(390): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(464): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(493): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(628): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(656): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(715): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(715): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(736): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(736): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(757): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(757): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(778): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(778): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(799): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(799): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1783): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1797): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-compiling load_Face.c...
-compiling graph.c...
-compiling c_dc.c...
-compiling settings.c...
-linking...
-Program Size: Code=149768 RO-data=59000 RW-data=2172 ZI-data=34532  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 34 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.309V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling MainTask.c...
-..\STemWinLibrary522\emWinTask\MainTask.c(59): warning:  #223-D: function "CreateSTARTER" declared implicitly
 compiling STARTER.c...
 D:\外发资料\电池综合测试仪 2.1\APP\STARTER.c(98): warning:  #223-D: function "CreateR" declared implicitly
 compiling graph.c...
-linking...
-Program Size: Code=151040 RO-data=119660 RW-data=2196 ZI-data=34580  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 2 Warning(s).
-Build target 'JK_BTSET'
-linking...
-Program Size: Code=151040 RO-data=119660 RW-data=2196 ZI-data=34580  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.316V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling MainTask.c...
-..\STemWinLibrary522\emWinTask\MainTask.c(59): warning:  #223-D: function "CreateSTARTER" declared implicitly
-linking...
-Program Size: Code=151064 RO-data=119660 RW-data=2196 ZI-data=34580  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 1 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.314V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling TIM2.c...
-linking...
-Program Size: Code=151064 RO-data=119660 RW-data=2196 ZI-data=34580  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Build target 'JK_BTSET'
-compiling MainTask.c...
-..\STemWinLibrary522\emWinTask\MainTask.c(59): warning:  #223-D: function "CreateSTARTER" declared implicitly
-linking...
-Program Size: Code=151064 RO-data=119660 RW-data=2196 ZI-data=34580  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 1 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-Build target 'JK_BTSET'
-compiling MainTask.c...
-..\STemWinLibrary522\emWinTask\MainTask.c(59): warning:  #223-D: function "CreateSTARTER" declared implicitly
-linking...
-Program Size: Code=151040 RO-data=119660 RW-data=2196 ZI-data=34580  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 1 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.335V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling R_Face.c...
-..\APP\R_Face.c(273): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(308): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(313): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(325): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(329): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(403): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(432): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(567): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(595): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(654): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(654): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(675): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(675): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(717): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(717): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1722): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1736): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1753): error:  #147-D: declaration is incompatible with "void test_r(void)" (declared at line 23)
-Target not created
-Build target 'JK_BTSET'
-compiling R_Face.c...
-..\APP\R_Face.c(273): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(308): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(313): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(325): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(329): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(403): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(432): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(567): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(595): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(654): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(654): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(675): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(675): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(717): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(717): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1722): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1736): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-linking...
-Program Size: Code=151040 RO-data=119660 RW-data=2196 ZI-data=34580  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 21 Warning(s).
-Build target 'JK_BTSET'
-linking...
-Program Size: Code=151040 RO-data=119660 RW-data=2196 ZI-data=34580  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Build target 'JK_BTSET'
-compiling MainTask.c...
-..\STemWinLibrary522\emWinTask\MainTask.c(59): warning:  #223-D: function "CreateSTARTER" declared implicitly
-linking...
-Program Size: Code=151072 RO-data=119660 RW-data=2196 ZI-data=34580  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 1 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.340V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling MainTask.c...
-..\STemWinLibrary522\emWinTask\MainTask.c(59): warning:  #223-D: function "CreateSTARTER" declared implicitly
-linking...
-Program Size: Code=151040 RO-data=119660 RW-data=2196 ZI-data=34580  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 1 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.330V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-linking...
-Program Size: Code=151040 RO-data=119660 RW-data=2196 ZI-data=34580  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Build target 'JK_BTSET'
+compiling c_dc.c...
+compiling settings.c...
 compiling sysinfo.c...
 ..\APP\sysinfo.c(1398): warning:  #940-D: missing return statement at end of non-void function "CFM_PASS"
 linking...
-Program Size: Code=151040 RO-data=119660 RW-data=2196 ZI-data=34580  
+Program Size: Code=152232 RO-data=119660 RW-data=2196 ZI-data=34580  
 FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 1 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.283V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
+"..\Output\JK_BTSET.axf" - 0 Error(s), 70 Warning(s).
 Build target 'JK_BTSET'
-compiling modbus.c...
-linking...
-Program Size: Code=151032 RO-data=119660 RW-data=2196 ZI-data=34580  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.285V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
+compiling flash.c...
+..\drive\flash.c(389): error:  #1460: expression must have integral or fixed-point type
+..\drive\flash.c(393): error:  #1460: expression must have integral or fixed-point type
+..\drive\flash.c(397): error:  #1460: expression must have integral or fixed-point type
+..\drive\flash.c(413): error:  #1460: expression must have integral or fixed-point type
+..\drive\flash.c(417): error:  #1460: expression must have integral or fixed-point type
+..\drive\flash.c(421): error:  #1460: expression must have integral or fixed-point type
+..\drive\flash.c(515): error:  #1460: expression must have integral or fixed-point type
+..\drive\flash.c(519): error:  #1460: expression must have integral or fixed-point type
+..\drive\flash.c(523): error:  #1460: expression must have integral or fixed-point type
+..\drive\flash.c(539): error:  #1460: expression must have integral or fixed-point type
+..\drive\flash.c(543): error:  #1460: expression must have integral or fixed-point type
+..\drive\flash.c(547): error:  #1460: expression must have integral or fixed-point type
+compiling MainTask.c...
+..\STemWinLibrary522\emWinTask\MainTask.c(62): warning:  #223-D: function "CreateSTARTER" declared implicitly
+compiling R_Face.c...
+..\APP\R_Face.c(273): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(308): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(313): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(325): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(329): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(403): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(432): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(567): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(595): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(654): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(654): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(675): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(675): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(717): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(717): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1722): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1736): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+compiling c_dc.c...
+Target not created
 Build target 'JK_BTSET'
+compiling main.c...
+compiling stm32f4xx_it.c...
+compiling adc.c...
+compiling AT24C01.c...
+compiling BEEP.c...
+compiling bsp_SysTick.c...
+compiling flash.c...
+compiling GPIO.c...
+compiling IIC_24C01.c...
 compiling key.c...
 ..\drive\key.c(809): warning:  #223-D: function "SET_OP_LEFT" declared implicitly
 ..\drive\key.c(818): warning:  #223-D: function "SYS_INFO_LEFT" declared implicitly
@@ -1181,10 +355,74 @@ compiling key.c...
 ..\drive\key.c(1097): warning:  #223-D: function "CreateCDC" declared implicitly
 ..\drive\key.c(1352): warning:  #223-D: function "CreateCDC" declared implicitly
 ..\drive\key.c(1380): warning:  #223-D: function "Createsysinfo" declared implicitly
+compiling modbus.c...
+compiling ssd1963.c...
+..\drive\ssd1963.c(168): warning:  #550-D: variable "FSMC_NORSRAMTimingInitStructure" was set but never used
+compiling TIM1.c...
+compiling TIM2.c...
+compiling TIM6.c...
+..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
+..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
+..\drive\TIM6.c(83): warning:  #260-D: explicit type is missing ("int" assumed)
+..\drive\TIM6.c(95): warning:  #223-D: function "LCD_Initializtion" declared implicitly
+..\drive\TIM6.c(96): warning:  #223-D: function "GUI_Init" declared implicitly
+..\drive\TIM6.c(99): warning:  #223-D: function "ResetPow" declared implicitly
+..\drive\TIM6.c(101): warning:  #223-D: function "ResetCDC" declared implicitly
+..\drive\TIM6.c(103): warning:  #223-D: function "ResetR" declared implicitly
+..\drive\TIM6.c(105): warning:  #223-D: function "ResetLoad" declared implicitly
+..\drive\TIM6.c(107): warning:  #223-D: function "ResetG" declared implicitly
+..\drive\TIM6.c(109): warning:  #223-D: function "ResetSET" declared implicitly
+..\drive\TIM6.c(82): warning:  #177-D: variable "read1963" was declared but never referenced
+..\drive\TIM6.c(83): warning:  #177-D: variable "scancount" was declared but never referenced
+compiling usart.c...
+compiling TM1650.c...
+compiling clock.c...
+compiling GUIDRV_Template.c...
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "xPhys" was declared but never referenced
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "yPhys" was declared but never referenced
+..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "lphys" was declared but never referenced
+compiling LCDConf_FlexColor_Template.c...
+compiling MainTask.c...
+..\STemWinLibrary522\emWinTask\MainTask.c(62): warning:  #223-D: function "CreateSTARTER" declared implicitly
+compiling menu.c...
+compiling R_Face.c...
+..\APP\R_Face.c(273): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(308): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(313): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(325): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(329): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(403): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(432): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(567): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(595): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(654): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(654): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(675): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(675): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(696): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(717): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(717): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(738): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1722): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1736): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+compiling load_Face.c...
+compiling STARTER.c...
+D:\外发资料\电池综合测试仪 2.1\APP\STARTER.c(98): warning:  #223-D: function "CreateR" declared implicitly
+compiling graph.c...
+compiling c_dc.c...
+..\APP\c_dc.c(48): error:  #147: declaration is incompatible with "vu16 coff[6]" (declared at line 228 of "..\Include\my_register.h")
+compiling settings.c...
+compiling sysinfo.c...
+..\APP\sysinfo.c(1398): warning:  #940-D: missing return statement at end of non-void function "CFM_PASS"
+Target not created
+Build target 'JK_BTSET'
+compiling c_dc.c...
 linking...
-Program Size: Code=151024 RO-data=119660 RW-data=2196 ZI-data=34580  
+Program Size: Code=153708 RO-data=119660 RW-data=2196 ZI-data=34572  
 FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 25 Warning(s).
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
 Load "..\\Output\\JK_BTSET.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
@@ -1213,6 +451,181 @@ Target info:
 ------------
 Device: STM32F407VE
 VTarget = 3.283V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.253V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling c_dc.c...
+linking...
+Program Size: Code=153984 RO-data=119660 RW-data=2196 ZI-data=34572  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Build target 'JK_BTSET'
+linking...
+Program Size: Code=153984 RO-data=119660 RW-data=2196 ZI-data=34572  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.258V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling c_dc.c...
+linking...
+Program Size: Code=154144 RO-data=119660 RW-data=2196 ZI-data=34572  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.258V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling c_dc.c...
+linking...
+Program Size: Code=154156 RO-data=119660 RW-data=2196 ZI-data=34572  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.259V
 State of Pins: 
 TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6

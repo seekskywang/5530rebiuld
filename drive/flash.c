@@ -385,6 +385,18 @@ void EEPROM_READ_Coeff(void)
 	opv3=opv3<<8;
 	opv3=opv3+EEPROM_READ_Byte(0x7F);
     
+    cov1=EEPROM_READ_Byte(0x86);
+	cov1=cov1<<8;
+	cov1=cov1+EEPROM_READ_Byte(0x87);
+    
+    cov2=EEPROM_READ_Byte(0x88);
+	cov2=cov2<<8;
+	cov2=cov2+EEPROM_READ_Byte(0x89);
+    
+    cov3=EEPROM_READ_Byte(0x8A);
+	cov3=cov3<<8;
+	cov3=cov3+EEPROM_READ_Byte(0x8B);
+    
     opc1=EEPROM_READ_Byte(0x78);
 	opc1=opc1<<8;
 	opc1=opc1+EEPROM_READ_Byte(0x79);
@@ -397,9 +409,27 @@ void EEPROM_READ_Coeff(void)
 	opc3=opc3<<8;
 	opc3=opc3+EEPROM_READ_Byte(0x83);
     
+    coc1=EEPROM_READ_Byte(0x8C);
+	coc1=coc1<<8;
+	coc1=coc1+EEPROM_READ_Byte(0x8D);
+    
+    coc2=EEPROM_READ_Byte(0x8E);
+	coc2=coc2<<8;
+	coc2=coc2+EEPROM_READ_Byte(0x8F);
+    
+    coc3=EEPROM_READ_Byte(0x90);
+	coc3=coc3<<8;
+	coc3=coc3+EEPROM_READ_Byte(0x91);
+    
+    set_loop_count=EEPROM_READ_Byte(0x84);
+    
     cdc_dc=EEPROM_READ_Byte(0x7A);
 	cdc_dc=cdc_dc<<8;
 	cdc_dc=cdc_dc+EEPROM_READ_Byte(0x7B);
+    
+    set_dc_cutoff_v=EEPROM_READ_Byte(0x92);
+	set_dc_cutoff_v=set_dc_cutoff_v<<8;
+	set_dc_cutoff_v=set_dc_cutoff_v+EEPROM_READ_Byte(0x93);
     
 
 }
@@ -482,6 +512,18 @@ void Write_Limits(void)
 	EEPROM_WriteByte(0x7E, data_8bit);
 	EEPROM_WriteByte(0x7F, opv3);
     
+    data_8bit = cov1 >> 8;
+	EEPROM_WriteByte(0x86, data_8bit);
+	EEPROM_WriteByte(0x87, cov1);
+    
+    data_8bit = cov2 >> 8;
+	EEPROM_WriteByte(0x88, data_8bit);
+	EEPROM_WriteByte(0x89, cov2);
+    
+    data_8bit = cov3 >> 8;
+	EEPROM_WriteByte(0x8A, data_8bit);
+	EEPROM_WriteByte(0x8B, cov3);
+    
     data_8bit = opc1 >> 8;
 	EEPROM_WriteByte(0x78, data_8bit);
 	EEPROM_WriteByte(0x79, opc1);
@@ -494,9 +536,29 @@ void Write_Limits(void)
 	EEPROM_WriteByte(0x82, data_8bit);
 	EEPROM_WriteByte(0x83, opc3);
     
+    data_8bit = coc1 >> 8;
+	EEPROM_WriteByte(0x8C, data_8bit);
+	EEPROM_WriteByte(0x8D, coc1);
+    
+    data_8bit = coc2 >> 8;
+	EEPROM_WriteByte(0x8E, data_8bit);
+	EEPROM_WriteByte(0x8F, coc2);
+    
+    data_8bit = coc3 >> 8;
+	EEPROM_WriteByte(0x90, data_8bit);
+	EEPROM_WriteByte(0x91, coc3);
+    
+	EEPROM_WriteByte(0x84, set_loop_count);
+    
     data_8bit = cdc_dc >> 8;
 	EEPROM_WriteByte(0x7A, data_8bit);
 	EEPROM_WriteByte(0x7B, cdc_dc);
+    
+    data_8bit = set_dc_cutoff_v >> 8;
+	EEPROM_WriteByte(0x92, data_8bit);
+	EEPROM_WriteByte(0x93, set_dc_cutoff_v);
+    
+
     
 }
 void Wrtite_Beep(void)//ѣզBEEP״ׁ̬FLASHא

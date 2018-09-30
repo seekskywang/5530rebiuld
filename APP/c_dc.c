@@ -45,7 +45,7 @@ vu8 cur_step;
 vu8 coffv_step;
 vu8 coffc_step;
 vu8 charge_step;
-float coff[6];
+vu16 coff[6];
 int count_num(int data);
 extern vu8 pass;
 extern vu8 track;
@@ -188,8 +188,8 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   float dis_load_c = (float)SET_Current_Laod/100;
   float dis_output_v = (float)SET_Voltage/100;
   float dis_output_c = (float)SET_Current/1000;
-  float dis_c_cutoff_v = (float)set_c_cutoff_v/100;
-  float dis_c_cutoff_c = (float)set_c_cutoff_c/100;
+  float dis_c_cutoff_v = (float)cov1/100;
+  float dis_c_cutoff_c = (float)coc1/1000;
   float dis_dc_cutoff_v = (float)set_dc_cutoff_v/100;
   float dis_dc_cutoff_c = (float)set_dc_cutoff_c/100;
 
@@ -344,11 +344,11 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             }
             if(opv2 == 0 && opv3 == 0 && opc2 == 0 && opc3 == 0)
             {
-                if(((DISS_POW_Voltage >= cov1 && cov1 != 0) || DISS_POW_Current < coc1) && cutoff_flag == 0){//判断电流是否小于截止电流，并记录时间
+                if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0){//判断电流是否小于截止电流，并记录时间
                     cutoff_time = GUI_GetTime()/500;
                     cutoff_flag = 1;
                 }
-                if(((DISS_POW_Voltage >= cov1 && cov1 != 0) || DISS_POW_Current < coc1) && (GUI_GetTime()/500 - cutoff_time) >= 10 )//若测量电流小于截止电流
+                if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )//若测量电流小于截止电流
                 {
                     if(mode_sw == mode_pow){
                         start_time = GUI_GetTime()/500;//记录开始时间
@@ -358,17 +358,17 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
                 }
             }else if(opv3 == 0 && opc3 == 0){
-                if(((DISS_POW_Voltage >= cov1 && cov1 != 0) || DISS_POW_Current < coc1) && cutoff_flag == 0 && charge_step == 1)
+                if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
                 {//判断电流是否小于截止电流，并记录时间
                     SET_Voltage = opv2;
                     SET_Current = opc2;
                     charge_step = 2;
                 }
-                if(((DISS_POW_Voltage >= cov2 && cov2 != 0) || DISS_POW_Current < coc2) && cutoff_flag == 0 && charge_step == 2){//判断电流是否小于截止电流，并记录时间
+                if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2){//判断电流是否小于截止电流，并记录时间
                     cutoff_time = GUI_GetTime()/500;
                     cutoff_flag = 1;
                 }
-                if(((DISS_POW_Voltage >= cov2 && cov2 != 0) || DISS_POW_Current < coc2) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)//若测量电流小于截止电流
+                if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)//若测量电流小于截止电流
                 {
                     if(mode_sw == mode_pow){
                         start_time = GUI_GetTime()/500;//记录开始时间
@@ -378,23 +378,23 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                     GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
                 }
             }else if(opv1 != 0 && opv2 != 0 && opv3 != 0 && opc1 != 0&& opc2 != 0 && opc3 != 0){
-                if(((DISS_POW_Voltage >= cov1 && cov1 != 0) || DISS_POW_Current < coc1) && cutoff_flag == 0 && charge_step == 1)
+                if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
                 {//判断电流是否小于截止电流，并记录时间
                     SET_Voltage = opv2;
                     SET_Current = opc2;
                     charge_step = 2;
                 }
-                if(((DISS_POW_Voltage > cov2 && cov2 != 0) || DISS_POW_Current < coc2) && cutoff_flag == 0 && charge_step == 2)
+                if(((DISS_POW_Voltage > (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2)
                 {//判断电流是否小于截止电流，并记录时间
                     SET_Voltage = opv3;
                     SET_Current = opc3;
                     charge_step = 3;
                 }
-                if(((DISS_POW_Voltage > cov3 && cov3 != 0) || DISS_POW_Current < coc3) && cutoff_flag == 0 && charge_step == 3){//判断电流是否小于截止电流，并记录时间
+                if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) || DISS_POW_Current < (float)coc3/1000) && cutoff_flag == 0 && charge_step == 3){//判断电流是否小于截止电流，并记录时间
                     cutoff_time = GUI_GetTime()/500;
                     cutoff_flag = 1;
                 }
-                if(((DISS_POW_Voltage > cov3 && cov3 != 0) || DISS_POW_Current < coc3) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)//若测量电流小于截止电流
+                if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) || DISS_POW_Current < (float)coc3/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)//若测量电流小于截止电流
                 {
                     if(mode_sw == mode_pow){
                         start_time = GUI_GetTime()/500;//记录开始时间
@@ -1332,7 +1332,7 @@ void CDC_OP_LEFT(void)
             
             if(coffv_step == step3)
             {
-                buffer = cov2;
+                buffer = (float)cov2/100;
                 hItem = WM_GetDialogItem(hWincdc, ID_TEXT_58);
                 
                 if(lang == 0)
@@ -1348,7 +1348,7 @@ void CDC_OP_LEFT(void)
                 TEXT_SetText(hItem,buf);
                 coffv_step = step2;
             }else if(coffv_step == step2){
-                buffer = cov1;
+                buffer = (float)cov1/100;
                 hItem = WM_GetDialogItem(hWincdc, ID_TEXT_58);
                 if(lang == 0)
                 {
@@ -1369,7 +1369,7 @@ void CDC_OP_LEFT(void)
             
             if(coffc_step == step3)
             {
-                buffer = coc2;
+                buffer = (float)coc2/1000;
                 hItem = WM_GetDialogItem(hWincdc, ID_TEXT_59);
                 if(lang == 0)
                 {
@@ -1385,7 +1385,7 @@ void CDC_OP_LEFT(void)
                 TEXT_SetText(hItem,buf);
                 coffc_step = step2;
             }else if(coffc_step == step2){
-                buffer = coc1;
+                buffer = (float)coc1/1000;;
                 hItem = WM_GetDialogItem(hWincdc, ID_TEXT_59);
                 if(lang == 0)
                 {
@@ -1489,7 +1489,7 @@ void CDC_OP_RIGHT(void)
             
             if(coffv_step == step1)
             {
-                buffer = cov2;
+                buffer = (float)cov2/100;
                 hItem = WM_GetDialogItem(hWincdc, ID_TEXT_58);
                 if(lang == 0)
                 {
@@ -1504,7 +1504,7 @@ void CDC_OP_RIGHT(void)
                 TEXT_SetText(hItem,buf);
                 coffv_step = step2;
             }else if(coffv_step == step2){
-                buffer = cov3;
+                buffer = (float)cov3/100;
                 hItem = WM_GetDialogItem(hWincdc, ID_TEXT_58);
                 if(lang == 0)
                 {
@@ -1525,7 +1525,7 @@ void CDC_OP_RIGHT(void)
             
             if(coffc_step == step1)
             {
-                buffer = coc2;
+                buffer = (float)coc2/1000;
                 hItem = WM_GetDialogItem(hWincdc, ID_TEXT_59);
                 if(lang == 0)
                 {
@@ -1540,7 +1540,7 @@ void CDC_OP_RIGHT(void)
                 TEXT_SetText(hItem,buf);
                 coffc_step = step2;
             }else if(coffc_step == step2){
-                buffer = coc3;
+                buffer = (float)coc3/1000;
                 hItem = WM_GetDialogItem(hWincdc, ID_TEXT_59);
                 if(lang == 0)
                 {
@@ -1709,16 +1709,18 @@ void CDC_SET(void)
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
             
-            sprintf(buf,"%.2f",dis_c_cutoff_v);
-            TEXT_SetText(hItem,buf);
             if(coffv_step == step1)
             {
-                cov1 = dis_c_cutoff_v;
+                dis_c_cutoff_v = (float)cov1/100;
             }else if(coffv_step == step2){
-                cov2 = dis_c_cutoff_v;
+                dis_c_cutoff_v = (float)cov2/100;;
             }else if(coffv_step == step3){
-                cov3 = dis_c_cutoff_v;
+                dis_c_cutoff_v = (float)cov3/100;;
             }
+            
+            sprintf(buf,"%.2f",dis_c_cutoff_v);
+            TEXT_SetText(hItem,buf);
+            
             
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_58);
             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
@@ -1727,6 +1729,7 @@ void CDC_SET(void)
             set_sw = set_28;
             bit = 1;
             dot_flag = 0;
+            Write_Limits();
             break;
         }
         case set_29:
@@ -1756,16 +1759,18 @@ void CDC_SET(void)
             TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);//选项背景色设为透明
             TEXT_SetTextColor(hItem, GUI_WHITE);
             
-            sprintf(buf,"%.2f",dis_c_cutoff_c);
-            TEXT_SetText(hItem,buf);
             if(coffc_step == step1)
             {
-                coc1 = dis_c_cutoff_c;
+                dis_c_cutoff_c = (float)coc1/1000;
             }else if(coffc_step == step2){
-                coc2 = dis_c_cutoff_c;
+                dis_c_cutoff_c = (float)coc2/1000;
             }else if(coffc_step == step3){
-                coc3 = dis_c_cutoff_c;
-            }   
+                dis_c_cutoff_c = (float)coc3/1000;
+            } 
+            
+            sprintf(buf,"%.2f",dis_c_cutoff_c);
+            TEXT_SetText(hItem,buf);
+              
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_59);
             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
             TEXT_SetTextColor(hItem, GUI_BLACK);
@@ -1773,6 +1778,7 @@ void CDC_SET(void)
             set_sw = set_29;
             bit = 1;
             dot_flag = 0;
+            Write_Limits();
             break;
         }
         case set_35:
@@ -1812,6 +1818,7 @@ void CDC_SET(void)
             set_sw = set_35;
             bit = 1;
             dot_flag = 0;
+            Write_Limits();
             break;
         }
         case set_36:
@@ -1908,6 +1915,7 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_57);
             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
             TEXT_SetTextColor(hItem, GUI_BLACK);
+            
 
             set_sw = set_33;
             break;
@@ -1923,10 +1931,11 @@ void CDC_SET(void)
             hItem = WM_GetDialogItem(hWincdc, ID_TEXT_53);
             TEXT_SetBkColor(hItem,0x00BFFFFF);//选项背景色设为米色
             TEXT_SetTextColor(hItem, GUI_BLACK);
-
+            
             set_sw = set_37;
             bit = 1;
             dot_flag = 0;
+            Write_Limits();
             break;
         }        
         default: break;
@@ -2361,7 +2370,15 @@ void INPUT_CDC(char* num){
             switch(bit){
                 case 1:
                 {
-                    set_c_cutoff_v = atoi(num) * 100;
+                    if(coffv_step == step1)
+                    {
+                        cov1 = atoi(num) * 100;
+                    }else if(coffv_step == step2){
+                        cov2 = atoi(num) * 100;
+                    }else if(coffv_step == step3){
+                        cov3 = atoi(num) * 100;
+                    }
+//                    set_c_cutoff_v = atoi(num) * 100;
                     strcat(set_limit,num);            
                     TEXT_SetText(hItem,set_limit);
                     bit = 2;
@@ -2375,7 +2392,15 @@ void INPUT_CDC(char* num){
                     {
                         dot_flag = 1;
                     }else{
-                        set_c_cutoff_v = set_c_cutoff_v * 10 + atoi(num) * 100;
+                        if(coffv_step == step1)
+                        {
+                            cov1 = cov1 * 10 + atoi(num) * 100;
+                        }else if(coffv_step == step2){
+                            cov2 = cov2 * 10 + atoi(num) * 100;
+                        }else if(coffv_step == step3){
+                            cov3 = cov3 * 10 + atoi(num) * 100;
+                        }
+//                        cov1 = cov1 * 10 + atoi(num) * 100;
                     }
                     bit = 3;
                     break;
@@ -2390,10 +2415,26 @@ void INPUT_CDC(char* num){
                         {                            
                             dot_flag = 2;
                         }else{
-                            set_c_cutoff_v = 1600;
+                            if(coffv_step == step1)
+                            {
+                                cov1 =1600;
+                            }else if(coffv_step == step2){
+                                cov2 = 1600;
+                            }else if(coffv_step == step3){
+                                cov3 = 1600;
+                            }
+//                            set_c_cutoff_v = 1600;
                         }
                     }else{
-                        set_c_cutoff_v = set_c_cutoff_v + atoi(num) * 10;
+                            if(coffv_step == step1)
+                            {
+                                cov1 = cov1 + atoi(num) * 10;
+                            }else if(coffv_step == step2){
+                                cov2 = cov2 + atoi(num) * 10;
+                            }else if(coffv_step == step3){
+                                cov3 = cov3 + atoi(num) * 10;
+                            }
+//                        set_c_cutoff_v = set_c_cutoff_v + atoi(num) * 10;
                     }
                                        
                     bit = 4;
@@ -2405,11 +2446,35 @@ void INPUT_CDC(char* num){
                     TEXT_SetText(hItem,set_limit);
                     if(dot_flag == 0)
                     {
-                        set_c_cutoff_v = 1600;
+                        if(coffv_step == step1)
+                        {
+                            cov1 =1600;
+                        }else if(coffv_step == step2){
+                            cov2 = 1600;
+                        }else if(coffv_step == step3){
+                            cov3 = 1600;
+                        }
+//                        set_c_cutoff_v = 1600;
                     }else if(dot_flag == 2){
-                        set_c_cutoff_v = set_c_cutoff_v + atoi(num) * 10;
+                        if(coffv_step == step1)
+                        {
+                            cov1 = cov1 + atoi(num) * 10;
+                        }else if(coffv_step == step2){
+                            cov2 = cov2 + atoi(num) * 10;
+                        }else if(coffv_step == step3){
+                            cov3 = cov3 + atoi(num) * 10;
+                        }
+//                        set_c_cutoff_v = set_c_cutoff_v + atoi(num) * 10;
                     }else{
-                        set_c_cutoff_v = set_c_cutoff_v + atoi(num);
+                        if(coffv_step == step1)
+                        {
+                            cov1 = cov1 + atoi(num);
+                        }else if(coffv_step == step2){
+                            cov2 = cov2 + atoi(num);
+                        }else if(coffv_step == step3){
+                            cov3 = cov3 + atoi(num);
+                        }
+//                        set_c_cutoff_v = set_c_cutoff_v + atoi(num);
                     }
                                        
                     bit = 5;
@@ -2421,11 +2486,35 @@ void INPUT_CDC(char* num){
                     TEXT_SetText(hItem,set_limit);
                     if(dot_flag == 0)
                     {
-                        set_c_cutoff_v = 1600;
+                        if(coffv_step == step1)
+                        {
+                            cov1 =1600;
+                        }else if(coffv_step == step2){
+                            cov2 = 1600;
+                        }else if(coffv_step == step3){
+                            cov3 = 1600;
+                        }
+//                        set_c_cutoff_v = 1600;
                     }else if(dot_flag == 1){
-                        set_c_cutoff_v = set_c_cutoff_v;
+                        if(coffv_step == step1)
+                        {
+                            cov1 =cov1;
+                        }else if(coffv_step == step2){
+                            cov2 = cov2;
+                        }else if(coffv_step == step3){
+                            cov3 = cov3;
+                        }
+//                        set_c_cutoff_v = set_c_cutoff_v;
                     }else{
-                        set_c_cutoff_v = set_c_cutoff_v + atoi(num);
+                        if(coffv_step == step1)
+                        {
+                            cov1 = cov1 + atoi(num);
+                        }else if(coffv_step == step2){
+                            cov2 = cov2 + atoi(num);
+                        }else if(coffv_step == step3){
+                            cov3 = cov3 + atoi(num);
+                        }
+//                        set_c_cutoff_v = set_c_cutoff_v + atoi(num);
                     }
                                        
                     bit = 1;
@@ -2442,7 +2531,15 @@ void INPUT_CDC(char* num){
             switch(bit){
                 case 1:
                 {
-                    set_c_cutoff_c = atoi(num) * 100;
+                    if(coffc_step == step1)
+                    {
+                        coc1 = atoi(num) * 1000;
+                    }else if(coffc_step == step2){
+                        coc2 = atoi(num) * 1000;
+                    }else if(coffc_step == step3){
+                        coc3 = atoi(num) * 1000;
+                    }  
+//                    set_c_cutoff_c = atoi(num) * 100;
                     strcat(set_limit,num);            
                     TEXT_SetText(hItem,set_limit);
                     bit = 2;
@@ -2456,7 +2553,15 @@ void INPUT_CDC(char* num){
                     {
                         dot_flag = 1;
                     }else{
-                        set_c_cutoff_c = set_c_cutoff_c * 10 + atoi(num) * 100;
+                        if(coffc_step == step1)
+                        {
+                            coc1 = coc1 * 10 + atoi(num) * 1000;
+                        }else if(coffc_step == step2){
+                            coc2 = coc2 * 10 + atoi(num) * 1000;
+                        }else if(coffc_step == step3){
+                            coc3 = coc3 * 10 + atoi(num) * 1000;
+                        }
+//                        coc1 = coc1 * 10 + atoi(num) * 100;
                     }
                     bit = 3;
                     break;
@@ -2471,10 +2576,26 @@ void INPUT_CDC(char* num){
                         {                            
                             dot_flag = 2;
                         }else{
-                            set_c_cutoff_c = 500;
+                            if(coffc_step == step1)
+                            {
+                                coc1 =5000;
+                            }else if(coffc_step == step2){
+                                coc2 = 5000;
+                            }else if(coffc_step == step3){
+                                coc3 = 5000;
+                            } 
+//                            set_c_cutoff_c = 500;
                         }
                     }else{
-                        set_c_cutoff_c = set_c_cutoff_c + atoi(num) * 10;
+                        if(coffc_step == step1)
+                        {
+                            coc1 = coc1 + atoi(num) * 100;
+                        }else if(coffc_step == step2){
+                            coc2 = coc2 + atoi(num) * 100;
+                        }else if(coffc_step == step3){
+                            coc3 = coc3 + atoi(num) * 100;
+                        }
+//                        set_c_cutoff_c = set_c_cutoff_c + atoi(num) * 10;
                     }
                                        
                     bit = 4;
@@ -2486,11 +2607,35 @@ void INPUT_CDC(char* num){
                     TEXT_SetText(hItem,set_limit);
                     if(dot_flag == 0)
                     {
-                        set_c_cutoff_c = 500;
+                        if(coffc_step == step1)
+                        {
+                            coc1 =5000;
+                        }else if(coffc_step == step2){
+                            coc2 = 5000;
+                        }else if(coffc_step == step3){
+                            coc3 = 5000;
+                        } 
+//                        set_c_cutoff_c = 500;
                     }else if(dot_flag == 2){
-                        set_c_cutoff_c = set_c_cutoff_c + atoi(num) * 10;
+                        if(coffc_step == step1)
+                        {
+                            coc1 = coc1 + atoi(num) * 100;
+                        }else if(coffc_step == step2){
+                            coc2 = coc2 + atoi(num) * 100;
+                        }else if(coffc_step == step3){
+                            coc3 = coc3 + atoi(num) * 100;
+                        }
+//                        set_c_cutoff_c = set_c_cutoff_c + atoi(num) * 10;
                     }else{
-                        set_c_cutoff_c = set_c_cutoff_c + atoi(num);
+                        if(coffc_step == step1)
+                        {
+                            coc1 = coc1 + atoi(num) * 10;
+                        }else if(coffc_step == step2){
+                            coc2 = coc2 + atoi(num) * 10;
+                        }else if(coffc_step == step3){
+                            coc3 = coc3 + atoi(num) * 10;
+                        }
+//                        set_c_cutoff_c = set_c_cutoff_c + atoi(num);
                     }
                                        
                     bit = 5;
@@ -2502,11 +2647,35 @@ void INPUT_CDC(char* num){
                     TEXT_SetText(hItem,set_limit);
                     if(dot_flag == 0)
                     {
-                        set_c_cutoff_c = 500;
+                        if(coffc_step == step1)
+                        {
+                            coc1 = 5000;
+                        }else if(coffc_step == step2){
+                            coc2 = 5000;
+                        }else if(coffc_step == step3){
+                            coc3 = 5000;
+                        }
+//                        set_c_cutoff_c = 500;
                     }else if(dot_flag == 1){
-                        set_c_cutoff_c = set_c_cutoff_c;
+                        if(coffc_step == step1)
+                        {
+                            coc1 = coc1;
+                        }else if(coffc_step == step2){
+                            coc2 = coc2;
+                        }else if(coffc_step == step3){
+                            coc3 = coc3;
+                        }
+//                        set_c_cutoff_c = set_c_cutoff_c;
                     }else{
-                        set_c_cutoff_c = set_c_cutoff_c + atoi(num);
+                        if(coffc_step == step1)
+                        {
+                            coc1 = coc1 + atoi(num) * 10;
+                        }else if(coffc_step == step2){
+                            coc2 = coc2 + atoi(num) * 10;
+                        }else if(coffc_step == step3){
+                            coc3 = coc3 + atoi(num) * 10;
+                        }
+//                        set_c_cutoff_c = set_c_cutoff_c + atoi(num);
                     }
                                        
                     bit = 1;

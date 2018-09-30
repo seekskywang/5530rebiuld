@@ -48760,6 +48760,7 @@ Nextern vu8 pause_flag;
 Nextern vu8 paused;
 Nextern vu8 finish;
 Nextern vu16 restart_time;
+Nextern vu8 set_loop_count;
 N
 N
 Nextern vu16 Run_Control[43];	
@@ -48809,7 +48810,7 @@ N#define cdc_dc    					    Run_Control[41]
 N#define pow_c    					    Run_Control[42]
 N
 N
-Nextern float coff[6];
+Nextern vu16 coff[6];
 N#define cov1    					    coff[0]
 N#define cov2    					    coff[1]
 N#define cov3    					    coff[2]
@@ -49233,6 +49234,7 @@ Sextern vu8 pause_flag;
 Sextern vu8 paused;
 Sextern vu8 finish;
 Sextern vu16 restart_time;
+Sextern vu8 set_loop_count;
 S
 S
 Sextern vu16 Run_Control[43];	
@@ -49282,7 +49284,7 @@ S#define cdc_dc    					    Run_Control[41]
 S#define pow_c    					    Run_Control[42]
 S
 S
-Sextern float coff[6];
+Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
 S#define cov2    					    coff[1]
 S#define cov3    					    coff[2]
@@ -49694,6 +49696,7 @@ Sextern vu8 pause_flag;
 Sextern vu8 paused;
 Sextern vu8 finish;
 Sextern vu16 restart_time;
+Sextern vu8 set_loop_count;
 S
 S
 Sextern vu16 Run_Control[43];	
@@ -49743,7 +49746,7 @@ S#define cdc_dc    					    Run_Control[41]
 S#define pow_c    					    Run_Control[42]
 S
 S
-Sextern float coff[6];
+Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
 S#define cov2    					    coff[1]
 S#define cov3    					    coff[2]
@@ -50155,6 +50158,7 @@ Sextern vu8 pause_flag;
 Sextern vu8 paused;
 Sextern vu8 finish;
 Sextern vu16 restart_time;
+Sextern vu8 set_loop_count;
 S
 S
 Sextern vu16 Run_Control[43];	
@@ -50204,7 +50208,7 @@ S#define cdc_dc    					    Run_Control[41]
 S#define pow_c    					    Run_Control[42]
 S
 S
-Sextern float coff[6];
+Sextern vu16 coff[6];
 S#define cov1    					    coff[0]
 S#define cov2    					    coff[1]
 S#define cov3    					    coff[2]
@@ -50456,12 +50460,9 @@ N*******************************************************************************
 N*/
 Nvoid MainTask(void) 
 N{ 
-W "..\STemWinLibrary522\emWinTask\MainTask.c" 44 12 explicit type is missing ("int" assumed)
-N    static resetcount;
-W "..\STemWinLibrary522\emWinTask\MainTask.c" 45 12 explicit type is missing ("int" assumed)
-N    static read1963;
-W "..\STemWinLibrary522\emWinTask\MainTask.c" 46 12 explicit type is missing ("int" assumed)
-N    static scancount;
+N//    static int resetcount;
+N    static int read1963;
+N    static int scancount;
 N//	unsigned char  ucKeyCode;
 N	GUI_Init();
 N	WM_SetDesktopColor(GUI_BLUE);  
@@ -50556,6 +50557,5 @@ N		BEEP_Ring();//èœ‚é¸£å™¨æŽ§åˆ¶
 N		GUI_Delay(2);//GUIåˆ·æ–°
 N	}
 N  
-W "..\STemWinLibrary522\emWinTask\MainTask.c" 44 12 variable "resetcount" was declared but never referenced
 N}
 N/***************************** °²¸»À³µç×Ó www.armfly.com (END OF FILE) *********************************/

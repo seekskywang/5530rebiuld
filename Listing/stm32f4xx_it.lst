@@ -34966,6 +34966,7 @@ Nextern vu8 pause_flag;
 Nextern vu8 paused;
 Nextern vu8 finish;
 Nextern vu16 restart_time;
+Nextern vu8 set_loop_count;
 N
 N
 Nextern vu16 Run_Control[43];	
@@ -35015,7 +35016,7 @@ N#define cdc_dc    					    Run_Control[41]
 N#define pow_c    					    Run_Control[42]
 N
 N
-Nextern float coff[6];
+Nextern vu16 coff[6];
 N#define cov1    					    coff[0]
 N#define cov2    					    coff[1]
 N#define cov3    					    coff[2]
