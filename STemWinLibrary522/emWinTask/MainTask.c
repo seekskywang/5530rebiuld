@@ -82,7 +82,7 @@ void MainTask(void)
              }else{
                  resetflag = 0; 
              }
-         }
+        }
 		DAC_SetChannel1Data(DAC_Align_12b_R,Contr_Laod);//负载DAC控制
 		TIM_SetCompare1(TIM2,Contr_Current);//电源电流控制
 		TIM_SetCompare2(TIM2,Contr_Voltage);//电源电压控制

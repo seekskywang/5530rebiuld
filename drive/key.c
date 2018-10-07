@@ -72,6 +72,7 @@ vu8 clear_r = 0;
 vu8 mode_sw;
 extern vu8 admin;
 
+
 vu32 Key_Scan(void);
 void Lift_Move(void);
 void Right_Move(void);

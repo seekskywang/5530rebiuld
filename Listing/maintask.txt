@@ -83,7 +83,7 @@
 ;;;82                  }else{
 ;;;83                      resetflag = 0; 
 ;;;84                  }
-;;;85              }
+;;;85             }
 ;;;86     		DAC_SetChannel1Data(DAC_Align_12b_R,Contr_Laod);//负载DAC控制
 000068  f8dfa0e8          LDR      r10,|L1.340|
 ;;;87     		TIM_SetCompare1(TIM2,Contr_Current);//电源电流控制

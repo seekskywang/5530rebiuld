@@ -50,23 +50,15 @@ vu8 wait_flag;
 vu8 test_num = 0;
 vu8 con_flag = 0;
 vu8 short_flag = 0;
-
 vu16 short_start;
 vu16 short_time;
 vu8 short_finish = 0;
 float v;
-
 //vu16 stable_time;
 float time1;
 vu16 steptime = 1;
-
 vu8 test_finish = 0;
 int test_ftime;
-
-
-
-
-
 extern vu8 t_onoff;
 extern vu8 LOAD_t;
 extern vu8 status_flash;

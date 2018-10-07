@@ -50516,7 +50516,7 @@ N                 resetflag = 1;
 N             }else{
 N                 resetflag = 0; 
 N             }
-N         }
+N        }
 N		DAC_SetChannel1Data(DAC_Align_12b_R,Contr_Laod);//负载DAC控制
 X		DAC_SetChannel1Data(((uint32_t)0x00000000),Contr_Laod);
 N		TIM_SetCompare1(TIM2,Contr_Current);//电源电流控制
