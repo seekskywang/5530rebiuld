@@ -71,7 +71,7 @@ float clear_lv = 0;
 vu8 clear_r = 0;
 vu8 mode_sw;
 extern vu8 admin;
-
+extern vu8 cal;
 
 vu32 Key_Scan(void);
 void Lift_Move(void);
@@ -244,6 +244,10 @@ void Key_Funtion(void)
                         if(admin == 1)
                         {
                             INPUT_INFO(1);    
+                        }else if(cal == 1){
+                            Rlow_cal(1);
+                        }else{
+                            pass += 1;
                         }
                         KeyCounter = 0;
                         BEEP_Tiggr();//触发蜂鸣器
@@ -298,6 +302,10 @@ void Key_Funtion(void)
                         if(admin == 1)
                         {
                             INPUT_INFO(2);    
+                        }else if(cal == 1){
+                            Rlow_cal(2);
+                        }else{
+                            pass += 2;
                         }
                         KeyCounter = 0;
                         BEEP_Tiggr();//触发蜂鸣器
@@ -409,6 +417,8 @@ void Key_Funtion(void)
                         if(admin == 1)
                         {
                             INPUT_INFO(4);    
+                        }else{
+                            pass += 4;
                         }
                         KeyCounter = 0;
                         BEEP_Tiggr();//触发蜂鸣器

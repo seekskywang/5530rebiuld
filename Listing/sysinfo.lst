@@ -48562,7 +48562,7 @@ Nvoid INPUT_CDC(char* num);
 Nvoid INPUT_C(char* num);  
 Nvoid INPUT_LOAD(char* num);  
 Nvoid INPUT_INFO(vu8 num);  
-N
+Nvoid Rlow_cal(u8 step);
 N
 N//=============================================================================
 N#define NOP   __nop();	  //��ָ��
@@ -49003,7 +49003,7 @@ Svoid INPUT_CDC(char* num);
 Svoid INPUT_C(char* num);  
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
-S
+Svoid Rlow_cal(u8 step);
 S
 S//=============================================================================
 S#define NOP   __nop();	  //��ָ��
@@ -51430,7 +51430,7 @@ Svoid INPUT_CDC(char* num);
 Svoid INPUT_C(char* num);  
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
-S
+Svoid Rlow_cal(u8 step);
 S
 S//=============================================================================
 S#define NOP   __nop();	  //��ָ��
@@ -52416,6 +52416,17 @@ N/******************* (C) COPYRIGHT 2015 AVER *****END OF FILE******************
 N
 L 19 "..\APP\sysinfo.c" 2
 N
+Nextern struct bitDefine
+N{
+N	unsigned bit0: 1;
+N	unsigned bit1: 1;
+N	unsigned bit2: 1;
+N	unsigned bit3: 1;
+N	unsigned bit4: 1;
+N	unsigned bit5: 1;
+N	unsigned bit6: 1;
+N	unsigned bit7: 1;
+N} flagA,flagB,flagC,flagD,flagE,flagG;
 N
 N
 NWM_HWIN hWinsysinfo;
@@ -52441,8 +52452,15 @@ Nvu8 code5 = 0;
 Nvu8 code6 = 0;
 Nvu8 code7 = 0;
 Nvu8 code8 = 0;
+Nvu8 cal = 0;
 Nextern vu8 pass;
-N
+Nextern vu16 Modify_A_READ;
+Nextern vu16 Modify_C_READ;
+Nextern vu16 Modify_A_ACT;
+N	
+Nextern vu16 Modify_B_READ;
+Nextern vu16 Modify_D_READ;
+Nextern vu16 Modify_B_ACT;
 N
 N/*********************************************************************
 N*
@@ -52467,6 +52485,7 @@ N#define ID_TEXT_111    	(GUI_ID_USER + 0x306)
 N#define ID_TEXT_112    	(GUI_ID_USER + 0x307)
 N#define ID_TEXT_113    	(GUI_ID_USER + 0x308)
 N#define ID_TEXT_114    	(GUI_ID_USER + 0x309)
+N#define ID_TEXT_123    	(GUI_ID_USER + 0x312)
 N
 N#define ID_TimerTime7    8
 N// USER START (Optionally insert additional defines)
@@ -52521,6 +52540,8 @@ N  { TEXT_CreateIndirect, "Text", ID_TEXT_113, 180, 150, 12, 20, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x308), 180, 150, 12, 20, 0, 0x0, 0 },
 N  { TEXT_CreateIndirect, "Text", ID_TEXT_114, 192, 150, 12, 20, 0, 0x0, 0 },
 X  { TEXT_CreateIndirect, "Text", (0x800 + 0x309), 192, 150, 12, 20, 0, 0x0, 0 },
+N  { TEXT_CreateIndirect, "Text", ID_TEXT_123, 192, 200, 80, 20, 0, 0x0, 0 },
+X  { TEXT_CreateIndirect, "Text", (0x800 + 0x312), 192, 200, 80, 20, 0, 0x0, 0 },
 N  // USER START (Optionally insert additional widgets)
 N  // USER END
 N};
@@ -52619,12 +52640,32 @@ N	{
 N        if(pass == 14)
 N        {
 N            admin = 1;
+N        }else if(pass == 10){
+N            cal = 1;
 N        }else{
 N            admin = 0;
+N            cal = 0;
 N        }
-N		WM_RestartTimer(pMsg->Data.v,500);//شλ֨ʱǷ˽ֵԽճˢтʱݤԽ׌
 N        
-N        
+N        if(cal ==  1)
+N        {
+N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_123);
+X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x312));
+N            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+X            TEXT_SetTextColor(hItem, 0x00FFFFFF);
+N            sprintf(buf,"%4d",R_VLUE);
+X            sprintf(buf,"%4d",Run_Control[13]);
+N            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+N            GUI_UC_SetEncodeUTF8();        
+N            TEXT_SetText(hItem,buf);
+N        }else{
+N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_123);
+X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x312));
+N            TEXT_SetText(hItem, "");
+N            TEXT_SetTextColor(hItem, GUI_INVALID_COLOR);
+X            TEXT_SetTextColor(hItem, 0xFFFFFFF);
+N        }
+N		WM_RestartTimer(pMsg->Data.v,500);//شλ֨ʱǷ˽ֵԽճˢтʱݤԽ׌                
 N	}
 N	break;
 N    
@@ -54281,5 +54322,68 @@ N        TEXT_SetTextColor(hItem, 0x00BFFFFF);
 N        info_set = set_48;
 X        info_set = 47;
 N    }
-W "..\APP\sysinfo.c" 1398 1 missing return statement at end of non-void function "CFM_PASS"
+W "..\APP\sysinfo.c" 1433 1 missing return statement at end of non-void function "CFM_PASS"
+N}
+N
+Nvoid Rlow_cal(u8 step)
+N{
+N    if(step == 1)
+N    {
+N        Modify_A_READ = Rmon_value;//测量电压值
+N		Modify_A_ACT = 0x0A;//读取低段
+N    }else if(step == 2){
+N        vu16 var16;
+N        vu32 var32a;
+N        vu32 var32b;
+N        
+N        vu16 var16a;
+N        vu32 var32c;
+N        vu32 var32d;
+N        Modify_B_READ =Rmon_value;//测量电压值
+N        flag_OverV=1;
+X        (flagG . bit1)=1;
+N        Modify_B_ACT = 0x64;//读取高段
+N        if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
+X        if((flagG . bit1)==1)
+N        {
+N            var32a = Modify_B_ACT;
+N            var32a = var32a - Modify_A_ACT;
+N            var32a = var32a << 12;
+N            var16 = Modify_B_READ - Modify_A_READ;
+N            var32a = var32a / var16;
+N            REG_CorrectionR = var32a;
+X            Correct_Parametet[3] = var32a;
+N            var32a=0;
+N            var32a = Modify_B_ACT;
+N            var32a = var32a << 12;
+N            var32b = Modify_B_READ;
+N            var32b = var32b * REG_CorrectionR;
+X            var32b = var32b * Correct_Parametet[3];
+N            if (var32a < var32b)
+N            {
+N                var32b = var32b - var32a;
+N                REG_ReadR_Offset = var32b;
+X                Correct_Strong[3] = var32b;
+N                Polar3 |= 0x01;
+X                Correct_Parametet[11] |= 0x01;
+N            }
+N            else 
+N            {
+N                var32a = var32a - var32b;
+N                REG_ReadR_Offset = var32a;
+X                Correct_Strong[3] = var32a;
+N                Polar3 &= ~0x01;
+X                Correct_Parametet[11] &= ~0x01;
+N            }
+N//---------------------------------------------------------------------------------------//
+W "..\APP\sysinfo.c" 1478 13 function "Flash_Write_all" declared implicitly
+N            Flash_Write_all();	//参数写进FLASH
+N            flag_OverV=0;
+X            (flagG . bit1)=0;
+N            Flag_DAC_OFF=0;
+X            (flagB . bit3)=0;
+N        }
+N        flag_ADJ_VH=0;//清掉标志位防止一直进入
+X        (flagF . bit3)=0;
+N    }
 N}

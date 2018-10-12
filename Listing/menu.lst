@@ -48560,7 +48560,7 @@ Nvoid INPUT_CDC(char* num);
 Nvoid INPUT_C(char* num);  
 Nvoid INPUT_LOAD(char* num);  
 Nvoid INPUT_INFO(vu8 num);  
-N
+Nvoid Rlow_cal(u8 step);
 N
 N//=============================================================================
 N#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -49001,7 +49001,7 @@ Svoid INPUT_CDC(char* num);
 Svoid INPUT_C(char* num);  
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
-S
+Svoid Rlow_cal(u8 step);
 S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -51428,7 +51428,7 @@ Svoid INPUT_CDC(char* num);
 Svoid INPUT_C(char* num);  
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
-S
+Svoid Rlow_cal(u8 step);
 S
 S//=============================================================================
 S#define NOP   __nop();	  //ø’÷∏¡Ó

@@ -17,6 +17,17 @@
 #include "string.h"
 #include "beep.h"
 
+extern struct bitDefine
+{
+	unsigned bit0: 1;
+	unsigned bit1: 1;
+	unsigned bit2: 1;
+	unsigned bit3: 1;
+	unsigned bit4: 1;
+	unsigned bit5: 1;
+	unsigned bit6: 1;
+	unsigned bit7: 1;
+} flagA,flagB,flagC,flagD,flagE,flagG;
 
 
 WM_HWIN hWinsysinfo;
@@ -39,8 +50,15 @@ vu8 code5 = 0;
 vu8 code6 = 0;
 vu8 code7 = 0;
 vu8 code8 = 0;
+vu8 cal = 0;
 extern vu8 pass;
-
+extern vu16 Modify_A_READ;
+extern vu16 Modify_C_READ;
+extern vu16 Modify_A_ACT;
+	
+extern vu16 Modify_B_READ;
+extern vu16 Modify_D_READ;
+extern vu16 Modify_B_ACT;
 
 /*********************************************************************
 *
@@ -65,6 +83,7 @@ extern vu8 pass;
 #define ID_TEXT_112    	(GUI_ID_USER + 0x307)
 #define ID_TEXT_113    	(GUI_ID_USER + 0x308)
 #define ID_TEXT_114    	(GUI_ID_USER + 0x309)
+#define ID_TEXT_123    	(GUI_ID_USER + 0x312)
 
 #define ID_TimerTime7    8
 // USER START (Optionally insert additional defines)
@@ -102,6 +121,7 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate7[] = {
   { TEXT_CreateIndirect, "Text", ID_TEXT_112, 276, 150, 12, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_113, 180, 150, 12, 20, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "Text", ID_TEXT_114, 192, 150, 12, 20, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, "Text", ID_TEXT_123, 192, 200, 80, 20, 0, 0x0, 0 },
   // USER START (Optionally insert additional widgets)
   // USER END
 };
@@ -187,12 +207,27 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         if(pass == 14)
         {
             admin = 1;
+        }else if(pass == 10){
+            cal = 1;
         }else{
             admin = 0;
+            cal = 0;
         }
-		WM_RestartTimer(pMsg->Data.v,500);//شλ֨ʱǷ˽ֵԽճˢтʱݤԽ׌
         
-        
+        if(cal ==  1)
+        {
+            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_123);
+            TEXT_SetTextColor(hItem, GUI_WHITE);//设置字体颜色
+            sprintf(buf,"%4d",R_VLUE);
+            TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体
+            GUI_UC_SetEncodeUTF8();        
+            TEXT_SetText(hItem,buf);
+        }else{
+            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_123);
+            TEXT_SetText(hItem, "");
+            TEXT_SetTextColor(hItem, GUI_INVALID_COLOR);
+        }
+		WM_RestartTimer(pMsg->Data.v,500);//شλ֨ʱǷ˽ֵԽճˢтʱݤԽ׌                
 	}
 	break;
     
@@ -1394,5 +1429,56 @@ WM_HWIN CFM_PASS(void){
         TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
         TEXT_SetTextColor(hItem, 0x00BFFFFF);
         info_set = set_48;
+    }
+}
+
+void Rlow_cal(u8 step)
+{
+    if(step == 1)
+    {
+        Modify_A_READ = Rmon_value;//测量电压值
+		Modify_A_ACT = 0x0A;//读取低段
+    }else if(step == 2){
+        vu16 var16;
+        vu32 var32a;
+        vu32 var32b;
+        
+        vu16 var16a;
+        vu32 var32c;
+        vu32 var32d;
+        Modify_B_READ =Rmon_value;//测量电压值
+        flag_OverV=1;
+        Modify_B_ACT = 0x64;//读取高段
+        if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
+        {
+            var32a = Modify_B_ACT;
+            var32a = var32a - Modify_A_ACT;
+            var32a = var32a << 12;
+            var16 = Modify_B_READ - Modify_A_READ;
+            var32a = var32a / var16;
+            REG_CorrectionR = var32a;
+            var32a=0;
+            var32a = Modify_B_ACT;
+            var32a = var32a << 12;
+            var32b = Modify_B_READ;
+            var32b = var32b * REG_CorrectionR;
+            if (var32a < var32b)
+            {
+                var32b = var32b - var32a;
+                REG_ReadR_Offset = var32b;
+                Polar3 |= 0x01;
+            }
+            else 
+            {
+                var32a = var32a - var32b;
+                REG_ReadR_Offset = var32a;
+                Polar3 &= ~0x01;
+            }
+//---------------------------------------------------------------------------------------//
+            Flash_Write_all();	//参数写进FLASH
+            flag_OverV=0;
+            Flag_DAC_OFF=0;
+        }
+        flag_ADJ_VH=0;//清掉标志位防止一直进入
     }
 }

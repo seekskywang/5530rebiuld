@@ -2235,7 +2235,10 @@ void PARA_SET(void) {
                         
                             hItem = WM_GetDialogItem(hWinset, ID_TEXT_121);
                             TEXT_SetText(hItem,"");
-                            
+                            if(b_type > 5)
+                            {
+                                b_type = 1;
+                            }
                             switch(b_type)
                             {
                                 case Lion:

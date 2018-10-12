@@ -138,6 +138,59 @@ void UART_Action(void)
 		}
 	}
 //===================================================================================
+    if (((UART_Buffer_Rece[0] == 0x01)&&(UART_Buffer_Rece[2] == 0xA5))||(flag_ADJ_ON==1))			   //电压校准
+	{
+        /*************************************内阻校准**************************************************************************/
+		if(UART_Buffer_Rece[1] == 0x07||flag_ADJ_VL==1)
+		{
+			Modify_A_READ = Rmon_value;//测量电压值
+			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//读取低段
+		}
+		if (UART_Buffer_Rece[1] == 0x08||flag_ADJ_VH==1)			   //电压测量校准完成
+		{
+			vu16 var16;
+			vu32 var32a;
+			vu32 var32b;
+			
+			vu16 var16a;
+			vu32 var32c;
+			vu32 var32d;
+			Modify_B_READ =Rmon_value;//测量电压值
+			flag_OverV=1;
+			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//读取高段
+			if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
+			{
+				var32a = Modify_B_ACT;
+				var32a = var32a - Modify_A_ACT;
+				var32a = var32a << 12;
+				var16 = Modify_B_READ - Modify_A_READ;
+				var32a = var32a / var16;
+				REG_CorrectionR = var32a;
+				var32a=0;
+				var32a = Modify_B_ACT;
+				var32a = var32a << 12;
+				var32b = Modify_B_READ;
+				var32b = var32b * REG_CorrectionR;
+				if (var32a < var32b)
+				{
+					var32b = var32b - var32a;
+					REG_ReadR_Offset = var32b;
+					Polar3 |= 0x01;
+				}
+				else 
+				{
+					var32a = var32a - var32b;
+					REG_ReadR_Offset = var32a;
+					Polar3 &= ~0x01;
+				}
+	//---------------------------------------------------------------------------------------//
+				Flash_Write_all();	//参数写进FLASH
+				flag_OverV=0;
+				Flag_DAC_OFF=0;
+			}
+			flag_ADJ_VH=0;//清掉标志位防止一直进入
+		}		
+    }
 }
 //===============================AD值转换成测量值============================================//
 void Transformation_ADC(void)  
@@ -181,23 +234,39 @@ void Transformation_ADC(void)
 	DISS_POW_Voltage=DISS_POW_Voltage/100;//计算显示电压
 	var32 = 0;
 /*****************************内阻值转换*******************************************/
-	var32 = Rmon_value;
-	var32 = var32 * 5844;  
-// 	if ((Polar1 & 0x04) == 0x04)		  
-// 	{
-		if (var32 < 28571) 
+// 	var32 = Rmon_value;
+// 	var32 = var32 * 6040;  
+// // 	if ((Polar1 & 0x04) == 0x04)		  
+// // 	{
+// 		if (var32 < 38926) 
+// 		{
+// 			var32 = 0;
+// 		}
+// 		else {
+//             var32 = var32 - 38926;
+//         }
+// // 	}
+// // 	else var32 = var32 + REG_ReadR_Offset;
+// // 	var32 = var32 >> 12;
+// 	if (var32 < 5) var32 = 0;				  //40mV以下清零
+// 	R_VLUE = var32/10000;
+// 	var32 = 0;	
+    var32 = Rmon_value;
+	var32 = var32 * REG_CorrectionR;  
+	if ((Polar1 & 0x04) == 0x04)		  
+	{
+		if (var32 < REG_ReadR_Offset) 
 		{
 			var32 = 0;
 		}
-		else {
-            var32 = var32 - 28571;
-        }
-// 	}
-// 	else var32 = var32 + REG_ReadR_Offset;
-// 	var32 = var32 >> 12;
+		else var32 = var32 - REG_ReadR_Offset;
+	}
+	else var32 = var32 + REG_ReadR_Offset;
+	var32 = var32 >> 12;
 	if (var32 < 5) var32 = 0;				  //40mV以下清零
-	R_VLUE = var32/10000;
+	R_VLUE = var32;
 	var32 = 0;	
+    
 /*****************************稳压电源测量电流转换*******************************************/
 	var32 = Imon_value;
 	var32 = var32 * CON_CorrectionA;	   

@@ -34726,7 +34726,7 @@ Nvoid INPUT_CDC(char* num);
 Nvoid INPUT_C(char* num);  
 Nvoid INPUT_LOAD(char* num);  
 Nvoid INPUT_INFO(vu8 num);  
-N
+Nvoid Rlow_cal(u8 step);
 N
 N//=============================================================================
 N#define NOP   __nop();	  //空指令
@@ -35215,7 +35215,7 @@ Svoid INPUT_CDC(char* num);
 Svoid INPUT_C(char* num);  
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
-S
+Svoid Rlow_cal(u8 step);
 S
 S//=============================================================================
 S#define NOP   __nop();	  //空指令
@@ -35783,6 +35783,73 @@ N			}
 N		}
 N	}
 N//===================================================================================
+N    if (((UART_Buffer_Rece[0] == 0x01)&&(UART_Buffer_Rece[2] == 0xA5))||(flag_ADJ_ON==1))			   //电压校准
+X    if (((UART_Buffer_Rece[0] == 0x01)&&(UART_Buffer_Rece[2] == 0xA5))||((flagF . bit1)==1))			   
+N	{
+N        /*************************************内阻校准**************************************************************************/
+N		if(UART_Buffer_Rece[1] == 0x07||flag_ADJ_VL==1)
+X		if(UART_Buffer_Rece[1] == 0x07||(flagF . bit2)==1)
+N		{
+N			Modify_A_READ = Rmon_value;//测量电压值
+N			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//读取低段
+N		}
+N		if (UART_Buffer_Rece[1] == 0x08||flag_ADJ_VH==1)			   //电压测量校准完成
+X		if (UART_Buffer_Rece[1] == 0x08||(flagF . bit3)==1)			   
+N		{
+N			vu16 var16;
+N			vu32 var32a;
+N			vu32 var32b;
+N			
+N			vu16 var16a;
+N			vu32 var32c;
+N			vu32 var32d;
+N			Modify_B_READ =Rmon_value;//测量电压值
+N			flag_OverV=1;
+X			(flagG . bit1)=1;
+N			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//读取高段
+N			if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
+X			if((flagG . bit1)==1)
+N			{
+N				var32a = Modify_B_ACT;
+N				var32a = var32a - Modify_A_ACT;
+N				var32a = var32a << 12;
+N				var16 = Modify_B_READ - Modify_A_READ;
+N				var32a = var32a / var16;
+N				REG_CorrectionR = var32a;
+X				Correct_Parametet[3] = var32a;
+N				var32a=0;
+N				var32a = Modify_B_ACT;
+N				var32a = var32a << 12;
+N				var32b = Modify_B_READ;
+N				var32b = var32b * REG_CorrectionR;
+X				var32b = var32b * Correct_Parametet[3];
+N				if (var32a < var32b)
+N				{
+N					var32b = var32b - var32a;
+N					REG_ReadR_Offset = var32b;
+X					Correct_Strong[3] = var32b;
+N					Polar3 |= 0x01;
+X					Correct_Parametet[11] |= 0x01;
+N				}
+N				else 
+N				{
+N					var32a = var32a - var32b;
+N					REG_ReadR_Offset = var32a;
+X					Correct_Strong[3] = var32a;
+N					Polar3 &= ~0x01;
+X					Correct_Parametet[11] &= ~0x01;
+N				}
+N	//---------------------------------------------------------------------------------------//
+N				Flash_Write_all();	//参数写进FLASH
+N				flag_OverV=0;
+X				(flagG . bit1)=0;
+N				Flag_DAC_OFF=0;
+X				(flagB . bit3)=0;
+N			}
+N			flag_ADJ_VH=0;//清掉标志位防止一直进入
+X			(flagF . bit3)=0;
+N		}		
+N    }
 N}
 N//===============================AD值转换成测量值============================================//
 Nvoid Transformation_ADC(void)  
@@ -35840,24 +35907,45 @@ X	DISS_POW_Voltage=Run_Control[9];
 N	DISS_POW_Voltage=DISS_POW_Voltage/100;//计算显示电压
 N	var32 = 0;
 N/*****************************内阻值转换*******************************************/
-N	var32 = Rmon_value;
-N	var32 = var32 * 5844;  
-N// 	if ((Polar1 & 0x04) == 0x04)		  
-N// 	{
-N		if (var32 < 28571) 
+N// 	var32 = Rmon_value;
+N// 	var32 = var32 * 6040;  
+N// // 	if ((Polar1 & 0x04) == 0x04)		  
+N// // 	{
+N// 		if (var32 < 38926) 
+N// 		{
+N// 			var32 = 0;
+N// 		}
+N// 		else {
+N//             var32 = var32 - 38926;
+N//         }
+N// // 	}
+N// // 	else var32 = var32 + REG_ReadR_Offset;
+N// // 	var32 = var32 >> 12;
+N// 	if (var32 < 5) var32 = 0;				  //40mV以下清零
+N// 	R_VLUE = var32/10000;
+N// 	var32 = 0;	
+N    var32 = Rmon_value;
+N	var32 = var32 * REG_CorrectionR;  
+X	var32 = var32 * Correct_Parametet[3];  
+N	if ((Polar1 & 0x04) == 0x04)		  
+X	if ((Correct_Parametet[9] & 0x04) == 0x04)		  
+N	{
+N		if (var32 < REG_ReadR_Offset) 
+X		if (var32 < Correct_Strong[3]) 
 N		{
 N			var32 = 0;
 N		}
-N		else {
-N            var32 = var32 - 28571;
-N        }
-N// 	}
-N// 	else var32 = var32 + REG_ReadR_Offset;
-N// 	var32 = var32 >> 12;
+N		else var32 = var32 - REG_ReadR_Offset;
+X		else var32 = var32 - Correct_Strong[3];
+N	}
+N	else var32 = var32 + REG_ReadR_Offset;
+X	else var32 = var32 + Correct_Strong[3];
+N	var32 = var32 >> 12;
 N	if (var32 < 5) var32 = 0;				  //40mV以下清零
-N	R_VLUE = var32/10000;
-X	Run_Control[13] = var32/10000;
+N	R_VLUE = var32;
+X	Run_Control[13] = var32;
 N	var32 = 0;	
+N    
 N/*****************************稳压电源测量电流转换*******************************************/
 N	var32 = Imon_value;
 N	var32 = var32 * CON_CorrectionA;	   

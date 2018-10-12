@@ -25,7 +25,7 @@ void INPUT_CDC(char* num);
 void INPUT_C(char* num);  
 void INPUT_LOAD(char* num);  
 void INPUT_INFO(vu8 num);  
-
+void Rlow_cal(u8 step);
 
 //=============================================================================
 #define NOP   __nop();	  //ø’÷∏¡Ó
