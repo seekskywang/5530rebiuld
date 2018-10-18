@@ -229,14 +229,14 @@
 ;;;208                case face_r:
 ;;;209                {                               
 ;;;210                    if(oct_sw == oct_on && para_set2 == set_2_on)
-;;;211                        {
-;;;212                            count1ms ++;
-;;;213                            if(count1ms == steptime)
-;;;214                            {
-;;;215                                OC_ADD();
-;;;216                                count1ms = 0;
-;;;217                            }
-;;;218                        }  
+;;;211                    {
+;;;212                        count1ms ++;
+;;;213                        if(count1ms == steptime)
+;;;214                        {
+;;;215                            OC_ADD();
+;;;216                            count1ms = 0;
+;;;217                        }
+;;;218                    }
 ;;;219                }break;
 ;;;220            }
 ;;;221        }    

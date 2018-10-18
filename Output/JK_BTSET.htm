@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\Output\JK_BTSET.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\Output\JK_BTSET.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Fri Oct 12 10:36:12 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Thu Oct 18 12:48:39 2018
 <BR><P>
 <H3>Maximum Stack Usage =        688 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -463,8 +463,8 @@ Global Symbols
 <P><STRONG><a name="[4b3]"></a>__rt_lib_shutdown_user_alloc_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, libshutdown2.o(.ARM.Collect$$libshutdown$$0000000B))
 
 <P><STRONG><a name="[160]"></a>__rt_entry</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry.o(.ARM.Collect$$rtentry$$00000000))
-<BR><BR>[Called By]<UL><LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
-<LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_rt2
+<BR><BR>[Called By]<UL><LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_rt2
+<LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
 </UL>
 
 <P><STRONG><a name="[4b4]"></a>__rt_entry_presh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rtentry2.o(.ARM.Collect$$rtentry$$00000002))
@@ -1531,10 +1531,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[328]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
 </UL>
 
-<P><STRONG><a name="[1ef]"></a>CreateWindow2</STRONG> (Thumb, 76 bytes, Stack size 16 bytes, load_face.o(i.CreateWindow2))
+<P><STRONG><a name="[1ef]"></a>CreateWindow2</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, load_face.o(i.CreateWindow2))
 <BR><BR>[Stack]<UL><LI>Max Depth = 232<LI>Call Chain = CreateWindow2 &rArr; GUI_CreateDialogBox &rArr; WM_ShowWindow &rArr; WM_InvalidateWindowAndDescs &rArr;  WM_InvalidateWindowAndDescs (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+<BR>[Calls]<UL><LI><a href="#[1b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
+<LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
 <LI><a href="#[1e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM1650_SET_LED
 <LI><a href="#[1e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_GetDesktopWindow
 <LI><a href="#[1e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_CreateDialogBox
@@ -1994,6 +1995,7 @@ Global Symbols
 <LI><a href="#[319]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIc_ReadByte
 <LI><a href="#[36e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OC_ADD
 <LI><a href="#[36d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Temp_Comapre
+<LI><a href="#[1ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateWindow2
 <LI><a href="#[33c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Mode_SW_CONT
 <LI><a href="#[328]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
@@ -5551,8 +5553,8 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[3bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_NVIC_Config
 </UL>
 
-<P><STRONG><a name="[36e]"></a>OC_ADD</STRONG> (Thumb, 396 bytes, Stack size 72 bytes, r_face.o(i.OC_ADD))
-<BR><BR>[Stack]<UL><LI>Max Depth = 256 + Unknown Stack Size
+<P><STRONG><a name="[36e]"></a>OC_ADD</STRONG> (Thumb, 342 bytes, Stack size 64 bytes, r_face.o(i.OC_ADD))
+<BR><BR>[Stack]<UL><LI>Max Depth = 248 + Unknown Stack Size
 <LI>Call Chain = OC_ADD &rArr; TEXT_SetText &rArr; WM_InvalidateWindow &rArr; WM_InvalidateRect &rArr; WM__InvalidateRectEx &rArr; WM__InvalidateRect &rArr;  WM__InvalidateRect (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
@@ -6804,8 +6806,8 @@ Global Symbols
 <LI> load_face.o(.constdata)
 <LI> settings.o(.constdata)
 <LI> sysinfo.o(.constdata)
-<LI> c_dc.o(.constdata)
 <LI> starter.o(.constdata)
+<LI> c_dc.o(.constdata)
 </UL>
 <P><STRONG><a name="[3dc]"></a>WINDOW_CreateUser</STRONG> (Thumb, 80 bytes, Stack size 40 bytes, window.o(i.WINDOW_CreateUser))
 <BR><BR>[Stack]<UL><LI>Max Depth = 272<LI>Call Chain = WINDOW_CreateUser &rArr; WM_CreateWindowAsChild &rArr; WM_BringToBottom &rArr; WM__InvalidateRectEx &rArr; WM__InvalidateRect &rArr;  WM__InvalidateRect (Cycle)
@@ -8870,7 +8872,7 @@ Local Symbols
 <BR>[Address Reference Count : 2]<UL><LI> graph.o(i.CreateG)
 <LI> graph.o(i.ResetG)
 </UL>
-<P><STRONG><a name="[8e]"></a>_cbDialog</STRONG> (Thumb, 6426 bytes, Stack size 88 bytes, c_dc.o(i._cbDialog))
+<P><STRONG><a name="[8e]"></a>_cbDialog</STRONG> (Thumb, 7432 bytes, Stack size 88 bytes, c_dc.o(i._cbDialog))
 <BR><BR>[Stack]<UL><LI>Max Depth = 288 + Unknown Stack Size
 <LI>Call Chain = _cbDialog &rArr; WM_CreateTimer &rArr; GUI_TIMER_Create &rArr; GUI_ALLOC_AllocZero &rArr; GUI_ALLOC_AllocNoInit &rArr; _Alloc &rArr; _InitOnce &rArr; _EnlargeBlocks &rArr;  _Alloc (Cycle)
 </UL>

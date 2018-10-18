@@ -490,6 +490,7 @@ WM_HWIN CreateWindow2(void) {
   pass = 0;
   TM1650_SET_LED(0x68,0x70);
   GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
+  GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
   load_wind = GUI_CreateDialogBox(_aDialogCreate2, GUI_COUNTOF(_aDialogCreate2), _cbDialog2, WM_HBKWIN, 0, 0);
   return load_wind;
 }

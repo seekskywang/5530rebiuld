@@ -48563,6 +48563,7 @@ Nvoid INPUT_C(char* num);
 Nvoid INPUT_LOAD(char* num);  
 Nvoid INPUT_INFO(vu8 num);  
 Nvoid Rlow_cal(u8 step);
+Nvoid short_test(void);
 N
 N//=============================================================================
 N#define NOP   __nop();	  //��ָ��
@@ -48713,6 +48714,7 @@ Nextern vu8 paused;
 Nextern vu8 finish;
 Nextern vu16 restart_time;
 Nextern vu8 set_loop_count;
+Nextern vu8 short_flag;
 N
 N
 Nextern vu16 Run_Control[43];	
@@ -49004,6 +49006,7 @@ Svoid INPUT_C(char* num);
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
 Svoid Rlow_cal(u8 step);
+Svoid short_test(void);
 S
 S//=============================================================================
 S#define NOP   __nop();	  //��ָ��
@@ -49154,6 +49157,7 @@ Sextern vu8 paused;
 Sextern vu8 finish;
 Sextern vu16 restart_time;
 Sextern vu8 set_loop_count;
+Sextern vu8 short_flag;
 S
 S
 Sextern vu16 Run_Control[43];	
@@ -51431,6 +51435,7 @@ Svoid INPUT_C(char* num);
 Svoid INPUT_LOAD(char* num);  
 Svoid INPUT_INFO(vu8 num);  
 Svoid Rlow_cal(u8 step);
+Svoid short_test(void);
 S
 S//=============================================================================
 S#define NOP   __nop();	  //��ָ��
@@ -51581,6 +51586,7 @@ Sextern vu8 paused;
 Sextern vu8 finish;
 Sextern vu16 restart_time;
 Sextern vu8 set_loop_count;
+Sextern vu8 short_flag;
 S
 S
 Sextern vu16 Run_Control[43];	
@@ -52622,7 +52628,7 @@ N        }
 N        GUI_SetColor(0x00BFFFFF);
 N        GUI_SetFont(&GUI_Font24_1);
 N        GUI_DispStringAt("JK5530", 180, 50);
-N        GUI_DispStringAt("Ver:2.2", 180, 75);
+N        GUI_DispStringAt("Ver:2.3", 180, 75);
 N        //1.7版本修改内阻测试判断测试结束与下一次测试开始的逻辑
 N        //1.8版本修正内阻测试短路后激活电池问题，添加手动测试功能，修正内阻显示不稳定问题
 N        //2.0版本添加英文

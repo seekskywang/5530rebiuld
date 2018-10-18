@@ -344,64 +344,146 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             }
             if(opv2 == 0 && opv3 == 0 && opc2 == 0 && opc3 == 0)
             {
-                if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0){//判断电流是否小于截止电流，并记录时间
-                    cutoff_time = GUI_GetTime()/500;
-                    cutoff_flag = 1;
-                }
-                if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )//若测量电流小于截止电流
+                if(cov1 == 0 || coc1 == 0)
                 {
-                    if(mode_sw == mode_pow){
-                        start_time = GUI_GetTime()/500;//记录开始时间
+                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0){//判断电流是否小于截止电流，并记录时间
+                        cutoff_time = GUI_GetTime()/500;
+                        cutoff_flag = 1;
                     }
-                    cutoff_flag = 0;
-                    Mode_SW_CONT(0x02);//切换至负载模式
-                    GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )//若测量电流小于截止电流
+                    {
+                        if(mode_sw == mode_pow){
+                            start_time = GUI_GetTime()/500;//记录开始时间
+                        }
+                        cutoff_flag = 0;
+                        Mode_SW_CONT(0x02);//切换至负载模式
+                        GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+                    }
+                }else{
+                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0){//判断电流是否小于截止电流，并记录时间
+                        cutoff_time = GUI_GetTime()/500;
+                        cutoff_flag = 1;
+                    }
+                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )//若测量电流小于截止电流
+                    {
+                        if(mode_sw == mode_pow){
+                            start_time = GUI_GetTime()/500;//记录开始时间
+                        }
+                        cutoff_flag = 0;
+                        Mode_SW_CONT(0x02);//切换至负载模式
+                        GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+                    }
                 }
             }else if(opv3 == 0 && opc3 == 0){
-                if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
-                {//判断电流是否小于截止电流，并记录时间
-                    SET_Voltage = opv2;
-                    SET_Current = opc2;
-                    charge_step = 2;
-                }
-                if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2){//判断电流是否小于截止电流，并记录时间
-                    cutoff_time = GUI_GetTime()/500;
-                    cutoff_flag = 1;
-                }
-                if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)//若测量电流小于截止电流
-                {
-                    if(mode_sw == mode_pow){
-                        start_time = GUI_GetTime()/500;//记录开始时间
+                if(cov1 == 0 || coc1 == 0)
+                { 
+                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
+                    {//判断电流是否小于截止电流，并记录时间
+                        SET_Voltage = opv2;
+                        SET_Current = opc2;
+                        charge_step = 2;
                     }
-                    cutoff_flag = 0;
-                    Mode_SW_CONT(0x02);//切换至负载模式
-                    GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
-                }
-            }else if(opv1 != 0 && opv2 != 0 && opv3 != 0 && opc1 != 0&& opc2 != 0 && opc3 != 0){
-                if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
-                {//判断电流是否小于截止电流，并记录时间
-                    SET_Voltage = opv2;
-                    SET_Current = opc2;
-                    charge_step = 2;
-                }
-                if(((DISS_POW_Voltage > (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2)
-                {//判断电流是否小于截止电流，并记录时间
-                    SET_Voltage = opv3;
-                    SET_Current = opc3;
-                    charge_step = 3;
-                }
-                if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) || DISS_POW_Current < (float)coc3/1000) && cutoff_flag == 0 && charge_step == 3){//判断电流是否小于截止电流，并记录时间
-                    cutoff_time = GUI_GetTime()/500;
-                    cutoff_flag = 1;
-                }
-                if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) || DISS_POW_Current < (float)coc3/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)//若测量电流小于截止电流
-                {
-                    if(mode_sw == mode_pow){
-                        start_time = GUI_GetTime()/500;//记录开始时间
+                }else{
+                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
+                    {//判断电流是否小于截止电流，并记录时间
+                        SET_Voltage = opv2;
+                        SET_Current = opc2;
+                        charge_step = 2;
                     }
-                    cutoff_flag = 0;
-                    Mode_SW_CONT(0x02);//切换至负载模式
-                    GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+                }
+                if(cov2 == 0 || coc2 == 0)
+                {
+                    if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2){//判断电流是否小于截止电流，并记录时间
+                        cutoff_time = GUI_GetTime()/500;
+                        cutoff_flag = 1;
+                    }
+                    if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)//若测量电流小于截止电流
+                    {
+                        if(mode_sw == mode_pow){
+                            start_time = GUI_GetTime()/500;//记录开始时间
+                        }
+                        cutoff_flag = 0;
+                        Mode_SW_CONT(0x02);//切换至负载模式
+                        GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+                    }
+                }else{
+                    if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) && DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2){//判断电流是否小于截止电流，并记录时间
+                        cutoff_time = GUI_GetTime()/500;
+                        cutoff_flag = 1;
+                    }
+                    if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) && DISS_POW_Current < (float)coc2/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)//若测量电流小于截止电流
+                    {
+                        if(mode_sw == mode_pow){
+                            start_time = GUI_GetTime()/500;//记录开始时间
+                        }
+                        cutoff_flag = 0;
+                        Mode_SW_CONT(0x02);//切换至负载模式
+                        GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+                    }
+                }
+            }else if((opv1 != 0 || opc1 != 0) && (opv2 != 0 || opc2 != 0) && (opv3 != 0 || opc3 != 0)){
+                if(cov1 == 0 || coc1 == 0)
+                { 
+                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
+                    {//判断电流是否小于截止电流，并记录时间
+                        SET_Voltage = opv2;
+                        SET_Current = opc2;
+                        charge_step = 2;
+                    }
+                }else{
+                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
+                    {//判断电流是否小于截止电流，并记录时间
+                        SET_Voltage = opv2;
+                        SET_Current = opc2;
+                        charge_step = 2;
+                    }
+                }
+                
+                if(cov2 == 0 || coc2 == 0)
+                {
+                    if(((DISS_POW_Voltage > (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2)
+                    {//判断电流是否小于截止电流，并记录时间
+                        SET_Voltage = opv3;
+                        SET_Current = opc3;
+                        charge_step = 3;
+                    }
+                }else{
+                    if(((DISS_POW_Voltage > (float)cov2/100 && cov2 != 0) && DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2)
+                    {//判断电流是否小于截止电流，并记录时间
+                        SET_Voltage = opv3;
+                        SET_Current = opc3;
+                        charge_step = 3;
+                    }
+                }
+                if(cov3 == 0 || coc3 == 0)
+                {
+                    if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) || DISS_POW_Current < (float)coc3/1000) && cutoff_flag == 0 && charge_step == 3){//判断电流是否小于截止电流，并记录时间
+                        cutoff_time = GUI_GetTime()/500;
+                        cutoff_flag = 1;
+                    }
+                    if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) || DISS_POW_Current < (float)coc3/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)//若测量电流小于截止电流
+                    {
+                        if(mode_sw == mode_pow){
+                            start_time = GUI_GetTime()/500;//记录开始时间
+                        }
+                        cutoff_flag = 0;
+                        Mode_SW_CONT(0x02);//切换至负载模式
+                        GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+                    }
+                }else{
+                    if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) && DISS_POW_Current < (float)coc3/1000) && cutoff_flag == 0 && charge_step == 3){//判断电流是否小于截止电流，并记录时间
+                        cutoff_time = GUI_GetTime()/500;
+                        cutoff_flag = 1;
+                    }
+                    if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) && DISS_POW_Current < (float)coc3/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)//若测量电流小于截止电流
+                    {
+                        if(mode_sw == mode_pow){
+                            start_time = GUI_GetTime()/500;//记录开始时间
+                        }
+                        cutoff_flag = 0;
+                        Mode_SW_CONT(0x02);//切换至负载模式
+                        GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
+                    }
                 }
             }
             

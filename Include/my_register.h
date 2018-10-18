@@ -26,6 +26,7 @@ void INPUT_C(char* num);
 void INPUT_LOAD(char* num);  
 void INPUT_INFO(vu8 num);  
 void Rlow_cal(u8 step);
+void short_test(void);
 
 //=============================================================================
 #define NOP   __nop();	  //ø’÷∏¡Ó
@@ -176,6 +177,7 @@ extern vu8 paused;
 extern vu8 finish;
 extern vu16 restart_time;
 extern vu8 set_loop_count;
+extern vu8 short_flag;
 
 
 extern vu16 Run_Control[43];	

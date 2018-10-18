@@ -175,6 +175,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     char  buf[5];
     float dis_init_c = (float)set_init_c/100;
     float dis_sbs_c = (float)set_sbs_c/100;
+    static float short1,short2;
 
 
   // USER START (Optionally insert additional variables)
@@ -1710,10 +1711,12 @@ void OC_ADD(void){
     WM_HWIN hItem;
     char sbs_c[5];
     float change_sbs_c;
+    static float crec1,crec2;
 
-    if(v - DISS_Voltage > v*0.3 && para_set2 == set_2_on)
+    if(v - DISS_Voltage > v*0.9 && para_set2 == set_2_on)
     {
-        oc_data = (float)SET_Current_Laod/100;       
+//        oc_data = (float)SET_Current_Laod/100;   
+        oc_data = crec2;
         SET_Current_Laod = set_init_c;
         hItem = WM_GetDialogItem(hWinR, ID_TEXT_47);
         change_sbs_c = (float)set_sbs_c/100;
@@ -1723,12 +1726,15 @@ void OC_ADD(void){
         LOAD_t = 0;
         oct_sw = oct_off;
         finish = 1;
+        crec1 = 0;
+        crec2 = 0;
     }else{
         SET_Current_Laod = SET_Current_Laod + set_sbs_c;
-        if(v - DISS_Voltage > v*0.3 && para_set2 == set_2_on)
+        crec2 = crec1;
+        crec1 = DISS_Current;
+        if(crec1 < crec2)
         {
-
-            oc_data = (float)SET_Current_Laod/100;       
+            oc_data = crec2;
             SET_Current_Laod = set_init_c;
             hItem = WM_GetDialogItem(hWinR, ID_TEXT_47);
             change_sbs_c = (float)set_sbs_c/100;
@@ -1738,6 +1744,8 @@ void OC_ADD(void){
             LOAD_t = 0;
             oct_sw = oct_off;
             finish = 1;
+            crec1 = 0;
+            crec2 = 0;
         }
     }        
 }

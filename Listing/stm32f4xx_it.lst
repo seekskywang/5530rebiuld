@@ -34817,6 +34817,7 @@ Nvoid INPUT_C(char* num);
 Nvoid INPUT_LOAD(char* num);  
 Nvoid INPUT_INFO(vu8 num);  
 Nvoid Rlow_cal(u8 step);
+Nvoid short_test(void);
 N
 N//=============================================================================
 N#define NOP   __nop();	  //ø’÷∏¡Ó
@@ -34967,6 +34968,7 @@ Nextern vu8 paused;
 Nextern vu8 finish;
 Nextern vu16 restart_time;
 Nextern vu8 set_loop_count;
+Nextern vu8 short_flag;
 N
 N
 Nextern vu16 Run_Control[43];	

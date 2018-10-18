@@ -54,8 +54,7 @@ vu8 t_onoff;
 vu8 t_doub;
 vu8 t_key_step;//é”®ç›˜æ‰«æè®¡æ•°å™¨
 vu16 KeyCounter;
- vu8 OFFSET_Zore;//ÁãµãÖµ
-
+vu8 OFFSET_Zore;//ÁãµãÖµ
 vu8 pass = 0;
 vu8 LOAD_t;
 vu8 track;
