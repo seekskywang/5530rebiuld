@@ -1085,6 +1085,10 @@ WM_HWIN CreateR(void) {
   page_sw = face_r;
   track = face_r;
   con_flag = 0;
+  load_sw = load_off;
+  pow_sw = pow_off;
+  GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+    GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
   SET_Current_Laod = set_init_c;
   pass = 0;
   hWinR = GUI_CreateDialogBox(_aDialogCreate, GUI_COUNTOF(_aDialogCreate), _cbDialog, WM_HBKWIN, 0, 0);

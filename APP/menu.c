@@ -492,10 +492,12 @@ WM_HWIN CreateWindow(void) {
   track = face_menu;
   set_sw = set_10;
   pass = 0;
+  load_sw = load_off;
   SET_Voltage = pow_v;
   SET_Current = pow_c;
   TM1650_SET_LED(0x68,0x70);
   GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
+  GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
   hWinWind = GUI_CreateDialogBox(_aDialogCreate1, GUI_COUNTOF(_aDialogCreate1), _cbDialog, WM_HBKWIN, 0, 0);
   return hWinWind;
 }

@@ -718,7 +718,7 @@
 ;;;885                        {
 ;;;886                            KeyCounter = 0;
 ;;;887                            BEEP_Tiggr();//触发蜂鸣器
-;;;888                            SET_Current_Laod=SET_Current_Laod+1;
+;;;888    //                        SET_Current_Laod=SET_Current_Laod+1;
 ;;;889                            break;
 ;;;890                        }
 ;;;891                        case face_set:
@@ -774,7 +774,7 @@
 ;;;941                        {
 ;;;942                           	KeyCounter = 0;
 ;;;943                            BEEP_Tiggr();//触发蜂鸣器
-;;;944                            SET_Current_Laod=SET_Current_Laod-1;
+;;;944    //                        SET_Current_Laod=SET_Current_Laod-1;
 ;;;945                            break;
 ;;;946                        }
 ;;;947                        case face_set:  //系统设置
@@ -974,18 +974,18 @@
 ;;;1134                       case face_load:
 ;;;1135                       {
 ;;;1136   //                        static vu8 LOAD_t;
-;;;1137                           LOAD_t++;
-;;;1138                           if(LOAD_t>1)
-;;;1139                           {
-;;;1140                               LOAD_t=0;
-;;;1141                           }
-;;;1142                           if(LOAD_t==0)
+;;;1137   //                         LOAD_t++;
+;;;1138   //                         if(LOAD_t>1)
+;;;1139   //                         {
+;;;1140   //                             LOAD_t=0;
+;;;1141   //                         }
+;;;1142                           if(load_sw==load_on)
 ;;;1143                           {
 ;;;1144                               Flag_Swtich_ON=0;
 ;;;1145                               GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
 ;;;1146                               load_sw = load_off;
 ;;;1147                           }
-;;;1148                           else if(LOAD_t==1)
+;;;1148                           else if(load_sw==load_off)
 ;;;1149                           {
 ;;;1150                               Flag_Swtich_ON=1;
 ;;;1151                               GPIO_ResetBits(GPIOC,GPIO_Pin_1);//On
@@ -1052,12 +1052,12 @@
 000088  170c422f          DCB      0x17,0x0c,0x42,0x2f
 00008c  a0e5              ADR      r0,|L1.1060|
 00008e  f7fffffe          BL       INPUT_POW
-000092  81ec              STRH     r4,[r5,#0xe]          ;206
+000092  81ac              STRH     r4,[r5,#0xc]          ;206
 000094  e8bd5ff0          POP      {r4-r12,lr}           ;207
 000098  f7ffbffe          B.W      BEEP_Tiggr
 00009c  a0e1              ADR      r0,|L1.1060|
 00009e  f7fffffe          BL       INPUT_NUM
-0000a2  81ec              STRH     r4,[r5,#0xe]          ;213
+0000a2  81ac              STRH     r4,[r5,#0xc]          ;213
 0000a4  e8bd5ff0          POP      {r4-r12,lr}           ;214
 0000a8  f7ffbffe          B.W      BEEP_Tiggr
 0000ac  7808              LDRB     r0,[r1,#0]            ;219  ; para_set2
@@ -1065,18 +1065,18 @@
 0000b0  d007              BEQ      |L1.194|
 0000b2  a0dc              ADR      r0,|L1.1060|
 0000b4  f7fffffe          BL       INPUT_LOAD
-0000b8  81ec              STRH     r4,[r5,#0xe]          ;230
+0000b8  81ac              STRH     r4,[r5,#0xc]          ;230
 0000ba  e8bd5ff0          POP      {r4-r12,lr}           ;231
 0000be  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.194|
 0000c2  a0d8              ADR      r0,|L1.1060|
 0000c4  f7fffffe          BL       INPUT_C
-0000c8  81ec              STRH     r4,[r5,#0xe]          ;222
+0000c8  81ac              STRH     r4,[r5,#0xc]          ;222
 0000ca  e8bd5ff0          POP      {r4-r12,lr}           ;223
 0000ce  f7ffbffe          B.W      BEEP_Tiggr
 0000d2  a0d4              ADR      r0,|L1.1060|
 0000d4  f7fffffe          BL       INPUT_CDC
-0000d8  81ec              STRH     r4,[r5,#0xe]          ;237
+0000d8  81ac              STRH     r4,[r5,#0xc]          ;237
 0000da  e8bd5ff0          POP      {r4-r12,lr}           ;238
 0000de  f7ffbffe          B.W      BEEP_Tiggr
 0000e2  7810              LDRB     r0,[r2,#0]            ;243  ; admin
@@ -1090,7 +1090,7 @@
 0000f2  1c40              ADDS     r0,r0,#1              ;249
 0000f4  7028              STRB     r0,[r5,#0]            ;249
                   |L1.246|
-0000f6  81ec              STRH     r4,[r5,#0xe]          ;251
+0000f6  81ac              STRH     r4,[r5,#0xc]          ;251
 0000f8  e8bd5ff0          POP      {r4-r12,lr}           ;252
 0000fc  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.256|
@@ -1114,11 +1114,11 @@
 000124  fd2d              DCB      0xfd,0x2d
 000126  a0c1              ADR      r0,|L1.1068|
 000128  f7fffffe          BL       INPUT_POW
-00012c  81ec              STRH     r4,[r5,#0xe]          ;265
+00012c  81ac              STRH     r4,[r5,#0xc]          ;265
 00012e  f7fffffe          BL       BEEP_Tiggr
 000132  a0be              ADR      r0,|L1.1068|
 000134  f7fffffe          BL       INPUT_NUM
-000138  81ec              STRH     r4,[r5,#0xe]          ;271
+000138  81ac              STRH     r4,[r5,#0xc]          ;271
 00013a  e8bd5ff0          POP      {r4-r12,lr}           ;272
 00013e  f7ffbffe          B.W      BEEP_Tiggr
 000142  7808              LDRB     r0,[r1,#0]            ;277  ; para_set2
@@ -1126,18 +1126,18 @@
 000146  d007              BEQ      |L1.344|
 000148  a0b8              ADR      r0,|L1.1068|
 00014a  f7fffffe          BL       INPUT_LOAD
-00014e  81ec              STRH     r4,[r5,#0xe]          ;288
+00014e  81ac              STRH     r4,[r5,#0xc]          ;288
 000150  e8bd5ff0          POP      {r4-r12,lr}           ;289
 000154  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.344|
 000158  a0b4              ADR      r0,|L1.1068|
 00015a  f7fffffe          BL       INPUT_C
-00015e  81ec              STRH     r4,[r5,#0xe]          ;280
+00015e  81ac              STRH     r4,[r5,#0xc]          ;280
 000160  e8bd5ff0          POP      {r4-r12,lr}           ;281
 000164  f7ffbffe          B.W      BEEP_Tiggr
 000168  a0b0              ADR      r0,|L1.1068|
 00016a  f7fffffe          BL       INPUT_CDC
-00016e  81ec              STRH     r4,[r5,#0xe]          ;295
+00016e  81ac              STRH     r4,[r5,#0xc]          ;295
 000170  e8bd5ff0          POP      {r4-r12,lr}           ;296
 000174  f7ffbffe          B.W      BEEP_Tiggr
 000178  7810              LDRB     r0,[r2,#0]            ;301  ; admin
@@ -1151,7 +1151,7 @@
 000188  1c80              ADDS     r0,r0,#2              ;307
 00018a  7028              STRB     r0,[r5,#0]            ;307
                   |L1.396|
-00018c  81ec              STRH     r4,[r5,#0xe]          ;309
+00018c  81ac              STRH     r4,[r5,#0xc]          ;309
 00018e  e8bd5ff0          POP      {r4-r12,lr}           ;310
 000192  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.406|
@@ -1173,11 +1173,11 @@
 0001b8  b32d              DCB      0xb3,0x2d
 0001ba  a09d              ADR      r0,|L1.1072|
 0001bc  f7fffffe          BL       INPUT_POW
-0001c0  81ec              STRH     r4,[r5,#0xe]          ;324
+0001c0  81ac              STRH     r4,[r5,#0xc]          ;324
 0001c2  f7fffffe          BL       BEEP_Tiggr
 0001c6  a09a              ADR      r0,|L1.1072|
 0001c8  f7fffffe          BL       INPUT_NUM
-0001cc  81ec              STRH     r4,[r5,#0xe]          ;330
+0001cc  81ac              STRH     r4,[r5,#0xc]          ;330
 0001ce  e8bd5ff0          POP      {r4-r12,lr}           ;331
 0001d2  f7ffbffe          B.W      BEEP_Tiggr
 0001d6  7808              LDRB     r0,[r1,#0]            ;336  ; para_set2
@@ -1185,46 +1185,46 @@
 0001da  d007              BEQ      |L1.492|
 0001dc  a094              ADR      r0,|L1.1072|
 0001de  f7fffffe          BL       INPUT_LOAD
-0001e2  81ec              STRH     r4,[r5,#0xe]          ;347
+0001e2  81ac              STRH     r4,[r5,#0xc]          ;347
 0001e4  e8bd5ff0          POP      {r4-r12,lr}           ;348
 0001e8  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.492|
 0001ec  a090              ADR      r0,|L1.1072|
 0001ee  f7fffffe          BL       INPUT_C
-0001f2  81ec              STRH     r4,[r5,#0xe]          ;339
+0001f2  81ac              STRH     r4,[r5,#0xc]          ;339
 0001f4  e8bd5ff0          POP      {r4-r12,lr}           ;340
 0001f8  f7ffbffe          B.W      BEEP_Tiggr
 0001fc  a08c              ADR      r0,|L1.1072|
 0001fe  f7fffffe          BL       INPUT_CDC
-000202  81ec              STRH     r4,[r5,#0xe]          ;354
+000202  81ac              STRH     r4,[r5,#0xc]          ;354
 000204  e8bd5ff0          POP      {r4-r12,lr}           ;355
 000208  f7ffbffe          B.W      BEEP_Tiggr
 00020c  7810              LDRB     r0,[r2,#0]            ;360  ; admin
 00020e  e017              B        |L1.576|
 000210  e18e              B        |L1.1328|
 000212  e0a9              B        |L1.872|
-000214  e3fd              B        |L1.2578|
-000216  e2c2              B        |L1.1950|
+000214  e3fe              B        |L1.2580|
+000216  e2bf              B        |L1.1944|
 000218  e14c              B        |L1.1204|
-00021a  e3fb              B        |L1.2580|
+00021a  e3fc              B        |L1.2582|
 00021c  e23e              B        |L1.1692|
 00021e  e0e1              B        |L1.996|
-000220  e3f9              B        |L1.2582|
+000220  e3fa              B        |L1.2584|
 000222  e207              B        |L1.1588|
-000224  e3f8              B        |L1.2584|
+000224  e3f9              B        |L1.2586|
 000226  e05b              B        |L1.736|
 000228  e1c2              B        |L1.1456|
-00022a  e3f6              B        |L1.2586|
+00022a  e3f7              B        |L1.2588|
 00022c  e016              B        |L1.604|
 00022e  e259              B        |L1.1764|
-000230  e3f4              B        |L1.2588|
-000232  e3de              B        |L1.2546|
-000234  e2ef              B        |L1.2070|
-000236  e3f2              B        |L1.2590|
-000238  e333              B        |L1.2210|
+000230  e3f5              B        |L1.2590|
+000232  e3d7              B        |L1.2532|
+000234  e2e9              B        |L1.2058|
+000236  e3f3              B        |L1.2592|
+000238  e32c              B        |L1.2196|
 00023a  e274              B        |L1.1830|
 00023c  e231              B        |L1.1698|
-00023e  e3ef              B        |L1.2592|
+00023e  e3f0              B        |L1.2594|
                   |L1.576|
 000240  2801              CMP      r0,#1                 ;360
 000242  d007              BEQ      |L1.596|
@@ -1232,7 +1232,7 @@
 000246  1cc0              ADDS     r0,r0,#3              ;364
 000248  7028              STRB     r0,[r5,#0]            ;364
                   |L1.586|
-00024a  81ec              STRH     r4,[r5,#0xe]          ;366
+00024a  81ac              STRH     r4,[r5,#0xc]          ;366
 00024c  e8bd5ff0          POP      {r4-r12,lr}           ;367
 000250  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.596|
@@ -1250,11 +1250,11 @@
 00026c  150a582d          DCB      0x15,0x0a,0x58,0x2d
 000270  a070              ADR      r0,|L1.1076|
 000272  f7fffffe          BL       INPUT_POW
-000276  81ec              STRH     r4,[r5,#0xe]          ;380
+000276  81ac              STRH     r4,[r5,#0xc]          ;380
 000278  f7fffffe          BL       BEEP_Tiggr
 00027c  a06d              ADR      r0,|L1.1076|
 00027e  f7fffffe          BL       INPUT_NUM
-000282  81ec              STRH     r4,[r5,#0xe]          ;386
+000282  81ac              STRH     r4,[r5,#0xc]          ;386
 000284  e8bd5ff0          POP      {r4-r12,lr}           ;387
 000288  f7ffbffe          B.W      BEEP_Tiggr
 00028c  7808              LDRB     r0,[r1,#0]            ;392  ; para_set2
@@ -1262,18 +1262,18 @@
 000290  d007              BEQ      |L1.674|
 000292  a068              ADR      r0,|L1.1076|
 000294  f7fffffe          BL       INPUT_LOAD
-000298  81ec              STRH     r4,[r5,#0xe]          ;403
+000298  81ac              STRH     r4,[r5,#0xc]          ;403
 00029a  e8bd5ff0          POP      {r4-r12,lr}           ;404
 00029e  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.674|
 0002a2  a064              ADR      r0,|L1.1076|
 0002a4  f7fffffe          BL       INPUT_C
-0002a8  81ec              STRH     r4,[r5,#0xe]          ;395
+0002a8  81ac              STRH     r4,[r5,#0xc]          ;395
 0002aa  e8bd5ff0          POP      {r4-r12,lr}           ;396
 0002ae  f7ffbffe          B.W      BEEP_Tiggr
 0002b2  a060              ADR      r0,|L1.1076|
 0002b4  f7fffffe          BL       INPUT_CDC
-0002b8  81ec              STRH     r4,[r5,#0xe]          ;410
+0002b8  81ac              STRH     r4,[r5,#0xc]          ;410
 0002ba  e8bd5ff0          POP      {r4-r12,lr}           ;411
 0002be  f7ffbffe          B.W      BEEP_Tiggr
 0002c2  7810              LDRB     r0,[r2,#0]            ;416  ; admin
@@ -1283,7 +1283,7 @@
 0002ca  1d00              ADDS     r0,r0,#4              ;420
 0002cc  7028              STRB     r0,[r5,#0]            ;420
                   |L1.718|
-0002ce  81ec              STRH     r4,[r5,#0xe]          ;422
+0002ce  81ac              STRH     r4,[r5,#0xc]          ;422
 0002d0  e8bd5ff0          POP      {r4-r12,lr}           ;423
 0002d4  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.728|
@@ -1301,11 +1301,11 @@
 0002f0  150a162f          DCB      0x15,0x0a,0x16,0x2f
 0002f4  a050              ADR      r0,|L1.1080|
 0002f6  f7fffffe          BL       INPUT_POW
-0002fa  81ec              STRH     r4,[r5,#0xe]          ;436
+0002fa  81ac              STRH     r4,[r5,#0xc]          ;436
 0002fc  f7fffffe          BL       BEEP_Tiggr
 000300  a04d              ADR      r0,|L1.1080|
 000302  f7fffffe          BL       INPUT_NUM
-000306  81ec              STRH     r4,[r5,#0xe]          ;442
+000306  81ac              STRH     r4,[r5,#0xc]          ;442
 000308  e8bd5ff0          POP      {r4-r12,lr}           ;443
 00030c  f7ffbffe          B.W      BEEP_Tiggr
 000310  7808              LDRB     r0,[r1,#0]            ;448  ; para_set2
@@ -1317,18 +1317,18 @@
                   |L1.794|
 00031a  a047              ADR      r0,|L1.1080|
 00031c  f7fffffe          BL       INPUT_LOAD
-000320  81ec              STRH     r4,[r5,#0xe]          ;459
+000320  81ac              STRH     r4,[r5,#0xc]          ;459
 000322  e8bd5ff0          POP      {r4-r12,lr}           ;460
 000326  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.810|
 00032a  a043              ADR      r0,|L1.1080|
 00032c  f7fffffe          BL       INPUT_C
-000330  81ec              STRH     r4,[r5,#0xe]          ;451
+000330  81ac              STRH     r4,[r5,#0xc]          ;451
 000332  e8bd5ff0          POP      {r4-r12,lr}           ;452
 000336  f7ffbffe          B.W      BEEP_Tiggr
 00033a  a03f              ADR      r0,|L1.1080|
 00033c  f7fffffe          BL       INPUT_CDC
-000340  81ec              STRH     r4,[r5,#0xe]          ;466
+000340  81ac              STRH     r4,[r5,#0xc]          ;466
 000342  e8bd5ff0          POP      {r4-r12,lr}           ;467
 000346  f7ffbffe          B.W      BEEP_Tiggr
 00034a  7810              LDRB     r0,[r2,#0]            ;472  ; admin
@@ -1338,7 +1338,7 @@
 000352  1d40              ADDS     r0,r0,#5              ;476
 000354  7028              STRB     r0,[r5,#0]            ;476
                   |L1.854|
-000356  81ec              STRH     r4,[r5,#0xe]          ;478
+000356  81ac              STRH     r4,[r5,#0xc]          ;478
 000358  e8bd5ff0          POP      {r4-r12,lr}           ;479
 00035c  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.864|
@@ -1356,11 +1356,11 @@
 000378  150afe2d          DCB      0x15,0x0a,0xfe,0x2d
 00037c  a02f              ADR      r0,|L1.1084|
 00037e  f7fffffe          BL       INPUT_POW
-000382  81ec              STRH     r4,[r5,#0xe]          ;492
+000382  81ac              STRH     r4,[r5,#0xc]          ;492
 000384  f7fffffe          BL       BEEP_Tiggr
 000388  a02c              ADR      r0,|L1.1084|
 00038a  f7fffffe          BL       INPUT_NUM
-00038e  81ec              STRH     r4,[r5,#0xe]          ;498
+00038e  81ac              STRH     r4,[r5,#0xc]          ;498
 000390  e8bd5ff0          POP      {r4-r12,lr}           ;499
 000394  f7ffbffe          B.W      BEEP_Tiggr
 000398  7808              LDRB     r0,[r1,#0]            ;504  ; para_set2
@@ -1368,18 +1368,18 @@
 00039c  d007              BEQ      |L1.942|
 00039e  a027              ADR      r0,|L1.1084|
 0003a0  f7fffffe          BL       INPUT_LOAD
-0003a4  81ec              STRH     r4,[r5,#0xe]          ;515
+0003a4  81ac              STRH     r4,[r5,#0xc]          ;515
 0003a6  e8bd5ff0          POP      {r4-r12,lr}           ;516
 0003aa  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.942|
 0003ae  a023              ADR      r0,|L1.1084|
 0003b0  f7fffffe          BL       INPUT_C
-0003b4  81ec              STRH     r4,[r5,#0xe]          ;507
+0003b4  81ac              STRH     r4,[r5,#0xc]          ;507
 0003b6  e8bd5ff0          POP      {r4-r12,lr}           ;508
 0003ba  f7ffbffe          B.W      BEEP_Tiggr
 0003be  a01f              ADR      r0,|L1.1084|
 0003c0  f7fffffe          BL       INPUT_CDC
-0003c4  81ec              STRH     r4,[r5,#0xe]          ;522
+0003c4  81ac              STRH     r4,[r5,#0xc]          ;522
 0003c6  e8bd5ff0          POP      {r4-r12,lr}           ;523
 0003ca  f7ffbffe          B.W      BEEP_Tiggr
 0003ce  7810              LDRB     r0,[r2,#0]            ;528  ; admin
@@ -1388,7 +1388,7 @@
 0003d4  2006              MOVS     r0,#6                 ;530
 0003d6  f7fffffe          BL       INPUT_INFO
                   |L1.986|
-0003da  81ec              STRH     r4,[r5,#0xe]          ;532
+0003da  81ac              STRH     r4,[r5,#0xc]          ;532
 0003dc  e8bd5ff0          POP      {r4-r12,lr}           ;533
 0003e0  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.996|
@@ -1455,32 +1455,32 @@
 000440  e8dff000          TBB      [pc,r0]               ;542
 000444  96250412          DCB      0x96,0x25,0x04,0x12
 000448  150a962d          DCB      0x15,0x0a,0x96,0x2d
-00044c  a0f7              ADR      r0,|L1.2092|
+00044c  a0fe              ADR      r0,|L1.2120|
 00044e  f7fffffe          BL       INPUT_POW
-000452  81ec              STRH     r4,[r5,#0xe]          ;546
+000452  81ac              STRH     r4,[r5,#0xc]          ;546
 000454  f7fffffe          BL       BEEP_Tiggr
-000458  a0f4              ADR      r0,|L1.2092|
+000458  a0fb              ADR      r0,|L1.2120|
 00045a  f7fffffe          BL       INPUT_NUM
-00045e  81ec              STRH     r4,[r5,#0xe]          ;552
+00045e  81ac              STRH     r4,[r5,#0xc]          ;552
 000460  e8bd5ff0          POP      {r4-r12,lr}           ;553
 000464  f7ffbffe          B.W      BEEP_Tiggr
 000468  7808              LDRB     r0,[r1,#0]            ;558  ; para_set2
 00046a  28ff              CMP      r0,#0xff              ;558
 00046c  d007              BEQ      |L1.1150|
-00046e  a0ef              ADR      r0,|L1.2092|
+00046e  a0f6              ADR      r0,|L1.2120|
 000470  f7fffffe          BL       INPUT_LOAD
-000474  81ec              STRH     r4,[r5,#0xe]          ;569
+000474  81ac              STRH     r4,[r5,#0xc]          ;569
 000476  e8bd5ff0          POP      {r4-r12,lr}           ;570
 00047a  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1150|
-00047e  a0eb              ADR      r0,|L1.2092|
+00047e  a0f2              ADR      r0,|L1.2120|
 000480  f7fffffe          BL       INPUT_C
-000484  81ec              STRH     r4,[r5,#0xe]          ;561
+000484  81ac              STRH     r4,[r5,#0xc]          ;561
 000486  e8bd5ff0          POP      {r4-r12,lr}           ;562
 00048a  f7ffbffe          B.W      BEEP_Tiggr
-00048e  a0e7              ADR      r0,|L1.2092|
+00048e  a0ee              ADR      r0,|L1.2120|
 000490  f7fffffe          BL       INPUT_CDC
-000494  81ec              STRH     r4,[r5,#0xe]          ;576
+000494  81ac              STRH     r4,[r5,#0xc]          ;576
 000496  e8bd5ff0          POP      {r4-r12,lr}           ;577
 00049a  f7ffbffe          B.W      BEEP_Tiggr
 00049e  7810              LDRB     r0,[r2,#0]            ;582  ; admin
@@ -1489,11 +1489,11 @@
 0004a4  2007              MOVS     r0,#7                 ;584
 0004a6  f7fffffe          BL       INPUT_INFO
                   |L1.1194|
-0004aa  81ec              STRH     r4,[r5,#0xe]          ;586
+0004aa  81ac              STRH     r4,[r5,#0xc]          ;586
 0004ac  e8bd5ff0          POP      {r4-r12,lr}           ;587
 0004b0  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1204|
-0004b4  48de              LDR      r0,|L1.2096|
+0004b4  48e5              LDR      r0,|L1.2124|
 0004b6  7800              LDRB     r0,[r0,#0]            ;596  ; page_sw
 0004b8  2808              CMP      r0,#8                 ;596
                   |L1.1210|
@@ -1501,32 +1501,32 @@
 0004bc  e8dff000          TBB      [pc,r0]               ;596
 0004c0  ef250412          DCB      0xef,0x25,0x04,0x12
 0004c4  150aef2d          DCB      0x15,0x0a,0xef,0x2d
-0004c8  a0da              ADR      r0,|L1.2100|
+0004c8  a0e1              ADR      r0,|L1.2128|
 0004ca  f7fffffe          BL       INPUT_POW
-0004ce  81ec              STRH     r4,[r5,#0xe]          ;600
+0004ce  81ac              STRH     r4,[r5,#0xc]          ;600
 0004d0  f7fffffe          BL       BEEP_Tiggr
-0004d4  a0d7              ADR      r0,|L1.2100|
+0004d4  a0de              ADR      r0,|L1.2128|
 0004d6  f7fffffe          BL       INPUT_NUM
-0004da  81ec              STRH     r4,[r5,#0xe]          ;606
+0004da  81ac              STRH     r4,[r5,#0xc]          ;606
 0004dc  e8bd5ff0          POP      {r4-r12,lr}           ;607
 0004e0  f7ffbffe          B.W      BEEP_Tiggr
 0004e4  7808              LDRB     r0,[r1,#0]            ;612  ; para_set2
 0004e6  28ff              CMP      r0,#0xff              ;612
 0004e8  d007              BEQ      |L1.1274|
-0004ea  a0d2              ADR      r0,|L1.2100|
+0004ea  a0d9              ADR      r0,|L1.2128|
 0004ec  f7fffffe          BL       INPUT_LOAD
-0004f0  81ec              STRH     r4,[r5,#0xe]          ;623
+0004f0  81ac              STRH     r4,[r5,#0xc]          ;623
 0004f2  e8bd5ff0          POP      {r4-r12,lr}           ;624
 0004f6  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1274|
-0004fa  a0ce              ADR      r0,|L1.2100|
+0004fa  a0d5              ADR      r0,|L1.2128|
 0004fc  f7fffffe          BL       INPUT_C
-000500  81ec              STRH     r4,[r5,#0xe]          ;615
+000500  81ac              STRH     r4,[r5,#0xc]          ;615
 000502  e8bd5ff0          POP      {r4-r12,lr}           ;616
 000506  f7ffbffe          B.W      BEEP_Tiggr
-00050a  a0ca              ADR      r0,|L1.2100|
+00050a  a0d1              ADR      r0,|L1.2128|
 00050c  f7fffffe          BL       INPUT_CDC
-000510  81ec              STRH     r4,[r5,#0xe]          ;630
+000510  81ac              STRH     r4,[r5,#0xc]          ;630
 000512  e8bd5ff0          POP      {r4-r12,lr}           ;631
 000516  f7ffbffe          B.W      BEEP_Tiggr
 00051a  7810              LDRB     r0,[r2,#0]            ;636  ; admin
@@ -1535,32 +1535,32 @@
 000520  2008              MOVS     r0,#8                 ;638
 000522  f7fffffe          BL       INPUT_INFO
                   |L1.1318|
-000526  81ec              STRH     r4,[r5,#0xe]          ;640
+000526  81ac              STRH     r4,[r5,#0xc]          ;640
 000528  e8bd5ff0          POP      {r4-r12,lr}           ;641
 00052c  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1328|
-000530  48bf              LDR      r0,|L1.2096|
+000530  48c6              LDR      r0,|L1.2124|
 000532  7800              LDRB     r0,[r0,#0]            ;650  ; page_sw
 000534  2808              CMP      r0,#8                 ;650
 000536  d2c0              BCS      |L1.1210|
 000538  e8dff000          TBB      [pc,r0]               ;650
 00053c  b1270412          DCB      0xb1,0x27,0x04,0x12
 000540  150ab12f          DCB      0x15,0x0a,0xb1,0x2f
-000544  a0bc              ADR      r0,|L1.2104|
+000544  a0c3              ADR      r0,|L1.2132|
 000546  f7fffffe          BL       INPUT_POW
-00054a  81ec              STRH     r4,[r5,#0xe]          ;654
+00054a  81ac              STRH     r4,[r5,#0xc]          ;654
 00054c  f7fffffe          BL       BEEP_Tiggr
-000550  a0b9              ADR      r0,|L1.2104|
+000550  a0c0              ADR      r0,|L1.2132|
 000552  f7fffffe          BL       INPUT_NUM
-000556  81ec              STRH     r4,[r5,#0xe]          ;660
+000556  81ac              STRH     r4,[r5,#0xc]          ;660
 000558  e8bd5ff0          POP      {r4-r12,lr}           ;661
 00055c  f7ffbffe          B.W      BEEP_Tiggr
 000560  7808              LDRB     r0,[r1,#0]            ;666  ; para_set2
 000562  28ff              CMP      r0,#0xff              ;666
 000564  d009              BEQ      |L1.1402|
-000566  a0b4              ADR      r0,|L1.2104|
+000566  a0bb              ADR      r0,|L1.2132|
 000568  f7fffffe          BL       INPUT_LOAD
-00056c  81ec              STRH     r4,[r5,#0xe]          ;677
+00056c  81ac              STRH     r4,[r5,#0xc]          ;677
 00056e  e000              B        |L1.1394|
                   |L1.1392|
 000570  e095              B        |L1.1694|
@@ -1568,14 +1568,14 @@
 000572  e8bd5ff0          POP      {r4-r12,lr}           ;678
 000576  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1402|
-00057a  a0af              ADR      r0,|L1.2104|
+00057a  a0b6              ADR      r0,|L1.2132|
 00057c  f7fffffe          BL       INPUT_C
-000580  81ec              STRH     r4,[r5,#0xe]          ;669
+000580  81ac              STRH     r4,[r5,#0xc]          ;669
 000582  e8bd5ff0          POP      {r4-r12,lr}           ;670
 000586  f7ffbffe          B.W      BEEP_Tiggr
-00058a  a0ab              ADR      r0,|L1.2104|
+00058a  a0b2              ADR      r0,|L1.2132|
 00058c  f7fffffe          BL       INPUT_CDC
-000590  81ec              STRH     r4,[r5,#0xe]          ;684
+000590  81ac              STRH     r4,[r5,#0xc]          ;684
 000592  e8bd5ff0          POP      {r4-r12,lr}           ;685
 000596  f7ffbffe          B.W      BEEP_Tiggr
 00059a  7810              LDRB     r0,[r2,#0]            ;690  ; admin
@@ -1584,43 +1584,43 @@
 0005a0  2009              MOVS     r0,#9                 ;692
 0005a2  f7fffffe          BL       INPUT_INFO
                   |L1.1446|
-0005a6  81ec              STRH     r4,[r5,#0xe]          ;694
+0005a6  81ac              STRH     r4,[r5,#0xc]          ;694
 0005a8  e8bd5ff0          POP      {r4-r12,lr}           ;695
 0005ac  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1456|
-0005b0  489f              LDR      r0,|L1.2096|
+0005b0  48a6              LDR      r0,|L1.2124|
 0005b2  7800              LDRB     r0,[r0,#0]            ;704  ; page_sw
 0005b4  2808              CMP      r0,#8                 ;704
 0005b6  d272              BCS      |L1.1694|
 0005b8  e8dff000          TBB      [pc,r0]               ;704
 0005bc  71250412          DCB      0x71,0x25,0x04,0x12
 0005c0  150a712d          DCB      0x15,0x0a,0x71,0x2d
-0005c4  a09d              ADR      r0,|L1.2108|
+0005c4  a0a4              ADR      r0,|L1.2136|
 0005c6  f7fffffe          BL       INPUT_POW
-0005ca  81ec              STRH     r4,[r5,#0xe]          ;708
+0005ca  81ac              STRH     r4,[r5,#0xc]          ;708
 0005cc  f7fffffe          BL       BEEP_Tiggr
-0005d0  a09a              ADR      r0,|L1.2108|
+0005d0  a0a1              ADR      r0,|L1.2136|
 0005d2  f7fffffe          BL       INPUT_NUM
-0005d6  81ec              STRH     r4,[r5,#0xe]          ;714
+0005d6  81ac              STRH     r4,[r5,#0xc]          ;714
 0005d8  e8bd5ff0          POP      {r4-r12,lr}           ;715
 0005dc  f7ffbffe          B.W      BEEP_Tiggr
 0005e0  7808              LDRB     r0,[r1,#0]            ;720  ; para_set2
 0005e2  28ff              CMP      r0,#0xff              ;720
 0005e4  d007              BEQ      |L1.1526|
-0005e6  a095              ADR      r0,|L1.2108|
+0005e6  a09c              ADR      r0,|L1.2136|
 0005e8  f7fffffe          BL       INPUT_LOAD
-0005ec  81ec              STRH     r4,[r5,#0xe]          ;731
+0005ec  81ac              STRH     r4,[r5,#0xc]          ;731
 0005ee  e8bd5ff0          POP      {r4-r12,lr}           ;732
 0005f2  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1526|
-0005f6  a091              ADR      r0,|L1.2108|
+0005f6  a098              ADR      r0,|L1.2136|
 0005f8  f7fffffe          BL       INPUT_C
-0005fc  81ec              STRH     r4,[r5,#0xe]          ;723
+0005fc  81ac              STRH     r4,[r5,#0xc]          ;723
 0005fe  e8bd5ff0          POP      {r4-r12,lr}           ;724
 000602  f7ffbffe          B.W      BEEP_Tiggr
-000606  a08d              ADR      r0,|L1.2108|
+000606  a094              ADR      r0,|L1.2136|
 000608  f7fffffe          BL       INPUT_CDC
-00060c  81ec              STRH     r4,[r5,#0xe]          ;738
+00060c  81ac              STRH     r4,[r5,#0xc]          ;738
 00060e  e8bd5ff0          POP      {r4-r12,lr}           ;739
 000612  f7ffbffe          B.W      BEEP_Tiggr
 000616  7810              LDRB     r0,[r2,#0]            ;744  ; admin
@@ -1630,7 +1630,7 @@
 00061e  1c40              ADDS     r0,r0,#1              ;748
 000620  7028              STRB     r0,[r5,#0]            ;748
                   |L1.1570|
-000622  81ec              STRH     r4,[r5,#0xe]          ;750
+000622  81ac              STRH     r4,[r5,#0xc]          ;750
 000624  e8bd5ff0          POP      {r4-r12,lr}           ;751
 000628  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1580|
@@ -1638,44 +1638,44 @@
 00062e  f7fffffe          BL       INPUT_INFO
 000632  e7f6              B        |L1.1570|
                   |L1.1588|
-000634  487e              LDR      r0,|L1.2096|
+000634  4885              LDR      r0,|L1.2124|
 000636  7800              LDRB     r0,[r0,#0]            ;760  ; page_sw
 000638  2806              CMP      r0,#6                 ;760
 00063a  d230              BCS      |L1.1694|
 00063c  e8dff000          TBB      [pc,r0]               ;760
 000640  2f1e031b          DCB      0x2f,0x1e,0x03,0x1b
 000644  130b              DCB      0x13,0x0b
-000646  a07e              ADR      r0,|L1.2112|
+000646  a085              ADR      r0,|L1.2140|
 000648  f7fffffe          BL       INPUT_POW
-00064c  81ec              STRH     r4,[r5,#0xe]          ;764
+00064c  81ac              STRH     r4,[r5,#0xc]          ;764
 00064e  e8bd5ff0          POP      {r4-r12,lr}           ;765
 000652  f7ffbffe          B.W      BEEP_Tiggr
-000656  a07a              ADR      r0,|L1.2112|
+000656  a081              ADR      r0,|L1.2140|
 000658  f7fffffe          BL       INPUT_NUM
-00065c  81ec              STRH     r4,[r5,#0xe]          ;771
+00065c  81ac              STRH     r4,[r5,#0xc]          ;771
 00065e  e8bd5ff0          POP      {r4-r12,lr}           ;772
 000662  f7ffbffe          B.W      BEEP_Tiggr
-000666  a076              ADR      r0,|L1.2112|
+000666  a07d              ADR      r0,|L1.2140|
 000668  f7fffffe          BL       INPUT_LOAD
-00066c  81ec              STRH     r4,[r5,#0xe]          ;778
+00066c  81ac              STRH     r4,[r5,#0xc]          ;778
 00066e  e8bd5ff0          POP      {r4-r12,lr}           ;779
 000672  f7ffbffe          B.W      BEEP_Tiggr
 000676  7808              LDRB     r0,[r1,#0]            ;784  ; para_set2
 000678  28ff              CMP      r0,#0xff              ;784
 00067a  d007              BEQ      |L1.1676|
-00067c  a070              ADR      r0,|L1.2112|
+00067c  a077              ADR      r0,|L1.2140|
 00067e  f7fffffe          BL       INPUT_CDC
-000682  81ec              STRH     r4,[r5,#0xe]          ;795
+000682  81ac              STRH     r4,[r5,#0xc]          ;795
 000684  e8bd5ff0          POP      {r4-r12,lr}           ;796
 000688  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1676|
-00068c  a06c              ADR      r0,|L1.2112|
+00068c  a073              ADR      r0,|L1.2140|
 00068e  f7fffffe          BL       INPUT_C
-000692  81ec              STRH     r4,[r5,#0xe]          ;787
+000692  81ac              STRH     r4,[r5,#0xc]          ;787
 000694  e8bd5ff0          POP      {r4-r12,lr}           ;788
 000698  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1692|
-00069c  81ec              STRH     r4,[r5,#0xe]          ;809
+00069c  81ac              STRH     r4,[r5,#0xc]          ;809
                   |L1.1694|
 ;;;1186                            {
 ;;;1187                               r_test = 1;
@@ -1710,18 +1710,18 @@
 ;;;1216                       }
 ;;;1217                       case face_menu:
 ;;;1218                       {
-;;;1219                           static vu8 POW_t;
-;;;1220                           POW_t++;
-;;;1221                           if(POW_t>1)
-;;;1222                           {
-;;;1223                               POW_t=0;
-;;;1224                           }
-;;;1225                           if(POW_t==0)
+;;;1219   //                         static vu8 POW_t;
+;;;1220   //                         POW_t++;
+;;;1221   //                         if(POW_t>1)
+;;;1222   //                         {
+;;;1223   //                             POW_t=0;
+;;;1224   //                         }
+;;;1225                           if(pow_sw==pow_on)
 ;;;1226                           {
 ;;;1227                               GPIO_ResetBits(GPIOB,GPIO_Pin_13);//关闭稳压电源输出
 ;;;1228                               pow_sw = pow_off;
 ;;;1229                           }
-;;;1230                           else if(POW_t==1)
+;;;1230                           else if(pow_sw==pow_off)
 ;;;1231                           {
 ;;;1232                               GPIO_SetBits(GPIOB,GPIO_Pin_13);//打开稳压电源输出
 ;;;1233                               pow_sw = pow_on;
@@ -1894,7 +1894,7 @@
 ;;;1400   }
 00069e  e8bd9ff0          POP      {r4-r12,pc}
                   |L1.1698|
-0006a2  4863              LDR      r0,|L1.2096|
+0006a2  486a              LDR      r0,|L1.2124|
 0006a4  7800              LDRB     r0,[r0,#0]            ;816  ; page_sw
 0006a6  2801              CMP      r0,#1                 ;816
 0006a8  d015              BEQ      |L1.1750|
@@ -1908,22 +1908,22 @@
 0006b8  e008              B        |L1.1740|
                   |L1.1722|
 0006ba  f7fffffe          BL       SET_OP_LEFT
-0006be  81ec              STRH     r4,[r5,#0xe]          ;820
+0006be  81ac              STRH     r4,[r5,#0xc]          ;820
 0006c0  e8bd5ff0          POP      {r4-r12,lr}           ;821
 0006c4  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1736|
 0006c8  f7fffffe          BL       SYS_INFO_LEFT
                   |L1.1740|
-0006cc  81ec              STRH     r4,[r5,#0xe]          ;830
+0006cc  81ac              STRH     r4,[r5,#0xc]          ;830
 0006ce  e8bd5ff0          POP      {r4-r12,lr}           ;831
 0006d2  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1750|
 0006d6  f7fffffe          BL       CDC_OP_LEFT
-0006da  81ec              STRH     r4,[r5,#0xe]          ;837
+0006da  81ac              STRH     r4,[r5,#0xc]          ;837
 0006dc  e8bd5ff0          POP      {r4-r12,lr}           ;838
 0006e0  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1764|
-0006e4  4852              LDR      r0,|L1.2096|
+0006e4  4859              LDR      r0,|L1.2124|
 0006e6  7800              LDRB     r0,[r0,#0]            ;846  ; page_sw
 0006e8  2801              CMP      r0,#1                 ;846
 0006ea  d015              BEQ      |L1.1816|
@@ -1937,668 +1937,643 @@
 0006fa  e008              B        |L1.1806|
                   |L1.1788|
 0006fc  f7fffffe          BL       SET_OP_RIGHT
-000700  81ec              STRH     r4,[r5,#0xe]          ;850
+000700  81ac              STRH     r4,[r5,#0xc]          ;850
 000702  e8bd5ff0          POP      {r4-r12,lr}           ;851
 000706  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1802|
 00070a  f7fffffe          BL       SYS_INFO_RIGHT
                   |L1.1806|
-00070e  81ec              STRH     r4,[r5,#0xe]          ;860
+00070e  81ac              STRH     r4,[r5,#0xc]          ;860
 000710  e8bd5ff0          POP      {r4-r12,lr}           ;861
 000714  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1816|
 000718  f7fffffe          BL       CDC_OP_RIGHT
-00071c  81ec              STRH     r4,[r5,#0xe]          ;867
+00071c  81ac              STRH     r4,[r5,#0xc]          ;867
 00071e  e8bd5ff0          POP      {r4-r12,lr}           ;868
 000722  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.1830|
-000726  4842              LDR      r0,|L1.2096|
+000726  4849              LDR      r0,|L1.2124|
 000728  7800              LDRB     r0,[r0,#0]            ;876  ; page_sw
 00072a  2808              CMP      r0,#8                 ;876
 00072c  d2b7              BCS      |L1.1694|
 00072e  e8dff000          TBB      [pc,r0]               ;876
-000732  041e              DCB      0x04,0x1e
-000734  051b0c14          DCB      0x05,0x1b,0x0c,0x14
-000738  042c              DCB      0x04,0x2c
+000732  041b              DCB      0x04,0x1b
+000734  05180c11          DCB      0x05,0x18,0x0c,0x11
+000738  0429              DCB      0x04,0x29
+                  |L1.1850|
 00073a  e7b0              B        |L1.1694|
-00073c  81ec              STRH     r4,[r5,#0xe]          ;879
+00073c  81ac              STRH     r4,[r5,#0xc]          ;879
 00073e  f7fffffe          BL       BEEP_Tiggr
 000742  e8bd5ff0          POP      {r4-r12,lr}           ;881
 000746  f7ffbffe          B.W      MENU_OP_UP
-00074a  81ec              STRH     r4,[r5,#0xe]          ;886
-00074c  f7fffffe          BL       BEEP_Tiggr
-000750  483c              LDR      r0,|L1.2116|
-000752  8901              LDRH     r1,[r0,#8]            ;888  ; Run_Control
-000754  1c49              ADDS     r1,r1,#1              ;888
-000756  8101              STRH     r1,[r0,#8]            ;888
-                  |L1.1880|
-000758  e7a1              B        |L1.1694|
-00075a  f7fffffe          BL       SET_OP_UP
-00075e  81ec              STRH     r4,[r5,#0xe]          ;894
-000760  e8bd5ff0          POP      {r4-r12,lr}           ;895
-000764  f7ffbffe          B.W      BEEP_Tiggr
-000768  7808              LDRB     r0,[r1,#0]            ;900  ; para_set2
-00076a  28ff              CMP      r0,#0xff              ;900
-00076c  d006              BEQ      |L1.1916|
-00076e  f7fffffe          BL       CDC_OP_UP
-000772  81ec              STRH     r4,[r5,#0xe]          ;912
-000774  e8bd5ff0          POP      {r4-r12,lr}           ;913
-000778  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.1916|
-00077c  f7fffffe          BL       OC_OP_UP
-000780  81ec              STRH     r4,[r5,#0xe]          ;903
-000782  e8bd5ff0          POP      {r4-r12,lr}           ;904
-000786  f7ffbffe          B.W      BEEP_Tiggr
-00078a  7810              LDRB     r0,[r2,#0]            ;918  ; admin
-00078c  2801              CMP      r0,#1                 ;918
-00078e  d101              BNE      |L1.1940|
-000790  f7fffffe          BL       SYS_INFO_UP
-                  |L1.1940|
-000794  81ec              STRH     r4,[r5,#0xe]          ;922
-000796  e8bd5ff0          POP      {r4-r12,lr}           ;923
-00079a  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.1950|
-00079e  4824              LDR      r0,|L1.2096|
-0007a0  7800              LDRB     r0,[r0,#0]            ;932  ; page_sw
-0007a2  2808              CMP      r0,#8                 ;932
-0007a4  d2d8              BCS      |L1.1880|
-0007a6  e8dff000          TBB      [pc,r0]               ;932
-0007aa  041e              DCB      0x04,0x1e
-0007ac  051b0c14          DCB      0x05,0x1b,0x0c,0x14
-0007b0  042c              DCB      0x04,0x2c
-                  |L1.1970|
-0007b2  e774              B        |L1.1694|
-0007b4  81ec              STRH     r4,[r5,#0xe]          ;935
-0007b6  f7fffffe          BL       BEEP_Tiggr
-0007ba  e8bd5ff0          POP      {r4-r12,lr}           ;937
-0007be  f7ffbffe          B.W      MENU_OP_DOWN
-0007c2  81ec              STRH     r4,[r5,#0xe]          ;942
-0007c4  f7fffffe          BL       BEEP_Tiggr
-0007c8  481e              LDR      r0,|L1.2116|
-0007ca  8901              LDRH     r1,[r0,#8]            ;944  ; Run_Control
-0007cc  1e49              SUBS     r1,r1,#1              ;944
-0007ce  8101              STRH     r1,[r0,#8]            ;944
-0007d0  e765              B        |L1.1694|
-0007d2  f7fffffe          BL       SET_OP_DOWN
-0007d6  81ec              STRH     r4,[r5,#0xe]          ;950
-0007d8  e8bd5ff0          POP      {r4-r12,lr}           ;951
-0007dc  f7ffbffe          B.W      BEEP_Tiggr
-0007e0  7808              LDRB     r0,[r1,#0]            ;956  ; para_set2
-0007e2  28ff              CMP      r0,#0xff              ;956
-0007e4  d006              BEQ      |L1.2036|
-0007e6  f7fffffe          BL       CDC_OP_DOWN
-0007ea  81ec              STRH     r4,[r5,#0xe]          ;967
-0007ec  e8bd5ff0          POP      {r4-r12,lr}           ;968
-0007f0  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2036|
-0007f4  f7fffffe          BL       OC_OP_DOWN
-0007f8  81ec              STRH     r4,[r5,#0xe]          ;959
-0007fa  e8bd5ff0          POP      {r4-r12,lr}           ;960
-0007fe  f7ffbffe          B.W      BEEP_Tiggr
-000802  7810              LDRB     r0,[r2,#0]            ;973  ; admin
-000804  2801              CMP      r0,#1                 ;973
-000806  d101              BNE      |L1.2060|
-000808  f7fffffe          BL       SYS_INFO_DOWN
-                  |L1.2060|
-00080c  81ec              STRH     r4,[r5,#0xe]          ;977
-00080e  e8bd5ff0          POP      {r4-r12,lr}           ;978
-000812  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2070|
-000816  4806              LDR      r0,|L1.2096|
-000818  7800              LDRB     r0,[r0,#0]            ;989  ; page_sw
-00081a  2808              CMP      r0,#8                 ;989
-00081c  d29c              BCS      |L1.1880|
-00081e  e8dff000          TBB      [pc,r0]               ;989
-000822  0432              DCB      0x04,0x32
-000824  1321241a          DCB      0x13,0x21,0x24,0x1a
-000828  0439              DCB      0x04,0x39
-00082a  e738              B        |L1.1694|
-                  |L1.2092|
-00082c  3700              DCB      "7",0
-00082e  00                DCB      0
-00082f  00                DCB      0
-                  |L1.2096|
+00074a  81ac              STRH     r4,[r5,#0xc]          ;886
+00074c  e8bd5ff0          POP      {r4-r12,lr}           ;887
+000750  f7ffbffe          B.W      BEEP_Tiggr
+000754  f7fffffe          BL       SET_OP_UP
+000758  81ac              STRH     r4,[r5,#0xc]          ;894
+00075a  e8bd5ff0          POP      {r4-r12,lr}           ;895
+00075e  f7ffbffe          B.W      BEEP_Tiggr
+000762  7808              LDRB     r0,[r1,#0]            ;900  ; para_set2
+000764  28ff              CMP      r0,#0xff              ;900
+000766  d006              BEQ      |L1.1910|
+000768  f7fffffe          BL       CDC_OP_UP
+00076c  81ac              STRH     r4,[r5,#0xc]          ;912
+00076e  e8bd5ff0          POP      {r4-r12,lr}           ;913
+000772  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.1910|
+000776  f7fffffe          BL       OC_OP_UP
+00077a  81ac              STRH     r4,[r5,#0xc]          ;903
+00077c  e8bd5ff0          POP      {r4-r12,lr}           ;904
+000780  f7ffbffe          B.W      BEEP_Tiggr
+000784  7810              LDRB     r0,[r2,#0]            ;918  ; admin
+000786  2801              CMP      r0,#1                 ;918
+000788  d101              BNE      |L1.1934|
+00078a  f7fffffe          BL       SYS_INFO_UP
+                  |L1.1934|
+00078e  81ac              STRH     r4,[r5,#0xc]          ;922
+000790  e8bd5ff0          POP      {r4-r12,lr}           ;923
+000794  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.1944|
+000798  482c              LDR      r0,|L1.2124|
+00079a  7800              LDRB     r0,[r0,#0]            ;932  ; page_sw
+00079c  2808              CMP      r0,#8                 ;932
+00079e  d2cc              BCS      |L1.1850|
+0007a0  e8dff000          TBB      [pc,r0]               ;932
+0007a4  041b0518          DCB      0x04,0x1b,0x05,0x18
+0007a8  0c110429          DCB      0x0c,0x11,0x04,0x29
+                  |L1.1964|
+0007ac  e777              B        |L1.1694|
+0007ae  81ac              STRH     r4,[r5,#0xc]          ;935
+0007b0  f7fffffe          BL       BEEP_Tiggr
+0007b4  e8bd5ff0          POP      {r4-r12,lr}           ;937
+0007b8  f7ffbffe          B.W      MENU_OP_DOWN
+0007bc  81ac              STRH     r4,[r5,#0xc]          ;942
+0007be  e8bd5ff0          POP      {r4-r12,lr}           ;943
+0007c2  f7ffbffe          B.W      BEEP_Tiggr
+0007c6  f7fffffe          BL       SET_OP_DOWN
+0007ca  81ac              STRH     r4,[r5,#0xc]          ;950
+0007cc  e8bd5ff0          POP      {r4-r12,lr}           ;951
+0007d0  f7ffbffe          B.W      BEEP_Tiggr
+0007d4  7808              LDRB     r0,[r1,#0]            ;956  ; para_set2
+0007d6  28ff              CMP      r0,#0xff              ;956
+0007d8  d006              BEQ      |L1.2024|
+0007da  f7fffffe          BL       CDC_OP_DOWN
+0007de  81ac              STRH     r4,[r5,#0xc]          ;967
+0007e0  e8bd5ff0          POP      {r4-r12,lr}           ;968
+0007e4  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2024|
+0007e8  f7fffffe          BL       OC_OP_DOWN
+0007ec  81ac              STRH     r4,[r5,#0xc]          ;959
+0007ee  e8bd5ff0          POP      {r4-r12,lr}           ;960
+0007f2  f7ffbffe          B.W      BEEP_Tiggr
+0007f6  7810              LDRB     r0,[r2,#0]            ;973  ; admin
+0007f8  2801              CMP      r0,#1                 ;973
+0007fa  d101              BNE      |L1.2048|
+0007fc  f7fffffe          BL       SYS_INFO_DOWN
+                  |L1.2048|
+000800  81ac              STRH     r4,[r5,#0xc]          ;977
+000802  e8bd5ff0          POP      {r4-r12,lr}           ;978
+000806  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2058|
+00080a  4810              LDR      r0,|L1.2124|
+00080c  7800              LDRB     r0,[r0,#0]            ;989  ; page_sw
+00080e  2808              CMP      r0,#8                 ;989
+000810  d293              BCS      |L1.1850|
+000812  e8dff000          TBB      [pc,r0]               ;989
+000816  0431              DCB      0x04,0x31
+000818  0513160c          DCB      0x05,0x13,0x16,0x0c
+00081c  0438              DCB      0x04,0x38
+00081e  e73e              B        |L1.1694|
+000820  f7fffffe          BL       MENU_SET
+000824  81ac              STRH     r4,[r5,#0xc]          ;993
+000826  e8bd5ff0          POP      {r4-r12,lr}           ;994
+00082a  f7ffbffe          B.W      BEEP_Tiggr
+00082e  f7fffffe          BL       PARA_SET
+000832  81ac              STRH     r4,[r5,#0xc]          ;1000
+000834  e8bd5ff0          POP      {r4-r12,lr}           ;1001
+000838  f7ffbffe          B.W      BEEP_Tiggr
+00083c  7808              LDRB     r0,[r1,#0]            ;1006  ; para_set2
+00083e  28ff              CMP      r0,#0xff              ;1006
+000840  d013              BEQ      |L1.2154|
+000842  f7fffffe          BL       LOAD_SET
+000846  e00b              B        |L1.2144|
+                  |L1.2120|
+000848  3700              DCB      "7",0
+00084a  00                DCB      0
+00084b  00                DCB      0
+                  |L1.2124|
                           DCD      page_sw
-                  |L1.2100|
-000834  3800              DCB      "8",0
-000836  00                DCB      0
-000837  00                DCB      0
-                  |L1.2104|
-000838  3900              DCB      "9",0
-00083a  00                DCB      0
-00083b  00                DCB      0
-                  |L1.2108|
-00083c  3000              DCB      "0",0
-00083e  00                DCB      0
-00083f  00                DCB      0
-                  |L1.2112|
-000840  2e00              DCB      ".",0
-000842  00                DCB      0
-000843  00                DCB      0
-                  |L1.2116|
-                          DCD      Run_Control
-000848  f7fffffe          BL       MENU_SET
-00084c  81ec              STRH     r4,[r5,#0xe]          ;993
-00084e  e8bd5ff0          POP      {r4-r12,lr}           ;994
-000852  f7ffbffe          B.W      BEEP_Tiggr
-000856  f7fffffe          BL       PARA_SET
-00085a  81ec              STRH     r4,[r5,#0xe]          ;1000
-00085c  e8bd5ff0          POP      {r4-r12,lr}           ;1001
-000860  f7ffbffe          B.W      BEEP_Tiggr
-000864  7808              LDRB     r0,[r1,#0]            ;1006  ; para_set2
-000866  28ff              CMP      r0,#0xff              ;1006
-000868  d006              BEQ      |L1.2168|
-00086a  f7fffffe          BL       LOAD_SET
-00086e  81ec              STRH     r4,[r5,#0xe]          ;1017
-000870  e8bd5ff0          POP      {r4-r12,lr}           ;1018
+                  |L1.2128|
+000850  3800              DCB      "8",0
+000852  00                DCB      0
+000853  00                DCB      0
+                  |L1.2132|
+000854  3900              DCB      "9",0
+000856  00                DCB      0
+000857  00                DCB      0
+                  |L1.2136|
+000858  3000              DCB      "0",0
+00085a  00                DCB      0
+00085b  00                DCB      0
+                  |L1.2140|
+00085c  2e00              DCB      ".",0
+00085e  00                DCB      0
+00085f  00                DCB      0
+                  |L1.2144|
+000860  81ac              STRH     r4,[r5,#0xc]          ;1017
+000862  e8bd5ff0          POP      {r4-r12,lr}           ;1018
+000866  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2154|
+00086a  f7fffffe          BL       OC_SET
+00086e  81ac              STRH     r4,[r5,#0xc]          ;1009
+000870  e8bd5ff0          POP      {r4-r12,lr}           ;1010
 000874  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2168|
-000878  f7fffffe          BL       OC_SET
-00087c  81ec              STRH     r4,[r5,#0xe]          ;1009
-00087e  e8bd5ff0          POP      {r4-r12,lr}           ;1010
+000878  f7fffffe          BL       CDC_SET
+00087c  81ac              STRH     r4,[r5,#0xc]          ;1024
+00087e  e8bd5ff0          POP      {r4-r12,lr}           ;1025
 000882  f7ffbffe          B.W      BEEP_Tiggr
-000886  f7fffffe          BL       CDC_SET
-00088a  81ec              STRH     r4,[r5,#0xe]          ;1024
-00088c  e8bd5ff0          POP      {r4-r12,lr}           ;1025
+000886  f7fffffe          BL       CFM_PASS
+00088a  81ac              STRH     r4,[r5,#0xc]          ;1031
+00088c  e8bd5ff0          POP      {r4-r12,lr}           ;1032
 000890  f7ffbffe          B.W      BEEP_Tiggr
-000894  f7fffffe          BL       CFM_PASS
-000898  81ec              STRH     r4,[r5,#0xe]          ;1031
-00089a  e8bd5ff0          POP      {r4-r12,lr}           ;1032
-00089e  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2210|
-0008a2  7b28              LDRB     r0,[r5,#0xc]          ;1040  ; track
-0008a4  2805              CMP      r0,#5                 ;1040
-0008a6  d284              BCS      |L1.1970|
-0008a8  e8dff000          TBB      [pc,r0]               ;1040
-0008ac  63834303          DCB      0x63,0x83,0x43,0x03
-0008b0  2300              DCB      0x23,0x00
-0008b2  6818              LDR      r0,[r3,#0]            ;1044  ; hWinR
-0008b4  f7fffffe          BL       WM_DeleteWindow
-0008b8  6830              LDR      r0,[r6,#0]            ;1045  ; hWinWind
+                  |L1.2196|
+000894  7aa8              LDRB     r0,[r5,#0xa]          ;1040  ; track
+000896  2805              CMP      r0,#5                 ;1040
+000898  d288              BCS      |L1.1964|
+00089a  e8dff000          TBB      [pc,r0]               ;1040
+00089e  6383              DCB      0x63,0x83
+0008a0  43032300          DCB      0x43,0x03,0x23,0x00
+0008a4  6818              LDR      r0,[r3,#0]            ;1044  ; hWinR
+0008a6  f7fffffe          BL       WM_DeleteWindow
+0008aa  6830              LDR      r0,[r6,#0]            ;1045  ; hWinWind
+0008ac  f7fffffe          BL       WM_DeleteWindow
+0008b0  6838              LDR      r0,[r7,#0]            ;1046  ; hWinG
+0008b2  f7fffffe          BL       WM_DeleteWindow
+0008b6  f8d80000          LDR      r0,[r8,#0]            ;1047  ; load_wind
 0008ba  f7fffffe          BL       WM_DeleteWindow
-0008be  6838              LDR      r0,[r7,#0]            ;1046  ; hWinG
-0008c0  f7fffffe          BL       WM_DeleteWindow
-0008c4  f8d80000          LDR      r0,[r8,#0]            ;1047  ; load_wind
-0008c8  f7fffffe          BL       WM_DeleteWindow
-0008cc  f8d90000          LDR      r0,[r9,#0]            ;1048  ; hWinsysinfo
-0008d0  f7fffffe          BL       WM_DeleteWindow
-0008d4  f8da0000          LDR      r0,[r10,#0]           ;1049  ; hWincdc
-0008d8  f7fffffe          BL       WM_DeleteWindow
-0008dc  f8db0000          LDR      r0,[r11,#0]           ;1050  ; hWinset
-0008e0  f7fffffe          BL       WM_DeleteWindow
-0008e4  f7fffffe          BL       CreateR
-0008e8  81ec              STRH     r4,[r5,#0xe]          ;1052
-0008ea  e8bd5ff0          POP      {r4-r12,lr}           ;1053
-0008ee  f7ffbffe          B.W      BEEP_Tiggr
-0008f2  6818              LDR      r0,[r3,#0]            ;1058  ; hWinR
-0008f4  f7fffffe          BL       WM_DeleteWindow
-0008f8  6830              LDR      r0,[r6,#0]            ;1059  ; hWinWind
+0008be  f8d90000          LDR      r0,[r9,#0]            ;1048  ; hWinsysinfo
+0008c2  f7fffffe          BL       WM_DeleteWindow
+0008c6  f8da0000          LDR      r0,[r10,#0]           ;1049  ; hWincdc
+0008ca  f7fffffe          BL       WM_DeleteWindow
+0008ce  f8db0000          LDR      r0,[r11,#0]           ;1050  ; hWinset
+0008d2  f7fffffe          BL       WM_DeleteWindow
+0008d6  f7fffffe          BL       CreateR
+0008da  81ac              STRH     r4,[r5,#0xc]          ;1052
+0008dc  e8bd5ff0          POP      {r4-r12,lr}           ;1053
+0008e0  f7ffbffe          B.W      BEEP_Tiggr
+0008e4  6818              LDR      r0,[r3,#0]            ;1058  ; hWinR
+0008e6  f7fffffe          BL       WM_DeleteWindow
+0008ea  6830              LDR      r0,[r6,#0]            ;1059  ; hWinWind
+0008ec  f7fffffe          BL       WM_DeleteWindow
+0008f0  6838              LDR      r0,[r7,#0]            ;1060  ; hWinG
+0008f2  f7fffffe          BL       WM_DeleteWindow
+0008f6  f8d80000          LDR      r0,[r8,#0]            ;1061  ; load_wind
 0008fa  f7fffffe          BL       WM_DeleteWindow
-0008fe  6838              LDR      r0,[r7,#0]            ;1060  ; hWinG
-000900  f7fffffe          BL       WM_DeleteWindow
-000904  f8d80000          LDR      r0,[r8,#0]            ;1061  ; load_wind
-000908  f7fffffe          BL       WM_DeleteWindow
-00090c  f8d90000          LDR      r0,[r9,#0]            ;1062  ; hWinsysinfo
-000910  f7fffffe          BL       WM_DeleteWindow
-000914  f8da0000          LDR      r0,[r10,#0]           ;1063  ; hWincdc
-000918  f7fffffe          BL       WM_DeleteWindow
-00091c  f8db0000          LDR      r0,[r11,#0]           ;1064  ; hWinset
-000920  f7fffffe          BL       WM_DeleteWindow
-000924  f7fffffe          BL       CreateWindow2
-000928  81ec              STRH     r4,[r5,#0xe]          ;1066
-00092a  e8bd5ff0          POP      {r4-r12,lr}           ;1067
-00092e  f7ffbffe          B.W      BEEP_Tiggr
-000932  6818              LDR      r0,[r3,#0]            ;1072  ; hWinR
-000934  f7fffffe          BL       WM_DeleteWindow
-000938  6830              LDR      r0,[r6,#0]            ;1073  ; hWinWind
+0008fe  f8d90000          LDR      r0,[r9,#0]            ;1062  ; hWinsysinfo
+000902  f7fffffe          BL       WM_DeleteWindow
+000906  f8da0000          LDR      r0,[r10,#0]           ;1063  ; hWincdc
+00090a  f7fffffe          BL       WM_DeleteWindow
+00090e  f8db0000          LDR      r0,[r11,#0]           ;1064  ; hWinset
+000912  f7fffffe          BL       WM_DeleteWindow
+000916  f7fffffe          BL       CreateWindow2
+00091a  81ac              STRH     r4,[r5,#0xc]          ;1066
+00091c  e8bd5ff0          POP      {r4-r12,lr}           ;1067
+000920  f7ffbffe          B.W      BEEP_Tiggr
+000924  6818              LDR      r0,[r3,#0]            ;1072  ; hWinR
+000926  f7fffffe          BL       WM_DeleteWindow
+00092a  6830              LDR      r0,[r6,#0]            ;1073  ; hWinWind
+00092c  f7fffffe          BL       WM_DeleteWindow
+000930  6838              LDR      r0,[r7,#0]            ;1074  ; hWinG
+000932  f7fffffe          BL       WM_DeleteWindow
+000936  f8d80000          LDR      r0,[r8,#0]            ;1075  ; load_wind
 00093a  f7fffffe          BL       WM_DeleteWindow
-00093e  6838              LDR      r0,[r7,#0]            ;1074  ; hWinG
-000940  f7fffffe          BL       WM_DeleteWindow
-000944  f8d80000          LDR      r0,[r8,#0]            ;1075  ; load_wind
-000948  f7fffffe          BL       WM_DeleteWindow
-00094c  f8d90000          LDR      r0,[r9,#0]            ;1076  ; hWinsysinfo
-000950  f7fffffe          BL       WM_DeleteWindow
-000954  f8da0000          LDR      r0,[r10,#0]           ;1077  ; hWincdc
-000958  f7fffffe          BL       WM_DeleteWindow
-00095c  f8db0000          LDR      r0,[r11,#0]           ;1078  ; hWinset
-000960  f7fffffe          BL       WM_DeleteWindow
-000964  f7fffffe          BL       CreateWindow
-000968  81ec              STRH     r4,[r5,#0xe]          ;1080
-00096a  e8bd5ff0          POP      {r4-r12,lr}           ;1081
-00096e  f7ffbffe          B.W      BEEP_Tiggr
-000972  6818              LDR      r0,[r3,#0]            ;1086  ; hWinR
-000974  f7fffffe          BL       WM_DeleteWindow
-000978  6830              LDR      r0,[r6,#0]            ;1087  ; hWinWind
+00093e  f8d90000          LDR      r0,[r9,#0]            ;1076  ; hWinsysinfo
+000942  f7fffffe          BL       WM_DeleteWindow
+000946  f8da0000          LDR      r0,[r10,#0]           ;1077  ; hWincdc
+00094a  f7fffffe          BL       WM_DeleteWindow
+00094e  f8db0000          LDR      r0,[r11,#0]           ;1078  ; hWinset
+000952  f7fffffe          BL       WM_DeleteWindow
+000956  f7fffffe          BL       CreateWindow
+00095a  81ac              STRH     r4,[r5,#0xc]          ;1080
+00095c  e8bd5ff0          POP      {r4-r12,lr}           ;1081
+000960  f7ffbffe          B.W      BEEP_Tiggr
+000964  6818              LDR      r0,[r3,#0]            ;1086  ; hWinR
+000966  f7fffffe          BL       WM_DeleteWindow
+00096a  6830              LDR      r0,[r6,#0]            ;1087  ; hWinWind
+00096c  f7fffffe          BL       WM_DeleteWindow
+000970  6838              LDR      r0,[r7,#0]            ;1088  ; hWinG
+000972  f7fffffe          BL       WM_DeleteWindow
+000976  f8d80000          LDR      r0,[r8,#0]            ;1089  ; load_wind
 00097a  f7fffffe          BL       WM_DeleteWindow
-00097e  6838              LDR      r0,[r7,#0]            ;1088  ; hWinG
-000980  f7fffffe          BL       WM_DeleteWindow
-000984  f8d80000          LDR      r0,[r8,#0]            ;1089  ; load_wind
-000988  f7fffffe          BL       WM_DeleteWindow
-00098c  f8d90000          LDR      r0,[r9,#0]            ;1090  ; hWinsysinfo
-000990  f7fffffe          BL       WM_DeleteWindow
-000994  f8da0000          LDR      r0,[r10,#0]           ;1091  ; hWincdc
-000998  f7fffffe          BL       WM_DeleteWindow
-00099c  f8db0000          LDR      r0,[r11,#0]           ;1092  ; hWinset
-0009a0  f7fffffe          BL       WM_DeleteWindow
-0009a4  f7fffffe          BL       CreateG
-0009a8  81ec              STRH     r4,[r5,#0xe]          ;1094
-0009aa  e8bd5ff0          POP      {r4-r12,lr}           ;1095
-0009ae  f7ffbffe          B.W      BEEP_Tiggr
-0009b2  6818              LDR      r0,[r3,#0]            ;1100  ; hWinR
-0009b4  f7fffffe          BL       WM_DeleteWindow
-0009b8  6830              LDR      r0,[r6,#0]            ;1101  ; hWinWind
+00097e  f8d90000          LDR      r0,[r9,#0]            ;1090  ; hWinsysinfo
+000982  f7fffffe          BL       WM_DeleteWindow
+000986  f8da0000          LDR      r0,[r10,#0]           ;1091  ; hWincdc
+00098a  f7fffffe          BL       WM_DeleteWindow
+00098e  f8db0000          LDR      r0,[r11,#0]           ;1092  ; hWinset
+000992  f7fffffe          BL       WM_DeleteWindow
+000996  f7fffffe          BL       CreateG
+00099a  81ac              STRH     r4,[r5,#0xc]          ;1094
+00099c  e8bd5ff0          POP      {r4-r12,lr}           ;1095
+0009a0  f7ffbffe          B.W      BEEP_Tiggr
+0009a4  6818              LDR      r0,[r3,#0]            ;1100  ; hWinR
+0009a6  f7fffffe          BL       WM_DeleteWindow
+0009aa  6830              LDR      r0,[r6,#0]            ;1101  ; hWinWind
+0009ac  f7fffffe          BL       WM_DeleteWindow
+0009b0  6838              LDR      r0,[r7,#0]            ;1102  ; hWinG
+0009b2  f7fffffe          BL       WM_DeleteWindow
+0009b6  f8d80000          LDR      r0,[r8,#0]            ;1103  ; load_wind
 0009ba  f7fffffe          BL       WM_DeleteWindow
-0009be  6838              LDR      r0,[r7,#0]            ;1102  ; hWinG
-0009c0  f7fffffe          BL       WM_DeleteWindow
-0009c4  f8d80000          LDR      r0,[r8,#0]            ;1103  ; load_wind
-0009c8  f7fffffe          BL       WM_DeleteWindow
-0009cc  f8d90000          LDR      r0,[r9,#0]            ;1104  ; hWinsysinfo
-0009d0  f7fffffe          BL       WM_DeleteWindow
-0009d4  f8da0000          LDR      r0,[r10,#0]           ;1105  ; hWincdc
-0009d8  f7fffffe          BL       WM_DeleteWindow
-0009dc  f8db0000          LDR      r0,[r11,#0]           ;1106  ; hWinset
-0009e0  f7fffffe          BL       WM_DeleteWindow
-0009e4  f7fffffe          BL       CreateCDC
-0009e8  81ec              STRH     r4,[r5,#0xe]          ;1108
-0009ea  e8bd5ff0          POP      {r4-r12,lr}           ;1109
-0009ee  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2546|
-0009f2  6818              LDR      r0,[r3,#0]            ;1119  ; hWinR
-0009f4  f7fffffe          BL       WM_DeleteWindow
-0009f8  6830              LDR      r0,[r6,#0]            ;1120  ; hWinWind
+0009be  f8d90000          LDR      r0,[r9,#0]            ;1104  ; hWinsysinfo
+0009c2  f7fffffe          BL       WM_DeleteWindow
+0009c6  f8da0000          LDR      r0,[r10,#0]           ;1105  ; hWincdc
+0009ca  f7fffffe          BL       WM_DeleteWindow
+0009ce  f8db0000          LDR      r0,[r11,#0]           ;1106  ; hWinset
+0009d2  f7fffffe          BL       WM_DeleteWindow
+0009d6  f7fffffe          BL       CreateCDC
+0009da  81ac              STRH     r4,[r5,#0xc]          ;1108
+0009dc  e8bd5ff0          POP      {r4-r12,lr}           ;1109
+0009e0  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2532|
+0009e4  6818              LDR      r0,[r3,#0]            ;1119  ; hWinR
+0009e6  f7fffffe          BL       WM_DeleteWindow
+0009ea  6830              LDR      r0,[r6,#0]            ;1120  ; hWinWind
+0009ec  f7fffffe          BL       WM_DeleteWindow
+0009f0  6838              LDR      r0,[r7,#0]            ;1121  ; hWinG
+0009f2  f7fffffe          BL       WM_DeleteWindow
+0009f6  f8d80000          LDR      r0,[r8,#0]            ;1122  ; load_wind
 0009fa  f7fffffe          BL       WM_DeleteWindow
-0009fe  6838              LDR      r0,[r7,#0]            ;1121  ; hWinG
-000a00  f7fffffe          BL       WM_DeleteWindow
-000a04  f8d80000          LDR      r0,[r8,#0]            ;1122  ; load_wind
-000a08  f7fffffe          BL       WM_DeleteWindow
-000a0c  f8d90000          LDR      r0,[r9,#0]            ;1123  ; hWinsysinfo
-000a10  e007              B        |L1.2594|
-                  |L1.2578|
-000a12  e017              B        |L1.2628|
+0009fe  f8d90000          LDR      r0,[r9,#0]            ;1123  ; hWinsysinfo
+000a02  f7fffffe          BL       WM_DeleteWindow
+000a06  f8da0000          LDR      r0,[r10,#0]           ;1124  ; hWincdc
+000a0a  f7fffffe          BL       WM_DeleteWindow
+000a0e  f8db0000          LDR      r0,[r11,#0]           ;1125  ; hWinset
+000a12  e007              B        |L1.2596|
                   |L1.2580|
-000a14  e1ae              B        |L1.3444|
+000a14  e00f              B        |L1.2614|
                   |L1.2582|
-000a16  e0bc              B        |L1.2962|
+000a16  e192              B        |L1.3390|
                   |L1.2584|
-000a18  e104              B        |L1.3108|
+000a18  e0a0              B        |L1.2908|
                   |L1.2586|
-000a1a  e125              B        |L1.3176|
+000a1a  e0e8              B        |L1.3054|
                   |L1.2588|
-000a1c  e147              B        |L1.3246|
+000a1c  e109              B        |L1.3122|
                   |L1.2590|
-000a1e  e169              B        |L1.3316|
+000a1e  e12b              B        |L1.3192|
                   |L1.2592|
-000a20  e188              B        |L1.3380|
+000a20  e14d              B        |L1.3262|
                   |L1.2594|
-000a22  f7fffffe          BL       WM_DeleteWindow
-000a26  f8da0000          LDR      r0,[r10,#0]           ;1124  ; hWincdc
-000a2a  f7fffffe          BL       WM_DeleteWindow
-000a2e  f8db0000          LDR      r0,[r11,#0]           ;1125  ; hWinset
-000a32  f7fffffe          BL       WM_DeleteWindow
-000a36  f7fffffe          BL       CreateSET
-000a3a  81ec              STRH     r4,[r5,#0xe]          ;1127
-000a3c  e8bd5ff0          POP      {r4-r12,lr}           ;1128
-000a40  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2628|
-000a44  48db              LDR      r0,|L1.3508|
-000a46  7802              LDRB     r2,[r0,#0]            ;1133  ; page_sw
-000a48  4fdb              LDR      r7,|L1.3512|
-000a4a  f44f5600          MOV      r6,#0x2000            ;1205
-000a4e  2a01              CMP      r2,#1                 ;1133
-000a50  d04b              BEQ      |L1.2794|
-000a52  2a02              CMP      r2,#2                 ;1133
-000a54  d074              BEQ      |L1.2880|
-000a56  2a03              CMP      r2,#3                 ;1133
-000a58  d032              BEQ      |L1.2752|
-000a5a  2a04              CMP      r2,#4                 ;1133
-000a5c  f47fae7c          BNE      |L1.1880|
-000a60  7ae8              LDRB     r0,[r5,#0xb]          ;1137  ; LOAD_t
-000a62  1c40              ADDS     r0,r0,#1              ;1137
-000a64  72e8              STRB     r0,[r5,#0xb]          ;1137
-000a66  7ae8              LDRB     r0,[r5,#0xb]          ;1138  ; LOAD_t
-000a68  2801              CMP      r0,#1                 ;1138
-000a6a  d900              BLS      |L1.2670|
-000a6c  72ec              STRB     r4,[r5,#0xb]          ;1140
-                  |L1.2670|
-000a6e  7ae8              LDRB     r0,[r5,#0xb]          ;1142  ; LOAD_t
-000a70  4ed2              LDR      r6,|L1.3516|
-000a72  b118              CBZ      r0,|L1.2684|
-000a74  7ae8              LDRB     r0,[r5,#0xb]          ;1148  ; LOAD_t
-000a76  2801              CMP      r0,#1                 ;1148
-000a78  d00b              BEQ      |L1.2706|
-000a7a  e01c              B        |L1.2742|
-                  |L1.2684|
-000a7c  48d0              LDR      r0,|L1.3520|
-000a7e  6801              LDR      r1,[r0,#0]            ;1144  ; flagA
-000a80  f0210140          BIC      r1,r1,#0x40           ;1144
-000a84  6001              STR      r1,[r0,#0]            ;1144  ; flagA
-000a86  2102              MOVS     r1,#2                 ;1145
-000a88  48ce              LDR      r0,|L1.3524|
-000a8a  f7fffffe          BL       GPIO_SetBits
-000a8e  7034              STRB     r4,[r6,#0]            ;1146
-000a90  e011              B        |L1.2742|
-                  |L1.2706|
-000a92  48cb              LDR      r0,|L1.3520|
-000a94  6801              LDR      r1,[r0,#0]            ;1150  ; flagA
-000a96  f0410140          ORR      r1,r1,#0x40           ;1150
-000a9a  6001              STR      r1,[r0,#0]            ;1150  ; flagA
-000a9c  2102              MOVS     r1,#2                 ;1151
-000a9e  48c9              LDR      r0,|L1.3524|
-000aa0  f7fffffe          BL       GPIO_ResetBits
-000aa4  f7fffffe          BL       GUI_GetTime
-000aa8  f44f71fa          MOV      r1,#0x1f4             ;1152
-000aac  fb90f0f1          SDIV     r0,r0,r1              ;1152
-000ab0  8268              STRH     r0,[r5,#0x12]         ;1152
-000ab2  2001              MOVS     r0,#1                 ;1153
-000ab4  7030              STRB     r0,[r6,#0]            ;1153
-                  |L1.2742|
-000ab6  81ec              STRH     r4,[r5,#0xe]          ;1155
-000ab8  e8bd5ff0          POP      {r4-r12,lr}           ;1156
-000abc  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2752|
-000ac0  7928              LDRB     r0,[r5,#4]            ;1185  ; r_test
-000ac2  b960              CBNZ     r0,|L1.2782|
-000ac4  48c0              LDR      r0,|L1.3528|
-000ac6  ed9c0a00          VLDR     s0,[r12,#0]           ;1185
-000aca  edd00a00          VLDR     s1,[r0,#0]            ;1185
-000ace  eeb40ae0          VCMPE.F32 s0,s1                 ;1185
-000ad2  eef1fa10          VMRS     APSR_nzcv,FPSCR       ;1185
-000ad6  dd02              BLE      |L1.2782|
-000ad8  2001              MOVS     r0,#1                 ;1187
-000ada  7128              STRB     r0,[r5,#4]            ;1187
-000adc  e000              B        |L1.2784|
-                  |L1.2782|
-000ade  712c              STRB     r4,[r5,#4]            ;1189
-                  |L1.2784|
-000ae0  81ec              STRH     r4,[r5,#0xe]          ;1191
-000ae2  e8bd5ff0          POP      {r4-r12,lr}           ;1192
-000ae6  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2794|
-000aea  f8df82e0          LDR      r8,|L1.3532|
-000aee  f8980000          LDRB     r0,[r8,#0]            ;1197  ; cdc_sw
-000af2  b168              CBZ      r0,|L1.2832|
-000af4  4631              MOV      r1,r6                 ;1208
-000af6  4638              MOV      r0,r7                 ;1208
-000af8  f7fffffe          BL       GPIO_ResetBits
-000afc  f8884000          STRB     r4,[r8,#0]            ;1209
-000b00  48b3              LDR      r0,|L1.3536|
-000b02  7004              STRB     r4,[r0,#0]            ;1210
-000b04  736c              STRB     r4,[r5,#0xd]          ;1211
-                  |L1.2822|
-000b06  81ec              STRH     r4,[r5,#0xe]          ;1213
-000b08  e8bd5ff0          POP      {r4-r12,lr}           ;1214
-000b0c  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2832|
-000b10  4ab0              LDR      r2,|L1.3540|
-000b12  8fd0              LDRH     r0,[r2,#0x3e]         ;1199  ; Run_Control
-000b14  8050              STRH     r0,[r2,#2]            ;1199
-000b16  f8b20044          LDRH     r0,[r2,#0x44]         ;1200  ; Run_Control
-000b1a  8090              STRH     r0,[r2,#4]            ;1200
-000b1c  48ae              LDR      r0,|L1.3544|
-000b1e  7004              STRB     r4,[r0,#0]            ;1201
-000b20  2003              MOVS     r0,#3                 ;1202
-000b22  f7fffffe          BL       Mode_SW_CONT
-000b26  48ad              LDR      r0,|L1.3548|
-000b28  f04f0901          MOV      r9,#1                 ;1204
-000b2c  f8809000          STRB     r9,[r0,#0]            ;1204
-000b30  4631              MOV      r1,r6                 ;1205
-000b32  4638              MOV      r0,r7                 ;1205
-000b34  f7fffffe          BL       GPIO_SetBits
-000b38  f8889000          STRB     r9,[r8,#0]            ;1206
-000b3c  e7e3              B        |L1.2822|
-000b3e  e7ff              B        |L1.2880|
-                  |L1.2880|
-000b40  7a68              LDRB     r0,[r5,#9]            ;1220  ; POW_t
-000b42  1c40              ADDS     r0,r0,#1              ;1220
-000b44  7268              STRB     r0,[r5,#9]            ;1220
-000b46  7a68              LDRB     r0,[r5,#9]            ;1221  ; POW_t
-000b48  2801              CMP      r0,#1                 ;1221
-000b4a  d900              BLS      |L1.2894|
-000b4c  726c              STRB     r4,[r5,#9]            ;1223
-                  |L1.2894|
-000b4e  7a68              LDRB     r0,[r5,#9]            ;1225  ; POW_t
-000b50  f8df828c          LDR      r8,|L1.3552|
-000b54  b118              CBZ      r0,|L1.2910|
-000b56  7a68              LDRB     r0,[r5,#9]            ;1230  ; POW_t
-000b58  2801              CMP      r0,#1                 ;1230
-000b5a  d007              BEQ      |L1.2924|
-000b5c  e014              B        |L1.2952|
-                  |L1.2910|
-000b5e  4631              MOV      r1,r6                 ;1227
-000b60  4638              MOV      r0,r7                 ;1227
-000b62  f7fffffe          BL       GPIO_ResetBits
-000b66  f8884000          STRB     r4,[r8,#0]            ;1228
-000b6a  e00d              B        |L1.2952|
-                  |L1.2924|
-000b6c  4631              MOV      r1,r6                 ;1232
-000b6e  4638              MOV      r0,r7                 ;1232
-000b70  f7fffffe          BL       GPIO_SetBits
-000b74  2001              MOVS     r0,#1                 ;1233
-000b76  f8880000          STRB     r0,[r8,#0]            ;1233
-000b7a  f7fffffe          BL       GUI_GetTime
-000b7e  f44f71fa          MOV      r1,#0x1f4             ;1234
-000b82  fb90f0f1          SDIV     r0,r0,r1              ;1234
-000b86  8228              STRH     r0,[r5,#0x10]         ;1234
-                  |L1.2952|
-000b88  81ec              STRH     r4,[r5,#0xe]          ;1236
-000b8a  e8bd5ff0          POP      {r4-r12,lr}           ;1237
-000b8e  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.2962|
-000b92  4888              LDR      r0,|L1.3508|
-000b94  7800              LDRB     r0,[r0,#0]            ;1246  ; page_sw
-000b96  2801              CMP      r0,#1                 ;1246
-000b98  d026              BEQ      |L1.3048|
-000b9a  2802              CMP      r0,#2                 ;1246
-000b9c  d01d              BEQ      |L1.3034|
-000b9e  2803              CMP      r0,#3                 ;1246
-000ba0  d00c              BEQ      |L1.3004|
-000ba2  2804              CMP      r0,#4                 ;1246
-000ba4  f47fadd8          BNE      |L1.1880|
-000ba8  2001              MOVS     r0,#1                 ;1269
-000baa  70e8              STRB     r0,[r5,#3]            ;1269
-000bac  f8dc0000          LDR      r0,[r12,#0]           ;1270  ; DISS_Voltage
-000bb0  61a8              STR      r0,[r5,#0x18]         ;1270  ; clear_lv
-000bb2  81ec              STRH     r4,[r5,#0xe]          ;1271
-000bb4  e8bd5ff0          POP      {r4-r12,lr}           ;1272
-000bb8  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.3004|
-000bbc  2001              MOVS     r0,#1                 ;1250
-000bbe  7068              STRB     r0,[r5,#1]            ;1250
-000bc0  4888              LDR      r0,|L1.3556|
-000bc2  7004              STRB     r4,[r0,#0]            ;1251
-000bc4  4883              LDR      r0,|L1.3540|
-000bc6  8b40              LDRH     r0,[r0,#0x1a]         ;1253  ; Run_Control
-000bc8  7168              STRB     r0,[r5,#5]            ;1253
-000bca  f8dc0000          LDR      r0,[r12,#0]           ;1254  ; DISS_Voltage
-000bce  6168              STR      r0,[r5,#0x14]         ;1254  ; clear_v
-000bd0  81ec              STRH     r4,[r5,#0xe]          ;1255
-000bd2  e8bd5ff0          POP      {r4-r12,lr}           ;1256
-000bd6  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.3034|
-000bda  2001              MOVS     r0,#1                 ;1261
-000bdc  70a8              STRB     r0,[r5,#2]            ;1261
-000bde  81ec              STRH     r4,[r5,#0xe]          ;1263
-000be0  e8bd5ff0          POP      {r4-r12,lr}           ;1264
+000a22  e16c              B        |L1.3326|
+                  |L1.2596|
+000a24  f7fffffe          BL       WM_DeleteWindow
+000a28  f7fffffe          BL       CreateSET
+000a2c  81ac              STRH     r4,[r5,#0xc]          ;1127
+000a2e  e8bd5ff0          POP      {r4-r12,lr}           ;1128
+000a32  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2614|
+000a36  48d2              LDR      r0,|L1.3456|
+000a38  7802              LDRB     r2,[r0,#0]            ;1133  ; page_sw
+000a3a  f8df8348          LDR      r8,|L1.3460|
+000a3e  f44f5700          MOV      r7,#0x2000            ;1205
+000a42  2a01              CMP      r2,#1                 ;1133
+000a44  d044              BEQ      |L1.2768|
+000a46  2a02              CMP      r2,#2                 ;1133
+000a48  d069              BEQ      |L1.2846|
+000a4a  2a03              CMP      r2,#3                 ;1133
+000a4c  d02b              BEQ      |L1.2726|
+000a4e  2a04              CMP      r2,#4                 ;1133
+000a50  f47fae73          BNE      |L1.1850|
+000a54  4ecc              LDR      r6,|L1.3464|
+000a56  7830              LDRB     r0,[r6,#0]            ;1142  ; load_sw
+000a58  2801              CMP      r0,#1                 ;1142
+000a5a  d002              BEQ      |L1.2658|
+000a5c  7830              LDRB     r0,[r6,#0]            ;1148  ; load_sw
+000a5e  b158              CBZ      r0,|L1.2680|
+000a60  e01c              B        |L1.2716|
+                  |L1.2658|
+000a62  48ca              LDR      r0,|L1.3468|
+000a64  6801              LDR      r1,[r0,#0]            ;1144  ; flagA
+000a66  f0210140          BIC      r1,r1,#0x40           ;1144
+000a6a  6001              STR      r1,[r0,#0]            ;1144  ; flagA
+000a6c  2102              MOVS     r1,#2                 ;1145
+000a6e  48c8              LDR      r0,|L1.3472|
+000a70  f7fffffe          BL       GPIO_SetBits
+000a74  7034              STRB     r4,[r6,#0]            ;1146
+000a76  e011              B        |L1.2716|
+                  |L1.2680|
+000a78  48c4              LDR      r0,|L1.3468|
+000a7a  6801              LDR      r1,[r0,#0]            ;1150  ; flagA
+000a7c  f0410140          ORR      r1,r1,#0x40           ;1150
+000a80  6001              STR      r1,[r0,#0]            ;1150  ; flagA
+000a82  2102              MOVS     r1,#2                 ;1151
+000a84  48c2              LDR      r0,|L1.3472|
+000a86  f7fffffe          BL       GPIO_ResetBits
+000a8a  f7fffffe          BL       GUI_GetTime
+000a8e  f44f71fa          MOV      r1,#0x1f4             ;1152
+000a92  fb90f0f1          SDIV     r0,r0,r1              ;1152
+000a96  8228              STRH     r0,[r5,#0x10]         ;1152
+000a98  2001              MOVS     r0,#1                 ;1153
+000a9a  7030              STRB     r0,[r6,#0]            ;1153
+                  |L1.2716|
+000a9c  81ac              STRH     r4,[r5,#0xc]          ;1155
+000a9e  e8bd5ff0          POP      {r4-r12,lr}           ;1156
+000aa2  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2726|
+000aa6  7928              LDRB     r0,[r5,#4]            ;1185  ; r_test
+000aa8  b960              CBNZ     r0,|L1.2756|
+000aaa  48ba              LDR      r0,|L1.3476|
+000aac  ed9c0a00          VLDR     s0,[r12,#0]           ;1185
+000ab0  edd00a00          VLDR     s1,[r0,#0]            ;1185
+000ab4  eeb40ae0          VCMPE.F32 s0,s1                 ;1185
+000ab8  eef1fa10          VMRS     APSR_nzcv,FPSCR       ;1185
+000abc  dd02              BLE      |L1.2756|
+000abe  2001              MOVS     r0,#1                 ;1187
+000ac0  7128              STRB     r0,[r5,#4]            ;1187
+000ac2  e000              B        |L1.2758|
+                  |L1.2756|
+000ac4  712c              STRB     r4,[r5,#4]            ;1189
+                  |L1.2758|
+000ac6  81ac              STRH     r4,[r5,#0xc]          ;1191
+000ac8  e8bd5ff0          POP      {r4-r12,lr}           ;1192
+000acc  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2768|
+000ad0  4eb1              LDR      r6,|L1.3480|
+000ad2  7830              LDRB     r0,[r6,#0]            ;1197  ; cdc_sw
+000ad4  b160              CBZ      r0,|L1.2800|
+000ad6  4639              MOV      r1,r7                 ;1208
+000ad8  4640              MOV      r0,r8                 ;1208
+000ada  f7fffffe          BL       GPIO_ResetBits
+000ade  7034              STRB     r4,[r6,#0]            ;1209
+000ae0  48ae              LDR      r0,|L1.3484|
+000ae2  7004              STRB     r4,[r0,#0]            ;1210
+000ae4  72ec              STRB     r4,[r5,#0xb]          ;1211
+                  |L1.2790|
+000ae6  81ac              STRH     r4,[r5,#0xc]          ;1213
+000ae8  e8bd5ff0          POP      {r4-r12,lr}           ;1214
+000aec  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2800|
+000af0  4aab              LDR      r2,|L1.3488|
+000af2  8fd0              LDRH     r0,[r2,#0x3e]         ;1199  ; Run_Control
+000af4  8050              STRH     r0,[r2,#2]            ;1199
+000af6  f8b20044          LDRH     r0,[r2,#0x44]         ;1200  ; Run_Control
+000afa  8090              STRH     r0,[r2,#4]            ;1200
+000afc  48a9              LDR      r0,|L1.3492|
+000afe  7004              STRB     r4,[r0,#0]            ;1201
+000b00  2003              MOVS     r0,#3                 ;1202
+000b02  f7fffffe          BL       Mode_SW_CONT
+000b06  48a8              LDR      r0,|L1.3496|
+000b08  f04f0901          MOV      r9,#1                 ;1204
+000b0c  f8809000          STRB     r9,[r0,#0]            ;1204
+000b10  4639              MOV      r1,r7                 ;1205
+000b12  4640              MOV      r0,r8                 ;1205
+000b14  f7fffffe          BL       GPIO_SetBits
+000b18  f8869000          STRB     r9,[r6,#0]            ;1206
+000b1c  e7e3              B        |L1.2790|
+                  |L1.2846|
+000b1e  4ea3              LDR      r6,|L1.3500|
+000b20  7830              LDRB     r0,[r6,#0]            ;1225  ; pow_sw
+000b22  2801              CMP      r0,#1                 ;1225
+000b24  d002              BEQ      |L1.2860|
+000b26  7830              LDRB     r0,[r6,#0]            ;1230  ; pow_sw
+000b28  b130              CBZ      r0,|L1.2872|
+000b2a  e012              B        |L1.2898|
+                  |L1.2860|
+000b2c  4639              MOV      r1,r7                 ;1227
+000b2e  4640              MOV      r0,r8                 ;1227
+000b30  f7fffffe          BL       GPIO_ResetBits
+000b34  7034              STRB     r4,[r6,#0]            ;1228
+000b36  e00c              B        |L1.2898|
+                  |L1.2872|
+000b38  4639              MOV      r1,r7                 ;1232
+000b3a  4640              MOV      r0,r8                 ;1232
+000b3c  f7fffffe          BL       GPIO_SetBits
+000b40  2001              MOVS     r0,#1                 ;1233
+000b42  7030              STRB     r0,[r6,#0]            ;1233
+000b44  f7fffffe          BL       GUI_GetTime
+000b48  f44f71fa          MOV      r1,#0x1f4             ;1234
+000b4c  fb90f0f1          SDIV     r0,r0,r1              ;1234
+000b50  81e8              STRH     r0,[r5,#0xe]          ;1234
+                  |L1.2898|
+000b52  81ac              STRH     r4,[r5,#0xc]          ;1236
+000b54  e8bd5ff0          POP      {r4-r12,lr}           ;1237
+000b58  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2908|
+000b5c  4888              LDR      r0,|L1.3456|
+000b5e  7800              LDRB     r0,[r0,#0]            ;1246  ; page_sw
+000b60  2801              CMP      r0,#1                 ;1246
+000b62  d026              BEQ      |L1.2994|
+000b64  2802              CMP      r0,#2                 ;1246
+000b66  d01d              BEQ      |L1.2980|
+000b68  2803              CMP      r0,#3                 ;1246
+000b6a  d00c              BEQ      |L1.2950|
+000b6c  2804              CMP      r0,#4                 ;1246
+000b6e  f47fade4          BNE      |L1.1850|
+000b72  2001              MOVS     r0,#1                 ;1269
+000b74  70e8              STRB     r0,[r5,#3]            ;1269
+000b76  f8dc0000          LDR      r0,[r12,#0]           ;1270  ; DISS_Voltage
+000b7a  61a8              STR      r0,[r5,#0x18]         ;1270  ; clear_lv
+000b7c  81ac              STRH     r4,[r5,#0xc]          ;1271
+000b7e  e8bd5ff0          POP      {r4-r12,lr}           ;1272
+000b82  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2950|
+000b86  2001              MOVS     r0,#1                 ;1250
+000b88  7068              STRB     r0,[r5,#1]            ;1250
+000b8a  4889              LDR      r0,|L1.3504|
+000b8c  7004              STRB     r4,[r0,#0]            ;1251
+000b8e  4884              LDR      r0,|L1.3488|
+000b90  8b40              LDRH     r0,[r0,#0x1a]         ;1253  ; Run_Control
+000b92  7168              STRB     r0,[r5,#5]            ;1253
+000b94  f8dc0000          LDR      r0,[r12,#0]           ;1254  ; DISS_Voltage
+000b98  6168              STR      r0,[r5,#0x14]         ;1254  ; clear_v
+000b9a  81ac              STRH     r4,[r5,#0xc]          ;1255
+000b9c  e8bd5ff0          POP      {r4-r12,lr}           ;1256
+000ba0  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2980|
+000ba4  2001              MOVS     r0,#1                 ;1261
+000ba6  70a8              STRB     r0,[r5,#2]            ;1261
+000ba8  81ac              STRH     r4,[r5,#0xc]          ;1263
+000baa  e8bd5ff0          POP      {r4-r12,lr}           ;1264
+000bae  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.2994|
+000bb2  7ae9              LDRB     r1,[r5,#0xb]          ;1277  ; mode_sw
+000bb4  487f              LDR      r0,|L1.3508|
+000bb6  2902              CMP      r1,#2                 ;1277
+000bb8  d101              BNE      |L1.3006|
+000bba  7801              LDRB     r1,[r0,#0]            ;1277  ; pause_flag
+000bbc  b1a1              CBZ      r1,|L1.3048|
+                  |L1.3006|
+000bbe  7004              STRB     r4,[r0,#0]            ;1281
+000bc0  4975              LDR      r1,|L1.3480|
+000bc2  2001              MOVS     r0,#1                 ;1282
+000bc4  7008              STRB     r0,[r1,#0]            ;1282
+000bc6  f7fffffe          BL       GUI_GetTime
+000bca  f44f71fa          MOV      r1,#0x1f4             ;1283
+000bce  fb90f0f1          SDIV     r0,r0,r1              ;1283
+000bd2  4979              LDR      r1,|L1.3512|
+000bd4  8008              STRH     r0,[r1,#0]            ;1283
+000bd6  2102              MOVS     r1,#2                 ;1284
+000bd8  486d              LDR      r0,|L1.3472|
+000bda  f7fffffe          BL       GPIO_ResetBits
+                  |L1.3038|
+000bde  81ac              STRH     r4,[r5,#0xc]          ;1286
+000be0  e8bd5ff0          POP      {r4-r12,lr}           ;1287
 000be4  f7ffbffe          B.W      BEEP_Tiggr
                   |L1.3048|
-000be8  7b69              LDRB     r1,[r5,#0xd]          ;1277  ; mode_sw
-000bea  487f              LDR      r0,|L1.3560|
-000bec  2902              CMP      r1,#2                 ;1277
-000bee  d101              BNE      |L1.3060|
-000bf0  7801              LDRB     r1,[r0,#0]            ;1277  ; pause_flag
-000bf2  b1a1              CBZ      r1,|L1.3102|
-                  |L1.3060|
-000bf4  7004              STRB     r4,[r0,#0]            ;1281
-000bf6  4975              LDR      r1,|L1.3532|
-000bf8  2001              MOVS     r0,#1                 ;1282
-000bfa  7008              STRB     r0,[r1,#0]            ;1282
-000bfc  f7fffffe          BL       GUI_GetTime
-000c00  f44f71fa          MOV      r1,#0x1f4             ;1283
-000c04  fb90f0f1          SDIV     r0,r0,r1              ;1283
-000c08  4978              LDR      r1,|L1.3564|
-000c0a  8008              STRH     r0,[r1,#0]            ;1283
-000c0c  2102              MOVS     r1,#2                 ;1284
-000c0e  486d              LDR      r0,|L1.3524|
-000c10  f7fffffe          BL       GPIO_ResetBits
-                  |L1.3092|
-000c14  81ec              STRH     r4,[r5,#0xe]          ;1286
-000c16  e8bd5ff0          POP      {r4-r12,lr}           ;1287
-000c1a  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.3102|
-000c1e  2101              MOVS     r1,#1                 ;1279
-000c20  7001              STRB     r1,[r0,#0]            ;1279
-000c22  e7f7              B        |L1.3092|
-                  |L1.3108|
-000c24  6818              LDR      r0,[r3,#0]            ;1307  ; hWinR
-000c26  f7fffffe          BL       WM_DeleteWindow
-000c2a  6830              LDR      r0,[r6,#0]            ;1308  ; hWinWind
-000c2c  f7fffffe          BL       WM_DeleteWindow
-000c30  6838              LDR      r0,[r7,#0]            ;1309  ; hWinG
-000c32  f7fffffe          BL       WM_DeleteWindow
-000c36  f8d80000          LDR      r0,[r8,#0]            ;1310  ; load_wind
+000be8  2101              MOVS     r1,#1                 ;1279
+000bea  7001              STRB     r1,[r0,#0]            ;1279
+000bec  e7f7              B        |L1.3038|
+                  |L1.3054|
+000bee  6818              LDR      r0,[r3,#0]            ;1307  ; hWinR
+000bf0  f7fffffe          BL       WM_DeleteWindow
+000bf4  6830              LDR      r0,[r6,#0]            ;1308  ; hWinWind
+000bf6  f7fffffe          BL       WM_DeleteWindow
+000bfa  6838              LDR      r0,[r7,#0]            ;1309  ; hWinG
+000bfc  f7fffffe          BL       WM_DeleteWindow
+000c00  f8d80000          LDR      r0,[r8,#0]            ;1310  ; load_wind
+000c04  f7fffffe          BL       WM_DeleteWindow
+000c08  f8d90000          LDR      r0,[r9,#0]            ;1311  ; hWinsysinfo
+000c0c  f7fffffe          BL       WM_DeleteWindow
+000c10  f8da0000          LDR      r0,[r10,#0]           ;1312  ; hWincdc
+000c14  f7fffffe          BL       WM_DeleteWindow
+000c18  f8db0000          LDR      r0,[r11,#0]           ;1313  ; hWinset
+000c1c  f7fffffe          BL       WM_DeleteWindow
+000c20  f7fffffe          BL       CreateR
+000c24  2001              MOVS     r0,#1                 ;1316
+000c26  f7fffffe          BL       Mode_SW_CONT
+000c2a  e8bd5ff0          POP      {r4-r12,lr}           ;1317
+000c2e  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.3122|
+000c32  6818              LDR      r0,[r3,#0]            ;1322  ; hWinR
+000c34  f7fffffe          BL       WM_DeleteWindow
+000c38  6830              LDR      r0,[r6,#0]            ;1323  ; hWinWind
 000c3a  f7fffffe          BL       WM_DeleteWindow
-000c3e  f8d90000          LDR      r0,[r9,#0]            ;1311  ; hWinsysinfo
-000c42  f7fffffe          BL       WM_DeleteWindow
-000c46  f8da0000          LDR      r0,[r10,#0]           ;1312  ; hWincdc
-000c4a  f7fffffe          BL       WM_DeleteWindow
-000c4e  f8db0000          LDR      r0,[r11,#0]           ;1313  ; hWinset
-000c52  f7fffffe          BL       WM_DeleteWindow
-000c56  f7fffffe          BL       CreateR
-000c5a  2001              MOVS     r0,#1                 ;1316
-000c5c  f7fffffe          BL       Mode_SW_CONT
-000c60  e8bd5ff0          POP      {r4-r12,lr}           ;1317
-000c64  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.3176|
-000c68  6818              LDR      r0,[r3,#0]            ;1322  ; hWinR
-000c6a  f7fffffe          BL       WM_DeleteWindow
-000c6e  6830              LDR      r0,[r6,#0]            ;1323  ; hWinWind
-000c70  f7fffffe          BL       WM_DeleteWindow
-000c74  6838              LDR      r0,[r7,#0]            ;1324  ; hWinG
-000c76  f7fffffe          BL       WM_DeleteWindow
-000c7a  f8d80000          LDR      r0,[r8,#0]            ;1325  ; load_wind
-000c7e  f7fffffe          BL       WM_DeleteWindow
-000c82  f8d90000          LDR      r0,[r9,#0]            ;1326  ; hWinsysinfo
+000c3e  6838              LDR      r0,[r7,#0]            ;1324  ; hWinG
+000c40  f7fffffe          BL       WM_DeleteWindow
+000c44  f8d80000          LDR      r0,[r8,#0]            ;1325  ; load_wind
+000c48  f7fffffe          BL       WM_DeleteWindow
+000c4c  f8d90000          LDR      r0,[r9,#0]            ;1326  ; hWinsysinfo
+000c50  f7fffffe          BL       WM_DeleteWindow
+000c54  f8da0000          LDR      r0,[r10,#0]           ;1327  ; hWincdc
+000c58  f7fffffe          BL       WM_DeleteWindow
+000c5c  f8db0000          LDR      r0,[r11,#0]           ;1328  ; hWinset
+000c60  f7fffffe          BL       WM_DeleteWindow
+000c64  f7fffffe          BL       CreateWindow2
+000c68  2002              MOVS     r0,#2                 ;1331
+000c6a  f7fffffe          BL       Mode_SW_CONT
+000c6e  81ac              STRH     r4,[r5,#0xc]          ;1333
+000c70  e8bd5ff0          POP      {r4-r12,lr}           ;1334
+000c74  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.3192|
+000c78  6818              LDR      r0,[r3,#0]            ;1339  ; hWinR
+000c7a  f7fffffe          BL       WM_DeleteWindow
+000c7e  6830              LDR      r0,[r6,#0]            ;1340  ; hWinWind
+000c80  f7fffffe          BL       WM_DeleteWindow
+000c84  6838              LDR      r0,[r7,#0]            ;1341  ; hWinG
 000c86  f7fffffe          BL       WM_DeleteWindow
-000c8a  f8da0000          LDR      r0,[r10,#0]           ;1327  ; hWincdc
+000c8a  f8d80000          LDR      r0,[r8,#0]            ;1342  ; load_wind
 000c8e  f7fffffe          BL       WM_DeleteWindow
-000c92  f8db0000          LDR      r0,[r11,#0]           ;1328  ; hWinset
+000c92  f8d90000          LDR      r0,[r9,#0]            ;1343  ; hWinsysinfo
 000c96  f7fffffe          BL       WM_DeleteWindow
-000c9a  f7fffffe          BL       CreateWindow2
-000c9e  2002              MOVS     r0,#2                 ;1331
-000ca0  f7fffffe          BL       Mode_SW_CONT
-000ca4  81ec              STRH     r4,[r5,#0xe]          ;1333
-000ca6  e8bd5ff0          POP      {r4-r12,lr}           ;1334
-000caa  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.3246|
-000cae  6818              LDR      r0,[r3,#0]            ;1339  ; hWinR
-000cb0  f7fffffe          BL       WM_DeleteWindow
-000cb4  6830              LDR      r0,[r6,#0]            ;1340  ; hWinWind
-000cb6  f7fffffe          BL       WM_DeleteWindow
-000cba  6838              LDR      r0,[r7,#0]            ;1341  ; hWinG
-000cbc  f7fffffe          BL       WM_DeleteWindow
-000cc0  f8d80000          LDR      r0,[r8,#0]            ;1342  ; load_wind
-000cc4  f7fffffe          BL       WM_DeleteWindow
-000cc8  f8d90000          LDR      r0,[r9,#0]            ;1343  ; hWinsysinfo
+000c9a  f8da0000          LDR      r0,[r10,#0]           ;1344  ; hWincdc
+000c9e  f7fffffe          BL       WM_DeleteWindow
+000ca2  f8db0000          LDR      r0,[r11,#0]           ;1345  ; hWinset
+000ca6  f7fffffe          BL       WM_DeleteWindow
+000caa  f7fffffe          BL       CreateWindow
+000cae  2003              MOVS     r0,#3                 ;1347
+000cb0  f7fffffe          BL       Mode_SW_CONT
+000cb4  81ac              STRH     r4,[r5,#0xc]          ;1348
+000cb6  e8bd5ff0          POP      {r4-r12,lr}           ;1349
+000cba  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.3262|
+000cbe  6818              LDR      r0,[r3,#0]            ;1355  ; hWinR
+000cc0  f7fffffe          BL       WM_DeleteWindow
+000cc4  6830              LDR      r0,[r6,#0]            ;1356  ; hWinWind
+000cc6  f7fffffe          BL       WM_DeleteWindow
+000cca  6838              LDR      r0,[r7,#0]            ;1357  ; hWinG
 000ccc  f7fffffe          BL       WM_DeleteWindow
-000cd0  f8da0000          LDR      r0,[r10,#0]           ;1344  ; hWincdc
+000cd0  f8d80000          LDR      r0,[r8,#0]            ;1358  ; load_wind
 000cd4  f7fffffe          BL       WM_DeleteWindow
-000cd8  f8db0000          LDR      r0,[r11,#0]           ;1345  ; hWinset
+000cd8  f8d90000          LDR      r0,[r9,#0]            ;1359  ; hWinsysinfo
 000cdc  f7fffffe          BL       WM_DeleteWindow
-000ce0  f7fffffe          BL       CreateWindow
-000ce4  2003              MOVS     r0,#3                 ;1347
-000ce6  f7fffffe          BL       Mode_SW_CONT
-000cea  81ec              STRH     r4,[r5,#0xe]          ;1348
-000cec  e8bd5ff0          POP      {r4-r12,lr}           ;1349
-000cf0  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.3316|
-000cf4  6818              LDR      r0,[r3,#0]            ;1355  ; hWinR
-000cf6  f7fffffe          BL       WM_DeleteWindow
-000cfa  6830              LDR      r0,[r6,#0]            ;1356  ; hWinWind
-000cfc  f7fffffe          BL       WM_DeleteWindow
-000d00  6838              LDR      r0,[r7,#0]            ;1357  ; hWinG
-000d02  f7fffffe          BL       WM_DeleteWindow
-000d06  f8d80000          LDR      r0,[r8,#0]            ;1358  ; load_wind
-000d0a  f7fffffe          BL       WM_DeleteWindow
-000d0e  f8d90000          LDR      r0,[r9,#0]            ;1359  ; hWinsysinfo
-000d12  f7fffffe          BL       WM_DeleteWindow
-000d16  f8da0000          LDR      r0,[r10,#0]           ;1360  ; hWincdc
-000d1a  f7fffffe          BL       WM_DeleteWindow
-000d1e  f8db0000          LDR      r0,[r11,#0]           ;1361  ; hWinset
-000d22  f7fffffe          BL       WM_DeleteWindow
-000d26  f7fffffe          BL       CreateCDC
-000d2a  81ec              STRH     r4,[r5,#0xe]          ;1363
-000d2c  e8bd5ff0          POP      {r4-r12,lr}           ;1364
-000d30  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.3380|
-000d34  6818              LDR      r0,[r3,#0]            ;1369  ; hWinR
-000d36  f7fffffe          BL       WM_DeleteWindow
-000d3a  6830              LDR      r0,[r6,#0]            ;1370  ; hWinWind
-000d3c  f7fffffe          BL       WM_DeleteWindow
-000d40  6838              LDR      r0,[r7,#0]            ;1371  ; hWinG
-000d42  f7fffffe          BL       WM_DeleteWindow
-000d46  f8d80000          LDR      r0,[r8,#0]            ;1372  ; load_wind
-000d4a  f7fffffe          BL       WM_DeleteWindow
-000d4e  f8d90000          LDR      r0,[r9,#0]            ;1373  ; hWinsysinfo
-000d52  f7fffffe          BL       WM_DeleteWindow
-000d56  f8da0000          LDR      r0,[r10,#0]           ;1374  ; hWincdc
-000d5a  f7fffffe          BL       WM_DeleteWindow
-000d5e  f8db0000          LDR      r0,[r11,#0]           ;1375  ; hWinset
-000d62  f7fffffe          BL       WM_DeleteWindow
-000d66  f7fffffe          BL       CreateG
-000d6a  81ec              STRH     r4,[r5,#0xe]          ;1377
-000d6c  e8bd5ff0          POP      {r4-r12,lr}           ;1378
-000d70  f7ffbffe          B.W      BEEP_Tiggr
-                  |L1.3444|
-000d74  6818              LDR      r0,[r3,#0]            ;1383  ; hWinR
-000d76  f7fffffe          BL       WM_DeleteWindow
-000d7a  6830              LDR      r0,[r6,#0]            ;1384  ; hWinWind
-000d7c  f7fffffe          BL       WM_DeleteWindow
-000d80  6838              LDR      r0,[r7,#0]            ;1385  ; hWinG
-000d82  f7fffffe          BL       WM_DeleteWindow
-000d86  f8d80000          LDR      r0,[r8,#0]            ;1386  ; load_wind
-000d8a  f7fffffe          BL       WM_DeleteWindow
-000d8e  f8d90000          LDR      r0,[r9,#0]            ;1387  ; hWinsysinfo
-000d92  f7fffffe          BL       WM_DeleteWindow
-000d96  f8da0000          LDR      r0,[r10,#0]           ;1388  ; hWincdc
-000d9a  f7fffffe          BL       WM_DeleteWindow
-000d9e  f8db0000          LDR      r0,[r11,#0]           ;1389  ; hWinset
-000da2  f7fffffe          BL       WM_DeleteWindow
-000da6  f7fffffe          BL       Createsysinfo
-000daa  81ec              STRH     r4,[r5,#0xe]          ;1391
-000dac  e8bd5ff0          POP      {r4-r12,lr}           ;1392
-000db0  f7ffbffe          B.W      BEEP_Tiggr
+000ce0  f8da0000          LDR      r0,[r10,#0]           ;1360  ; hWincdc
+000ce4  f7fffffe          BL       WM_DeleteWindow
+000ce8  f8db0000          LDR      r0,[r11,#0]           ;1361  ; hWinset
+000cec  f7fffffe          BL       WM_DeleteWindow
+000cf0  f7fffffe          BL       CreateCDC
+000cf4  81ac              STRH     r4,[r5,#0xc]          ;1363
+000cf6  e8bd5ff0          POP      {r4-r12,lr}           ;1364
+000cfa  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.3326|
+000cfe  6818              LDR      r0,[r3,#0]            ;1369  ; hWinR
+000d00  f7fffffe          BL       WM_DeleteWindow
+000d04  6830              LDR      r0,[r6,#0]            ;1370  ; hWinWind
+000d06  f7fffffe          BL       WM_DeleteWindow
+000d0a  6838              LDR      r0,[r7,#0]            ;1371  ; hWinG
+000d0c  f7fffffe          BL       WM_DeleteWindow
+000d10  f8d80000          LDR      r0,[r8,#0]            ;1372  ; load_wind
+000d14  f7fffffe          BL       WM_DeleteWindow
+000d18  f8d90000          LDR      r0,[r9,#0]            ;1373  ; hWinsysinfo
+000d1c  f7fffffe          BL       WM_DeleteWindow
+000d20  f8da0000          LDR      r0,[r10,#0]           ;1374  ; hWincdc
+000d24  f7fffffe          BL       WM_DeleteWindow
+000d28  f8db0000          LDR      r0,[r11,#0]           ;1375  ; hWinset
+000d2c  f7fffffe          BL       WM_DeleteWindow
+000d30  f7fffffe          BL       CreateG
+000d34  81ac              STRH     r4,[r5,#0xc]          ;1377
+000d36  e8bd5ff0          POP      {r4-r12,lr}           ;1378
+000d3a  f7ffbffe          B.W      BEEP_Tiggr
+                  |L1.3390|
+000d3e  6818              LDR      r0,[r3,#0]            ;1383  ; hWinR
+000d40  f7fffffe          BL       WM_DeleteWindow
+000d44  6830              LDR      r0,[r6,#0]            ;1384  ; hWinWind
+000d46  f7fffffe          BL       WM_DeleteWindow
+000d4a  6838              LDR      r0,[r7,#0]            ;1385  ; hWinG
+000d4c  f7fffffe          BL       WM_DeleteWindow
+000d50  f8d80000          LDR      r0,[r8,#0]            ;1386  ; load_wind
+000d54  f7fffffe          BL       WM_DeleteWindow
+000d58  f8d90000          LDR      r0,[r9,#0]            ;1387  ; hWinsysinfo
+000d5c  f7fffffe          BL       WM_DeleteWindow
+000d60  f8da0000          LDR      r0,[r10,#0]           ;1388  ; hWincdc
+000d64  f7fffffe          BL       WM_DeleteWindow
+000d68  f8db0000          LDR      r0,[r11,#0]           ;1389  ; hWinset
+000d6c  f7fffffe          BL       WM_DeleteWindow
+000d70  f7fffffe          BL       Createsysinfo
+000d74  81ac              STRH     r4,[r5,#0xc]          ;1391
+000d76  e8bd5ff0          POP      {r4-r12,lr}           ;1392
+000d7a  f7ffbffe          B.W      BEEP_Tiggr
 ;;;1401   
                           ENDP
 
-                  |L1.3508|
+000d7e  0000              DCW      0x0000
+                  |L1.3456|
                           DCD      page_sw
-                  |L1.3512|
+                  |L1.3460|
                           DCD      0x40020400
-                  |L1.3516|
+                  |L1.3464|
                           DCD      load_sw
-                  |L1.3520|
+                  |L1.3468|
                           DCD      flagA
-                  |L1.3524|
+                  |L1.3472|
                           DCD      0x40020800
-                  |L1.3528|
+                  |L1.3476|
                           DCD      gate_v
-                  |L1.3532|
+                  |L1.3480|
                           DCD      cdc_sw
-                  |L1.3536|
+                  |L1.3484|
                           DCD      paused
-                  |L1.3540|
+                  |L1.3488|
                           DCD      Run_Control
-                  |L1.3544|
+                  |L1.3492|
                           DCD      cutoff_flag
-                  |L1.3548|
+                  |L1.3496|
                           DCD      charge_step
-                  |L1.3552|
+                  |L1.3500|
                           DCD      pow_sw
-                  |L1.3556|
+                  |L1.3504|
                           DCD      finish
-                  |L1.3560|
+                  |L1.3508|
                           DCD      pause_flag
-                  |L1.3564|
+                  |L1.3512|
                           DCD      restart_time
 
                           AREA ||i.Key_Scan||, CODE, READONLY, ALIGN=2
@@ -2617,7 +2592,7 @@
 ;;;139    	
 ;;;140    	if((NewKey>0x37)&&(IsKeyRelease==1))
 000002  4922              LDR      r1,|L2.140|
-000004  7a8d              LDRB     r5,[r1,#0xa]  ; NewKey
+000004  7a4d              LDRB     r5,[r1,#9]  ; NewKey
 ;;;141    	{
 ;;;142    		if(KeyState == KEY_INIT_STATE)                    /*ϞдݼдЂ*/
 ;;;143    		{
@@ -2666,7 +2641,7 @@
 ;;;176    		}
 ;;;177    	}
 ;;;178    	else if(NewKey<=0x37)
-000018  7a8d              LDRB     r5,[r1,#0xa]  ; NewKey
+000018  7a4d              LDRB     r5,[r1,#9]  ; NewKey
 00001a  2d37              CMP      r5,#0x37
 00001c  d804              BHI      |L2.40|
 ;;;179    	{
@@ -2698,13 +2673,13 @@
 000042  798c              LDRB     r4,[r1,#6]            ;168  ; KeyState
 000044  2c03              CMP      r4,#3                 ;168
 000046  d1ef              BNE      |L2.40|
-000048  89cc              LDRH     r4,[r1,#0xe]          ;170  ; KeyCounter
+000048  898c              LDRH     r4,[r1,#0xc]          ;170  ; KeyCounter
 00004a  1c64              ADDS     r4,r4,#1              ;170
-00004c  81cc              STRH     r4,[r1,#0xe]          ;170
-00004e  89cc              LDRH     r4,[r1,#0xe]          ;171  ; KeyCounter
+00004c  818c              STRH     r4,[r1,#0xc]          ;170
+00004e  898c              LDRH     r4,[r1,#0xc]          ;171  ; KeyCounter
 000050  2c32              CMP      r4,#0x32              ;171
 000052  d1e9              BNE      |L2.40|
-000054  81cb              STRH     r3,[r1,#0xe]          ;173
+000054  818b              STRH     r3,[r1,#0xc]          ;173
 000056  f0400004          ORR      r0,r0,#4              ;174
 00005a  6010              STR      r0,[r2,#0]            ;174  ; flagB
 00005c  e7e4              B        |L2.40|
@@ -2718,19 +2693,19 @@
 000068  2000              MOVS     r0,#0                 ;150
 00006a  bd30              POP      {r4,r5,pc}
                   |L2.108|
-00006c  7a88              LDRB     r0,[r1,#0xa]          ;154  ; NewKey
+00006c  7a48              LDRB     r0,[r1,#9]            ;154  ; NewKey
 00006e  7208              STRB     r0,[r1,#8]            ;155
 000070  2204              MOVS     r2,#4                 ;156
 000072  718a              STRB     r2,[r1,#6]            ;156
 000074  bd30              POP      {r4,r5,pc}
                   |L2.118|
-000076  89c8              LDRH     r0,[r1,#0xe]          ;161  ; KeyCounter
+000076  8988              LDRH     r0,[r1,#0xc]          ;161  ; KeyCounter
 000078  1c40              ADDS     r0,r0,#1              ;161
-00007a  81c8              STRH     r0,[r1,#0xe]          ;161
-00007c  89c8              LDRH     r0,[r1,#0xe]          ;162  ; KeyCounter
+00007a  8188              STRH     r0,[r1,#0xc]          ;161
+00007c  8988              LDRH     r0,[r1,#0xc]          ;162  ; KeyCounter
 00007e  280a              CMP      r0,#0xa               ;162
 000080  d1d2              BNE      |L2.40|
-000082  81cb              STRH     r3,[r1,#0xe]          ;164
+000082  818b              STRH     r3,[r1,#0xc]          ;164
 000084  2003              MOVS     r0,#3                 ;165
 000086  7188              STRB     r0,[r1,#6]            ;165
 000088  e7ce              B        |L2.40|
@@ -2786,7 +2761,7 @@
 00001e  f7fffffe          BL       GPIO_SetBits
 ;;;1425               mode_sw = mode_pow;
 000022  2003              MOVS     r0,#3
-000024  7368              STRB     r0,[r5,#0xd]
+000024  72e8              STRB     r0,[r5,#0xb]
                   |L3.38|
 ;;;1426   		}
 ;;;1427   		break;
@@ -2803,7 +2778,7 @@
 000032  4620              MOV      r0,r4                 ;1410
 000034  f7fffffe          BL       GPIO_ResetBits
 000038  2001              MOVS     r0,#1                 ;1411
-00003a  7368              STRB     r0,[r5,#0xd]          ;1411
+00003a  72e8              STRB     r0,[r5,#0xb]          ;1411
 00003c  bd70              POP      {r4-r6,pc}
                   |L3.62|
 00003e  2104              MOVS     r1,#4                 ;1416
@@ -2813,7 +2788,7 @@
 000048  4620              MOV      r0,r4                 ;1417
 00004a  f7fffffe          BL       GPIO_ResetBits
 00004e  2002              MOVS     r0,#2                 ;1418
-000050  7368              STRB     r0,[r5,#0xd]          ;1418
+000050  72e8              STRB     r0,[r5,#0xb]          ;1418
 000052  bd70              POP      {r4-r6,pc}
                           ENDP
 
@@ -2842,22 +2817,18 @@
 000007  01                DCB      0x01
                   KeyValueTemp
 000008  00                DCB      0x00
-                  POW_t
-000009  00                DCB      0x00
                   NewKey
-00000a  00                DCB      0x00
-                  LOAD_t
-00000b  00                DCB      0x00
+000009  00                DCB      0x00
                   track
-00000c  00                DCB      0x00
+00000a  00                DCB      0x00
                   mode_sw
-00000d  00                DCB      0x00
+00000b  00                DCB      0x00
                   KeyCounter
-00000e  0000              DCB      0x00,0x00
+00000c  0000              DCB      0x00,0x00
                   menu_time
-000010  0000              DCB      0x00,0x00
+00000e  0000              DCB      0x00,0x00
                   load_time
-000012  0000              DCB      0x00,0x00
+000010  00000000          DCB      0x00,0x00,0x00,0x00
                   clear_v
 000014  00000000          DCFS     0x00000000 ; 0
                   clear_lv
@@ -2915,6 +2886,12 @@
 
                           EXPORTAS ||area_number.15||, ||.data||
                   OFFSET_Zore
+000000  00                DCB      0x00
+
+                          AREA ||area_number.16||, DATA, ALIGN=0
+
+                          EXPORTAS ||area_number.16||, ||.data||
+                  LOAD_t
 000000  00                DCB      0x00
 
 ;*** Start embedded assembler ***

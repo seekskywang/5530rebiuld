@@ -51416,8 +51416,7 @@ X                    case 4:
 N                    {
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
-N                        SET_Current_Laod=SET_Current_Laod+1;
-X                        Run_Control[4]=Run_Control[4]+1;
+N//                        SET_Current_Laod=SET_Current_Laod+1;
 N                        break;
 N                    }
 N                    case face_set:
@@ -51486,8 +51485,7 @@ X                    case 4:
 N                    {
 N                       	KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
-N                        SET_Current_Laod=SET_Current_Laod-1;
-X                        Run_Control[4]=Run_Control[4]-1;
+N//                        SET_Current_Laod=SET_Current_Laod-1;
 N                        break;
 N                    }
 N                    case face_set:  //系统设置
@@ -51713,12 +51711,13 @@ N                    case face_load:
 X                    case 4:
 N                    {
 N//                        static vu8 LOAD_t;
-N                        LOAD_t++;
-N                        if(LOAD_t>1)
-N                        {
-N                            LOAD_t=0;
-N                        }
-N                        if(LOAD_t==0)
+N//                         LOAD_t++;
+N//                         if(LOAD_t>1)
+N//                         {
+N//                             LOAD_t=0;
+N//                         }
+N                        if(load_sw==load_on)
+X                        if(load_sw==1)
 N                        {
 N                            Flag_Swtich_ON=0;
 X                            (flagA . bit6)=0;
@@ -51727,7 +51726,8 @@ X                            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000
 N                            load_sw = load_off;
 X                            load_sw = 0;
 N                        }
-N                        else if(LOAD_t==1)
+N                        else if(load_sw==load_off)
+X                        else if(load_sw==0)
 N                        {
 N                            Flag_Swtich_ON=1;
 X                            (flagA . bit6)=1;
@@ -51811,20 +51811,22 @@ N                    }
 N                    case face_menu:
 X                    case 2:
 N                    {
-N                        static vu8 POW_t;
-N                        POW_t++;
-N                        if(POW_t>1)
-N                        {
-N                            POW_t=0;
-N                        }
-N                        if(POW_t==0)
+N//                         static vu8 POW_t;
+N//                         POW_t++;
+N//                         if(POW_t>1)
+N//                         {
+N//                             POW_t=0;
+N//                         }
+N                        if(pow_sw==pow_on)
+X                        if(pow_sw==1)
 N                        {
 N                            GPIO_ResetBits(GPIOB,GPIO_Pin_13);//关闭稳压电源输出
 X                            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
 N                            pow_sw = pow_off;
 X                            pow_sw = 0;
 N                        }
-N                        else if(POW_t==1)
+N                        else if(pow_sw==pow_off)
+X                        else if(pow_sw==0)
 N                        {
 N                            GPIO_SetBits(GPIOB,GPIO_Pin_13);//打开稳压电源输出
 X                            GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));

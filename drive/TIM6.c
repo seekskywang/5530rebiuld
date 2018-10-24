@@ -206,7 +206,7 @@ void TIM3_IRQHandler(void)
                 }
             }break;
             case face_r:
-            {                               
+            {                     
                 if(oct_sw == oct_on && para_set2 == set_2_on)
                 {
                     count1ms ++;

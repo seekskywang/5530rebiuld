@@ -1060,8 +1060,12 @@ WM_HWIN CreateCDC(void) {
   SET_Voltage = opv1;
   SET_Current = opc1;
   SET_Current_Laod = cdc_dc;
+  load_sw = load_off;
+  pow_sw = pow_off;
   TM1650_SET_LED(0x68,0x70);
   GPIO_ResetBits(GPIOD,GPIO_Pin_12);//ÃðµÆ
+  GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+    GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
 //  double_sw = face_cdc;
   hWincdc = GUI_CreateDialogBox(_aDialogCreate4, GUI_COUNTOF(_aDialogCreate4), _cbDialog, WM_HBKWIN, 0, 0);
   return hWincdc;

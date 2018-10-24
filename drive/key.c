@@ -885,7 +885,7 @@ void Key_Funtion(void)
                     {
                         KeyCounter = 0;
                         BEEP_Tiggr();//触发蜂鸣器
-                        SET_Current_Laod=SET_Current_Laod+1;
+//                        SET_Current_Laod=SET_Current_Laod+1;
                         break;
                     }
                     case face_set:
@@ -941,7 +941,7 @@ void Key_Funtion(void)
                     {
                        	KeyCounter = 0;
                         BEEP_Tiggr();//触发蜂鸣器
-                        SET_Current_Laod=SET_Current_Laod-1;
+//                        SET_Current_Laod=SET_Current_Laod-1;
                         break;
                     }
                     case face_set:  //系统设置
@@ -1134,18 +1134,18 @@ void Key_Funtion(void)
                     case face_load:
                     {
 //                        static vu8 LOAD_t;
-                        LOAD_t++;
-                        if(LOAD_t>1)
-                        {
-                            LOAD_t=0;
-                        }
-                        if(LOAD_t==0)
+//                         LOAD_t++;
+//                         if(LOAD_t>1)
+//                         {
+//                             LOAD_t=0;
+//                         }
+                        if(load_sw==load_on)
                         {
                             Flag_Swtich_ON=0;
                             GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
                             load_sw = load_off;
                         }
-                        else if(LOAD_t==1)
+                        else if(load_sw==load_off)
                         {
                             Flag_Swtich_ON=1;
                             GPIO_ResetBits(GPIOC,GPIO_Pin_1);//On
@@ -1216,18 +1216,18 @@ void Key_Funtion(void)
                     }
                     case face_menu:
                     {
-                        static vu8 POW_t;
-                        POW_t++;
-                        if(POW_t>1)
-                        {
-                            POW_t=0;
-                        }
-                        if(POW_t==0)
+//                         static vu8 POW_t;
+//                         POW_t++;
+//                         if(POW_t>1)
+//                         {
+//                             POW_t=0;
+//                         }
+                        if(pow_sw==pow_on)
                         {
                             GPIO_ResetBits(GPIOB,GPIO_Pin_13);//关闭稳压电源输出
                             pow_sw = pow_off;
                         }
-                        else if(POW_t==1)
+                        else if(pow_sw==pow_off)
                         {
                             GPIO_SetBits(GPIOB,GPIO_Pin_13);//打开稳压电源输出
                             pow_sw = pow_on;

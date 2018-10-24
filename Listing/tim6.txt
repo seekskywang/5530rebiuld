@@ -227,7 +227,7 @@
 ;;;206                    }
 ;;;207                }break;
 ;;;208                case face_r:
-;;;209                {                               
+;;;209                {                     
 ;;;210                    if(oct_sw == oct_on && para_set2 == set_2_on)
 ;;;211                    {
 ;;;212                        count1ms ++;

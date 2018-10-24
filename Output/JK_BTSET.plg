@@ -114,27 +114,28 @@ compiling MainTask.c...
 ..\STemWinLibrary522\emWinTask\MainTask.c(62): warning:  #223-D: function "CreateSTARTER" declared implicitly
 compiling menu.c...
 compiling R_Face.c...
-..\APP\R_Face.c(265): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(300): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(305): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(317): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(321): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(395): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(424): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(559): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(587): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(646): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(646): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(667): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(667): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(688): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(688): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(709): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(709): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(730): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(730): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1728): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(266): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(301): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(306): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(318): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(322): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(396): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(425): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(560): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(588): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(647): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(647): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(668): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(668): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(689): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(689): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(710): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(710): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(731): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(731): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(178): warning:  #177-D: variable "short1" was declared but never referenced
+..\APP\R_Face.c(178): warning:  #177-D: variable "short2" was declared but never referenced
+..\APP\R_Face.c(1716): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 compiling load_Face.c...
 compiling STARTER.c...
 D:\外发资料\电池综合测试仪 2.1\APP\STARTER.c(98): warning:  #223-D: function "CreateR" declared implicitly
@@ -164,36 +165,17 @@ compiling usbh_msc_scsi.c...
 compiling usb_bsp.c...
 compiling usbh_usr.c...
 linking...
-Program Size: Code=156500 RO-data=119688 RW-data=2208 ZI-data=34568  
+Program Size: Code=156460 RO-data=119688 RW-data=2216 ZI-data=34568  
 FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 67 Warning(s).
+"..\Output\JK_BTSET.axf" - 0 Error(s), 68 Warning(s).
 Build target 'JK_BTSET'
-compiling R_Face.c...
-..\APP\R_Face.c(265): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(300): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(305): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(317): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(321): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(395): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(424): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(559): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(587): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(646): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(646): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(667): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(667): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(688): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(688): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(709): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(709): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(730): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(730): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1715): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-compiling load_Face.c...
+compiling sysinfo.c...
+..\APP\sysinfo.c(1433): warning:  #940-D: missing return statement at end of non-void function "CFM_PASS"
+..\APP\sysinfo.c(1478): warning:  #223-D: function "Flash_Write_all" declared implicitly
 linking...
-Program Size: Code=156436 RO-data=119688 RW-data=2216 ZI-data=34568  
+Program Size: Code=156460 RO-data=119688 RW-data=2216 ZI-data=34568  
 FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 20 Warning(s).
+"..\Output\JK_BTSET.axf" - 0 Error(s), 2 Warning(s).
 Load "..\\Output\\JK_BTSET.AXF" 
 * JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
 Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
@@ -221,7 +203,7 @@ ROMTableAddr = 0xE00FF003
 Target info:
 ------------
 Device: STM32F407VE
-VTarget = 3.338V
+VTarget = 3.314V
 State of Pins: 
 TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6
@@ -233,322 +215,13 @@ Erase Done.
 Programming Done.
 Verify OK.
 Build target 'JK_BTSET'
-compiling R_Face.c...
-..\APP\R_Face.c(265): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(300): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(305): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(317): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(321): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(395): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(424): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(559): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(587): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(646): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(646): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(667): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(667): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(688): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(688): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(709): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(709): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(730): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(730): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1715): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+compiling usart.c...
+compiling menu.c...
 linking...
-Program Size: Code=156452 RO-data=119688 RW-data=2216 ZI-data=34568  
+Program Size: Code=156468 RO-data=119688 RW-data=2216 ZI-data=34568  
 FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 20 Warning(s).
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
 Build target 'JK_BTSET'
-compiling R_Face.c...
-..\APP\R_Face.c(266): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(301): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(306): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(318): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(322): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(396): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(425): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(564): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(592): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1720): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-linking...
-Program Size: Code=156496 RO-data=119688 RW-data=2224 ZI-data=34568  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 20 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.337V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling TIM6.c...
-..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(83): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(95): warning:  #223-D: function "LCD_Initializtion" declared implicitly
-..\drive\TIM6.c(96): warning:  #223-D: function "GUI_Init" declared implicitly
-..\drive\TIM6.c(99): warning:  #223-D: function "ResetPow" declared implicitly
-..\drive\TIM6.c(101): warning:  #223-D: function "ResetCDC" declared implicitly
-..\drive\TIM6.c(103): warning:  #223-D: function "ResetR" declared implicitly
-..\drive\TIM6.c(105): warning:  #223-D: function "ResetLoad" declared implicitly
-..\drive\TIM6.c(107): warning:  #223-D: function "ResetG" declared implicitly
-..\drive\TIM6.c(109): warning:  #223-D: function "ResetSET" declared implicitly
-..\drive\TIM6.c(219): error:  #20: identifier "short_flag" is undefined
-..\drive\TIM6.c(222): error:  #20: identifier "short2" is undefined
-..\drive\TIM6.c(222): error:  #20: identifier "short1" is undefined
-..\drive\TIM6.c(226): error:  #20: identifier "short_time" is undefined
-..\drive\TIM6.c(226): warning:  #223-D: function "GUI_GetTime" declared implicitly
-..\drive\TIM6.c(226): error:  #20: identifier "short_start" is undefined
-..\drive\TIM6.c(228): error:  #20: identifier "short_finish" is undefined
-..\drive\TIM6.c(229): error:  #20: identifier "hItem" is undefined
-..\drive\TIM6.c(229): warning:  #223-D: function "WM_GetDialogItem" declared implicitly
-..\drive\TIM6.c(229): error:  #20: identifier "pMsg" is undefined
-..\drive\TIM6.c(229): error:  #20: identifier "ID_TEXT_117" is undefined
-..\drive\TIM6.c(230): warning:  #223-D: function "sprintf" declared implicitly
-..\drive\TIM6.c(230): error:  #20: identifier "buf" is undefined
-..\drive\TIM6.c(231): warning:  #223-D: function "TEXT_SetText" declared implicitly
-..\drive\TIM6.c(82): warning:  #177-D: variable "read1963" was declared but never referenced
-..\drive\TIM6.c(83): warning:  #177-D: variable "scancount" was declared but never referenced
-compiling R_Face.c...
-..\APP\R_Face.c(266): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(301): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(306): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(318): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(322): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(396): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(425): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(564): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(592): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(178): warning:  #177-D: variable "short1" was declared but never referenced
-..\APP\R_Face.c(178): warning:  #177-D: variable "short2" was declared but never referenced
-..\APP\R_Face.c(1720): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-Target not created
-Build target 'JK_BTSET'
-compiling TIM6.c...
-..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(83): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(95): warning:  #223-D: function "LCD_Initializtion" declared implicitly
-..\drive\TIM6.c(96): warning:  #223-D: function "GUI_Init" declared implicitly
-..\drive\TIM6.c(99): warning:  #223-D: function "ResetPow" declared implicitly
-..\drive\TIM6.c(101): warning:  #223-D: function "ResetCDC" declared implicitly
-..\drive\TIM6.c(103): warning:  #223-D: function "ResetR" declared implicitly
-..\drive\TIM6.c(105): warning:  #223-D: function "ResetLoad" declared implicitly
-..\drive\TIM6.c(107): warning:  #223-D: function "ResetG" declared implicitly
-..\drive\TIM6.c(109): warning:  #223-D: function "ResetSET" declared implicitly
-..\drive\TIM6.c(219): error:  #20: identifier "short_flag" is undefined
-..\drive\TIM6.c(82): warning:  #177-D: variable "read1963" was declared but never referenced
-..\drive\TIM6.c(83): warning:  #177-D: variable "scancount" was declared but never referenced
-compiling R_Face.c...
-..\APP\R_Face.c(266): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(301): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(306): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(318): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(322): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(396): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(425): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(564): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(592): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(178): warning:  #177-D: variable "short1" was declared but never referenced
-..\APP\R_Face.c(178): warning:  #177-D: variable "short2" was declared but never referenced
-..\APP\R_Face.c(1720): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1887): error:  #20: identifier "short2" is undefined
-..\APP\R_Face.c(1887): error:  #20: identifier "short1" is undefined
-..\APP\R_Face.c(1894): error:  #20: identifier "hItem" is undefined
-..\APP\R_Face.c(1894): error:  #20: identifier "pMsg" is undefined
-..\APP\R_Face.c(1895): error:  #20: identifier "buf" is undefined
-Target not created
-Build target 'JK_BTSET'
-compiling TIM6.c...
-..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(83): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(95): warning:  #223-D: function "LCD_Initializtion" declared implicitly
-..\drive\TIM6.c(96): warning:  #223-D: function "GUI_Init" declared implicitly
-..\drive\TIM6.c(99): warning:  #223-D: function "ResetPow" declared implicitly
-..\drive\TIM6.c(101): warning:  #223-D: function "ResetCDC" declared implicitly
-..\drive\TIM6.c(103): warning:  #223-D: function "ResetR" declared implicitly
-..\drive\TIM6.c(105): warning:  #223-D: function "ResetLoad" declared implicitly
-..\drive\TIM6.c(107): warning:  #223-D: function "ResetG" declared implicitly
-..\drive\TIM6.c(109): warning:  #223-D: function "ResetSET" declared implicitly
-..\drive\TIM6.c(219): error:  #20: identifier "short_flag" is undefined
-..\drive\TIM6.c(82): warning:  #177-D: variable "read1963" was declared but never referenced
-..\drive\TIM6.c(83): warning:  #177-D: variable "scancount" was declared but never referenced
-compiling R_Face.c...
-..\APP\R_Face.c(266): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(301): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(306): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(318): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(322): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(396): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(425): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(564): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(592): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1720): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1895): error:  #20: identifier "hItem" is undefined
-..\APP\R_Face.c(1895): error:  #20: identifier "pMsg" is undefined
-..\APP\R_Face.c(1896): error:  #20: identifier "buf" is undefined
-Target not created
-Build target 'JK_BTSET'
-compiling TIM6.c...
-..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(83): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(95): warning:  #223-D: function "LCD_Initializtion" declared implicitly
-..\drive\TIM6.c(96): warning:  #223-D: function "GUI_Init" declared implicitly
-..\drive\TIM6.c(99): warning:  #223-D: function "ResetPow" declared implicitly
-..\drive\TIM6.c(101): warning:  #223-D: function "ResetCDC" declared implicitly
-..\drive\TIM6.c(103): warning:  #223-D: function "ResetR" declared implicitly
-..\drive\TIM6.c(105): warning:  #223-D: function "ResetLoad" declared implicitly
-..\drive\TIM6.c(107): warning:  #223-D: function "ResetG" declared implicitly
-..\drive\TIM6.c(109): warning:  #223-D: function "ResetSET" declared implicitly
-..\drive\TIM6.c(219): error:  #20: identifier "short_flag" is undefined
-..\drive\TIM6.c(82): warning:  #177-D: variable "read1963" was declared but never referenced
-..\drive\TIM6.c(83): warning:  #177-D: variable "scancount" was declared but never referenced
-compiling R_Face.c...
-..\APP\R_Face.c(266): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(301): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(306): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(318): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(322): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(396): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(425): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(564): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(592): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1720): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1896): error:  #20: identifier "pMsg" is undefined
-..\APP\R_Face.c(1897): error:  #20: identifier "buf" is undefined
-Target not created
-Build target 'JK_BTSET'
-compiling TIM6.c...
-..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(83): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(95): warning:  #223-D: function "LCD_Initializtion" declared implicitly
-..\drive\TIM6.c(96): warning:  #223-D: function "GUI_Init" declared implicitly
-..\drive\TIM6.c(99): warning:  #223-D: function "ResetPow" declared implicitly
-..\drive\TIM6.c(101): warning:  #223-D: function "ResetCDC" declared implicitly
-..\drive\TIM6.c(103): warning:  #223-D: function "ResetR" declared implicitly
-..\drive\TIM6.c(105): warning:  #223-D: function "ResetLoad" declared implicitly
-..\drive\TIM6.c(107): warning:  #223-D: function "ResetG" declared implicitly
-..\drive\TIM6.c(109): warning:  #223-D: function "ResetSET" declared implicitly
-..\drive\TIM6.c(219): error:  #20: identifier "short_flag" is undefined
-..\drive\TIM6.c(82): warning:  #177-D: variable "read1963" was declared but never referenced
-..\drive\TIM6.c(83): warning:  #177-D: variable "scancount" was declared but never referenced
-compiling R_Face.c...
-..\APP\R_Face.c(266): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(301): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(306): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(318): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(322): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(396): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(425): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(564): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(592): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1720): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-Target not created
-Build target 'JK_BTSET'
-compiling main.c...
-compiling stm32f4xx_it.c...
-compiling adc.c...
-compiling AT24C01.c...
-compiling BEEP.c...
-compiling bsp_SysTick.c...
-compiling flash.c...
-compiling GPIO.c...
-compiling IIC_24C01.c...
 compiling key.c...
 ..\drive\key.c(819): warning:  #223-D: function "SET_OP_LEFT" declared implicitly
 ..\drive\key.c(828): warning:  #223-D: function "SYS_INFO_LEFT" declared implicitly
@@ -575,242 +248,6 @@ compiling key.c...
 ..\drive\key.c(1107): warning:  #223-D: function "CreateCDC" declared implicitly
 ..\drive\key.c(1362): warning:  #223-D: function "CreateCDC" declared implicitly
 ..\drive\key.c(1390): warning:  #223-D: function "Createsysinfo" declared implicitly
-compiling modbus.c...
-compiling ssd1963.c...
-..\drive\ssd1963.c(168): warning:  #550-D: variable "FSMC_NORSRAMTimingInitStructure" was set but never used
-compiling TIM1.c...
-compiling TIM2.c...
-compiling TIM6.c...
-..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(83): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(95): warning:  #223-D: function "LCD_Initializtion" declared implicitly
-..\drive\TIM6.c(96): warning:  #223-D: function "GUI_Init" declared implicitly
-..\drive\TIM6.c(99): warning:  #223-D: function "ResetPow" declared implicitly
-..\drive\TIM6.c(101): warning:  #223-D: function "ResetCDC" declared implicitly
-..\drive\TIM6.c(103): warning:  #223-D: function "ResetR" declared implicitly
-..\drive\TIM6.c(105): warning:  #223-D: function "ResetLoad" declared implicitly
-..\drive\TIM6.c(107): warning:  #223-D: function "ResetG" declared implicitly
-..\drive\TIM6.c(109): warning:  #223-D: function "ResetSET" declared implicitly
-..\drive\TIM6.c(82): warning:  #177-D: variable "read1963" was declared but never referenced
-..\drive\TIM6.c(83): warning:  #177-D: variable "scancount" was declared but never referenced
-compiling usart.c...
-compiling TM1650.c...
-compiling clock.c...
-compiling GUIDRV_Template.c...
-..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "xPhys" was declared but never referenced
-..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "yPhys" was declared but never referenced
-..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "lphys" was declared but never referenced
-compiling LCDConf_FlexColor_Template.c...
-compiling MainTask.c...
-..\STemWinLibrary522\emWinTask\MainTask.c(62): warning:  #223-D: function "CreateSTARTER" declared implicitly
-compiling menu.c...
-compiling R_Face.c...
-..\APP\R_Face.c(266): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(301): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(306): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(318): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(322): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(396): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(425): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(564): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(592): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1720): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-compiling load_Face.c...
-compiling STARTER.c...
-D:\外发资料\电池综合测试仪 2.1\APP\STARTER.c(98): warning:  #223-D: function "CreateR" declared implicitly
-compiling graph.c...
-compiling c_dc.c...
-compiling settings.c...
-compiling sysinfo.c...
-..\APP\sysinfo.c(1433): warning:  #940-D: missing return statement at end of non-void function "CFM_PASS"
-..\APP\sysinfo.c(1478): warning:  #223-D: function "Flash_Write_all" declared implicitly
-linking...
-Program Size: Code=156360 RO-data=119688 RW-data=2224 ZI-data=34568  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 66 Warning(s).
-Build target 'JK_BTSET'
-compiling main.c...
-compiling stm32f4xx_it.c...
-compiling adc.c...
-compiling AT24C01.c...
-compiling BEEP.c...
-compiling bsp_SysTick.c...
-compiling flash.c...
-compiling GPIO.c...
-compiling IIC_24C01.c...
-compiling key.c...
-..\drive\key.c(819): warning:  #223-D: function "SET_OP_LEFT" declared implicitly
-..\drive\key.c(828): warning:  #223-D: function "SYS_INFO_LEFT" declared implicitly
-..\drive\key.c(836): warning:  #223-D: function "CDC_OP_LEFT" declared implicitly
-..\drive\key.c(849): warning:  #223-D: function "SET_OP_RIGHT" declared implicitly
-..\drive\key.c(858): warning:  #223-D: function "SYS_INFO_RIGHT" declared implicitly
-..\drive\key.c(866): warning:  #223-D: function "CDC_OP_RIGHT" declared implicitly
-..\drive\key.c(881): warning:  #223-D: function "MENU_OP_UP" declared implicitly
-..\drive\key.c(893): warning:  #223-D: function "SET_OP_UP" declared implicitly
-..\drive\key.c(902): warning:  #223-D: function "OC_OP_UP" declared implicitly
-..\drive\key.c(911): warning:  #223-D: function "CDC_OP_UP" declared implicitly
-..\drive\key.c(920): warning:  #223-D: function "SYS_INFO_UP" declared implicitly
-..\drive\key.c(937): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
-..\drive\key.c(949): warning:  #223-D: function "SET_OP_DOWN" declared implicitly
-..\drive\key.c(958): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
-..\drive\key.c(966): warning:  #223-D: function "CDC_OP_DOWN" declared implicitly
-..\drive\key.c(975): warning:  #223-D: function "SYS_INFO_DOWN" declared implicitly
-..\drive\key.c(992): warning:  #223-D: function "MENU_SET" declared implicitly
-..\drive\key.c(999): warning:  #223-D: function "PARA_SET" declared implicitly
-..\drive\key.c(1008): warning:  #223-D: function "OC_SET" declared implicitly
-..\drive\key.c(1016): warning:  #223-D: function "LOAD_SET" declared implicitly
-..\drive\key.c(1023): warning:  #223-D: function "CDC_SET" declared implicitly
-..\drive\key.c(1030): warning:  #223-D: function "CFM_PASS" declared implicitly
-..\drive\key.c(1107): warning:  #223-D: function "CreateCDC" declared implicitly
-..\drive\key.c(1362): warning:  #223-D: function "CreateCDC" declared implicitly
-..\drive\key.c(1390): warning:  #223-D: function "Createsysinfo" declared implicitly
-compiling modbus.c...
-compiling ssd1963.c...
-..\drive\ssd1963.c(168): warning:  #550-D: variable "FSMC_NORSRAMTimingInitStructure" was set but never used
-compiling TIM1.c...
-compiling TIM2.c...
-compiling TIM6.c...
-..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(83): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(95): warning:  #223-D: function "LCD_Initializtion" declared implicitly
-..\drive\TIM6.c(96): warning:  #223-D: function "GUI_Init" declared implicitly
-..\drive\TIM6.c(99): warning:  #223-D: function "ResetPow" declared implicitly
-..\drive\TIM6.c(101): warning:  #223-D: function "ResetCDC" declared implicitly
-..\drive\TIM6.c(103): warning:  #223-D: function "ResetR" declared implicitly
-..\drive\TIM6.c(105): warning:  #223-D: function "ResetLoad" declared implicitly
-..\drive\TIM6.c(107): warning:  #223-D: function "ResetG" declared implicitly
-..\drive\TIM6.c(109): warning:  #223-D: function "ResetSET" declared implicitly
-..\drive\TIM6.c(82): warning:  #177-D: variable "read1963" was declared but never referenced
-..\drive\TIM6.c(83): warning:  #177-D: variable "scancount" was declared but never referenced
-compiling usart.c...
-compiling TM1650.c...
-compiling clock.c...
-compiling GUIDRV_Template.c...
-..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "xPhys" was declared but never referenced
-..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "yPhys" was declared but never referenced
-..\STemWinLibrary522\Config\GUIDRV_Template.c(264): warning:  #177-D: variable "lphys" was declared but never referenced
-compiling LCDConf_FlexColor_Template.c...
-compiling MainTask.c...
-..\STemWinLibrary522\emWinTask\MainTask.c(62): warning:  #223-D: function "CreateSTARTER" declared implicitly
-compiling menu.c...
-compiling R_Face.c...
-..\APP\R_Face.c(266): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(301): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(306): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(318): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(322): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(396): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(425): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(564): warning:  #181-D: argument is incompatible with corresponding format string conversion
-..\APP\R_Face.c(592): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(651): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(672): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(693): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(714): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(735): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-..\APP\R_Face.c(1720): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-compiling load_Face.c...
-compiling STARTER.c...
-D:\外发资料\电池综合测试仪 2.1\APP\STARTER.c(98): warning:  #223-D: function "CreateR" declared implicitly
-compiling graph.c...
-compiling c_dc.c...
-compiling settings.c...
-compiling sysinfo.c...
-..\APP\sysinfo.c(1433): warning:  #940-D: missing return statement at end of non-void function "CFM_PASS"
-..\APP\sysinfo.c(1478): warning:  #223-D: function "Flash_Write_all" declared implicitly
-linking...
-Program Size: Code=156360 RO-data=119688 RW-data=2224 ZI-data=34568  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 66 Warning(s).
-Build target 'JK_BTSET'
-compiling TIM6.c...
-..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(83): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(95): warning:  #223-D: function "LCD_Initializtion" declared implicitly
-..\drive\TIM6.c(96): warning:  #223-D: function "GUI_Init" declared implicitly
-..\drive\TIM6.c(99): warning:  #223-D: function "ResetPow" declared implicitly
-..\drive\TIM6.c(101): warning:  #223-D: function "ResetCDC" declared implicitly
-..\drive\TIM6.c(103): warning:  #223-D: function "ResetR" declared implicitly
-..\drive\TIM6.c(105): warning:  #223-D: function "ResetLoad" declared implicitly
-..\drive\TIM6.c(107): warning:  #223-D: function "ResetG" declared implicitly
-..\drive\TIM6.c(109): warning:  #223-D: function "ResetSET" declared implicitly
-..\drive\TIM6.c(82): warning:  #177-D: variable "read1963" was declared but never referenced
-..\drive\TIM6.c(83): warning:  #177-D: variable "scancount" was declared but never referenced
-linking...
-Program Size: Code=156512 RO-data=119688 RW-data=2224 ZI-data=34568  
-FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 13 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.349V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
-Build target 'JK_BTSET'
-compiling TIM6.c...
-..\drive\TIM6.c(81): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(82): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(83): warning:  #260-D: explicit type is missing ("int" assumed)
-..\drive\TIM6.c(95): warning:  #223-D: function "LCD_Initializtion" declared implicitly
-..\drive\TIM6.c(96): warning:  #223-D: function "GUI_Init" declared implicitly
-..\drive\TIM6.c(99): warning:  #223-D: function "ResetPow" declared implicitly
-..\drive\TIM6.c(101): warning:  #223-D: function "ResetCDC" declared implicitly
-..\drive\TIM6.c(103): warning:  #223-D: function "ResetR" declared implicitly
-..\drive\TIM6.c(105): warning:  #223-D: function "ResetLoad" declared implicitly
-..\drive\TIM6.c(107): warning:  #223-D: function "ResetG" declared implicitly
-..\drive\TIM6.c(109): warning:  #223-D: function "ResetSET" declared implicitly
-..\drive\TIM6.c(82): warning:  #177-D: variable "read1963" was declared but never referenced
-..\drive\TIM6.c(83): warning:  #177-D: variable "scancount" was declared but never referenced
 compiling R_Face.c...
 ..\APP\R_Face.c(266): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\APP\R_Face.c(301): warning:  #1035-D: single-precision operand implicitly converted to double-precision
@@ -833,52 +270,20 @@ compiling R_Face.c...
 ..\APP\R_Face.c(731): warning:  #1035-D: single-precision operand implicitly converted to double-precision
 ..\APP\R_Face.c(178): warning:  #177-D: variable "short1" was declared but never referenced
 ..\APP\R_Face.c(178): warning:  #177-D: variable "short2" was declared but never referenced
-..\APP\R_Face.c(1716): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(1718): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+compiling load_Face.c...
+compiling c_dc.c...
+compiling settings.c...
+compiling sysinfo.c...
+..\APP\sysinfo.c(1435): warning:  #940-D: missing return statement at end of non-void function "CFM_PASS"
+..\APP\sysinfo.c(1480): warning:  #223-D: function "Flash_Write_all" declared implicitly
 linking...
-Program Size: Code=156460 RO-data=119688 RW-data=2216 ZI-data=34568  
+Program Size: Code=156524 RO-data=119688 RW-data=2216 ZI-data=34568  
 FromELF: creating hex file...
-"..\Output\JK_BTSET.axf" - 0 Error(s), 35 Warning(s).
-Load "..\\Output\\JK_BTSET.AXF" 
-* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
-Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
- 
-JLink info:
-------------
-DLL: V4.40c, compiled Jan 24 2012 09:30:33
-Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
-Hardware: V9.40
-S/N : 59401576 
-Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
- 
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
-ROMTableAddr = 0xE00FF003
-* JLink Info: Found SWD-DP with ID 0x2BA01477
-* JLink Info: TPIU fitted.
-* JLink Info: ETM fitted.
-* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
-* JLink Info: Found Cortex-M4 r0p1, Little endian.
- 
-Target info:
-------------
-Device: STM32F407VE
-VTarget = 3.348V
-State of Pins: 
-TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 0
-Hardware-Breakpoints: 6
-Software-Breakpoints: 8192
-Watchpoints:          4
-JTAG speed: 3000 kHz
- 
-Erase Done.
-Programming Done.
-Verify OK.
+"..\Output\JK_BTSET.axf" - 0 Error(s), 49 Warning(s).
 Build target 'JK_BTSET'
 linking...
-Program Size: Code=156460 RO-data=119688 RW-data=2216 ZI-data=34568  
+Program Size: Code=156524 RO-data=119688 RW-data=2216 ZI-data=34568  
 FromELF: creating hex file...
 "..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
 Load "..\\Output\\JK_BTSET.AXF" 
@@ -908,7 +313,282 @@ ROMTableAddr = 0xE00FF003
 Target info:
 ------------
 Device: STM32F407VE
+VTarget = 3.291V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 0
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling key.c...
+..\drive\key.c(819): warning:  #223-D: function "SET_OP_LEFT" declared implicitly
+..\drive\key.c(828): warning:  #223-D: function "SYS_INFO_LEFT" declared implicitly
+..\drive\key.c(836): warning:  #223-D: function "CDC_OP_LEFT" declared implicitly
+..\drive\key.c(849): warning:  #223-D: function "SET_OP_RIGHT" declared implicitly
+..\drive\key.c(858): warning:  #223-D: function "SYS_INFO_RIGHT" declared implicitly
+..\drive\key.c(866): warning:  #223-D: function "CDC_OP_RIGHT" declared implicitly
+..\drive\key.c(881): warning:  #223-D: function "MENU_OP_UP" declared implicitly
+..\drive\key.c(893): warning:  #223-D: function "SET_OP_UP" declared implicitly
+..\drive\key.c(902): warning:  #223-D: function "OC_OP_UP" declared implicitly
+..\drive\key.c(911): warning:  #223-D: function "CDC_OP_UP" declared implicitly
+..\drive\key.c(920): warning:  #223-D: function "SYS_INFO_UP" declared implicitly
+..\drive\key.c(937): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
+..\drive\key.c(949): warning:  #223-D: function "SET_OP_DOWN" declared implicitly
+..\drive\key.c(958): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
+..\drive\key.c(966): warning:  #223-D: function "CDC_OP_DOWN" declared implicitly
+..\drive\key.c(975): warning:  #223-D: function "SYS_INFO_DOWN" declared implicitly
+..\drive\key.c(992): warning:  #223-D: function "MENU_SET" declared implicitly
+..\drive\key.c(999): warning:  #223-D: function "PARA_SET" declared implicitly
+..\drive\key.c(1008): warning:  #223-D: function "OC_SET" declared implicitly
+..\drive\key.c(1016): warning:  #223-D: function "LOAD_SET" declared implicitly
+..\drive\key.c(1023): warning:  #223-D: function "CDC_SET" declared implicitly
+..\drive\key.c(1030): warning:  #223-D: function "CFM_PASS" declared implicitly
+..\drive\key.c(1107): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1362): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1390): warning:  #223-D: function "Createsysinfo" declared implicitly
+compiling GUI_X.c...
+compiling R_Face.c...
+..\APP\R_Face.c(266): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(301): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(306): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(318): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(322): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(396): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(425): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(560): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(588): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(647): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(647): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(668): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(668): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(689): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(689): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(710): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(710): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(731): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(731): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(178): warning:  #177-D: variable "short1" was declared but never referenced
+..\APP\R_Face.c(178): warning:  #177-D: variable "short2" was declared but never referenced
+..\APP\R_Face.c(1718): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+compiling load_Face.c...
+compiling c_dc.c...
+compiling settings.c...
+linking...
+Program Size: Code=156516 RO-data=119688 RW-data=2216 ZI-data=34568  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 47 Warning(s).
+Build target 'JK_BTSET'
+compiling key.c...
+..\drive\key.c(819): warning:  #223-D: function "SET_OP_LEFT" declared implicitly
+..\drive\key.c(828): warning:  #223-D: function "SYS_INFO_LEFT" declared implicitly
+..\drive\key.c(836): warning:  #223-D: function "CDC_OP_LEFT" declared implicitly
+..\drive\key.c(849): warning:  #223-D: function "SET_OP_RIGHT" declared implicitly
+..\drive\key.c(858): warning:  #223-D: function "SYS_INFO_RIGHT" declared implicitly
+..\drive\key.c(866): warning:  #223-D: function "CDC_OP_RIGHT" declared implicitly
+..\drive\key.c(881): warning:  #223-D: function "MENU_OP_UP" declared implicitly
+..\drive\key.c(893): warning:  #223-D: function "SET_OP_UP" declared implicitly
+..\drive\key.c(902): warning:  #223-D: function "OC_OP_UP" declared implicitly
+..\drive\key.c(911): warning:  #223-D: function "CDC_OP_UP" declared implicitly
+..\drive\key.c(920): warning:  #223-D: function "SYS_INFO_UP" declared implicitly
+..\drive\key.c(937): warning:  #223-D: function "MENU_OP_DOWN" declared implicitly
+..\drive\key.c(949): warning:  #223-D: function "SET_OP_DOWN" declared implicitly
+..\drive\key.c(958): warning:  #223-D: function "OC_OP_DOWN" declared implicitly
+..\drive\key.c(966): warning:  #223-D: function "CDC_OP_DOWN" declared implicitly
+..\drive\key.c(975): warning:  #223-D: function "SYS_INFO_DOWN" declared implicitly
+..\drive\key.c(992): warning:  #223-D: function "MENU_SET" declared implicitly
+..\drive\key.c(999): warning:  #223-D: function "PARA_SET" declared implicitly
+..\drive\key.c(1008): warning:  #223-D: function "OC_SET" declared implicitly
+..\drive\key.c(1016): warning:  #223-D: function "LOAD_SET" declared implicitly
+..\drive\key.c(1023): warning:  #223-D: function "CDC_SET" declared implicitly
+..\drive\key.c(1030): warning:  #223-D: function "CFM_PASS" declared implicitly
+..\drive\key.c(1107): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1362): warning:  #223-D: function "CreateCDC" declared implicitly
+..\drive\key.c(1390): warning:  #223-D: function "Createsysinfo" declared implicitly
+linking...
+Program Size: Code=156484 RO-data=119688 RW-data=2216 ZI-data=34568  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 25 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
 VTarget = 3.303V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling GUI_X.c...
+compiling R_Face.c...
+..\APP\R_Face.c(266): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(301): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(306): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(318): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(322): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(396): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(425): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(560): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(588): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(647): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(647): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(668): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(668): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(689): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(689): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(710): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(710): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(731): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(731): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(178): warning:  #177-D: variable "short1" was declared but never referenced
+..\APP\R_Face.c(178): warning:  #177-D: variable "short2" was declared but never referenced
+..\APP\R_Face.c(1719): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+compiling load_Face.c...
+compiling c_dc.c...
+compiling settings.c...
+compiling sysinfo.c...
+..\APP\sysinfo.c(1436): warning:  #940-D: missing return statement at end of non-void function "CFM_PASS"
+..\APP\sysinfo.c(1481): warning:  #223-D: function "Flash_Write_all" declared implicitly
+linking...
+Program Size: Code=156556 RO-data=119688 RW-data=2216 ZI-data=34568  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 24 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.309V
+State of Pins: 
+TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 3000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'JK_BTSET'
+compiling load_Face.c...
+linking...
+Program Size: Code=156540 RO-data=119688 RW-data=2216 ZI-data=34568  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
+Build target 'JK_BTSET'
+compiling menu.c...
+compiling R_Face.c...
+..\APP\R_Face.c(266): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(301): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(306): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(318): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(322): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(396): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(425): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(560): warning:  #181-D: argument is incompatible with corresponding format string conversion
+..\APP\R_Face.c(588): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(647): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(647): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(668): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(668): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(689): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(689): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(710): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(710): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(731): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(731): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\APP\R_Face.c(178): warning:  #177-D: variable "short1" was declared but never referenced
+..\APP\R_Face.c(178): warning:  #177-D: variable "short2" was declared but never referenced
+..\APP\R_Face.c(1720): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+compiling c_dc.c...
+compiling settings.c...
+linking...
+Program Size: Code=156588 RO-data=119688 RW-data=2216 ZI-data=34568  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 22 Warning(s).
+Load "..\\Output\\JK_BTSET.AXF" 
+* JLink Info: Device "STM32F407VE" selected (512 KB flash, 128 KB RAM).
+Set JLink Project File to "D:\5530\5530rebiuld\Project\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link V9 compiled Apr 20 2018 16:47:26
+Hardware: V9.40
+S/N : 59401576 
+Feature(s) : RDI, GDB, FlashDL, FlashBP, JFlash 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ROMTableAddr = 0xE00FF003
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+ 
+Target info:
+------------
+Device: STM32F407VE
+VTarget = 3.304V
 State of Pins: 
 TCK: 0, TDI: 0, TDO: 0, TMS: 1, TRES: 1, TRST: 1
 Hardware-Breakpoints: 6

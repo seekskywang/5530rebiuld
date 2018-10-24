@@ -690,7 +690,11 @@ WM_HWIN CreateSET(void) {
   set_sw = set_1;
   pass = 0;
   TM1650_SET_LED(0x68,0x70);
+  load_sw = load_off;
+  pow_sw = pow_off;
   GPIO_ResetBits(GPIOD,GPIO_Pin_12);//ÃðµÆ
+  GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+    GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
   hWinset = GUI_CreateDialogBox(_aDialogCreate5, GUI_COUNTOF(_aDialogCreate5), _cbDialog, WM_HBKWIN, 0, 0);
   return hWinset;
 }

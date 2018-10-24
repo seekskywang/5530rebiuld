@@ -54205,9 +54205,17 @@ N  SET_Current = opc1;
 X  Run_Control[2] = Run_Control[34];
 N  SET_Current_Laod = cdc_dc;
 X  Run_Control[4] = Run_Control[41];
+N  load_sw = load_off;
+X  load_sw = 0;
+N  pow_sw = pow_off;
+X  pow_sw = 0;
 N  TM1650_SET_LED(0x68,0x70);
 N  GPIO_ResetBits(GPIOD,GPIO_Pin_12);//ÃðµÆ
 X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
+N  GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N    GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
+X    GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
 N//  double_sw = face_cdc;
 N  hWincdc = GUI_CreateDialogBox(_aDialogCreate4, GUI_COUNTOF(_aDialogCreate4), _cbDialog, WM_HBKWIN, 0, 0);
 X  hWincdc = GUI_CreateDialogBox(_aDialogCreate4, (sizeof(_aDialogCreate4) / sizeof(_aDialogCreate4[0])), _cbDialog, WM_GetDesktopWindow(), 0, 0);

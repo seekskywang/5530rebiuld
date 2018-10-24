@@ -53012,6 +53012,8 @@ X  track = 2;
 N  set_sw = set_10;
 X  set_sw = 9;
 N  pass = 0;
+N  load_sw = load_off;
+X  load_sw = 0;
 N  SET_Voltage = pow_v;
 X  Run_Control[1] = Run_Control[40];
 N  SET_Current = pow_c;
@@ -53019,6 +53021,8 @@ X  Run_Control[2] = Run_Control[42];
 N  TM1650_SET_LED(0x68,0x70);
 N  GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
 X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
+N  GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
+X  GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
 N  hWinWind = GUI_CreateDialogBox(_aDialogCreate1, GUI_COUNTOF(_aDialogCreate1), _cbDialog, WM_HBKWIN, 0, 0);
 X  hWinWind = GUI_CreateDialogBox(_aDialogCreate1, (sizeof(_aDialogCreate1) / sizeof(_aDialogCreate1[0])), _cbDialog, WM_GetDesktopWindow(), 0, 0);
 N  return hWinWind;

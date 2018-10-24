@@ -35395,7 +35395,7 @@ N                }
 N            }break;
 N            case face_r:
 X            case 3:
-N            {                               
+N            {                     
 N                if(oct_sw == oct_on && para_set2 == set_2_on)
 X                if(oct_sw == 1 && para_set2 == 0xff)
 N                {

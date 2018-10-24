@@ -52628,7 +52628,7 @@ N        }
 N        GUI_SetColor(0x00BFFFFF);
 N        GUI_SetFont(&GUI_Font24_1);
 N        GUI_DispStringAt("JK5530", 180, 50);
-N        GUI_DispStringAt("Ver:2.3", 180, 75);
+N        GUI_DispStringAt("Ver:2.4", 180, 75);
 N        //1.7版本修改内阻测试判断测试结束与下一次测试开始的逻辑
 N        //1.8版本修正内阻测试短路后激活电池问题，添加手动测试功能，修正内阻显示不稳定问题
 N        //2.0版本添加英文
@@ -52847,6 +52847,12 @@ X  hWinsysinfo  = GUI_CreateDialogBox(_aDialogCreate7, (sizeof(_aDialogCreate7) 
 N  pass = 0;
 N  page_sw = face_sys_info;
 X  page_sw = 7;
+N  load_sw = load_off;
+X  load_sw = 0;
+N  pow_sw == pow_off;
+X  pow_sw == 0;
+N  GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+X  GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
 N  info_set = set_48;
 X  info_set = 47;
 N  return hWinsysinfo;
@@ -54328,7 +54334,7 @@ N        TEXT_SetTextColor(hItem, 0x00BFFFFF);
 N        info_set = set_48;
 X        info_set = 47;
 N    }
-W "..\APP\sysinfo.c" 1433 1 missing return statement at end of non-void function "CFM_PASS"
+W "..\APP\sysinfo.c" 1436 1 missing return statement at end of non-void function "CFM_PASS"
 N}
 N
 Nvoid Rlow_cal(u8 step)
@@ -54382,7 +54388,7 @@ N                Polar3 &= ~0x01;
 X                Correct_Parametet[11] &= ~0x01;
 N            }
 N//---------------------------------------------------------------------------------------//
-W "..\APP\sysinfo.c" 1478 13 function "Flash_Write_all" declared implicitly
+W "..\APP\sysinfo.c" 1481 13 function "Flash_Write_all" declared implicitly
 N            Flash_Write_all();	//参数写进FLASH
 N            flag_OverV=0;
 X            (flagG . bit1)=0;

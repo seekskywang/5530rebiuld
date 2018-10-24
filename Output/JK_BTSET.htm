@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\Output\JK_BTSET.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\Output\JK_BTSET.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Thu Oct 18 12:48:39 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Wed Oct 24 15:51:39 2018
 <BR><P>
 <H3>Maximum Stack Usage =        688 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1468,10 +1468,11 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> checkbox.o(.data)
 </UL>
-<P><STRONG><a name="[1e6]"></a>CreateCDC</STRONG> (Thumb, 86 bytes, Stack size 16 bytes, c_dc.o(i.CreateCDC))
+<P><STRONG><a name="[1e6]"></a>CreateCDC</STRONG> (Thumb, 112 bytes, Stack size 16 bytes, c_dc.o(i.CreateCDC))
 <BR><BR>[Stack]<UL><LI>Max Depth = 232<LI>Call Chain = CreateCDC &rArr; GUI_CreateDialogBox &rArr; WM_ShowWindow &rArr; WM_InvalidateWindowAndDescs &rArr;  WM_InvalidateWindowAndDescs (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+<BR>[Calls]<UL><LI><a href="#[1b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
+<LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
 <LI><a href="#[1e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM1650_SET_LED
 <LI><a href="#[1e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_GetDesktopWindow
 <LI><a href="#[1e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_CreateDialogBox
@@ -1490,20 +1491,23 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[328]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
 </UL>
 
-<P><STRONG><a name="[1eb]"></a>CreateR</STRONG> (Thumb, 54 bytes, Stack size 24 bytes, r_face.o(i.CreateR))
+<P><STRONG><a name="[1eb]"></a>CreateR</STRONG> (Thumb, 80 bytes, Stack size 24 bytes, r_face.o(i.CreateR))
 <BR><BR>[Stack]<UL><LI>Max Depth = 240<LI>Call Chain = CreateR &rArr; GUI_CreateDialogBox &rArr; WM_ShowWindow &rArr; WM_InvalidateWindowAndDescs &rArr;  WM_InvalidateWindowAndDescs (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_GetDesktopWindow
+<BR>[Calls]<UL><LI><a href="#[1b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
+<LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+<LI><a href="#[1e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_GetDesktopWindow
 <LI><a href="#[1e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_CreateDialogBox
 </UL>
 <BR>[Called By]<UL><LI><a href="#[328]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
 </UL>
 
-<P><STRONG><a name="[1ec]"></a>CreateSET</STRONG> (Thumb, 62 bytes, Stack size 16 bytes, settings.o(i.CreateSET))
+<P><STRONG><a name="[1ec]"></a>CreateSET</STRONG> (Thumb, 88 bytes, Stack size 16 bytes, settings.o(i.CreateSET))
 <BR><BR>[Stack]<UL><LI>Max Depth = 232<LI>Call Chain = CreateSET &rArr; GUI_CreateDialogBox &rArr; WM_ShowWindow &rArr; WM_InvalidateWindowAndDescs &rArr;  WM_InvalidateWindowAndDescs (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+<BR>[Calls]<UL><LI><a href="#[1b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
+<LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
 <LI><a href="#[1e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM1650_SET_LED
 <LI><a href="#[1e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_GetDesktopWindow
 <LI><a href="#[1e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_CreateDialogBox
@@ -1520,19 +1524,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[35a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MainTask
 </UL>
 
-<P><STRONG><a name="[1ee]"></a>CreateWindow</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, menu.o(i.CreateWindow))
+<P><STRONG><a name="[1ee]"></a>CreateWindow</STRONG> (Thumb, 94 bytes, Stack size 16 bytes, menu.o(i.CreateWindow))
 <BR><BR>[Stack]<UL><LI>Max Depth = 232<LI>Call Chain = CreateWindow &rArr; GUI_CreateDialogBox &rArr; WM_ShowWindow &rArr; WM_InvalidateWindowAndDescs &rArr;  WM_InvalidateWindowAndDescs (Cycle)
-</UL>
-<BR>[Calls]<UL><LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
-<LI><a href="#[1e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM1650_SET_LED
-<LI><a href="#[1e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_GetDesktopWindow
-<LI><a href="#[1e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_CreateDialogBox
-</UL>
-<BR>[Called By]<UL><LI><a href="#[328]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
-</UL>
-
-<P><STRONG><a name="[1ef]"></a>CreateWindow2</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, load_face.o(i.CreateWindow2))
-<BR><BR>[Stack]<UL><LI>Max Depth = 232<LI>Call Chain = CreateWindow2 &rArr; GUI_CreateDialogBox &rArr; WM_ShowWindow &rArr; WM_InvalidateWindowAndDescs &rArr;  WM_InvalidateWindowAndDescs (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
 <LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
@@ -1543,10 +1536,22 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[328]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
 </UL>
 
-<P><STRONG><a name="[1f0]"></a>Createsysinfo</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, sysinfo.o(i.Createsysinfo))
-<BR><BR>[Stack]<UL><LI>Max Depth = 232<LI>Call Chain = Createsysinfo &rArr; GUI_CreateDialogBox &rArr; WM_ShowWindow &rArr; WM_InvalidateWindowAndDescs &rArr;  WM_InvalidateWindowAndDescs (Cycle)
+<P><STRONG><a name="[1ef]"></a>CreateWindow2</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, load_face.o(i.CreateWindow2))
+<BR><BR>[Stack]<UL><LI>Max Depth = 232<LI>Call Chain = CreateWindow2 &rArr; GUI_CreateDialogBox &rArr; WM_ShowWindow &rArr; WM_InvalidateWindowAndDescs &rArr;  WM_InvalidateWindowAndDescs (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_GetDesktopWindow
+<BR>[Calls]<UL><LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+<LI><a href="#[1e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TM1650_SET_LED
+<LI><a href="#[1e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_GetDesktopWindow
+<LI><a href="#[1e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_CreateDialogBox
+</UL>
+<BR>[Called By]<UL><LI><a href="#[328]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
+</UL>
+
+<P><STRONG><a name="[1f0]"></a>Createsysinfo</STRONG> (Thumb, 64 bytes, Stack size 24 bytes, sysinfo.o(i.Createsysinfo))
+<BR><BR>[Stack]<UL><LI>Max Depth = 240<LI>Call Chain = Createsysinfo &rArr; GUI_CreateDialogBox &rArr; WM_ShowWindow &rArr; WM_InvalidateWindowAndDescs &rArr;  WM_InvalidateWindowAndDescs (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+<LI><a href="#[1e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM_GetDesktopWindow
 <LI><a href="#[1e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GUI_CreateDialogBox
 </UL>
 <BR>[Called By]<UL><LI><a href="#[328]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
@@ -1967,9 +1972,11 @@ Global Symbols
 <LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM3_IRQHandler
 <LI><a href="#[36d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Temp_Comapre
 <LI><a href="#[34d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sLCD_GPIO_Config
+<LI><a href="#[1f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Createsysinfo
 <LI><a href="#[1ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateWindow2
 <LI><a href="#[1ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateWindow
 <LI><a href="#[1ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateSET
+<LI><a href="#[1eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateR
 <LI><a href="#[1ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateG
 <LI><a href="#[1e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateCDC
 <LI><a href="#[33c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Mode_SW_CONT
@@ -1995,7 +2002,10 @@ Global Symbols
 <LI><a href="#[319]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIc_ReadByte
 <LI><a href="#[36e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OC_ADD
 <LI><a href="#[36d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Temp_Comapre
-<LI><a href="#[1ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateWindow2
+<LI><a href="#[1ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateWindow
+<LI><a href="#[1ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateSET
+<LI><a href="#[1eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateR
+<LI><a href="#[1e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateCDC
 <LI><a href="#[33c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Mode_SW_CONT
 <LI><a href="#[328]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_cbDialog
@@ -4982,7 +4992,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[328]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Funtion
 </UL>
 
-<P><STRONG><a name="[328]"></a>Key_Funtion</STRONG> (Thumb, 3508 bytes, Stack size 40 bytes, key.o(i.Key_Funtion))
+<P><STRONG><a name="[328]"></a>Key_Funtion</STRONG> (Thumb, 3454 bytes, Stack size 40 bytes, key.o(i.Key_Funtion))
 <BR><BR>[Stack]<UL><LI>Max Depth = 304 + Unknown Stack Size
 <LI>Call Chain = Key_Funtion &rArr; CDC_SET &rArr; TEXT_SetBkColor &rArr; WM_ClrHasTrans &rArr; WM_InvalidateWindow &rArr; WM_InvalidateRect &rArr; WM__InvalidateRectEx &rArr; WM__InvalidateRect &rArr;  WM__InvalidateRect (Cycle)
 </UL>
