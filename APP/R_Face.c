@@ -303,12 +303,17 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                         
                         if(con_flag == 1 && oct_sw == oct_off && finish == 0)
                         {
-                            if((float)(GUI_GetTime()/500.0 - time1) > 0.2)
+                            if((float)(GUI_GetTime()/500.0 - time1) > 0.8)
                             {
                                 r = R_VLUE;
                                 v = DISS_Voltage;
                                 oct_sw = oct_on;
                                 clear_flag1 = 0;
+                            }else{
+                                if(v < DISS_Voltage)
+                                {
+                                    v = DISS_Voltage;
+                                }
                             }
                         }
                     }else{
@@ -316,15 +321,21 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                         {
                             con_flag = 1;
                             time1 = (float)GUI_GetTime()/500.0;
-                        }                       
+                            
+                        }
                         if(con_flag == 1 && oct_sw == oct_off && finish == 0)
                         {
-                            if((float)(GUI_GetTime()/500.0 - time1) > 0.2)
+                            if((float)(GUI_GetTime()/500.0 - time1) > 0.8)
                             {
                                 r = R_VLUE;
                                 v = DISS_Voltage;
                                 oct_sw = oct_on;
                                 clear_flag1 = 0;
+                            }else{
+                                if(v < DISS_Voltage)
+                                {
+                                    v = DISS_Voltage;
+                                }
                             }
                         }
                     }
@@ -598,7 +609,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                                 sprintf(buf,"%4d",0);       
                                 TEXT_SetText(hItem,buf);
                             }else{
-                                
+                                   
 //                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
 //                                 TEXT_SetFont(hItem,&GUI_FontD24x32);
 //                                 

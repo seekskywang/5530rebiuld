@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\Output\JK_BTSET.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\Output\JK_BTSET.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Wed Oct 24 15:51:39 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 894]: Last Updated: Sat Oct 27 13:12:20 2018
 <BR><P>
 <H3>Maximum Stack Usage =        688 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1241,10 +1241,10 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[1bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_SetText
 <LI><a href="#[1bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUTTON_CreateUser
 </UL>
-<BR>[Address Reference Count : 6]<UL><LI> graph.o(.constdata)
+<BR>[Address Reference Count : 6]<UL><LI> load_face.o(.constdata)
 <LI> menu.o(.constdata)
 <LI> r_face.o(.constdata)
-<LI> load_face.o(.constdata)
+<LI> graph.o(.constdata)
 <LI> settings.o(.constdata)
 <LI> c_dc.o(.constdata)
 </UL>
@@ -6138,9 +6138,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[3a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TEXT_CreateUser
 </UL>
-<BR>[Address Reference Count : 6]<UL><LI> menu.o(.constdata)
+<BR>[Address Reference Count : 6]<UL><LI> load_face.o(.constdata)
+<LI> menu.o(.constdata)
 <LI> r_face.o(.constdata)
-<LI> load_face.o(.constdata)
 <LI> settings.o(.constdata)
 <LI> sysinfo.o(.constdata)
 <LI> c_dc.o(.constdata)
@@ -6810,13 +6810,13 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[3dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WINDOW_CreateUser
 </UL>
-<BR>[Address Reference Count : 8]<UL><LI> graph.o(.constdata)
+<BR>[Address Reference Count : 8]<UL><LI> load_face.o(.constdata)
+<LI> starter.o(.constdata)
 <LI> menu.o(.constdata)
 <LI> r_face.o(.constdata)
-<LI> load_face.o(.constdata)
+<LI> graph.o(.constdata)
 <LI> settings.o(.constdata)
 <LI> sysinfo.o(.constdata)
-<LI> starter.o(.constdata)
 <LI> c_dc.o(.constdata)
 </UL>
 <P><STRONG><a name="[3dc]"></a>WINDOW_CreateUser</STRONG> (Thumb, 80 bytes, Stack size 40 bytes, window.o(i.WINDOW_CreateUser))
@@ -8764,7 +8764,7 @@ Local Symbols
 <BR>[Address Reference Count : 2]<UL><LI> menu.o(i.ResetPow)
 <LI> menu.o(i.CreateWindow)
 </UL>
-<P><STRONG><a name="[90]"></a>_cbDialog</STRONG> (Thumb, 6084 bytes, Stack size 64 bytes, r_face.o(i._cbDialog))
+<P><STRONG><a name="[90]"></a>_cbDialog</STRONG> (Thumb, 6140 bytes, Stack size 64 bytes, r_face.o(i._cbDialog))
 <BR><BR>[Stack]<UL><LI>Max Depth = 288 + Unknown Stack Size
 <LI>Call Chain = _cbDialog &rArr; test_r &rArr; TEXT_SetTextColor &rArr; WM_InvalidateWindow &rArr; WM_InvalidateRect &rArr; WM__InvalidateRectEx &rArr; WM__InvalidateRect &rArr;  WM__InvalidateRect (Cycle)
 </UL>
@@ -8832,8 +8832,8 @@ Local Symbols
 <LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 <LI><a href="#[1da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 </UL>
-<BR>[Address Reference Count : 2]<UL><LI> load_face.o(i.CreateWindow2)
-<LI> load_face.o(i.ResetLoad)
+<BR>[Address Reference Count : 2]<UL><LI> load_face.o(i.ResetLoad)
+<LI> load_face.o(i.CreateWindow2)
 </UL>
 <P><STRONG><a name="[92]"></a>_cbDialog</STRONG> (Thumb, 120 bytes, Stack size 8 bytes, starter.o(i._cbDialog))
 <BR><BR>[Stack]<UL><LI>Max Depth = 248<LI>Call Chain = _cbDialog &rArr; CreateR &rArr; GUI_CreateDialogBox &rArr; WM_ShowWindow &rArr; WM_InvalidateWindowAndDescs &rArr;  WM_InvalidateWindowAndDescs (Cycle)
