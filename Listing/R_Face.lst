@@ -52772,7 +52772,7 @@ N                            if((float)(GUI_GetTime()/500.0 - time1) > 0.8)
 N                            {
 N                                r = R_VLUE;
 X                                r = Run_Control[13];
-N                                v = DISS_Voltage;
+N//                                v = DISS_Voltage;
 N                                oct_sw = oct_on;
 X                                oct_sw = 1;
 N                                clear_flag1 = 0;
@@ -52800,7 +52800,7 @@ N                            if((float)(GUI_GetTime()/500.0 - time1) > 0.8)
 N                            {
 N                                r = R_VLUE;
 X                                r = Run_Control[13];
-N                                v = DISS_Voltage;
+N//                                v = DISS_Voltage;
 N                                oct_sw = oct_on;
 X                                oct_sw = 1;
 N                                clear_flag1 = 0;
