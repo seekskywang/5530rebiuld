@@ -74,6 +74,14 @@ void Flash_Write_all (void)
 	data_8bit = REG_ReadR_Offset >> 8;
 	EEPROM_WriteByte(0x0B, data_8bit);
 	EEPROM_WriteByte(0x0C, REG_ReadR_Offset);//ÄÚ×è
+    
+    data_8bit = REG_ReadRH_Offset >> 24;
+	EEPROM_WriteByte(0x94, data_8bit);
+	data_8bit = REG_ReadRH_Offset >> 16;
+	EEPROM_WriteByte(0x95, data_8bit);
+	data_8bit = REG_ReadRH_Offset >> 8;
+	EEPROM_WriteByte(0x96, data_8bit);
+	EEPROM_WriteByte(0x97, REG_ReadRH_Offset);//ÅšØ¨
 	
 	data_8bit = REG_ReadV1_Offset >> 24;
 	EEPROM_WriteByte(0x40, data_8bit);
@@ -98,6 +106,10 @@ void Flash_Write_all (void)
 	data_8bit=REG_CorrectionR>>8;
 	EEPROM_WriteByte(0x11, data_8bit);
 	EEPROM_WriteByte(0x12, REG_CorrectionR);
+    
+    data_8bit=REG_CorrectionRH>>8;
+	EEPROM_WriteByte(0x98, data_8bit);
+	EEPROM_WriteByte(0x99, REG_CorrectionRH);
 	
 	data_8bit=REG_CorrectionV1>>8;
 	EEPROM_WriteByte(0x44, data_8bit);
@@ -205,6 +217,14 @@ void EEPROM_READ_Coeff(void)
 	REG_ReadR_Offset=REG_ReadR_Offset+EEPROM_READ_Byte(0x0B);
 	REG_ReadR_Offset=REG_ReadR_Offset<<8;
 	REG_ReadR_Offset=REG_ReadR_Offset+EEPROM_READ_Byte(0x0C);
+    
+    REG_ReadRH_Offset=EEPROM_READ_Byte(0x94);
+	REG_ReadRH_Offset=REG_ReadRH_Offset<<8;
+	REG_ReadRH_Offset=REG_ReadRH_Offset+EEPROM_READ_Byte(0x95);
+	REG_ReadRH_Offset=REG_ReadRH_Offset<<8;
+	REG_ReadRH_Offset=REG_ReadRH_Offset+EEPROM_READ_Byte(0x96);
+	REG_ReadRH_Offset=REG_ReadRH_Offset<<8;
+	REG_ReadRH_Offset=REG_ReadRH_Offset+EEPROM_READ_Byte(0x97);
 	
 	REG_CorrectionV=EEPROM_READ_Byte(0x0D);
 	REG_CorrectionV=REG_CorrectionV<<8;
@@ -225,6 +245,10 @@ void EEPROM_READ_Coeff(void)
 	REG_CorrectionR=EEPROM_READ_Byte(0x11);
 	REG_CorrectionR=REG_CorrectionR<<8;
 	REG_CorrectionR=REG_CorrectionR+EEPROM_READ_Byte(0x12);
+    
+    REG_CorrectionRH=EEPROM_READ_Byte(0x98);
+	REG_CorrectionRH=REG_CorrectionRH<<8;
+	REG_CorrectionRH=REG_CorrectionRH+EEPROM_READ_Byte(0x99);
 	
 	Polar=EEPROM_READ_Byte(0x13);
 	Polar3=EEPROM_READ_Byte(0x46);

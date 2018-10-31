@@ -48775,7 +48775,7 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu16 Correct_Parametet[13];
+Nextern vu16 Correct_Parametet[14];
 N#define  REG_CorrectionV   Correct_Parametet[0]
 N#define  REG_CorrectionA   Correct_Parametet[1]
 N#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -48789,9 +48789,10 @@ N#define  Polar1            Correct_Parametet[9]
 N#define  Polar2						 Correct_Parametet[10]
 N#define  Polar3						 Correct_Parametet[11]
 N#define  REG_CorrectionV1  Correct_Parametet[12]
+N#define  REG_CorrectionRH   Correct_Parametet[13]
 N
 N
-Nextern vu32 Correct_Strong[9];//校准系数
+Nextern vu32 Correct_Strong[10];//校准系数
 N#define  REG_ReadV_Offset   Correct_Strong[0]
 N#define  REG_ReadA_Offset   Correct_Strong[1]
 N#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -48801,6 +48802,7 @@ N#define  SET_ReadA_Offset   Correct_Strong[5]
 N#define  SET_ReadA1_Offset  Correct_Strong[6]
 N#define  CON_ReadA_Offset   Correct_Strong[7]
 N#define  REG_ReadV1_Offset  Correct_Strong[8]
+N#define  REG_ReadRH_Offset   Correct_Strong[9]
 N
 N/*
 N************************************************************************
@@ -49213,7 +49215,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu16 Correct_Parametet[13];
+Sextern vu16 Correct_Parametet[14];
 S#define  REG_CorrectionV   Correct_Parametet[0]
 S#define  REG_CorrectionA   Correct_Parametet[1]
 S#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -49227,9 +49229,10 @@ S#define  Polar1            Correct_Parametet[9]
 S#define  Polar2						 Correct_Parametet[10]
 S#define  Polar3						 Correct_Parametet[11]
 S#define  REG_CorrectionV1  Correct_Parametet[12]
+S#define  REG_CorrectionRH   Correct_Parametet[13]
 S
 S
-Sextern vu32 Correct_Strong[9];//校准系数
+Sextern vu32 Correct_Strong[10];//校准系数
 S#define  REG_ReadV_Offset   Correct_Strong[0]
 S#define  REG_ReadA_Offset   Correct_Strong[1]
 S#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -49239,6 +49242,7 @@ S#define  SET_ReadA_Offset   Correct_Strong[5]
 S#define  SET_ReadA1_Offset  Correct_Strong[6]
 S#define  CON_ReadA_Offset   Correct_Strong[7]
 S#define  REG_ReadV1_Offset  Correct_Strong[8]
+S#define  REG_ReadRH_Offset   Correct_Strong[9]
 S
 S/*
 S************************************************************************
@@ -49656,7 +49660,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu16 Correct_Parametet[13];
+Sextern vu16 Correct_Parametet[14];
 S#define  REG_CorrectionV   Correct_Parametet[0]
 S#define  REG_CorrectionA   Correct_Parametet[1]
 S#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -49670,9 +49674,10 @@ S#define  Polar1            Correct_Parametet[9]
 S#define  Polar2						 Correct_Parametet[10]
 S#define  Polar3						 Correct_Parametet[11]
 S#define  REG_CorrectionV1  Correct_Parametet[12]
+S#define  REG_CorrectionRH   Correct_Parametet[13]
 S
 S
-Sextern vu32 Correct_Strong[9];//校准系数
+Sextern vu32 Correct_Strong[10];//校准系数
 S#define  REG_ReadV_Offset   Correct_Strong[0]
 S#define  REG_ReadA_Offset   Correct_Strong[1]
 S#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -49682,6 +49687,7 @@ S#define  SET_ReadA_Offset   Correct_Strong[5]
 S#define  SET_ReadA1_Offset  Correct_Strong[6]
 S#define  CON_ReadA_Offset   Correct_Strong[7]
 S#define  REG_ReadV1_Offset  Correct_Strong[8]
+S#define  REG_ReadRH_Offset   Correct_Strong[9]
 S
 S/*
 S************************************************************************
@@ -52085,7 +52091,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu16 Correct_Parametet[13];
+Sextern vu16 Correct_Parametet[14];
 S#define  REG_CorrectionV   Correct_Parametet[0]
 S#define  REG_CorrectionA   Correct_Parametet[1]
 S#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -52099,9 +52105,10 @@ S#define  Polar1            Correct_Parametet[9]
 S#define  Polar2						 Correct_Parametet[10]
 S#define  Polar3						 Correct_Parametet[11]
 S#define  REG_CorrectionV1  Correct_Parametet[12]
+S#define  REG_CorrectionRH   Correct_Parametet[13]
 S
 S
-Sextern vu32 Correct_Strong[9];//校准系数
+Sextern vu32 Correct_Strong[10];//校准系数
 S#define  REG_ReadV_Offset   Correct_Strong[0]
 S#define  REG_ReadA_Offset   Correct_Strong[1]
 S#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -52111,6 +52118,7 @@ S#define  SET_ReadA_Offset   Correct_Strong[5]
 S#define  SET_ReadA1_Offset  Correct_Strong[6]
 S#define  CON_ReadA_Offset   Correct_Strong[7]
 S#define  REG_ReadV1_Offset  Correct_Strong[8]
+S#define  REG_ReadRH_Offset   Correct_Strong[9]
 S
 S/*
 S************************************************************************

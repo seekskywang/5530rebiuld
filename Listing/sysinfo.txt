@@ -563,132 +563,132 @@
 0002dc  256400            DCB      "%d",0
 0002df  00                DCB      0
 
-                          AREA ||i.Rlow_cal||, CODE, READONLY, ALIGN=2
+                          AREA ||i.Rhigh_cal||, CODE, READONLY, ALIGN=2
 
-                  Rlow_cal PROC
-;;;1437   
-;;;1438   void Rlow_cal(u8 step)
+                  Rhigh_cal PROC
+;;;1488   
+;;;1489   void Rhigh_cal(u8 step)
 000000  b570              PUSH     {r4-r6,lr}
-;;;1439   {
-;;;1440       if(step == 1)
-;;;1441       {
-;;;1442           Modify_A_READ = Rmon_value;//测量电压值
+;;;1490   {
+;;;1491       if(step == 3)
+;;;1492       {
+;;;1493           Modify_A_READ = Rmon_value;//测量电压值
 000002  4b25              LDR      r3,|L4.152|
 000004  4a25              LDR      r2,|L4.156|
-;;;1443   		Modify_A_ACT = 0x0A;//读取低段
+;;;1494   		Modify_A_ACT = 0x64;//读取低段
 000006  4926              LDR      r1,|L4.160|
-000008  2801              CMP      r0,#1                 ;1440
+000008  2803              CMP      r0,#3                 ;1491
 00000a  d029              BEQ      |L4.96|
-;;;1444       }else if(step == 2){
-00000c  2802              CMP      r0,#2
+;;;1495       }else if(step == 4){
+00000c  2804              CMP      r0,#4
 00000e  d12b              BNE      |L4.104|
-;;;1445           vu16 var16;
-;;;1446           vu32 var32a;
-;;;1447           vu32 var32b;
-;;;1448           
-;;;1449           vu16 var16a;
-;;;1450           vu32 var32c;
-;;;1451           vu32 var32d;
-;;;1452           Modify_B_READ =Rmon_value;//测量电压值
+;;;1496           vu16 var16;
+;;;1497           vu32 var32a;
+;;;1498           vu32 var32b;
+;;;1499           
+;;;1500           vu16 var16a;
+;;;1501           vu32 var32c;
+;;;1502           vu32 var32d;
+;;;1503           Modify_B_READ =Rmon_value;//测量电压值
 000010  8818              LDRH     r0,[r3,#0]  ; Rmon_value
 000012  4b24              LDR      r3,|L4.164|
 000014  8018              STRH     r0,[r3,#0]
-;;;1453           flag_OverV=1;
+;;;1504           flag_OverV=1;
 000016  4c24              LDR      r4,|L4.168|
 000018  6820              LDR      r0,[r4,#0]  ; flagG
 00001a  f0400002          ORR      r0,r0,#2
 00001e  6020              STR      r0,[r4,#0]  ; flagG
-;;;1454           Modify_B_ACT = 0x64;//读取高段
+;;;1505           Modify_B_ACT = 0xC8;//读取高段
 000020  4d22              LDR      r5,|L4.172|
-000022  2664              MOVS     r6,#0x64
+000022  26c8              MOVS     r6,#0xc8
 000024  802e              STRH     r6,[r5,#0]
-;;;1455           if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
+;;;1506           if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
 000026  0780              LSLS     r0,r0,#30
 000028  d530              BPL      |L4.140|
-;;;1456           {
-;;;1457               var32a = Modify_B_ACT;
+;;;1507           {
+;;;1508               var32a = Modify_B_ACT;
 00002a  8828              LDRH     r0,[r5,#0]  ; Modify_B_ACT
-;;;1458               var32a = var32a - Modify_A_ACT;
+;;;1509               var32a = var32a - Modify_A_ACT;
 00002c  8809              LDRH     r1,[r1,#0]  ; Modify_A_ACT
 00002e  1a40              SUBS     r0,r0,r1
-;;;1459               var32a = var32a << 12;
+;;;1510               var32a = var32a << 12;
 000030  0301              LSLS     r1,r0,#12
-;;;1460               var16 = Modify_B_READ - Modify_A_READ;
+;;;1511               var16 = Modify_B_READ - Modify_A_READ;
 000032  8818              LDRH     r0,[r3,#0]  ; Modify_B_READ
 000034  8812              LDRH     r2,[r2,#0]  ; Modify_A_READ
 000036  1a80              SUBS     r0,r0,r2
 000038  b280              UXTH     r0,r0
-;;;1461               var32a = var32a / var16;
+;;;1512               var32a = var32a / var16;
 00003a  fbb1f0f0          UDIV     r0,r1,r0
-;;;1462               REG_CorrectionR = var32a;
+;;;1513               REG_CorrectionRH = var32a;
 00003e  4a1c              LDR      r2,|L4.176|
-000040  80d0              STRH     r0,[r2,#6]
-;;;1463               var32a=0;
-;;;1464               var32a = Modify_B_ACT;
+000040  8350              STRH     r0,[r2,#0x1a]
+;;;1514               var32a=0;
+;;;1515               var32a = Modify_B_ACT;
 000042  8828              LDRH     r0,[r5,#0]  ; Modify_B_ACT
-;;;1465               var32a = var32a << 12;
+;;;1516               var32a = var32a << 12;
 000044  0301              LSLS     r1,r0,#12
-;;;1466               var32b = Modify_B_READ;
+;;;1517               var32b = Modify_B_READ;
 000046  881b              LDRH     r3,[r3,#0]  ; Modify_B_READ
-;;;1467               var32b = var32b * REG_CorrectionR;
-000048  88d0              LDRH     r0,[r2,#6]  ; Correct_Parametet
+;;;1518               var32b = var32b * REG_CorrectionRH;
+000048  8b50              LDRH     r0,[r2,#0x1a]  ; Correct_Parametet
 00004a  4358              MULS     r0,r3,r0
-;;;1468               if (var32a < var32b)
-;;;1469               {
-;;;1470                   var32b = var32b - var32a;
-;;;1471                   REG_ReadR_Offset = var32b;
+;;;1519               if (var32a < var32b)
+;;;1520               {
+;;;1521                   var32b = var32b - var32a;
+;;;1522                   REG_ReadRH_Offset = var32b;
 00004c  4b19              LDR      r3,|L4.180|
-00004e  4281              CMP      r1,r0                 ;1468
+00004e  4281              CMP      r1,r0                 ;1519
 000050  d20b              BCS      |L4.106|
-000052  1a40              SUBS     r0,r0,r1              ;1470
-000054  60d8              STR      r0,[r3,#0xc]  ; Correct_Strong
-;;;1472                   Polar3 |= 0x01;
+000052  1a40              SUBS     r0,r0,r1              ;1521
+000054  6258              STR      r0,[r3,#0x24]  ; Correct_Strong
+;;;1523                   Polar3 |= 0x01;
 000056  8ad0              LDRH     r0,[r2,#0x16]  ; Correct_Parametet
 000058  f0400001          ORR      r0,r0,#1
 00005c  82d0              STRH     r0,[r2,#0x16]
 00005e  e00a              B        |L4.118|
                   |L4.96|
-000060  8818              LDRH     r0,[r3,#0]            ;1442  ; Rmon_value
-000062  8010              STRH     r0,[r2,#0]            ;1442
-000064  200a              MOVS     r0,#0xa               ;1443
-000066  8008              STRH     r0,[r1,#0]            ;1443
+000060  8818              LDRH     r0,[r3,#0]            ;1493  ; Rmon_value
+000062  8010              STRH     r0,[r2,#0]            ;1493
+000064  2064              MOVS     r0,#0x64              ;1494
+000066  8008              STRH     r0,[r1,#0]            ;1494
                   |L4.104|
-;;;1473               }
-;;;1474               else 
-;;;1475               {
-;;;1476                   var32a = var32a - var32b;
-;;;1477                   REG_ReadR_Offset = var32a;
-;;;1478                   Polar3 &= ~0x01;
-;;;1479               }
-;;;1480   //---------------------------------------------------------------------------------------//
-;;;1481               Flash_Write_all();	//参数写进FLASH
-;;;1482               flag_OverV=0;
-;;;1483               Flag_DAC_OFF=0;
-;;;1484           }
-;;;1485           flag_ADJ_VH=0;//清掉标志位防止一直进入
-;;;1486       }
-;;;1487   }
+;;;1524               }
+;;;1525               else 
+;;;1526               {
+;;;1527                   var32a = var32a - var32b;
+;;;1528                   REG_ReadRH_Offset = var32a;
+;;;1529                   Polar3 &= ~0x01;
+;;;1530               }
+;;;1531   //---------------------------------------------------------------------------------------//
+;;;1532               Flash_Write_all();	//参数写进FLASH
+;;;1533               flag_OverV=0;
+;;;1534               Flag_DAC_OFF=0;
+;;;1535           }
+;;;1536           flag_ADJ_VH=0;//清掉标志位防止一直进入
+;;;1537       }
+;;;1538   }
 000068  bd70              POP      {r4-r6,pc}
                   |L4.106|
-00006a  1a08              SUBS     r0,r1,r0              ;1476
-00006c  60d8              STR      r0,[r3,#0xc]          ;1477  ; Correct_Strong
-00006e  8ad0              LDRH     r0,[r2,#0x16]         ;1478  ; Correct_Parametet
-000070  f0200001          BIC      r0,r0,#1              ;1478
-000074  82d0              STRH     r0,[r2,#0x16]         ;1478
+00006a  1a08              SUBS     r0,r1,r0              ;1527
+00006c  6258              STR      r0,[r3,#0x24]         ;1528  ; Correct_Strong
+00006e  8ad0              LDRH     r0,[r2,#0x16]         ;1529  ; Correct_Parametet
+000070  f0200001          BIC      r0,r0,#1              ;1529
+000074  82d0              STRH     r0,[r2,#0x16]         ;1529
                   |L4.118|
 000076  f7fffffe          BL       Flash_Write_all
-00007a  6820              LDR      r0,[r4,#0]            ;1482  ; flagG
-00007c  f0200002          BIC      r0,r0,#2              ;1482
-000080  6020              STR      r0,[r4,#0]            ;1482  ; flagG
+00007a  6820              LDR      r0,[r4,#0]            ;1533  ; flagG
+00007c  f0200002          BIC      r0,r0,#2              ;1533
+000080  6020              STR      r0,[r4,#0]            ;1533  ; flagG
 000082  480d              LDR      r0,|L4.184|
-000084  6801              LDR      r1,[r0,#0]            ;1483  ; flagB
-000086  f0210108          BIC      r1,r1,#8              ;1483
-00008a  6001              STR      r1,[r0,#0]            ;1483  ; flagB
+000084  6801              LDR      r1,[r0,#0]            ;1534  ; flagB
+000086  f0210108          BIC      r1,r1,#8              ;1534
+00008a  6001              STR      r1,[r0,#0]            ;1534  ; flagB
                   |L4.140|
 00008c  480b              LDR      r0,|L4.188|
-00008e  6801              LDR      r1,[r0,#0]            ;1485  ; flagF
-000090  f0210108          BIC      r1,r1,#8              ;1485
-000094  6001              STR      r1,[r0,#0]            ;1485  ; flagF
+00008e  6801              LDR      r1,[r0,#0]            ;1536  ; flagF
+000090  f0210108          BIC      r1,r1,#8              ;1536
+000094  6001              STR      r1,[r0,#0]            ;1536  ; flagF
 000096  bd70              POP      {r4-r6,pc}
                           ENDP
 
@@ -713,6 +713,157 @@
                   |L4.188|
                           DCD      flagF
 
+                          AREA ||i.Rlow_cal||, CODE, READONLY, ALIGN=2
+
+                  Rlow_cal PROC
+;;;1437   
+;;;1438   void Rlow_cal(u8 step)
+000000  b570              PUSH     {r4-r6,lr}
+;;;1439   {
+;;;1440       if(step == 1)
+;;;1441       {
+;;;1442           Modify_A_READ = Rmon_value;//测量电压值
+000002  4b25              LDR      r3,|L5.152|
+000004  4a25              LDR      r2,|L5.156|
+;;;1443   		Modify_A_ACT = 0x0A;//读取低段
+000006  4926              LDR      r1,|L5.160|
+000008  2801              CMP      r0,#1                 ;1440
+00000a  d029              BEQ      |L5.96|
+;;;1444       }else if(step == 2){
+00000c  2802              CMP      r0,#2
+00000e  d12b              BNE      |L5.104|
+;;;1445           vu16 var16;
+;;;1446           vu32 var32a;
+;;;1447           vu32 var32b;
+;;;1448           
+;;;1449           vu16 var16a;
+;;;1450           vu32 var32c;
+;;;1451           vu32 var32d;
+;;;1452           Modify_B_READ =Rmon_value;//测量电压值
+000010  8818              LDRH     r0,[r3,#0]  ; Rmon_value
+000012  4b24              LDR      r3,|L5.164|
+000014  8018              STRH     r0,[r3,#0]
+;;;1453           flag_OverV=1;
+000016  4c24              LDR      r4,|L5.168|
+000018  6820              LDR      r0,[r4,#0]  ; flagG
+00001a  f0400002          ORR      r0,r0,#2
+00001e  6020              STR      r0,[r4,#0]  ; flagG
+;;;1454           Modify_B_ACT = 0x64;//读取高段
+000020  4d22              LDR      r5,|L5.172|
+000022  2664              MOVS     r6,#0x64
+000024  802e              STRH     r6,[r5,#0]
+;;;1455           if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
+000026  0780              LSLS     r0,r0,#30
+000028  d530              BPL      |L5.140|
+;;;1456           {
+;;;1457               var32a = Modify_B_ACT;
+00002a  8828              LDRH     r0,[r5,#0]  ; Modify_B_ACT
+;;;1458               var32a = var32a - Modify_A_ACT;
+00002c  8809              LDRH     r1,[r1,#0]  ; Modify_A_ACT
+00002e  1a40              SUBS     r0,r0,r1
+;;;1459               var32a = var32a << 12;
+000030  0301              LSLS     r1,r0,#12
+;;;1460               var16 = Modify_B_READ - Modify_A_READ;
+000032  8818              LDRH     r0,[r3,#0]  ; Modify_B_READ
+000034  8812              LDRH     r2,[r2,#0]  ; Modify_A_READ
+000036  1a80              SUBS     r0,r0,r2
+000038  b280              UXTH     r0,r0
+;;;1461               var32a = var32a / var16;
+00003a  fbb1f0f0          UDIV     r0,r1,r0
+;;;1462               REG_CorrectionR = var32a;
+00003e  4a1c              LDR      r2,|L5.176|
+000040  80d0              STRH     r0,[r2,#6]
+;;;1463               var32a=0;
+;;;1464               var32a = Modify_B_ACT;
+000042  8828              LDRH     r0,[r5,#0]  ; Modify_B_ACT
+;;;1465               var32a = var32a << 12;
+000044  0301              LSLS     r1,r0,#12
+;;;1466               var32b = Modify_B_READ;
+000046  881b              LDRH     r3,[r3,#0]  ; Modify_B_READ
+;;;1467               var32b = var32b * REG_CorrectionR;
+000048  88d0              LDRH     r0,[r2,#6]  ; Correct_Parametet
+00004a  4358              MULS     r0,r3,r0
+;;;1468               if (var32a < var32b)
+;;;1469               {
+;;;1470                   var32b = var32b - var32a;
+;;;1471                   REG_ReadR_Offset = var32b;
+00004c  4b19              LDR      r3,|L5.180|
+00004e  4281              CMP      r1,r0                 ;1468
+000050  d20b              BCS      |L5.106|
+000052  1a40              SUBS     r0,r0,r1              ;1470
+000054  60d8              STR      r0,[r3,#0xc]  ; Correct_Strong
+;;;1472                   Polar3 |= 0x01;
+000056  8ad0              LDRH     r0,[r2,#0x16]  ; Correct_Parametet
+000058  f0400001          ORR      r0,r0,#1
+00005c  82d0              STRH     r0,[r2,#0x16]
+00005e  e00a              B        |L5.118|
+                  |L5.96|
+000060  8818              LDRH     r0,[r3,#0]            ;1442  ; Rmon_value
+000062  8010              STRH     r0,[r2,#0]            ;1442
+000064  200a              MOVS     r0,#0xa               ;1443
+000066  8008              STRH     r0,[r1,#0]            ;1443
+                  |L5.104|
+;;;1473               }
+;;;1474               else 
+;;;1475               {
+;;;1476                   var32a = var32a - var32b;
+;;;1477                   REG_ReadR_Offset = var32a;
+;;;1478                   Polar3 &= ~0x01;
+;;;1479               }
+;;;1480   //---------------------------------------------------------------------------------------//
+;;;1481               Flash_Write_all();	//参数写进FLASH
+;;;1482               flag_OverV=0;
+;;;1483               Flag_DAC_OFF=0;
+;;;1484           }
+;;;1485           flag_ADJ_VH=0;//清掉标志位防止一直进入
+;;;1486       }
+;;;1487   }
+000068  bd70              POP      {r4-r6,pc}
+                  |L5.106|
+00006a  1a08              SUBS     r0,r1,r0              ;1476
+00006c  60d8              STR      r0,[r3,#0xc]          ;1477  ; Correct_Strong
+00006e  8ad0              LDRH     r0,[r2,#0x16]         ;1478  ; Correct_Parametet
+000070  f0200001          BIC      r0,r0,#1              ;1478
+000074  82d0              STRH     r0,[r2,#0x16]         ;1478
+                  |L5.118|
+000076  f7fffffe          BL       Flash_Write_all
+00007a  6820              LDR      r0,[r4,#0]            ;1482  ; flagG
+00007c  f0200002          BIC      r0,r0,#2              ;1482
+000080  6020              STR      r0,[r4,#0]            ;1482  ; flagG
+000082  480d              LDR      r0,|L5.184|
+000084  6801              LDR      r1,[r0,#0]            ;1483  ; flagB
+000086  f0210108          BIC      r1,r1,#8              ;1483
+00008a  6001              STR      r1,[r0,#0]            ;1483  ; flagB
+                  |L5.140|
+00008c  480b              LDR      r0,|L5.188|
+00008e  6801              LDR      r1,[r0,#0]            ;1485  ; flagF
+000090  f0210108          BIC      r1,r1,#8              ;1485
+000094  6001              STR      r1,[r0,#0]            ;1485  ; flagF
+000096  bd70              POP      {r4-r6,pc}
+;;;1488   
+                          ENDP
+
+                  |L5.152|
+                          DCD      Rmon_value
+                  |L5.156|
+                          DCD      Modify_A_READ
+                  |L5.160|
+                          DCD      Modify_A_ACT
+                  |L5.164|
+                          DCD      Modify_B_READ
+                  |L5.168|
+                          DCD      flagG
+                  |L5.172|
+                          DCD      Modify_B_ACT
+                  |L5.176|
+                          DCD      Correct_Parametet
+                  |L5.180|
+                          DCD      Correct_Strong
+                  |L5.184|
+                          DCD      flagB
+                  |L5.188|
+                          DCD      flagF
+
                           AREA ||i.SYS_INFO_DOWN||, CODE, READONLY, ALIGN=2
 
                   SYS_INFO_DOWN PROC
@@ -722,7 +873,7 @@
 ;;;1050   {
 ;;;1051       WM_HWIN hItem;
 ;;;1052       switch(info_set)
-000004  f8dfb404          LDR      r11,|L5.1036|
+000004  f8dfb404          LDR      r11,|L6.1036|
 000008  f89b1000          LDRB     r1,[r11,#0]  ; info_set
 00000c  4658              MOV      r0,r11
 00000e  392f              SUBS     r1,r1,#0x2f
@@ -732,7 +883,7 @@
 ;;;1056               hItem = WM_GetDialogItem(hWinsysinfo, ID_TEXT_99);
 ;;;1057               TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
 ;;;1058               TEXT_SetTextColor(hItem, 0x00BFFFFF);
-000010  4fff              LDR      r7,|L5.1040|
+000010  4fff              LDR      r7,|L6.1040|
 ;;;1059               
 ;;;1060               hItem = WM_GetDialogItem(hWinsysinfo, ID_TEXT_113);
 ;;;1061               TEXT_SetBkColor(hItem,0x00BFFFFF);
@@ -850,7 +1001,7 @@
 00001c  f06f4870          MVN      r8,#0xf0000000        ;1057
 000020  f6403908          MOV      r9,#0xb08             ;1060
 000024  2910              CMP      r1,#0x10              ;1052
-000026  d225              BCS      |L5.116|
+000026  d225              BCS      |L6.116|
 000028  e8dff001          TBB      [pc,r1]               ;1052
 00002c  08264462          DCB      0x08,0x26,0x44,0x62
 000030  809ebcda          DCB      0x80,0x9e,0xbc,0xda
@@ -876,7 +1027,7 @@
 00006a  4620              MOV      r0,r4                 ;1062
 00006c  f7fffffe          BL       TEXT_SetTextColor
 000070  f88b5000          STRB     r5,[r11,#0]           ;1064
-                  |L5.116|
+                  |L6.116|
 ;;;1169               break;
 ;;;1170           }
 ;;;1171           case set_63:
@@ -994,7 +1145,7 @@
 0000a8  4620              MOV      r0,r4                 ;1075
 0000aa  f7fffffe          BL       TEXT_SetTextColor
 0000ae  f88b5000          STRB     r5,[r11,#0]           ;1077
-0000b2  e7df              B        |L5.116|
+0000b2  e7df              B        |L6.116|
 0000b4  f640019b          MOV      r1,#0x89b             ;1082
 0000b8  f7fffffe          BL       WM_GetDialogItem
 0000bc  4604              MOV      r4,r0                 ;1082
@@ -1015,7 +1166,7 @@
 0000e4  4620              MOV      r0,r4                 ;1088
 0000e6  f7fffffe          BL       TEXT_SetTextColor
 0000ea  f88b5000          STRB     r5,[r11,#0]           ;1090
-0000ee  e7c1              B        |L5.116|
+0000ee  e7c1              B        |L6.116|
 0000f0  f640019c          MOV      r1,#0x89c             ;1095
 0000f4  f7fffffe          BL       WM_GetDialogItem
 0000f8  4604              MOV      r4,r0                 ;1095
@@ -1036,7 +1187,7 @@
 000120  4620              MOV      r0,r4                 ;1101
 000122  f7fffffe          BL       TEXT_SetTextColor
 000126  f88b5000          STRB     r5,[r11,#0]           ;1103
-00012a  e7a3              B        |L5.116|
+00012a  e7a3              B        |L6.116|
 00012c  f640019d          MOV      r1,#0x89d             ;1108
 000130  f7fffffe          BL       WM_GetDialogItem
 000134  4604              MOV      r4,r0                 ;1108
@@ -1057,7 +1208,7 @@
 00015c  4620              MOV      r0,r4                 ;1114
 00015e  f7fffffe          BL       TEXT_SetTextColor
 000162  f88b5000          STRB     r5,[r11,#0]           ;1116
-000166  e785              B        |L5.116|
+000166  e785              B        |L6.116|
 000168  f640019e          MOV      r1,#0x89e             ;1121
 00016c  f7fffffe          BL       WM_GetDialogItem
 000170  4604              MOV      r4,r0                 ;1121
@@ -1078,7 +1229,7 @@
 000198  4620              MOV      r0,r4                 ;1127
 00019a  f7fffffe          BL       TEXT_SetTextColor
 00019e  f88b5000          STRB     r5,[r11,#0]           ;1129
-0001a2  e767              B        |L5.116|
+0001a2  e767              B        |L6.116|
 0001a4  f44f6130          MOV      r1,#0xb00             ;1134
 0001a8  f7fffffe          BL       WM_GetDialogItem
 0001ac  4604              MOV      r4,r0                 ;1134
@@ -1099,7 +1250,7 @@
 0001d4  4620              MOV      r0,r4                 ;1140
 0001d6  f7fffffe          BL       TEXT_SetTextColor
 0001da  f88b5000          STRB     r5,[r11,#0]           ;1142
-0001de  e749              B        |L5.116|
+0001de  e749              B        |L6.116|
 0001e0  f6403101          MOV      r1,#0xb01             ;1147
 0001e4  f7fffffe          BL       WM_GetDialogItem
 0001e8  4604              MOV      r4,r0                 ;1147
@@ -1119,19 +1270,19 @@
 00020e  2100              MOVS     r1,#0                 ;1153
 000210  4620              MOV      r0,r4                 ;1153
 000212  f7fffffe          BL       TEXT_SetTextColor
-000216  e007              B        |L5.552|
-000218  e026              B        |L5.616|
-00021a  e008              B        |L5.558|
-00021c  e0d8              B        |L5.976|
-00021e  e0b9              B        |L5.916|
-000220  e09a              B        |L5.856|
-000222  e07b              B        |L5.796|
-000224  e05c              B        |L5.736|
-000226  e03d              B        |L5.676|
-                  |L5.552|
+000216  e007              B        |L6.552|
+000218  e026              B        |L6.616|
+00021a  e008              B        |L6.558|
+00021c  e0d8              B        |L6.976|
+00021e  e0b9              B        |L6.916|
+000220  e09a              B        |L6.856|
+000222  e07b              B        |L6.796|
+000224  e05c              B        |L6.736|
+000226  e03d              B        |L6.676|
+                  |L6.552|
 000228  f88b5000          STRB     r5,[r11,#0]           ;1155
-00022c  e722              B        |L5.116|
-                  |L5.558|
+00022c  e722              B        |L6.116|
+                  |L6.558|
 00022e  4649              MOV      r1,r9                 ;1160
 000230  f7fffffe          BL       WM_GetDialogItem
 000234  4604              MOV      r4,r0                 ;1160
@@ -1152,8 +1303,8 @@
 00025c  4620              MOV      r0,r4                 ;1166
 00025e  f7fffffe          BL       TEXT_SetTextColor
 000262  f88b6000          STRB     r6,[r11,#0]           ;1168
-000266  e705              B        |L5.116|
-                  |L5.616|
+000266  e705              B        |L6.116|
+                  |L6.616|
 000268  f6403109          MOV      r1,#0xb09             ;1173
 00026c  f7fffffe          BL       WM_GetDialogItem
 000270  4604              MOV      r4,r0                 ;1173
@@ -1174,8 +1325,8 @@
 000298  4620              MOV      r0,r4                 ;1179
 00029a  f7fffffe          BL       TEXT_SetTextColor
 00029e  f88b6000          STRB     r6,[r11,#0]           ;1181
-0002a2  e6e7              B        |L5.116|
-                  |L5.676|
+0002a2  e6e7              B        |L6.116|
+                  |L6.676|
 0002a4  f6403102          MOV      r1,#0xb02             ;1186
 0002a8  f7fffffe          BL       WM_GetDialogItem
 0002ac  4604              MOV      r4,r0                 ;1186
@@ -1196,8 +1347,8 @@
 0002d4  4620              MOV      r0,r4                 ;1192
 0002d6  f7fffffe          BL       TEXT_SetTextColor
 0002da  f88b6000          STRB     r6,[r11,#0]           ;1194
-0002de  e6c9              B        |L5.116|
-                  |L5.736|
+0002de  e6c9              B        |L6.116|
+                  |L6.736|
 0002e0  f6403103          MOV      r1,#0xb03             ;1199
 0002e4  f7fffffe          BL       WM_GetDialogItem
 0002e8  4604              MOV      r4,r0                 ;1199
@@ -1218,8 +1369,8 @@
 000310  4620              MOV      r0,r4                 ;1205
 000312  f7fffffe          BL       TEXT_SetTextColor
 000316  f88b6000          STRB     r6,[r11,#0]           ;1207
-00031a  e6ab              B        |L5.116|
-                  |L5.796|
+00031a  e6ab              B        |L6.116|
+                  |L6.796|
 00031c  f6403104          MOV      r1,#0xb04             ;1212
 000320  f7fffffe          BL       WM_GetDialogItem
 000324  4604              MOV      r4,r0                 ;1212
@@ -1240,8 +1391,8 @@
 00034c  4620              MOV      r0,r4                 ;1218
 00034e  f7fffffe          BL       TEXT_SetTextColor
 000352  f88b6000          STRB     r6,[r11,#0]           ;1220
-000356  e68d              B        |L5.116|
-                  |L5.856|
+000356  e68d              B        |L6.116|
+                  |L6.856|
 000358  f6403105          MOV      r1,#0xb05             ;1225
 00035c  f7fffffe          BL       WM_GetDialogItem
 000360  4604              MOV      r4,r0                 ;1225
@@ -1262,8 +1413,8 @@
 000388  4620              MOV      r0,r4                 ;1231
 00038a  f7fffffe          BL       TEXT_SetTextColor
 00038e  f88b6000          STRB     r6,[r11,#0]           ;1233
-000392  e66f              B        |L5.116|
-                  |L5.916|
+000392  e66f              B        |L6.116|
+                  |L6.916|
 000394  f6403106          MOV      r1,#0xb06             ;1238
 000398  f7fffffe          BL       WM_GetDialogItem
 00039c  4604              MOV      r4,r0                 ;1238
@@ -1284,8 +1435,8 @@
 0003c4  4620              MOV      r0,r4                 ;1244
 0003c6  f7fffffe          BL       TEXT_SetTextColor
 0003ca  f88b6000          STRB     r6,[r11,#0]           ;1246
-0003ce  e651              B        |L5.116|
-                  |L5.976|
+0003ce  e651              B        |L6.116|
+                  |L6.976|
 0003d0  f6403107          MOV      r1,#0xb07             ;1251
 0003d4  f7fffffe          BL       WM_GetDialogItem
 0003d8  4604              MOV      r4,r0                 ;1251
@@ -1306,10 +1457,10 @@
 000400  4620              MOV      r0,r4                 ;1257
 000402  f7fffffe          BL       TEXT_SetTextColor
 000406  f88b6000          STRB     r6,[r11,#0]           ;1259
-00040a  e633              B        |L5.116|
-                  |L5.1036|
+00040a  e633              B        |L6.116|
+                  |L6.1036|
                           DCD      ||.data||
-                  |L5.1040|
+                  |L6.1040|
                           DCD      0x00bfffff
                           ENDP
 
@@ -1323,7 +1474,7 @@
 ;;;612    {
 ;;;613        WM_HWIN hItem;
 ;;;614        switch(info_set)
-000004  48fc              LDR      r0,|L6.1016|
+000004  48fc              LDR      r0,|L7.1016|
 000006  7801              LDRB     r1,[r0,#0]  ; info_set
 ;;;615        {
 ;;;616            case set_48:
@@ -1333,7 +1484,7 @@
 00000c  392f              SUBS     r1,r1,#0x2f           ;614
 ;;;619                TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
 ;;;620                TEXT_SetTextColor(hItem, 0x00BFFFFF);
-00000e  4dfb              LDR      r5,|L6.1020|
+00000e  4dfb              LDR      r5,|L7.1020|
 ;;;621                
 ;;;622                hItem = WM_GetDialogItem(hWinsysinfo, ID_TEXT_106);
 ;;;623                TEXT_SetBkColor(hItem,0x00BFFFFF);
@@ -1418,7 +1569,7 @@
 ;;;696                hItem = WM_GetDialogItem(hWinsysinfo, ID_TEXT_105);
 000022  f44f6b30          MOV      r11,#0xb00
 000026  2910              CMP      r1,#0x10              ;614
-000028  d227              BCS      |L6.122|
+000028  d227              BCS      |L7.122|
 00002a  e8dff001          TBB      [pc,r1]               ;614
 00002e  0828              DCB      0x08,0x28
 000030  466482a0          DCB      0x46,0x64,0x82,0xa0
@@ -1426,7 +1577,7 @@
 000038  fcfbfaf9          DCB      0xfc,0xfb,0xfa,0xf9
 00003c  f8f7              DCB      0xf8,0xf7
 00003e  4631              MOV      r1,r6                 ;618
-000040  4eed              LDR      r6,|L6.1016|
+000040  4eed              LDR      r6,|L7.1016|
 000042  f7fffffe          BL       WM_GetDialogItem
 000046  4604              MOV      r4,r0                 ;618
 000048  f06f4170          MVN      r1,#0xf0000000        ;619
@@ -1447,7 +1598,7 @@
 000072  f7fffffe          BL       TEXT_SetTextColor
 000076  2036              MOVS     r0,#0x36              ;626
 000078  7030              STRB     r0,[r6,#0]            ;626
-                  |L6.122|
+                  |L7.122|
 ;;;697                TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
 ;;;698                TEXT_SetTextColor(hItem, 0x00BFFFFF);
 ;;;699                
@@ -1580,7 +1731,7 @@
 ;;;826    }
 00007a  e8bd9ff0          POP      {r4-r12,pc}
 00007e  4639              MOV      r1,r7                 ;631
-000080  4fdd              LDR      r7,|L6.1016|
+000080  4fdd              LDR      r7,|L7.1016|
 000082  f7fffffe          BL       WM_GetDialogItem
 000086  4604              MOV      r4,r0                 ;631
 000088  f06f4170          MVN      r1,#0xf0000000        ;632
@@ -1601,9 +1752,9 @@
 0000b0  f7fffffe          BL       TEXT_SetTextColor
 0000b4  202f              MOVS     r0,#0x2f              ;639
 0000b6  7038              STRB     r0,[r7,#0]            ;639
-0000b8  e7df              B        |L6.122|
+0000b8  e7df              B        |L7.122|
 0000ba  4641              MOV      r1,r8                 ;644
-0000bc  4ece              LDR      r6,|L6.1016|
+0000bc  4ece              LDR      r6,|L7.1016|
 0000be  f7fffffe          BL       WM_GetDialogItem
 0000c2  4604              MOV      r4,r0                 ;644
 0000c4  f06f4170          MVN      r1,#0xf0000000        ;645
@@ -1624,9 +1775,9 @@
 0000ec  f7fffffe          BL       TEXT_SetTextColor
 0000f0  2030              MOVS     r0,#0x30              ;652
 0000f2  7030              STRB     r0,[r6,#0]            ;652
-0000f4  e7c1              B        |L6.122|
+0000f4  e7c1              B        |L7.122|
 0000f6  4649              MOV      r1,r9                 ;657
-0000f8  4ebf              LDR      r6,|L6.1016|
+0000f8  4ebf              LDR      r6,|L7.1016|
 0000fa  f7fffffe          BL       WM_GetDialogItem
 0000fe  4604              MOV      r4,r0                 ;657
 000100  f06f4170          MVN      r1,#0xf0000000        ;658
@@ -1647,9 +1798,9 @@
 000128  f7fffffe          BL       TEXT_SetTextColor
 00012c  2031              MOVS     r0,#0x31              ;665
 00012e  7030              STRB     r0,[r6,#0]            ;665
-000130  e7a3              B        |L6.122|
+000130  e7a3              B        |L7.122|
 000132  4621              MOV      r1,r4                 ;670
-000134  4eb0              LDR      r6,|L6.1016|
+000134  4eb0              LDR      r6,|L7.1016|
 000136  f7fffffe          BL       WM_GetDialogItem
 00013a  4604              MOV      r4,r0                 ;670
 00013c  f06f4170          MVN      r1,#0xf0000000        ;671
@@ -1670,9 +1821,9 @@
 000164  f7fffffe          BL       TEXT_SetTextColor
 000168  2032              MOVS     r0,#0x32              ;678
 00016a  7030              STRB     r0,[r6,#0]            ;678
-00016c  e785              B        |L6.122|
+00016c  e785              B        |L7.122|
 00016e  4651              MOV      r1,r10                ;683
-000170  4fa1              LDR      r7,|L6.1016|
+000170  4fa1              LDR      r7,|L7.1016|
 000172  f7fffffe          BL       WM_GetDialogItem
 000176  4606              MOV      r6,r0                 ;683
 000178  f06f4170          MVN      r1,#0xf0000000        ;684
@@ -1693,9 +1844,9 @@
 0001a0  f7fffffe          BL       TEXT_SetTextColor
 0001a4  2033              MOVS     r0,#0x33              ;691
 0001a6  7038              STRB     r0,[r7,#0]            ;691
-0001a8  e767              B        |L6.122|
+0001a8  e767              B        |L7.122|
 0001aa  4659              MOV      r1,r11                ;696
-0001ac  4e92              LDR      r6,|L6.1016|
+0001ac  4e92              LDR      r6,|L7.1016|
 0001ae  f7fffffe          BL       WM_GetDialogItem
 0001b2  4604              MOV      r4,r0                 ;696
 0001b4  f06f4170          MVN      r1,#0xf0000000        ;697
@@ -1716,9 +1867,9 @@
 0001dc  f7fffffe          BL       TEXT_SetTextColor
 0001e0  2034              MOVS     r0,#0x34              ;704
 0001e2  7030              STRB     r0,[r6,#0]            ;704
-0001e4  e749              B        |L6.122|
+0001e4  e749              B        |L7.122|
 0001e6  f6403101          MOV      r1,#0xb01             ;709
-0001ea  4e83              LDR      r6,|L6.1016|
+0001ea  4e83              LDR      r6,|L7.1016|
 0001ec  f7fffffe          BL       WM_GetDialogItem
 0001f0  4604              MOV      r4,r0                 ;709
 0001f2  f06f4170          MVN      r1,#0xf0000000        ;710
@@ -1736,23 +1887,23 @@
 000212  f7fffffe          BL       TEXT_SetBkColor
 000216  2100              MOVS     r1,#0                 ;715
 000218  4620              MOV      r0,r4                 ;715
-00021a  e007              B        |L6.556|
-00021c  e02b              B        |L6.630|
-00021e  e00a              B        |L6.566|
-000220  e0ee              B        |L6.1024|
-000222  e0c8              B        |L6.950|
-000224  e0a7              B        |L6.886|
-000226  e086              B        |L6.822|
-000228  e065              B        |L6.758|
-00022a  e044              B        |L6.694|
-                  |L6.556|
+00021a  e007              B        |L7.556|
+00021c  e02b              B        |L7.630|
+00021e  e00a              B        |L7.566|
+000220  e0ee              B        |L7.1024|
+000222  e0c8              B        |L7.950|
+000224  e0a7              B        |L7.886|
+000226  e086              B        |L7.822|
+000228  e065              B        |L7.758|
+00022a  e044              B        |L7.694|
+                  |L7.556|
 00022c  f7fffffe          BL       TEXT_SetTextColor
 000230  2035              MOVS     r0,#0x35              ;717
 000232  7030              STRB     r0,[r6,#0]            ;717
-000234  e721              B        |L6.122|
-                  |L6.566|
+000234  e721              B        |L7.122|
+                  |L7.566|
 000236  f6403108          MOV      r1,#0xb08             ;722
-00023a  4e6f              LDR      r6,|L6.1016|
+00023a  4e6f              LDR      r6,|L7.1016|
 00023c  f7fffffe          BL       WM_GetDialogItem
 000240  4604              MOV      r4,r0                 ;722
 000242  f06f4170          MVN      r1,#0xf0000000        ;723
@@ -1773,10 +1924,10 @@
 00026c  f7fffffe          BL       TEXT_SetTextColor
 000270  203c              MOVS     r0,#0x3c              ;730
 000272  7030              STRB     r0,[r6,#0]            ;730
-000274  e701              B        |L6.122|
-                  |L6.630|
+000274  e701              B        |L7.122|
+                  |L7.630|
 000276  f6403109          MOV      r1,#0xb09             ;735
-00027a  4e5f              LDR      r6,|L6.1016|
+00027a  4e5f              LDR      r6,|L7.1016|
 00027c  f7fffffe          BL       WM_GetDialogItem
 000280  4604              MOV      r4,r0                 ;735
 000282  f06f4170          MVN      r1,#0xf0000000        ;736
@@ -1797,10 +1948,10 @@
 0002ac  f7fffffe          BL       TEXT_SetTextColor
 0002b0  203d              MOVS     r0,#0x3d              ;743
 0002b2  7030              STRB     r0,[r6,#0]            ;743
-0002b4  e6e1              B        |L6.122|
-                  |L6.694|
+0002b4  e6e1              B        |L7.122|
+                  |L7.694|
 0002b6  f6403102          MOV      r1,#0xb02             ;748
-0002ba  4e4f              LDR      r6,|L6.1016|
+0002ba  4e4f              LDR      r6,|L7.1016|
 0002bc  f7fffffe          BL       WM_GetDialogItem
 0002c0  4604              MOV      r4,r0                 ;748
 0002c2  f06f4170          MVN      r1,#0xf0000000        ;749
@@ -1821,10 +1972,10 @@
 0002ec  f7fffffe          BL       TEXT_SetTextColor
 0002f0  203e              MOVS     r0,#0x3e              ;756
 0002f2  7030              STRB     r0,[r6,#0]            ;756
-0002f4  e6c1              B        |L6.122|
-                  |L6.758|
+0002f4  e6c1              B        |L7.122|
+                  |L7.758|
 0002f6  f6403103          MOV      r1,#0xb03             ;761
-0002fa  4e3f              LDR      r6,|L6.1016|
+0002fa  4e3f              LDR      r6,|L7.1016|
 0002fc  f7fffffe          BL       WM_GetDialogItem
 000300  4604              MOV      r4,r0                 ;761
 000302  f06f4170          MVN      r1,#0xf0000000        ;762
@@ -1845,10 +1996,10 @@
 00032c  f7fffffe          BL       TEXT_SetTextColor
 000330  2037              MOVS     r0,#0x37              ;769
 000332  7030              STRB     r0,[r6,#0]            ;769
-000334  e6a1              B        |L6.122|
-                  |L6.822|
+000334  e6a1              B        |L7.122|
+                  |L7.822|
 000336  f6403104          MOV      r1,#0xb04             ;774
-00033a  4e2f              LDR      r6,|L6.1016|
+00033a  4e2f              LDR      r6,|L7.1016|
 00033c  f7fffffe          BL       WM_GetDialogItem
 000340  4604              MOV      r4,r0                 ;774
 000342  f06f4170          MVN      r1,#0xf0000000        ;775
@@ -1869,10 +2020,10 @@
 00036c  f7fffffe          BL       TEXT_SetTextColor
 000370  2038              MOVS     r0,#0x38              ;782
 000372  7030              STRB     r0,[r6,#0]            ;782
-000374  e681              B        |L6.122|
-                  |L6.886|
+000374  e681              B        |L7.122|
+                  |L7.886|
 000376  f6403105          MOV      r1,#0xb05             ;787
-00037a  4e1f              LDR      r6,|L6.1016|
+00037a  4e1f              LDR      r6,|L7.1016|
 00037c  f7fffffe          BL       WM_GetDialogItem
 000380  4604              MOV      r4,r0                 ;787
 000382  f06f4170          MVN      r1,#0xf0000000        ;788
@@ -1893,10 +2044,10 @@
 0003ac  f7fffffe          BL       TEXT_SetTextColor
 0003b0  2039              MOVS     r0,#0x39              ;795
 0003b2  7030              STRB     r0,[r6,#0]            ;795
-0003b4  e661              B        |L6.122|
-                  |L6.950|
+0003b4  e661              B        |L7.122|
+                  |L7.950|
 0003b6  f6403106          MOV      r1,#0xb06             ;800
-0003ba  4e0f              LDR      r6,|L6.1016|
+0003ba  4e0f              LDR      r6,|L7.1016|
 0003bc  f7fffffe          BL       WM_GetDialogItem
 0003c0  4604              MOV      r4,r0                 ;800
 0003c2  f06f4170          MVN      r1,#0xf0000000        ;801
@@ -1917,15 +2068,15 @@
 0003ec  f7fffffe          BL       TEXT_SetTextColor
 0003f0  203a              MOVS     r0,#0x3a              ;808
 0003f2  7030              STRB     r0,[r6,#0]            ;808
-0003f4  e641              B        |L6.122|
+0003f4  e641              B        |L7.122|
 0003f6  0000              DCW      0x0000
-                  |L6.1016|
+                  |L7.1016|
                           DCD      ||.data||
-                  |L6.1020|
+                  |L7.1020|
                           DCD      0x00bfffff
-                  |L6.1024|
+                  |L7.1024|
 000400  f6403107          MOV      r1,#0xb07             ;813
-000404  4e0e              LDR      r6,|L6.1088|
+000404  4e0e              LDR      r6,|L7.1088|
 000406  f7fffffe          BL       WM_GetDialogItem
 00040a  4604              MOV      r4,r0                 ;813
 00040c  f06f4170          MVN      r1,#0xf0000000        ;814
@@ -1946,11 +2097,11 @@
 000436  f7fffffe          BL       TEXT_SetTextColor
 00043a  203b              MOVS     r0,#0x3b              ;821
 00043c  7030              STRB     r0,[r6,#0]            ;821
-00043e  e61c              B        |L6.122|
+00043e  e61c              B        |L7.122|
 ;;;827    
                           ENDP
 
-                  |L6.1088|
+                  |L7.1088|
                           DCD      ||.data||
 
                           AREA ||i.SYS_INFO_RIGHT||, CODE, READONLY, ALIGN=2
@@ -1962,7 +2113,7 @@
 ;;;393    {
 ;;;394        WM_HWIN hItem;
 ;;;395        switch(info_set)
-000004  48f8              LDR      r0,|L7.1000|
+000004  48f8              LDR      r0,|L8.1000|
 000006  7801              LDRB     r1,[r0,#0]  ; info_set
 ;;;396        {
 ;;;397            case set_48:
@@ -1970,7 +2121,7 @@
 ;;;399                hItem = WM_GetDialogItem(hWinsysinfo, ID_TEXT_99);
 ;;;400                TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
 ;;;401                TEXT_SetTextColor(hItem, 0x00BFFFFF);
-000008  4df8              LDR      r5,|L7.1004|
+000008  4df8              LDR      r5,|L8.1004|
 00000a  392f              SUBS     r1,r1,#0x2f           ;395
 00000c  6980              LDR      r0,[r0,#0x18]         ;399
 00000e  f6400799          MOV      r7,#0x899             ;399
@@ -2083,7 +2234,7 @@
 ;;;503                hItem = WM_GetDialogItem(hWinsysinfo, ID_TEXT_113);
 000026  f6403408          MOV      r4,#0xb08
 00002a  2910              CMP      r1,#0x10              ;395
-00002c  d225              BCS      |L7.122|
+00002c  d225              BCS      |L8.122|
 00002e  e8dff001          TBB      [pc,r1]               ;395
 000032  0826              DCB      0x08,0x26
 000034  43607d9b          DCB      0x43,0x60,0x7d,0x9b
@@ -2091,7 +2242,7 @@
 00003c  fcfbfaf9          DCB      0xfc,0xfb,0xfa,0xf9
 000040  f8f7              DCB      0xf8,0xf7
 000042  4639              MOV      r1,r7                 ;399
-000044  4fe8              LDR      r7,|L7.1000|
+000044  4fe8              LDR      r7,|L8.1000|
 000046  f7fffffe          BL       WM_GetDialogItem
 00004a  4604              MOV      r4,r0                 ;399
 00004c  4631              MOV      r1,r6                 ;400
@@ -2112,7 +2263,7 @@
 000072  f7fffffe          BL       TEXT_SetTextColor
 000076  2030              MOVS     r0,#0x30              ;407
 000078  7038              STRB     r0,[r7,#0]            ;407
-                  |L7.122|
+                  |L8.122|
 ;;;504                TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
 ;;;505                TEXT_SetTextColor(hItem, 0x00BFFFFF);
 ;;;506                
@@ -2219,7 +2370,7 @@
 ;;;607    }
 00007a  e8bd9ff0          POP      {r4-r12,pc}
 00007e  4641              MOV      r1,r8                 ;412
-000080  4fd9              LDR      r7,|L7.1000|
+000080  4fd9              LDR      r7,|L8.1000|
 000082  f7fffffe          BL       WM_GetDialogItem
 000086  4604              MOV      r4,r0                 ;412
 000088  4631              MOV      r1,r6                 ;413
@@ -2240,9 +2391,9 @@
 0000ae  f7fffffe          BL       TEXT_SetTextColor
 0000b2  2031              MOVS     r0,#0x31              ;420
 0000b4  7038              STRB     r0,[r7,#0]            ;420
-0000b6  e7e0              B        |L7.122|
+0000b6  e7e0              B        |L8.122|
 0000b8  4649              MOV      r1,r9                 ;425
-0000ba  4fcb              LDR      r7,|L7.1000|
+0000ba  4fcb              LDR      r7,|L8.1000|
 0000bc  f7fffffe          BL       WM_GetDialogItem
 0000c0  4604              MOV      r4,r0                 ;425
 0000c2  4631              MOV      r1,r6                 ;426
@@ -2263,9 +2414,9 @@
 0000e8  f7fffffe          BL       TEXT_SetTextColor
 0000ec  2032              MOVS     r0,#0x32              ;433
 0000ee  7038              STRB     r0,[r7,#0]            ;433
-0000f0  e7c3              B        |L7.122|
+0000f0  e7c3              B        |L8.122|
 0000f2  4651              MOV      r1,r10                ;438
-0000f4  4fbc              LDR      r7,|L7.1000|
+0000f4  4fbc              LDR      r7,|L8.1000|
 0000f6  f7fffffe          BL       WM_GetDialogItem
 0000fa  4604              MOV      r4,r0                 ;438
 0000fc  4631              MOV      r1,r6                 ;439
@@ -2286,9 +2437,9 @@
 000122  f7fffffe          BL       TEXT_SetTextColor
 000126  2033              MOVS     r0,#0x33              ;446
 000128  7038              STRB     r0,[r7,#0]            ;446
-00012a  e7a6              B        |L7.122|
+00012a  e7a6              B        |L8.122|
 00012c  4659              MOV      r1,r11                ;451
-00012e  4fae              LDR      r7,|L7.1000|
+00012e  4fae              LDR      r7,|L8.1000|
 000130  f7fffffe          BL       WM_GetDialogItem
 000134  4604              MOV      r4,r0                 ;451
 000136  4631              MOV      r1,r6                 ;452
@@ -2309,9 +2460,9 @@
 00015e  f7fffffe          BL       TEXT_SetTextColor
 000162  2034              MOVS     r0,#0x34              ;459
 000164  7038              STRB     r0,[r7,#0]            ;459
-000166  e788              B        |L7.122|
+000166  e788              B        |L8.122|
 000168  f640019e          MOV      r1,#0x89e             ;464
-00016c  4f9e              LDR      r7,|L7.1000|
+00016c  4f9e              LDR      r7,|L8.1000|
 00016e  f7fffffe          BL       WM_GetDialogItem
 000172  4604              MOV      r4,r0                 ;464
 000174  4631              MOV      r1,r6                 ;465
@@ -2332,9 +2483,9 @@
 00019c  f7fffffe          BL       TEXT_SetTextColor
 0001a0  2035              MOVS     r0,#0x35              ;472
 0001a2  7038              STRB     r0,[r7,#0]            ;472
-0001a4  e769              B        |L7.122|
+0001a4  e769              B        |L8.122|
 0001a6  f44f6130          MOV      r1,#0xb00             ;477
-0001aa  4f8f              LDR      r7,|L7.1000|
+0001aa  4f8f              LDR      r7,|L8.1000|
 0001ac  f7fffffe          BL       WM_GetDialogItem
 0001b0  4604              MOV      r4,r0                 ;477
 0001b2  4631              MOV      r1,r6                 ;478
@@ -2355,9 +2506,9 @@
 0001da  f7fffffe          BL       TEXT_SetTextColor
 0001de  2036              MOVS     r0,#0x36              ;485
 0001e0  7038              STRB     r0,[r7,#0]            ;485
-0001e2  e74a              B        |L7.122|
+0001e2  e74a              B        |L8.122|
 0001e4  f6403101          MOV      r1,#0xb01             ;490
-0001e8  f8df81fc          LDR      r8,|L7.1000|
+0001e8  f8df81fc          LDR      r8,|L8.1000|
 0001ec  f7fffffe          BL       WM_GetDialogItem
 0001f0  4604              MOV      r4,r0                 ;490
 0001f2  4631              MOV      r1,r6                 ;491
@@ -2376,22 +2527,22 @@
 000216  2100              MOVS     r1,#0                 ;496
 000218  4620              MOV      r0,r4                 ;496
 00021a  f7fffffe          BL       TEXT_SetTextColor
-00021e  e007              B        |L7.560|
-000220  e028              B        |L7.628|
-000222  e009              B        |L7.568|
-000224  e0e4              B        |L7.1008|
-000226  e0c0              B        |L7.938|
-000228  e0a0              B        |L7.876|
-00022a  e080              B        |L7.814|
-00022c  e060              B        |L7.752|
-00022e  e040              B        |L7.690|
-                  |L7.560|
+00021e  e007              B        |L8.560|
+000220  e028              B        |L8.628|
+000222  e009              B        |L8.568|
+000224  e0e4              B        |L8.1008|
+000226  e0c0              B        |L8.938|
+000228  e0a0              B        |L8.876|
+00022a  e080              B        |L8.814|
+00022c  e060              B        |L8.752|
+00022e  e040              B        |L8.690|
+                  |L8.560|
 000230  202f              MOVS     r0,#0x2f              ;498
 000232  f8880000          STRB     r0,[r8,#0]            ;498
-000236  e720              B        |L7.122|
-                  |L7.568|
+000236  e720              B        |L8.122|
+                  |L8.568|
 000238  4621              MOV      r1,r4                 ;503
-00023a  4f6b              LDR      r7,|L7.1000|
+00023a  4f6b              LDR      r7,|L8.1000|
 00023c  f7fffffe          BL       WM_GetDialogItem
 000240  4604              MOV      r4,r0                 ;503
 000242  4631              MOV      r1,r6                 ;504
@@ -2412,10 +2563,10 @@
 00026a  f7fffffe          BL       TEXT_SetTextColor
 00026e  203e              MOVS     r0,#0x3e              ;511
 000270  7038              STRB     r0,[r7,#0]            ;511
-000272  e702              B        |L7.122|
-                  |L7.628|
+000272  e702              B        |L8.122|
+                  |L8.628|
 000274  f6403109          MOV      r1,#0xb09             ;516
-000278  4f5b              LDR      r7,|L7.1000|
+000278  4f5b              LDR      r7,|L8.1000|
 00027a  f7fffffe          BL       WM_GetDialogItem
 00027e  4604              MOV      r4,r0                 ;516
 000280  4631              MOV      r1,r6                 ;517
@@ -2436,10 +2587,10 @@
 0002a8  f7fffffe          BL       TEXT_SetTextColor
 0002ac  2037              MOVS     r0,#0x37              ;524
 0002ae  7038              STRB     r0,[r7,#0]            ;524
-0002b0  e6e3              B        |L7.122|
-                  |L7.690|
+0002b0  e6e3              B        |L8.122|
+                  |L8.690|
 0002b2  f6403102          MOV      r1,#0xb02             ;529
-0002b6  4f4c              LDR      r7,|L7.1000|
+0002b6  4f4c              LDR      r7,|L8.1000|
 0002b8  f7fffffe          BL       WM_GetDialogItem
 0002bc  4604              MOV      r4,r0                 ;529
 0002be  4631              MOV      r1,r6                 ;530
@@ -2460,10 +2611,10 @@
 0002e6  f7fffffe          BL       TEXT_SetTextColor
 0002ea  2038              MOVS     r0,#0x38              ;537
 0002ec  7038              STRB     r0,[r7,#0]            ;537
-0002ee  e6c4              B        |L7.122|
-                  |L7.752|
+0002ee  e6c4              B        |L8.122|
+                  |L8.752|
 0002f0  f6403103          MOV      r1,#0xb03             ;542
-0002f4  4f3c              LDR      r7,|L7.1000|
+0002f4  4f3c              LDR      r7,|L8.1000|
 0002f6  f7fffffe          BL       WM_GetDialogItem
 0002fa  4604              MOV      r4,r0                 ;542
 0002fc  4631              MOV      r1,r6                 ;543
@@ -2484,10 +2635,10 @@
 000324  f7fffffe          BL       TEXT_SetTextColor
 000328  2039              MOVS     r0,#0x39              ;550
 00032a  7038              STRB     r0,[r7,#0]            ;550
-00032c  e6a5              B        |L7.122|
-                  |L7.814|
+00032c  e6a5              B        |L8.122|
+                  |L8.814|
 00032e  f6403104          MOV      r1,#0xb04             ;555
-000332  4f2d              LDR      r7,|L7.1000|
+000332  4f2d              LDR      r7,|L8.1000|
 000334  f7fffffe          BL       WM_GetDialogItem
 000338  4604              MOV      r4,r0                 ;555
 00033a  4631              MOV      r1,r6                 ;556
@@ -2508,10 +2659,10 @@
 000362  f7fffffe          BL       TEXT_SetTextColor
 000366  203a              MOVS     r0,#0x3a              ;563
 000368  7038              STRB     r0,[r7,#0]            ;563
-00036a  e686              B        |L7.122|
-                  |L7.876|
+00036a  e686              B        |L8.122|
+                  |L8.876|
 00036c  f6403105          MOV      r1,#0xb05             ;568
-000370  4f1d              LDR      r7,|L7.1000|
+000370  4f1d              LDR      r7,|L8.1000|
 000372  f7fffffe          BL       WM_GetDialogItem
 000376  4604              MOV      r4,r0                 ;568
 000378  4631              MOV      r1,r6                 ;569
@@ -2532,10 +2683,10 @@
 0003a0  f7fffffe          BL       TEXT_SetTextColor
 0003a4  203b              MOVS     r0,#0x3b              ;576
 0003a6  7038              STRB     r0,[r7,#0]            ;576
-0003a8  e667              B        |L7.122|
-                  |L7.938|
+0003a8  e667              B        |L8.122|
+                  |L8.938|
 0003aa  f6403106          MOV      r1,#0xb06             ;581
-0003ae  4f0e              LDR      r7,|L7.1000|
+0003ae  4f0e              LDR      r7,|L8.1000|
 0003b0  f7fffffe          BL       WM_GetDialogItem
 0003b4  4604              MOV      r4,r0                 ;581
 0003b6  4631              MOV      r1,r6                 ;582
@@ -2556,14 +2707,14 @@
 0003de  f7fffffe          BL       TEXT_SetTextColor
 0003e2  203c              MOVS     r0,#0x3c              ;589
 0003e4  7038              STRB     r0,[r7,#0]            ;589
-0003e6  e648              B        |L7.122|
-                  |L7.1000|
+0003e6  e648              B        |L8.122|
+                  |L8.1000|
                           DCD      ||.data||
-                  |L7.1004|
+                  |L8.1004|
                           DCD      0x00bfffff
-                  |L7.1008|
+                  |L8.1008|
 0003f0  f6403107          MOV      r1,#0xb07             ;594
-0003f4  f8df803c          LDR      r8,|L7.1076|
+0003f4  f8df803c          LDR      r8,|L8.1076|
 0003f8  f7fffffe          BL       WM_GetDialogItem
 0003fc  4607              MOV      r7,r0                 ;594
 0003fe  4631              MOV      r1,r6                 ;595
@@ -2584,12 +2735,12 @@
 000426  f7fffffe          BL       TEXT_SetTextColor
 00042a  203d              MOVS     r0,#0x3d              ;602
 00042c  f8880000          STRB     r0,[r8,#0]            ;602
-000430  e623              B        |L7.122|
+000430  e623              B        |L8.122|
 ;;;608    
                           ENDP
 
 000432  0000              DCW      0x0000
-                  |L7.1076|
+                  |L8.1076|
                           DCD      ||.data||
 
                           AREA ||i.SYS_INFO_UP||, CODE, READONLY, ALIGN=2
@@ -2601,7 +2752,7 @@
 ;;;831    {
 ;;;832        WM_HWIN hItem;
 ;;;833        switch(info_set)
-000004  f8dfb404          LDR      r11,|L8.1036|
+000004  f8dfb404          LDR      r11,|L9.1036|
 000008  f89b1000          LDRB     r1,[r11,#0]  ; info_set
 00000c  4658              MOV      r0,r11
 00000e  392f              SUBS     r1,r1,#0x2f
@@ -2611,7 +2762,7 @@
 ;;;837                hItem = WM_GetDialogItem(hWinsysinfo, ID_TEXT_99);
 ;;;838                TEXT_SetBkColor(hItem,GUI_INVALID_COLOR);
 ;;;839                TEXT_SetTextColor(hItem, 0x00BFFFFF);
-000010  4fff              LDR      r7,|L8.1040|
+000010  4fff              LDR      r7,|L9.1040|
 ;;;840                
 ;;;841                hItem = WM_GetDialogItem(hWinsysinfo, ID_TEXT_113);
 ;;;842                TEXT_SetBkColor(hItem,0x00BFFFFF);
@@ -2729,7 +2880,7 @@
 00001c  f06f4870          MVN      r8,#0xf0000000        ;838
 000020  f6403908          MOV      r9,#0xb08             ;841
 000024  2910              CMP      r1,#0x10              ;833
-000026  d225              BCS      |L8.116|
+000026  d225              BCS      |L9.116|
 000028  e8dff001          TBB      [pc,r1]               ;833
 00002c  08264462          DCB      0x08,0x26,0x44,0x62
 000030  809ebcda          DCB      0x80,0x9e,0xbc,0xda
@@ -2755,7 +2906,7 @@
 00006a  4620              MOV      r0,r4                 ;843
 00006c  f7fffffe          BL       TEXT_SetTextColor
 000070  f88b5000          STRB     r5,[r11,#0]           ;845
-                  |L8.116|
+                  |L9.116|
 ;;;950                break;
 ;;;951            }
 ;;;952            case set_62:
@@ -2873,7 +3024,7 @@
 0000a8  4620              MOV      r0,r4                 ;856
 0000aa  f7fffffe          BL       TEXT_SetTextColor
 0000ae  f88b5000          STRB     r5,[r11,#0]           ;858
-0000b2  e7df              B        |L8.116|
+0000b2  e7df              B        |L9.116|
 0000b4  f640019b          MOV      r1,#0x89b             ;863
 0000b8  f7fffffe          BL       WM_GetDialogItem
 0000bc  4604              MOV      r4,r0                 ;863
@@ -2894,7 +3045,7 @@
 0000e4  4620              MOV      r0,r4                 ;869
 0000e6  f7fffffe          BL       TEXT_SetTextColor
 0000ea  f88b5000          STRB     r5,[r11,#0]           ;871
-0000ee  e7c1              B        |L8.116|
+0000ee  e7c1              B        |L9.116|
 0000f0  f640019c          MOV      r1,#0x89c             ;876
 0000f4  f7fffffe          BL       WM_GetDialogItem
 0000f8  4604              MOV      r4,r0                 ;876
@@ -2915,7 +3066,7 @@
 000120  4620              MOV      r0,r4                 ;882
 000122  f7fffffe          BL       TEXT_SetTextColor
 000126  f88b5000          STRB     r5,[r11,#0]           ;884
-00012a  e7a3              B        |L8.116|
+00012a  e7a3              B        |L9.116|
 00012c  f640019d          MOV      r1,#0x89d             ;889
 000130  f7fffffe          BL       WM_GetDialogItem
 000134  4604              MOV      r4,r0                 ;889
@@ -2936,7 +3087,7 @@
 00015c  4620              MOV      r0,r4                 ;895
 00015e  f7fffffe          BL       TEXT_SetTextColor
 000162  f88b5000          STRB     r5,[r11,#0]           ;897
-000166  e785              B        |L8.116|
+000166  e785              B        |L9.116|
 000168  f640019e          MOV      r1,#0x89e             ;902
 00016c  f7fffffe          BL       WM_GetDialogItem
 000170  4604              MOV      r4,r0                 ;902
@@ -2957,7 +3108,7 @@
 000198  4620              MOV      r0,r4                 ;908
 00019a  f7fffffe          BL       TEXT_SetTextColor
 00019e  f88b5000          STRB     r5,[r11,#0]           ;910
-0001a2  e767              B        |L8.116|
+0001a2  e767              B        |L9.116|
 0001a4  f44f6130          MOV      r1,#0xb00             ;915
 0001a8  f7fffffe          BL       WM_GetDialogItem
 0001ac  4604              MOV      r4,r0                 ;915
@@ -2978,7 +3129,7 @@
 0001d4  4620              MOV      r0,r4                 ;921
 0001d6  f7fffffe          BL       TEXT_SetTextColor
 0001da  f88b5000          STRB     r5,[r11,#0]           ;923
-0001de  e749              B        |L8.116|
+0001de  e749              B        |L9.116|
 0001e0  f6403101          MOV      r1,#0xb01             ;928
 0001e4  f7fffffe          BL       WM_GetDialogItem
 0001e8  4604              MOV      r4,r0                 ;928
@@ -2998,19 +3149,19 @@
 00020e  2100              MOVS     r1,#0                 ;934
 000210  4620              MOV      r0,r4                 ;934
 000212  f7fffffe          BL       TEXT_SetTextColor
-000216  e007              B        |L8.552|
-000218  e044              B        |L8.676|
-00021a  e026              B        |L8.618|
-00021c  e0d8              B        |L8.976|
-00021e  e0b9              B        |L8.916|
-000220  e09a              B        |L8.856|
-000222  e07b              B        |L8.796|
-000224  e05c              B        |L8.736|
-000226  e002              B        |L8.558|
-                  |L8.552|
+000216  e007              B        |L9.552|
+000218  e044              B        |L9.676|
+00021a  e026              B        |L9.618|
+00021c  e0d8              B        |L9.976|
+00021e  e0b9              B        |L9.916|
+000220  e09a              B        |L9.856|
+000222  e07b              B        |L9.796|
+000224  e05c              B        |L9.736|
+000226  e002              B        |L9.558|
+                  |L9.552|
 000228  f88b5000          STRB     r5,[r11,#0]           ;936
-00022c  e722              B        |L8.116|
-                  |L8.558|
+00022c  e722              B        |L9.116|
+                  |L9.558|
 00022e  f6403102          MOV      r1,#0xb02             ;941
 000232  f7fffffe          BL       WM_GetDialogItem
 000236  4604              MOV      r4,r0                 ;941
@@ -3031,8 +3182,8 @@
 00025e  4620              MOV      r0,r4                 ;947
 000260  f7fffffe          BL       TEXT_SetTextColor
 000264  f88b6000          STRB     r6,[r11,#0]           ;949
-000268  e704              B        |L8.116|
-                  |L8.618|
+000268  e704              B        |L9.116|
+                  |L9.618|
 00026a  4649              MOV      r1,r9                 ;954
 00026c  f7fffffe          BL       WM_GetDialogItem
 000270  4604              MOV      r4,r0                 ;954
@@ -3053,8 +3204,8 @@
 000298  4620              MOV      r0,r4                 ;960
 00029a  f7fffffe          BL       TEXT_SetTextColor
 00029e  f88b6000          STRB     r6,[r11,#0]           ;962
-0002a2  e6e7              B        |L8.116|
-                  |L8.676|
+0002a2  e6e7              B        |L9.116|
+                  |L9.676|
 0002a4  f6403109          MOV      r1,#0xb09             ;967
 0002a8  f7fffffe          BL       WM_GetDialogItem
 0002ac  4604              MOV      r4,r0                 ;967
@@ -3075,8 +3226,8 @@
 0002d4  4620              MOV      r0,r4                 ;973
 0002d6  f7fffffe          BL       TEXT_SetTextColor
 0002da  f88b6000          STRB     r6,[r11,#0]           ;975
-0002de  e6c9              B        |L8.116|
-                  |L8.736|
+0002de  e6c9              B        |L9.116|
+                  |L9.736|
 0002e0  f6403103          MOV      r1,#0xb03             ;980
 0002e4  f7fffffe          BL       WM_GetDialogItem
 0002e8  4604              MOV      r4,r0                 ;980
@@ -3097,8 +3248,8 @@
 000310  4620              MOV      r0,r4                 ;986
 000312  f7fffffe          BL       TEXT_SetTextColor
 000316  f88b6000          STRB     r6,[r11,#0]           ;988
-00031a  e6ab              B        |L8.116|
-                  |L8.796|
+00031a  e6ab              B        |L9.116|
+                  |L9.796|
 00031c  f6403104          MOV      r1,#0xb04             ;993
 000320  f7fffffe          BL       WM_GetDialogItem
 000324  4604              MOV      r4,r0                 ;993
@@ -3119,8 +3270,8 @@
 00034c  4620              MOV      r0,r4                 ;999
 00034e  f7fffffe          BL       TEXT_SetTextColor
 000352  f88b6000          STRB     r6,[r11,#0]           ;1001
-000356  e68d              B        |L8.116|
-                  |L8.856|
+000356  e68d              B        |L9.116|
+                  |L9.856|
 000358  f6403105          MOV      r1,#0xb05             ;1006
 00035c  f7fffffe          BL       WM_GetDialogItem
 000360  4604              MOV      r4,r0                 ;1006
@@ -3141,8 +3292,8 @@
 000388  4620              MOV      r0,r4                 ;1012
 00038a  f7fffffe          BL       TEXT_SetTextColor
 00038e  f88b6000          STRB     r6,[r11,#0]           ;1014
-000392  e66f              B        |L8.116|
-                  |L8.916|
+000392  e66f              B        |L9.116|
+                  |L9.916|
 000394  f6403106          MOV      r1,#0xb06             ;1019
 000398  f7fffffe          BL       WM_GetDialogItem
 00039c  4604              MOV      r4,r0                 ;1019
@@ -3163,8 +3314,8 @@
 0003c4  4620              MOV      r0,r4                 ;1025
 0003c6  f7fffffe          BL       TEXT_SetTextColor
 0003ca  f88b6000          STRB     r6,[r11,#0]           ;1027
-0003ce  e651              B        |L8.116|
-                  |L8.976|
+0003ce  e651              B        |L9.116|
+                  |L9.976|
 0003d0  f6403107          MOV      r1,#0xb07             ;1032
 0003d4  f7fffffe          BL       WM_GetDialogItem
 0003d8  4604              MOV      r4,r0                 ;1032
@@ -3185,10 +3336,10 @@
 000400  4620              MOV      r0,r4                 ;1038
 000402  f7fffffe          BL       TEXT_SetTextColor
 000406  f88b6000          STRB     r6,[r11,#0]           ;1040
-00040a  e633              B        |L8.116|
-                  |L8.1036|
+00040a  e633              B        |L9.116|
+                  |L9.1036|
                           DCD      ||.data||
-                  |L8.1040|
+                  |L9.1040|
                           DCD      0x00bfffff
                           ENDP
 
@@ -3253,11 +3404,11 @@
 ;;;189                GUI_DispStringAt("Serial NO.", 30, 150);
 ;;;190            }
 ;;;191            GUI_SetColor(0x00BFFFFF);
-000006  4fff              LDR      r7,|L9.1028|
+000006  4fff              LDR      r7,|L10.1028|
 000008  6820              LDR      r0,[r4,#0]            ;153
 00000a  f06f487f          MVN      r8,#0xff000000        ;156
 00000e  280f              CMP      r0,#0xf               ;153
-000010  d00b              BEQ      |L9.42|
+000010  d00b              BEQ      |L10.42|
 ;;;192            GUI_SetFont(&GUI_Font24_1);
 ;;;193            GUI_DispStringAt("JK5530", 180, 50);
 ;;;194            GUI_DispStringAt("Ver:2.5", 180, 75);
@@ -3276,12 +3427,12 @@
 ;;;207            if(pass == 14)
 ;;;208            {
 ;;;209                admin = 1;
-000012  4efd              LDR      r6,|L9.1032|
+000012  4efd              LDR      r6,|L10.1032|
 000014  281d              CMP      r0,#0x1d              ;153
-000016  d07d              BEQ      |L9.276|
+000016  d07d              BEQ      |L10.276|
 000018  f5a07080          SUB      r0,r0,#0x100          ;153
 00001c  3813              SUBS     r0,r0,#0x13           ;153
-00001e  d07a              BEQ      |L9.278|
+00001e  d07a              BEQ      |L10.278|
 ;;;210            }else if(pass == 10){
 ;;;211                cal = 1;
 ;;;212            }else{
@@ -3436,7 +3587,7 @@
 000020  4620              MOV      r0,r4
 000022  e8bd41f0          POP      {r4-r8,lr}
 000026  f7ffbffe          B.W      WM_DefaultProc
-                  |L9.42|
+                  |L10.42|
 00002a  4640              MOV      r0,r8                 ;156
 00002c  f7fffffe          BL       GUI_SetColor
 000030  231a              MOVS     r3,#0x1a              ;157
@@ -3446,192 +3597,192 @@
 00003a  f7fffffe          BL       GUI_FillRect
 00003e  f24a50ff          MOV      r0,#0xa5ff            ;158
 000042  f7fffffe          BL       GUI_SetColor
-000046  48f1              LDR      r0,|L9.1036|
+000046  48f1              LDR      r0,|L10.1036|
 000048  f7fffffe          BL       GUI_SetFont
 00004c  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 000050  2002              MOVS     r0,#2                 ;161
 000052  f7fffffe          BL       GUI_SetTextMode
 000056  2201              MOVS     r2,#1                 ;162
 000058  2105              MOVS     r1,#5                 ;162
-00005a  a0ed              ADR      r0,|L9.1040|
+00005a  a0ed              ADR      r0,|L10.1040|
 00005c  f7fffffe          BL       GUI_DispStringAt
-000060  48ed              LDR      r0,|L9.1048|
+000060  48ed              LDR      r0,|L10.1048|
 000062  7800              LDRB     r0,[r0,#0]            ;163  ; lang
-000064  4ced              LDR      r4,|L9.1052|
+000064  4ced              LDR      r4,|L10.1052|
 000066  2800              CMP      r0,#0                 ;163
-000068  d058              BEQ      |L9.284|
+000068  d058              BEQ      |L10.284|
 00006a  4640              MOV      r0,r8                 ;178
 00006c  f7fffffe          BL       GUI_SetColor
-000070  48eb              LDR      r0,|L9.1056|
+000070  48eb              LDR      r0,|L10.1056|
 000072  f7fffffe          BL       GUI_SetFont
 000076  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 00007a  2002              MOVS     r0,#2                 ;181
 00007c  f7fffffe          BL       GUI_SetTextMode
 000080  2203              MOVS     r2,#3                 ;182
 000082  2182              MOVS     r1,#0x82              ;182
-000084  a0e7              ADR      r0,|L9.1060|
+000084  a0e7              ADR      r0,|L10.1060|
 000086  f7fffffe          BL       GUI_DispStringAt
 00008a  4620              MOV      r0,r4                 ;183
 00008c  f7fffffe          BL       GUI_SetColor
-000090  48e3              LDR      r0,|L9.1056|
+000090  48e3              LDR      r0,|L10.1056|
 000092  f7fffffe          BL       GUI_SetFont
 000096  2232              MOVS     r2,#0x32              ;185
 000098  211e              MOVS     r1,#0x1e              ;185
-00009a  a0e7              ADR      r0,|L9.1080|
+00009a  a0e7              ADR      r0,|L10.1080|
 00009c  f7fffffe          BL       GUI_DispStringAt
 0000a0  224b              MOVS     r2,#0x4b              ;186
 0000a2  211e              MOVS     r1,#0x1e              ;186
-0000a4  a0e9              ADR      r0,|L9.1100|
+0000a4  a0e9              ADR      r0,|L10.1100|
 0000a6  f7fffffe          BL       GUI_DispStringAt
 0000aa  2264              MOVS     r2,#0x64              ;187
 0000ac  211e              MOVS     r1,#0x1e              ;187
-0000ae  a0ec              ADR      r0,|L9.1120|
+0000ae  a0ec              ADR      r0,|L10.1120|
 0000b0  f7fffffe          BL       GUI_DispStringAt
 0000b4  227d              MOVS     r2,#0x7d              ;188
 0000b6  211e              MOVS     r1,#0x1e              ;188
-0000b8  a0ee              ADR      r0,|L9.1140|
+0000b8  a0ee              ADR      r0,|L10.1140|
 0000ba  f7fffffe          BL       GUI_DispStringAt
 0000be  2296              MOVS     r2,#0x96              ;189
 0000c0  211e              MOVS     r1,#0x1e              ;189
-0000c2  a0f0              ADR      r0,|L9.1156|
+0000c2  a0f0              ADR      r0,|L10.1156|
 0000c4  f7fffffe          BL       GUI_DispStringAt
-                  |L9.200|
+                  |L10.200|
 0000c8  4638              MOV      r0,r7                 ;191
 0000ca  f7fffffe          BL       GUI_SetColor
-0000ce  48f0              LDR      r0,|L9.1168|
+0000ce  48f0              LDR      r0,|L10.1168|
 0000d0  f7fffffe          BL       GUI_SetFont
 0000d4  2232              MOVS     r2,#0x32              ;193
 0000d6  21b4              MOVS     r1,#0xb4              ;193
-0000d8  a0ee              ADR      r0,|L9.1172|
+0000d8  a0ee              ADR      r0,|L10.1172|
 0000da  f7fffffe          BL       GUI_DispStringAt
 0000de  224b              MOVS     r2,#0x4b              ;194
 0000e0  21b4              MOVS     r1,#0xb4              ;194
-0000e2  a0ee              ADR      r0,|L9.1180|
+0000e2  a0ee              ADR      r0,|L10.1180|
 0000e4  f7fffffe          BL       GUI_DispStringAt
 0000e8  2264              MOVS     r2,#0x64              ;199
 0000ea  21b4              MOVS     r1,#0xb4              ;199
-0000ec  a0ed              ADR      r0,|L9.1188|
+0000ec  a0ed              ADR      r0,|L10.1188|
 0000ee  f7fffffe          BL       GUI_DispStringAt
 0000f2  227d              MOVS     r2,#0x7d              ;200
 0000f4  21e7              MOVS     r1,#0xe7              ;200
-0000f6  a0ed              ADR      r0,|L9.1196|
+0000f6  a0ed              ADR      r0,|L10.1196|
 0000f8  f7fffffe          BL       GUI_DispStringAt
 0000fc  227d              MOVS     r2,#0x7d              ;201
 0000fe  f240110b          MOV      r1,#0x10b             ;201
-000102  a0ea              ADR      r0,|L9.1196|
+000102  a0ea              ADR      r0,|L10.1196|
 000104  f7fffffe          BL       GUI_DispStringAt
 000108  e8bd41f0          POP      {r4-r8,lr}            ;202
 00010c  2296              MOVS     r2,#0x96              ;202
 00010e  21cc              MOVS     r1,#0xcc              ;202
-000110  a0e7              ADR      r0,|L9.1200|
-000112  e001              B        |L9.280|
-                  |L9.276|
-000114  e07a              B        |L9.524|
-                  |L9.278|
-000116  e031              B        |L9.380|
-                  |L9.280|
+000110  a0e7              ADR      r0,|L10.1200|
+000112  e001              B        |L10.280|
+                  |L10.276|
+000114  e07a              B        |L10.524|
+                  |L10.278|
+000116  e031              B        |L10.380|
+                  |L10.280|
 000118  f7ffbffe          B.W      GUI_DispStringAt
-                  |L9.284|
+                  |L10.284|
 00011c  4640              MOV      r0,r8                 ;165
 00011e  f7fffffe          BL       GUI_SetColor
-000122  48e4              LDR      r0,|L9.1204|
+000122  48e4              LDR      r0,|L10.1204|
 000124  f7fffffe          BL       GUI_SetFont
 000128  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 00012c  2002              MOVS     r0,#2                 ;168
 00012e  f7fffffe          BL       GUI_SetTextMode
 000132  2203              MOVS     r2,#3                 ;169
 000134  2182              MOVS     r1,#0x82              ;169
-000136  a0e0              ADR      r0,|L9.1208|
+000136  a0e0              ADR      r0,|L10.1208|
 000138  f7fffffe          BL       GUI_DispStringAt
 00013c  4620              MOV      r0,r4                 ;170
 00013e  f7fffffe          BL       GUI_SetColor
-000142  48e1              LDR      r0,|L9.1224|
+000142  48e1              LDR      r0,|L10.1224|
 000144  f7fffffe          BL       GUI_SetFont
 000148  2232              MOVS     r2,#0x32              ;172
 00014a  211e              MOVS     r1,#0x1e              ;172
-00014c  a0df              ADR      r0,|L9.1228|
+00014c  a0df              ADR      r0,|L10.1228|
 00014e  f7fffffe          BL       GUI_DispStringAt
 000152  224b              MOVS     r2,#0x4b              ;173
 000154  211e              MOVS     r1,#0x1e              ;173
-000156  a0e1              ADR      r0,|L9.1244|
+000156  a0e1              ADR      r0,|L10.1244|
 000158  f7fffffe          BL       GUI_DispStringAt
 00015c  2264              MOVS     r2,#0x64              ;174
 00015e  211e              MOVS     r1,#0x1e              ;174
-000160  a0e2              ADR      r0,|L9.1260|
+000160  a0e2              ADR      r0,|L10.1260|
 000162  f7fffffe          BL       GUI_DispStringAt
 000166  227d              MOVS     r2,#0x7d              ;175
 000168  211e              MOVS     r1,#0x1e              ;175
-00016a  a0e4              ADR      r0,|L9.1276|
+00016a  a0e4              ADR      r0,|L10.1276|
 00016c  f7fffffe          BL       GUI_DispStringAt
 000170  2296              MOVS     r2,#0x96              ;176
 000172  211e              MOVS     r1,#0x1e              ;176
-000174  a0e5              ADR      r0,|L9.1292|
+000174  a0e5              ADR      r0,|L10.1292|
 000176  f7fffffe          BL       GUI_DispStringAt
-00017a  e7a5              B        |L9.200|
-                  |L9.380|
+00017a  e7a5              B        |L10.200|
+                  |L10.380|
 00017c  68e0              LDR      r0,[r4,#0xc]          ;205
 00017e  f7fffffe          BL       WM_GetTimerId
 000182  2808              CMP      r0,#8                 ;205
-000184  d17e              BNE      |L9.644|
-000186  48e5              LDR      r0,|L9.1308|
+000184  d17e              BNE      |L10.644|
+000186  48e5              LDR      r0,|L10.1308|
 000188  7802              LDRB     r2,[r0,#0]            ;207  ; pass
 00018a  2101              MOVS     r1,#1                 ;162
 00018c  2a0e              CMP      r2,#0xe               ;207
-00018e  d01e              BEQ      |L9.462|
+00018e  d01e              BEQ      |L10.462|
 000190  7800              LDRB     r0,[r0,#0]            ;210  ; pass
 000192  280a              CMP      r0,#0xa               ;210
-000194  d01d              BEQ      |L9.466|
+000194  d01d              BEQ      |L10.466|
 000196  2000              MOVS     r0,#0                 ;213
 000198  7170              STRB     r0,[r6,#5]            ;213
 00019a  73b0              STRB     r0,[r6,#0xe]          ;214
-                  |L9.412|
+                  |L10.412|
 00019c  7bb0              LDRB     r0,[r6,#0xe]          ;217  ; cal
 00019e  f6403112          MOV      r1,#0xb12             ;219
 0001a2  2801              CMP      r0,#1                 ;217
-0001a4  d017              BEQ      |L9.470|
+0001a4  d017              BEQ      |L10.470|
 0001a6  6860              LDR      r0,[r4,#4]            ;226
 0001a8  f7fffffe          BL       WM_GetDialogItem
 0001ac  4605              MOV      r5,r0                 ;226
-0001ae  a1a6              ADR      r1,|L9.1096|
+0001ae  a1a6              ADR      r1,|L10.1096|
 0001b0  4628              MOV      r0,r5                 ;227
 0001b2  f7fffffe          BL       TEXT_SetText
 0001b6  f06f4170          MVN      r1,#0xf0000000        ;228
 0001ba  4628              MOV      r0,r5                 ;228
 0001bc  f7fffffe          BL       TEXT_SetTextColor
-                  |L9.448|
+                  |L10.448|
 0001c0  68e0              LDR      r0,[r4,#0xc]          ;230
 0001c2  e8bd41f0          POP      {r4-r8,lr}            ;230
 0001c6  f44f71fa          MOV      r1,#0x1f4             ;230
 0001ca  f7ffbffe          B.W      WM_RestartTimer
-                  |L9.462|
+                  |L10.462|
 0001ce  7171              STRB     r1,[r6,#5]            ;209
-0001d0  e7e4              B        |L9.412|
-                  |L9.466|
+0001d0  e7e4              B        |L10.412|
+                  |L10.466|
 0001d2  73b1              STRB     r1,[r6,#0xe]          ;211
-0001d4  e7e2              B        |L9.412|
-                  |L9.470|
+0001d4  e7e2              B        |L10.412|
+                  |L10.470|
 0001d6  6860              LDR      r0,[r4,#4]            ;219
 0001d8  f7fffffe          BL       WM_GetDialogItem
 0001dc  4605              MOV      r5,r0                 ;219
 0001de  4641              MOV      r1,r8                 ;220
 0001e0  4628              MOV      r0,r5                 ;220
 0001e2  f7fffffe          BL       TEXT_SetTextColor
-0001e6  48ce              LDR      r0,|L9.1312|
+0001e6  48ce              LDR      r0,|L10.1312|
 0001e8  8b42              LDRH     r2,[r0,#0x1a]         ;221  ; Run_Control
-0001ea  4887              LDR      r0,|L9.1032|
-0001ec  a1cd              ADR      r1,|L9.1316|
+0001ea  4887              LDR      r0,|L10.1032|
+0001ec  a1cd              ADR      r1,|L10.1316|
 0001ee  301c              ADDS     r0,r0,#0x1c           ;221
 0001f0  f7fffffe          BL       __2sprintf
-0001f4  49a6              LDR      r1,|L9.1168|
+0001f4  49a6              LDR      r1,|L10.1168|
 0001f6  4628              MOV      r0,r5                 ;222
 0001f8  f7fffffe          BL       TEXT_SetFont
 0001fc  f7fffffe          BL       GUI_UC_SetEncodeUTF8
-000200  4981              LDR      r1,|L9.1032|
+000200  4981              LDR      r1,|L10.1032|
 000202  4628              MOV      r0,r5                 ;224
 000204  311c              ADDS     r1,r1,#0x1c           ;224
 000206  f7fffffe          BL       TEXT_SetText
-00020a  e7d9              B        |L9.448|
-                  |L9.524|
+00020a  e7d9              B        |L10.448|
+                  |L10.524|
 00020c  6865              LDR      r5,[r4,#4]            ;236
 00020e  2100              MOVS     r1,#0                 ;237
 000210  4628              MOV      r0,r5                 ;237
@@ -3647,18 +3798,18 @@
 00022c  4605              MOV      r5,r0                 ;240
 00022e  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 000232  8a32              LDRH     r2,[r6,#0x10]         ;242  ; year1
-000234  4874              LDR      r0,|L9.1032|
-000236  a1bc              ADR      r1,|L9.1320|
+000234  4874              LDR      r0,|L10.1032|
+000236  a1bc              ADR      r1,|L10.1320|
 000238  301c              ADDS     r0,r0,#0x1c           ;242
 00023a  f7fffffe          BL       __2sprintf
-00023e  4972              LDR      r1,|L9.1032|
+00023e  4972              LDR      r1,|L10.1032|
 000240  4628              MOV      r0,r5                 ;243
 000242  311c              ADDS     r1,r1,#0x1c           ;243
 000244  f7fffffe          BL       TEXT_SetText
 000248  4639              MOV      r1,r7                 ;244
 00024a  4628              MOV      r0,r5                 ;244
 00024c  f7fffffe          BL       TEXT_SetTextColor
-000250  498f              LDR      r1,|L9.1168|
+000250  498f              LDR      r1,|L10.1168|
 000252  4628              MOV      r0,r5                 ;245
 000254  f7fffffe          BL       TEXT_SetFont
 000258  f640019a          MOV      r1,#0x89a             ;247
@@ -3667,22 +3818,22 @@
 000262  4605              MOV      r5,r0                 ;247
 000264  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 000268  8a72              LDRH     r2,[r6,#0x12]         ;249  ; year2
-00026a  4867              LDR      r0,|L9.1032|
-00026c  a1ae              ADR      r1,|L9.1320|
+00026a  4867              LDR      r0,|L10.1032|
+00026c  a1ae              ADR      r1,|L10.1320|
 00026e  301c              ADDS     r0,r0,#0x1c           ;249
 000270  f7fffffe          BL       __2sprintf
-000274  4964              LDR      r1,|L9.1032|
+000274  4964              LDR      r1,|L10.1032|
 000276  4628              MOV      r0,r5                 ;250
 000278  311c              ADDS     r1,r1,#0x1c           ;250
 00027a  f7fffffe          BL       TEXT_SetText
 00027e  4639              MOV      r1,r7                 ;251
 000280  4628              MOV      r0,r5                 ;251
-000282  e000              B        |L9.646|
-                  |L9.644|
-000284  e210              B        |L9.1704|
-                  |L9.646|
+000282  e000              B        |L10.646|
+                  |L10.644|
+000284  e210              B        |L10.1704|
+                  |L10.646|
 000286  f7fffffe          BL       TEXT_SetTextColor
-00028a  4981              LDR      r1,|L9.1168|
+00028a  4981              LDR      r1,|L10.1168|
 00028c  4628              MOV      r0,r5                 ;252
 00028e  f7fffffe          BL       TEXT_SetFont
 000292  f640019b          MOV      r1,#0x89b             ;254
@@ -3691,18 +3842,18 @@
 00029c  4605              MOV      r5,r0                 ;254
 00029e  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 0002a2  8ab2              LDRH     r2,[r6,#0x14]         ;256  ; year3
-0002a4  4858              LDR      r0,|L9.1032|
-0002a6  a1a0              ADR      r1,|L9.1320|
+0002a4  4858              LDR      r0,|L10.1032|
+0002a6  a1a0              ADR      r1,|L10.1320|
 0002a8  301c              ADDS     r0,r0,#0x1c           ;256
 0002aa  f7fffffe          BL       __2sprintf
-0002ae  4956              LDR      r1,|L9.1032|
+0002ae  4956              LDR      r1,|L10.1032|
 0002b0  4628              MOV      r0,r5                 ;257
 0002b2  311c              ADDS     r1,r1,#0x1c           ;257
 0002b4  f7fffffe          BL       TEXT_SetText
 0002b8  4639              MOV      r1,r7                 ;258
 0002ba  4628              MOV      r0,r5                 ;258
 0002bc  f7fffffe          BL       TEXT_SetTextColor
-0002c0  4973              LDR      r1,|L9.1168|
+0002c0  4973              LDR      r1,|L10.1168|
 0002c2  4628              MOV      r0,r5                 ;259
 0002c4  f7fffffe          BL       TEXT_SetFont
 0002c8  f640019c          MOV      r1,#0x89c             ;261
@@ -3711,18 +3862,18 @@
 0002d2  4605              MOV      r5,r0                 ;261
 0002d4  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 0002d8  8af2              LDRH     r2,[r6,#0x16]         ;263  ; year4
-0002da  484b              LDR      r0,|L9.1032|
-0002dc  a192              ADR      r1,|L9.1320|
+0002da  484b              LDR      r0,|L10.1032|
+0002dc  a192              ADR      r1,|L10.1320|
 0002de  301c              ADDS     r0,r0,#0x1c           ;263
 0002e0  f7fffffe          BL       __2sprintf
-0002e4  4948              LDR      r1,|L9.1032|
+0002e4  4948              LDR      r1,|L10.1032|
 0002e6  4628              MOV      r0,r5                 ;264
 0002e8  311c              ADDS     r1,r1,#0x1c           ;264
 0002ea  f7fffffe          BL       TEXT_SetText
 0002ee  4639              MOV      r1,r7                 ;265
 0002f0  4628              MOV      r0,r5                 ;265
 0002f2  f7fffffe          BL       TEXT_SetTextColor
-0002f6  4966              LDR      r1,|L9.1168|
+0002f6  4966              LDR      r1,|L10.1168|
 0002f8  4628              MOV      r0,r5                 ;266
 0002fa  f7fffffe          BL       TEXT_SetFont
 0002fe  f640019d          MOV      r1,#0x89d             ;268
@@ -3731,18 +3882,18 @@
 000308  4605              MOV      r5,r0                 ;268
 00030a  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 00030e  7872              LDRB     r2,[r6,#1]            ;270  ; month1
-000310  483d              LDR      r0,|L9.1032|
-000312  a185              ADR      r1,|L9.1320|
+000310  483d              LDR      r0,|L10.1032|
+000312  a185              ADR      r1,|L10.1320|
 000314  301c              ADDS     r0,r0,#0x1c           ;270
 000316  f7fffffe          BL       __2sprintf
-00031a  493b              LDR      r1,|L9.1032|
+00031a  493b              LDR      r1,|L10.1032|
 00031c  4628              MOV      r0,r5                 ;271
 00031e  311c              ADDS     r1,r1,#0x1c           ;271
 000320  f7fffffe          BL       TEXT_SetText
 000324  4639              MOV      r1,r7                 ;272
 000326  4628              MOV      r0,r5                 ;272
 000328  f7fffffe          BL       TEXT_SetTextColor
-00032c  4958              LDR      r1,|L9.1168|
+00032c  4958              LDR      r1,|L10.1168|
 00032e  4628              MOV      r0,r5                 ;273
 000330  f7fffffe          BL       TEXT_SetFont
 000334  f640019e          MOV      r1,#0x89e             ;275
@@ -3751,18 +3902,18 @@
 00033e  4605              MOV      r5,r0                 ;275
 000340  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 000344  78b2              LDRB     r2,[r6,#2]            ;277  ; month2
-000346  4830              LDR      r0,|L9.1032|
-000348  a177              ADR      r1,|L9.1320|
+000346  4830              LDR      r0,|L10.1032|
+000348  a177              ADR      r1,|L10.1320|
 00034a  301c              ADDS     r0,r0,#0x1c           ;277
 00034c  f7fffffe          BL       __2sprintf
-000350  492d              LDR      r1,|L9.1032|
+000350  492d              LDR      r1,|L10.1032|
 000352  4628              MOV      r0,r5                 ;278
 000354  311c              ADDS     r1,r1,#0x1c           ;278
 000356  f7fffffe          BL       TEXT_SetText
 00035a  4639              MOV      r1,r7                 ;279
 00035c  4628              MOV      r0,r5                 ;279
 00035e  f7fffffe          BL       TEXT_SetTextColor
-000362  494b              LDR      r1,|L9.1168|
+000362  494b              LDR      r1,|L10.1168|
 000364  4628              MOV      r0,r5                 ;280
 000366  f7fffffe          BL       TEXT_SetFont
 00036a  f44f6130          MOV      r1,#0xb00             ;282
@@ -3771,18 +3922,18 @@
 000374  4605              MOV      r5,r0                 ;282
 000376  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 00037a  78f2              LDRB     r2,[r6,#3]            ;284  ; day1
-00037c  4822              LDR      r0,|L9.1032|
-00037e  a16a              ADR      r1,|L9.1320|
+00037c  4822              LDR      r0,|L10.1032|
+00037e  a16a              ADR      r1,|L10.1320|
 000380  301c              ADDS     r0,r0,#0x1c           ;284
 000382  f7fffffe          BL       __2sprintf
-000386  4920              LDR      r1,|L9.1032|
+000386  4920              LDR      r1,|L10.1032|
 000388  4628              MOV      r0,r5                 ;285
 00038a  311c              ADDS     r1,r1,#0x1c           ;285
 00038c  f7fffffe          BL       TEXT_SetText
 000390  4639              MOV      r1,r7                 ;286
 000392  4628              MOV      r0,r5                 ;286
 000394  f7fffffe          BL       TEXT_SetTextColor
-000398  493d              LDR      r1,|L9.1168|
+000398  493d              LDR      r1,|L10.1168|
 00039a  4628              MOV      r0,r5                 ;287
 00039c  f7fffffe          BL       TEXT_SetFont
 0003a0  f6403101          MOV      r1,#0xb01             ;289
@@ -3791,18 +3942,18 @@
 0003aa  4605              MOV      r5,r0                 ;289
 0003ac  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 0003b0  7932              LDRB     r2,[r6,#4]            ;291  ; day2
-0003b2  4815              LDR      r0,|L9.1032|
-0003b4  a15c              ADR      r1,|L9.1320|
+0003b2  4815              LDR      r0,|L10.1032|
+0003b4  a15c              ADR      r1,|L10.1320|
 0003b6  301c              ADDS     r0,r0,#0x1c           ;291
 0003b8  f7fffffe          BL       __2sprintf
-0003bc  4912              LDR      r1,|L9.1032|
+0003bc  4912              LDR      r1,|L10.1032|
 0003be  4628              MOV      r0,r5                 ;292
 0003c0  311c              ADDS     r1,r1,#0x1c           ;292
 0003c2  f7fffffe          BL       TEXT_SetText
 0003c6  4639              MOV      r1,r7                 ;293
 0003c8  4628              MOV      r0,r5                 ;293
 0003ca  f7fffffe          BL       TEXT_SetTextColor
-0003ce  4930              LDR      r1,|L9.1168|
+0003ce  4930              LDR      r1,|L10.1168|
 0003d0  4628              MOV      r0,r5                 ;294
 0003d2  f7fffffe          BL       TEXT_SetFont
 0003d6  f6403102          MOV      r1,#0xb02             ;296
@@ -3811,53 +3962,53 @@
 0003e0  4605              MOV      r5,r0                 ;296
 0003e2  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 0003e6  7a32              LDRB     r2,[r6,#8]            ;298  ; code3
-0003e8  4807              LDR      r0,|L9.1032|
-0003ea  a14f              ADR      r1,|L9.1320|
+0003e8  4807              LDR      r0,|L10.1032|
+0003ea  a14f              ADR      r1,|L10.1320|
 0003ec  301c              ADDS     r0,r0,#0x1c           ;298
 0003ee  f7fffffe          BL       __2sprintf
-0003f2  4905              LDR      r1,|L9.1032|
+0003f2  4905              LDR      r1,|L10.1032|
 0003f4  4628              MOV      r0,r5                 ;299
 0003f6  311c              ADDS     r1,r1,#0x1c           ;299
 0003f8  f7fffffe          BL       TEXT_SetText
 0003fc  4639              MOV      r1,r7                 ;300
 0003fe  4628              MOV      r0,r5                 ;300
-000400  e094              B        |L9.1324|
+000400  e094              B        |L10.1324|
 000402  0000              DCW      0x0000
-                  |L9.1028|
+                  |L10.1028|
                           DCD      0x00bfffff
-                  |L9.1032|
+                  |L10.1032|
                           DCD      ||.data||
-                  |L9.1036|
+                  |L10.1036|
                           DCD      GUI_Fontsymbol
-                  |L9.1040|
+                  |L10.1040|
 000410  4a696e6b          DCB      "Jinko",0
 000414  6f00    
 000416  00                DCB      0
 000417  00                DCB      0
-                  |L9.1048|
+                  |L10.1048|
                           DCD      lang
-                  |L9.1052|
+                  |L10.1052|
                           DCD      0x00ff8080
-                  |L9.1056|
+                  |L10.1056|
                           DCD      GUI_Font20_ASCII
-                  |L9.1060|
+                  |L10.1060|
 000424  53797374          DCB      "System Information",0
 000428  656d2049
 00042c  6e666f72
 000430  6d617469
 000434  6f6e00  
 000437  00                DCB      0
-                  |L9.1080|
+                  |L10.1080|
 000438  496e7374          DCB      "Instrument Model"
 00043c  72756d65
 000440  6e74204d
 000444  6f64656c
-                  |L9.1096|
+                  |L10.1096|
 000448  00                DCB      0
 000449  00                DCB      0
 00044a  00                DCB      0
 00044b  00                DCB      0
-                  |L9.1100|
+                  |L10.1100|
 00044c  536f6674          DCB      "Software Version",0
 000450  77617265
 000454  20566572
@@ -3866,7 +4017,7 @@
 00045d  00                DCB      0
 00045e  00                DCB      0
 00045f  00                DCB      0
-                  |L9.1120|
+                  |L10.1120|
 000460  48617264          DCB      "Hardware Version",0
 000464  77617265
 000468  20566572
@@ -3875,39 +4026,39 @@
 000471  00                DCB      0
 000472  00                DCB      0
 000473  00                DCB      0
-                  |L9.1140|
+                  |L10.1140|
 000474  50726f64          DCB      "Production Date",0
 000478  75637469
 00047c  6f6e2044
 000480  61746500
-                  |L9.1156|
+                  |L10.1156|
 000484  53657269          DCB      "Serial NO.",0
 000488  616c204e
 00048c  4f2e00  
 00048f  00                DCB      0
-                  |L9.1168|
+                  |L10.1168|
                           DCD      GUI_Font24_1
-                  |L9.1172|
+                  |L10.1172|
 000494  4a4b3535          DCB      "JK5530",0
 000498  333000  
 00049b  00                DCB      0
-                  |L9.1180|
+                  |L10.1180|
 00049c  5665723a          DCB      "Ver:2.5",0
 0004a0  322e3500
-                  |L9.1188|
+                  |L10.1188|
 0004a4  5665723a          DCB      "Ver:1.0",0
 0004a8  312e3000
-                  |L9.1196|
+                  |L10.1196|
 0004ac  2d00              DCB      "-",0
 0004ae  00                DCB      0
 0004af  00                DCB      0
-                  |L9.1200|
+                  |L10.1200|
 0004b0  4100              DCB      "A",0
 0004b2  00                DCB      0
 0004b3  00                DCB      0
-                  |L9.1204|
+                  |L10.1204|
                           DCD      GUI_FontHZ20S
-                  |L9.1208|
+                  |L10.1208|
 0004b8  e7b3bbe7          DCB      231,179,187,231,187,159,228,191,161,230,129,175,0
 0004bc  bb9fe4bf
 0004c0  a1e681af
@@ -3915,9 +4066,9 @@
 0004c5  00                DCB      0
 0004c6  00                DCB      0
 0004c7  00                DCB      0
-                  |L9.1224|
+                  |L10.1224|
                           DCD      GUI_Fontset_font
-                  |L9.1228|
+                  |L10.1228|
 0004cc  e4bbaae5          DCB      228,187,170,229,153,168,229,158,139,229,143,183,0
 0004d0  99a8e59e
 0004d4  8be58fb7
@@ -3925,7 +4076,7 @@
 0004d9  00                DCB      0
 0004da  00                DCB      0
 0004db  00                DCB      0
-                  |L9.1244|
+                  |L10.1244|
 0004dc  e8bdafe4          DCB      232,189,175,228,187,182,231,137,136,230,156,172,0
 0004e0  bbb6e789
 0004e4  88e69cac
@@ -3933,7 +4084,7 @@
 0004e9  00                DCB      0
 0004ea  00                DCB      0
 0004eb  00                DCB      0
-                  |L9.1260|
+                  |L10.1260|
 0004ec  e7a1ace4          DCB      231,161,172,228,187,182,231,137,136,230,156,172,0
 0004f0  bbb6e789
 0004f4  88e69cac
@@ -3941,7 +4092,7 @@
 0004f9  00                DCB      0
 0004fa  00                DCB      0
 0004fb  00                DCB      0
-                  |L9.1276|
+                  |L10.1276|
 0004fc  e7949fe4          DCB      231,148,159,228,186,167,230,151,165,230,156,159,0
 000500  baa7e697
 000504  a5e69c9f
@@ -3949,7 +4100,7 @@
 000509  00                DCB      0
 00050a  00                DCB      0
 00050b  00                DCB      0
-                  |L9.1292|
+                  |L10.1292|
 00050c  e4bbaae5          DCB      228,187,170,229,153,168,231,188,150,229,143,183,0
 000510  99a8e7bc
 000514  96e58fb7
@@ -3957,18 +4108,18 @@
 000519  00                DCB      0
 00051a  00                DCB      0
 00051b  00                DCB      0
-                  |L9.1308|
+                  |L10.1308|
                           DCD      pass
-                  |L9.1312|
+                  |L10.1312|
                           DCD      Run_Control
-                  |L9.1316|
+                  |L10.1316|
 000524  25346400          DCB      "%4d",0
-                  |L9.1320|
+                  |L10.1320|
 000528  256400            DCB      "%d",0
 00052b  00                DCB      0
-                  |L9.1324|
+                  |L10.1324|
 00052c  f7fffffe          BL       TEXT_SetTextColor
-000530  495e              LDR      r1,|L9.1708|
+000530  495e              LDR      r1,|L10.1708|
 000532  4628              MOV      r0,r5                 ;301
 000534  f7fffffe          BL       TEXT_SetFont
 000538  f6403103          MOV      r1,#0xb03             ;303
@@ -3977,16 +4128,16 @@
 000542  4605              MOV      r5,r0                 ;303
 000544  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 000548  7a72              LDRB     r2,[r6,#9]            ;305  ; code4
-00054a  f2af0124          ADR      r1,|L9.1320|
-00054e  4858              LDR      r0,|L9.1712|
+00054a  f2af0124          ADR      r1,|L10.1320|
+00054e  4858              LDR      r0,|L10.1712|
 000550  f7fffffe          BL       __2sprintf
-000554  4956              LDR      r1,|L9.1712|
+000554  4956              LDR      r1,|L10.1712|
 000556  4628              MOV      r0,r5                 ;306
 000558  f7fffffe          BL       TEXT_SetText
 00055c  4639              MOV      r1,r7                 ;307
 00055e  4628              MOV      r0,r5                 ;307
 000560  f7fffffe          BL       TEXT_SetTextColor
-000564  4951              LDR      r1,|L9.1708|
+000564  4951              LDR      r1,|L10.1708|
 000566  4628              MOV      r0,r5                 ;308
 000568  f7fffffe          BL       TEXT_SetFont
 00056c  f6403104          MOV      r1,#0xb04             ;310
@@ -3995,16 +4146,16 @@
 000576  4605              MOV      r5,r0                 ;310
 000578  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 00057c  7ab2              LDRB     r2,[r6,#0xa]          ;312  ; code5
-00057e  f2af0158          ADR      r1,|L9.1320|
-000582  484b              LDR      r0,|L9.1712|
+00057e  f2af0158          ADR      r1,|L10.1320|
+000582  484b              LDR      r0,|L10.1712|
 000584  f7fffffe          BL       __2sprintf
-000588  4949              LDR      r1,|L9.1712|
+000588  4949              LDR      r1,|L10.1712|
 00058a  4628              MOV      r0,r5                 ;313
 00058c  f7fffffe          BL       TEXT_SetText
 000590  4639              MOV      r1,r7                 ;314
 000592  4628              MOV      r0,r5                 ;314
 000594  f7fffffe          BL       TEXT_SetTextColor
-000598  4944              LDR      r1,|L9.1708|
+000598  4944              LDR      r1,|L10.1708|
 00059a  4628              MOV      r0,r5                 ;315
 00059c  f7fffffe          BL       TEXT_SetFont
 0005a0  f6403105          MOV      r1,#0xb05             ;317
@@ -4013,16 +4164,16 @@
 0005aa  4605              MOV      r5,r0                 ;317
 0005ac  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 0005b0  7af2              LDRB     r2,[r6,#0xb]          ;319  ; code6
-0005b2  f2af018c          ADR      r1,|L9.1320|
-0005b6  483e              LDR      r0,|L9.1712|
+0005b2  f2af018c          ADR      r1,|L10.1320|
+0005b6  483e              LDR      r0,|L10.1712|
 0005b8  f7fffffe          BL       __2sprintf
-0005bc  493c              LDR      r1,|L9.1712|
+0005bc  493c              LDR      r1,|L10.1712|
 0005be  4628              MOV      r0,r5                 ;320
 0005c0  f7fffffe          BL       TEXT_SetText
 0005c4  4639              MOV      r1,r7                 ;321
 0005c6  4628              MOV      r0,r5                 ;321
 0005c8  f7fffffe          BL       TEXT_SetTextColor
-0005cc  4937              LDR      r1,|L9.1708|
+0005cc  4937              LDR      r1,|L10.1708|
 0005ce  4628              MOV      r0,r5                 ;322
 0005d0  f7fffffe          BL       TEXT_SetFont
 0005d4  f6403106          MOV      r1,#0xb06             ;324
@@ -4031,16 +4182,16 @@
 0005de  4605              MOV      r5,r0                 ;324
 0005e0  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 0005e4  7b32              LDRB     r2,[r6,#0xc]          ;326  ; code7
-0005e6  f2af01c0          ADR      r1,|L9.1320|
-0005ea  4831              LDR      r0,|L9.1712|
+0005e6  f2af01c0          ADR      r1,|L10.1320|
+0005ea  4831              LDR      r0,|L10.1712|
 0005ec  f7fffffe          BL       __2sprintf
-0005f0  492f              LDR      r1,|L9.1712|
+0005f0  492f              LDR      r1,|L10.1712|
 0005f2  4628              MOV      r0,r5                 ;327
 0005f4  f7fffffe          BL       TEXT_SetText
 0005f8  4639              MOV      r1,r7                 ;328
 0005fa  4628              MOV      r0,r5                 ;328
 0005fc  f7fffffe          BL       TEXT_SetTextColor
-000600  492a              LDR      r1,|L9.1708|
+000600  492a              LDR      r1,|L10.1708|
 000602  4628              MOV      r0,r5                 ;329
 000604  f7fffffe          BL       TEXT_SetFont
 000608  f6403107          MOV      r1,#0xb07             ;331
@@ -4049,16 +4200,16 @@
 000612  4605              MOV      r5,r0                 ;331
 000614  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 000618  7b72              LDRB     r2,[r6,#0xd]          ;333  ; code8
-00061a  f2af01f4          ADR      r1,|L9.1320|
-00061e  4824              LDR      r0,|L9.1712|
+00061a  f2af01f4          ADR      r1,|L10.1320|
+00061e  4824              LDR      r0,|L10.1712|
 000620  f7fffffe          BL       __2sprintf
-000624  4922              LDR      r1,|L9.1712|
+000624  4922              LDR      r1,|L10.1712|
 000626  4628              MOV      r0,r5                 ;334
 000628  f7fffffe          BL       TEXT_SetText
 00062c  4639              MOV      r1,r7                 ;335
 00062e  4628              MOV      r0,r5                 ;335
 000630  f7fffffe          BL       TEXT_SetTextColor
-000634  491d              LDR      r1,|L9.1708|
+000634  491d              LDR      r1,|L10.1708|
 000636  4628              MOV      r0,r5                 ;336
 000638  f7fffffe          BL       TEXT_SetFont
 00063c  f6403108          MOV      r1,#0xb08             ;338
@@ -4067,16 +4218,16 @@
 000646  4605              MOV      r5,r0                 ;338
 000648  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 00064c  79b2              LDRB     r2,[r6,#6]            ;340  ; code1
-00064e  f2af1128          ADR      r1,|L9.1320|
-000652  4817              LDR      r0,|L9.1712|
+00064e  f2af1128          ADR      r1,|L10.1320|
+000652  4817              LDR      r0,|L10.1712|
 000654  f7fffffe          BL       __2sprintf
-000658  4915              LDR      r1,|L9.1712|
+000658  4915              LDR      r1,|L10.1712|
 00065a  4628              MOV      r0,r5                 ;341
 00065c  f7fffffe          BL       TEXT_SetText
 000660  4639              MOV      r1,r7                 ;342
 000662  4628              MOV      r0,r5                 ;342
 000664  f7fffffe          BL       TEXT_SetTextColor
-000668  4910              LDR      r1,|L9.1708|
+000668  4910              LDR      r1,|L10.1708|
 00066a  4628              MOV      r0,r5                 ;343
 00066c  f7fffffe          BL       TEXT_SetFont
 000670  f6403109          MOV      r1,#0xb09             ;345
@@ -4085,10 +4236,10 @@
 00067a  4604              MOV      r4,r0                 ;345
 00067c  f7fffffe          BL       GUI_UC_SetEncodeUTF8
 000680  79f2              LDRB     r2,[r6,#7]            ;347  ; code2
-000682  f2af115c          ADR      r1,|L9.1320|
-000686  480a              LDR      r0,|L9.1712|
+000682  f2af115c          ADR      r1,|L10.1320|
+000686  480a              LDR      r0,|L10.1712|
 000688  f7fffffe          BL       __2sprintf
-00068c  4908              LDR      r1,|L9.1712|
+00068c  4908              LDR      r1,|L10.1712|
 00068e  4620              MOV      r0,r4                 ;348
 000690  f7fffffe          BL       TEXT_SetText
 000694  4639              MOV      r1,r7                 ;349
@@ -4096,9 +4247,9 @@
 000698  f7fffffe          BL       TEXT_SetTextColor
 00069c  4620              MOV      r0,r4                 ;350
 00069e  e8bd41f0          POP      {r4-r8,lr}            ;350
-0006a2  4902              LDR      r1,|L9.1708|
+0006a2  4902              LDR      r1,|L10.1708|
 0006a4  f7ffbffe          B.W      TEXT_SetFont
-                  |L9.1704|
+                  |L10.1704|
 ;;;361            break;
 ;;;362      }
 ;;;363    }
@@ -4106,9 +4257,9 @@
 ;;;364    
                           ENDP
 
-                  |L9.1708|
+                  |L10.1708|
                           DCD      GUI_Font24_1
-                  |L9.1712|
+                  |L10.1712|
                           DCD      ||.data||+0x1c
 
                           AREA ||.constdata||, DATA, READONLY, ALIGN=2
@@ -4293,7 +4444,7 @@
                   buf
                           DCD      0x00000000
 000020  00                DCB      0x00
-                  |symbol_number.51|
+                  |symbol_number.54|
 000021  000000            DCB      0x00,0x00,0x00
 000024  0000              DCB      0x00,0x00
 

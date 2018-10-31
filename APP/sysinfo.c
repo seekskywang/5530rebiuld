@@ -1485,3 +1485,54 @@ void Rlow_cal(u8 step)
         flag_ADJ_VH=0;//清掉标志位防止一直进入
     }
 }
+
+void Rhigh_cal(u8 step)
+{
+    if(step == 3)
+    {
+        Modify_A_READ = Rmon_value;//测量电压值
+		Modify_A_ACT = 0x64;//读取低段
+    }else if(step == 4){
+        vu16 var16;
+        vu32 var32a;
+        vu32 var32b;
+        
+        vu16 var16a;
+        vu32 var32c;
+        vu32 var32d;
+        Modify_B_READ =Rmon_value;//测量电压值
+        flag_OverV=1;
+        Modify_B_ACT = 0xC8;//读取高段
+        if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
+        {
+            var32a = Modify_B_ACT;
+            var32a = var32a - Modify_A_ACT;
+            var32a = var32a << 12;
+            var16 = Modify_B_READ - Modify_A_READ;
+            var32a = var32a / var16;
+            REG_CorrectionRH = var32a;
+            var32a=0;
+            var32a = Modify_B_ACT;
+            var32a = var32a << 12;
+            var32b = Modify_B_READ;
+            var32b = var32b * REG_CorrectionRH;
+            if (var32a < var32b)
+            {
+                var32b = var32b - var32a;
+                REG_ReadRH_Offset = var32b;
+                Polar3 |= 0x01;
+            }
+            else 
+            {
+                var32a = var32a - var32b;
+                REG_ReadRH_Offset = var32a;
+                Polar3 &= ~0x01;
+            }
+//---------------------------------------------------------------------------------------//
+            Flash_Write_all();	//参数写进FLASH
+            flag_OverV=0;
+            Flag_DAC_OFF=0;
+        }
+        flag_ADJ_VH=0;//清掉标志位防止一直进入
+    }
+}

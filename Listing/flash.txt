@@ -5,588 +5,595 @@
                           AREA ||i.EEPROM_READ_Coeff||, CODE, READONLY, ALIGN=2
 
                   EEPROM_READ_Coeff PROC
-;;;165    //===========================================================================//
-;;;166    void EEPROM_READ_Coeff(void)
+;;;177    //===========================================================================//
+;;;178    void EEPROM_READ_Coeff(void)
 000000  b570              PUSH     {r4-r6,lr}
-;;;167    {
-;;;168    /****************Ӣӎ˽ׁȡ*********************/
-;;;169    	REG_ReadV_Offset=EEPROM_READ_Byte(0x01);
+;;;179    {
+;;;180    /****************Ӣӎ˽ׁȡ*********************/
+;;;181    	REG_ReadV_Offset=EEPROM_READ_Byte(0x01);
 000002  2001              MOVS     r0,#1
 000004  f7fffffe          BL       EEPROM_READ_Byte
 000008  4cfe              LDR      r4,|L1.1028|
 00000a  6020              STR      r0,[r4,#0]  ; Correct_Strong
-;;;170    	REG_ReadV_Offset=REG_ReadV_Offset<<8;
+;;;182    	REG_ReadV_Offset=REG_ReadV_Offset<<8;
 00000c  6820              LDR      r0,[r4,#0]  ; Correct_Strong
 00000e  0200              LSLS     r0,r0,#8
 000010  6020              STR      r0,[r4,#0]  ; Correct_Strong
-;;;171    	REG_ReadV_Offset=REG_ReadV_Offset+EEPROM_READ_Byte(0x02);
+;;;183    	REG_ReadV_Offset=REG_ReadV_Offset+EEPROM_READ_Byte(0x02);
 000012  2002              MOVS     r0,#2
 000014  f7fffffe          BL       EEPROM_READ_Byte
 000018  6821              LDR      r1,[r4,#0]  ; Correct_Strong
 00001a  4408              ADD      r0,r0,r1
 00001c  6020              STR      r0,[r4,#0]  ; Correct_Strong
-;;;172    	REG_ReadV_Offset=REG_ReadV_Offset<<8;
+;;;184    	REG_ReadV_Offset=REG_ReadV_Offset<<8;
 00001e  6820              LDR      r0,[r4,#0]  ; Correct_Strong
 000020  0200              LSLS     r0,r0,#8
 000022  6020              STR      r0,[r4,#0]  ; Correct_Strong
-;;;173    	REG_ReadV_Offset=REG_ReadV_Offset+EEPROM_READ_Byte(0x03);
+;;;185    	REG_ReadV_Offset=REG_ReadV_Offset+EEPROM_READ_Byte(0x03);
 000024  2003              MOVS     r0,#3
 000026  f7fffffe          BL       EEPROM_READ_Byte
 00002a  6821              LDR      r1,[r4,#0]  ; Correct_Strong
 00002c  4408              ADD      r0,r0,r1
 00002e  6020              STR      r0,[r4,#0]  ; Correct_Strong
-;;;174    	REG_ReadV_Offset=REG_ReadV_Offset<<8;
+;;;186    	REG_ReadV_Offset=REG_ReadV_Offset<<8;
 000030  6820              LDR      r0,[r4,#0]  ; Correct_Strong
 000032  0200              LSLS     r0,r0,#8
 000034  6020              STR      r0,[r4,#0]  ; Correct_Strong
-;;;175    	REG_ReadV_Offset=REG_ReadV_Offset+EEPROM_READ_Byte(0x04);
+;;;187    	REG_ReadV_Offset=REG_ReadV_Offset+EEPROM_READ_Byte(0x04);
 000036  2004              MOVS     r0,#4
 000038  f7fffffe          BL       EEPROM_READ_Byte
 00003c  6821              LDR      r1,[r4,#0]  ; Correct_Strong
 00003e  4408              ADD      r0,r0,r1
 000040  6020              STR      r0,[r4,#0]  ; Correct_Strong
-;;;176    	
-;;;177    	REG_ReadV1_Offset=EEPROM_READ_Byte(0x40);
+;;;188    	
+;;;189    	REG_ReadV1_Offset=EEPROM_READ_Byte(0x40);
 000042  2040              MOVS     r0,#0x40
 000044  f7fffffe          BL       EEPROM_READ_Byte
 000048  6220              STR      r0,[r4,#0x20]  ; Correct_Strong
-;;;178    	REG_ReadV1_Offset=REG_ReadV1_Offset<<8;
+;;;190    	REG_ReadV1_Offset=REG_ReadV1_Offset<<8;
 00004a  6a20              LDR      r0,[r4,#0x20]  ; Correct_Strong
 00004c  0200              LSLS     r0,r0,#8
 00004e  6220              STR      r0,[r4,#0x20]  ; Correct_Strong
-;;;179    	REG_ReadV1_Offset=REG_ReadV1_Offset+EEPROM_READ_Byte(0x41);
+;;;191    	REG_ReadV1_Offset=REG_ReadV1_Offset+EEPROM_READ_Byte(0x41);
 000050  2041              MOVS     r0,#0x41
 000052  f7fffffe          BL       EEPROM_READ_Byte
 000056  6a21              LDR      r1,[r4,#0x20]  ; Correct_Strong
 000058  4408              ADD      r0,r0,r1
 00005a  6220              STR      r0,[r4,#0x20]  ; Correct_Strong
-;;;180    	REG_ReadV1_Offset=REG_ReadV1_Offset<<8;
+;;;192    	REG_ReadV1_Offset=REG_ReadV1_Offset<<8;
 00005c  6a20              LDR      r0,[r4,#0x20]  ; Correct_Strong
 00005e  0200              LSLS     r0,r0,#8
 000060  6220              STR      r0,[r4,#0x20]  ; Correct_Strong
-;;;181    	REG_ReadV1_Offset=REG_ReadV1_Offset+EEPROM_READ_Byte(0x42);
+;;;193    	REG_ReadV1_Offset=REG_ReadV1_Offset+EEPROM_READ_Byte(0x42);
 000062  2042              MOVS     r0,#0x42
 000064  f7fffffe          BL       EEPROM_READ_Byte
 000068  6a21              LDR      r1,[r4,#0x20]  ; Correct_Strong
 00006a  4408              ADD      r0,r0,r1
 00006c  6220              STR      r0,[r4,#0x20]  ; Correct_Strong
-;;;182    	REG_ReadV1_Offset=REG_ReadV1_Offset<<8;
+;;;194    	REG_ReadV1_Offset=REG_ReadV1_Offset<<8;
 00006e  6a20              LDR      r0,[r4,#0x20]  ; Correct_Strong
 000070  0200              LSLS     r0,r0,#8
 000072  6220              STR      r0,[r4,#0x20]  ; Correct_Strong
-;;;183    	REG_ReadV1_Offset=REG_ReadV1_Offset+EEPROM_READ_Byte(0x43);
+;;;195    	REG_ReadV1_Offset=REG_ReadV1_Offset+EEPROM_READ_Byte(0x43);
 000074  2043              MOVS     r0,#0x43
 000076  f7fffffe          BL       EEPROM_READ_Byte
 00007a  6a21              LDR      r1,[r4,#0x20]  ; Correct_Strong
 00007c  4408              ADD      r0,r0,r1
 00007e  6220              STR      r0,[r4,#0x20]  ; Correct_Strong
-;;;184    	
-;;;185    	REG_ReadA_Offset=EEPROM_READ_Byte(0x05);
+;;;196    	
+;;;197    	REG_ReadA_Offset=EEPROM_READ_Byte(0x05);
 000080  2005              MOVS     r0,#5
 000082  f7fffffe          BL       EEPROM_READ_Byte
 000086  6060              STR      r0,[r4,#4]  ; Correct_Strong
-;;;186    	REG_ReadA_Offset=REG_ReadA_Offset<<8;
+;;;198    	REG_ReadA_Offset=REG_ReadA_Offset<<8;
 000088  6860              LDR      r0,[r4,#4]  ; Correct_Strong
 00008a  0200              LSLS     r0,r0,#8
 00008c  6060              STR      r0,[r4,#4]  ; Correct_Strong
-;;;187    	REG_ReadA_Offset=REG_ReadA_Offset+EEPROM_READ_Byte(0x06);
+;;;199    	REG_ReadA_Offset=REG_ReadA_Offset+EEPROM_READ_Byte(0x06);
 00008e  2006              MOVS     r0,#6
 000090  f7fffffe          BL       EEPROM_READ_Byte
 000094  6861              LDR      r1,[r4,#4]  ; Correct_Strong
 000096  4408              ADD      r0,r0,r1
 000098  6060              STR      r0,[r4,#4]  ; Correct_Strong
-;;;188    	REG_ReadA_Offset=REG_ReadA_Offset<<8;
+;;;200    	REG_ReadA_Offset=REG_ReadA_Offset<<8;
 00009a  6860              LDR      r0,[r4,#4]  ; Correct_Strong
 00009c  0200              LSLS     r0,r0,#8
 00009e  6060              STR      r0,[r4,#4]  ; Correct_Strong
-;;;189    	REG_ReadA_Offset=REG_ReadA_Offset+EEPROM_READ_Byte(0x07);
+;;;201    	REG_ReadA_Offset=REG_ReadA_Offset+EEPROM_READ_Byte(0x07);
 0000a0  2007              MOVS     r0,#7
 0000a2  f7fffffe          BL       EEPROM_READ_Byte
 0000a6  6861              LDR      r1,[r4,#4]  ; Correct_Strong
 0000a8  4408              ADD      r0,r0,r1
 0000aa  6060              STR      r0,[r4,#4]  ; Correct_Strong
-;;;190    	REG_ReadA_Offset=REG_ReadA_Offset<<8;
+;;;202    	REG_ReadA_Offset=REG_ReadA_Offset<<8;
 0000ac  6860              LDR      r0,[r4,#4]  ; Correct_Strong
 0000ae  0200              LSLS     r0,r0,#8
 0000b0  6060              STR      r0,[r4,#4]  ; Correct_Strong
-;;;191    	REG_ReadA_Offset=REG_ReadA_Offset+EEPROM_READ_Byte(0x08);
+;;;203    	REG_ReadA_Offset=REG_ReadA_Offset+EEPROM_READ_Byte(0x08);
 0000b2  2008              MOVS     r0,#8
 0000b4  f7fffffe          BL       EEPROM_READ_Byte
 0000b8  6861              LDR      r1,[r4,#4]  ; Correct_Strong
 0000ba  4408              ADD      r0,r0,r1
 0000bc  6060              STR      r0,[r4,#4]  ; Correct_Strong
-;;;192    	
-;;;193    	REG_ReadA1_Offset=EEPROM_READ_Byte(0x33);
+;;;204    	
+;;;205    	REG_ReadA1_Offset=EEPROM_READ_Byte(0x33);
 0000be  2033              MOVS     r0,#0x33
 0000c0  f7fffffe          BL       EEPROM_READ_Byte
 0000c4  60a0              STR      r0,[r4,#8]  ; Correct_Strong
-;;;194    	REG_ReadA1_Offset=REG_ReadA1_Offset<<8;
+;;;206    	REG_ReadA1_Offset=REG_ReadA1_Offset<<8;
 0000c6  68a0              LDR      r0,[r4,#8]  ; Correct_Strong
 0000c8  0200              LSLS     r0,r0,#8
 0000ca  60a0              STR      r0,[r4,#8]  ; Correct_Strong
-;;;195    	REG_ReadA1_Offset=REG_ReadA1_Offset+EEPROM_READ_Byte(0x34);
+;;;207    	REG_ReadA1_Offset=REG_ReadA1_Offset+EEPROM_READ_Byte(0x34);
 0000cc  2034              MOVS     r0,#0x34
 0000ce  f7fffffe          BL       EEPROM_READ_Byte
 0000d2  68a1              LDR      r1,[r4,#8]  ; Correct_Strong
 0000d4  4408              ADD      r0,r0,r1
 0000d6  60a0              STR      r0,[r4,#8]  ; Correct_Strong
-;;;196    	REG_ReadA1_Offset=REG_ReadA1_Offset<<8;
+;;;208    	REG_ReadA1_Offset=REG_ReadA1_Offset<<8;
 0000d8  68a0              LDR      r0,[r4,#8]  ; Correct_Strong
 0000da  0200              LSLS     r0,r0,#8
 0000dc  60a0              STR      r0,[r4,#8]  ; Correct_Strong
-;;;197    	REG_ReadA1_Offset=REG_ReadA1_Offset+EEPROM_READ_Byte(0x35);
+;;;209    	REG_ReadA1_Offset=REG_ReadA1_Offset+EEPROM_READ_Byte(0x35);
 0000de  2035              MOVS     r0,#0x35
 0000e0  f7fffffe          BL       EEPROM_READ_Byte
 0000e4  68a1              LDR      r1,[r4,#8]  ; Correct_Strong
 0000e6  4408              ADD      r0,r0,r1
 0000e8  60a0              STR      r0,[r4,#8]  ; Correct_Strong
-;;;198    	REG_ReadA1_Offset=REG_ReadA1_Offset<<8;
+;;;210    	REG_ReadA1_Offset=REG_ReadA1_Offset<<8;
 0000ea  68a0              LDR      r0,[r4,#8]  ; Correct_Strong
 0000ec  0200              LSLS     r0,r0,#8
 0000ee  60a0              STR      r0,[r4,#8]  ; Correct_Strong
-;;;199    	REG_ReadA1_Offset=REG_ReadA1_Offset+EEPROM_READ_Byte(0x36);
+;;;211    	REG_ReadA1_Offset=REG_ReadA1_Offset+EEPROM_READ_Byte(0x36);
 0000f0  2036              MOVS     r0,#0x36
 0000f2  f7fffffe          BL       EEPROM_READ_Byte
 0000f6  68a1              LDR      r1,[r4,#8]  ; Correct_Strong
 0000f8  4408              ADD      r0,r0,r1
 0000fa  60a0              STR      r0,[r4,#8]  ; Correct_Strong
-;;;200    	
-;;;201    	REG_ReadR_Offset=EEPROM_READ_Byte(0x09);
+;;;212    	
+;;;213    	REG_ReadR_Offset=EEPROM_READ_Byte(0x09);
 0000fc  2009              MOVS     r0,#9
 0000fe  f7fffffe          BL       EEPROM_READ_Byte
 000102  60e0              STR      r0,[r4,#0xc]  ; Correct_Strong
-;;;202    	REG_ReadR_Offset=REG_ReadR_Offset<<8;
+;;;214    	REG_ReadR_Offset=REG_ReadR_Offset<<8;
 000104  68e0              LDR      r0,[r4,#0xc]  ; Correct_Strong
 000106  0200              LSLS     r0,r0,#8
 000108  60e0              STR      r0,[r4,#0xc]  ; Correct_Strong
-;;;203    	REG_ReadR_Offset=REG_ReadR_Offset+EEPROM_READ_Byte(0x0A);
+;;;215    	REG_ReadR_Offset=REG_ReadR_Offset+EEPROM_READ_Byte(0x0A);
 00010a  200a              MOVS     r0,#0xa
 00010c  f7fffffe          BL       EEPROM_READ_Byte
 000110  68e1              LDR      r1,[r4,#0xc]  ; Correct_Strong
 000112  4408              ADD      r0,r0,r1
 000114  60e0              STR      r0,[r4,#0xc]  ; Correct_Strong
-;;;204    	REG_ReadR_Offset=REG_ReadR_Offset<<8;
+;;;216    	REG_ReadR_Offset=REG_ReadR_Offset<<8;
 000116  68e0              LDR      r0,[r4,#0xc]  ; Correct_Strong
 000118  0200              LSLS     r0,r0,#8
 00011a  60e0              STR      r0,[r4,#0xc]  ; Correct_Strong
-;;;205    	REG_ReadR_Offset=REG_ReadR_Offset+EEPROM_READ_Byte(0x0B);
+;;;217    	REG_ReadR_Offset=REG_ReadR_Offset+EEPROM_READ_Byte(0x0B);
 00011c  200b              MOVS     r0,#0xb
 00011e  f7fffffe          BL       EEPROM_READ_Byte
 000122  68e1              LDR      r1,[r4,#0xc]  ; Correct_Strong
 000124  4408              ADD      r0,r0,r1
 000126  60e0              STR      r0,[r4,#0xc]  ; Correct_Strong
-;;;206    	REG_ReadR_Offset=REG_ReadR_Offset<<8;
+;;;218    	REG_ReadR_Offset=REG_ReadR_Offset<<8;
 000128  68e0              LDR      r0,[r4,#0xc]  ; Correct_Strong
 00012a  0200              LSLS     r0,r0,#8
 00012c  60e0              STR      r0,[r4,#0xc]  ; Correct_Strong
-;;;207    	REG_ReadR_Offset=REG_ReadR_Offset+EEPROM_READ_Byte(0x0C);
+;;;219    	REG_ReadR_Offset=REG_ReadR_Offset+EEPROM_READ_Byte(0x0C);
 00012e  200c              MOVS     r0,#0xc
 000130  f7fffffe          BL       EEPROM_READ_Byte
 000134  68e1              LDR      r1,[r4,#0xc]  ; Correct_Strong
 000136  4408              ADD      r0,r0,r1
 000138  60e0              STR      r0,[r4,#0xc]  ; Correct_Strong
-;;;208    	
-;;;209    	REG_CorrectionV=EEPROM_READ_Byte(0x0D);
-00013a  200d              MOVS     r0,#0xd
+;;;220        
+;;;221        REG_ReadRH_Offset=EEPROM_READ_Byte(0x94);
+00013a  2094              MOVS     r0,#0x94
 00013c  f7fffffe          BL       EEPROM_READ_Byte
-000140  4db1              LDR      r5,|L1.1032|
-000142  8028              STRH     r0,[r5,#0]
-;;;210    	REG_CorrectionV=REG_CorrectionV<<8;
-000144  8828              LDRH     r0,[r5,#0]  ; Correct_Parametet
-000146  0200              LSLS     r0,r0,#8
-000148  8028              STRH     r0,[r5,#0]
-;;;211    	REG_CorrectionV=REG_CorrectionV+EEPROM_READ_Byte(0x0E);
-00014a  200e              MOVS     r0,#0xe
-00014c  f7fffffe          BL       EEPROM_READ_Byte
-000150  8829              LDRH     r1,[r5,#0]  ; Correct_Parametet
-000152  4408              ADD      r0,r0,r1
-000154  8028              STRH     r0,[r5,#0]
-;;;212    	
-;;;213    	REG_CorrectionV1=EEPROM_READ_Byte(0x44);
-000156  2044              MOVS     r0,#0x44
-000158  f7fffffe          BL       EEPROM_READ_Byte
-00015c  8328              STRH     r0,[r5,#0x18]
-;;;214    	REG_CorrectionV1=REG_CorrectionV1<<8;
-00015e  8b28              LDRH     r0,[r5,#0x18]  ; Correct_Parametet
-000160  0200              LSLS     r0,r0,#8
-000162  8328              STRH     r0,[r5,#0x18]
-;;;215    	REG_CorrectionV1=REG_CorrectionV1+EEPROM_READ_Byte(0x45);
-000164  2045              MOVS     r0,#0x45
-000166  f7fffffe          BL       EEPROM_READ_Byte
-00016a  8b29              LDRH     r1,[r5,#0x18]  ; Correct_Parametet
-00016c  4408              ADD      r0,r0,r1
-00016e  8328              STRH     r0,[r5,#0x18]
-;;;216    	
-;;;217    	REG_CorrectionA=EEPROM_READ_Byte(0x0F);
-000170  200f              MOVS     r0,#0xf
-000172  f7fffffe          BL       EEPROM_READ_Byte
-000176  8068              STRH     r0,[r5,#2]
-;;;218    	REG_CorrectionA=REG_CorrectionA<<8;
-000178  8868              LDRH     r0,[r5,#2]  ; Correct_Parametet
-00017a  0200              LSLS     r0,r0,#8
-00017c  8068              STRH     r0,[r5,#2]
-;;;219    	REG_CorrectionA=REG_CorrectionA+EEPROM_READ_Byte(0x10);
-00017e  2010              MOVS     r0,#0x10
-000180  f7fffffe          BL       EEPROM_READ_Byte
-000184  8869              LDRH     r1,[r5,#2]  ; Correct_Parametet
-000186  4408              ADD      r0,r0,r1
-000188  8068              STRH     r0,[r5,#2]
-;;;220    	
-;;;221    	REG_CorrectionA1=EEPROM_READ_Byte(0x37);
-00018a  2037              MOVS     r0,#0x37
-00018c  f7fffffe          BL       EEPROM_READ_Byte
-000190  80a8              STRH     r0,[r5,#4]
-;;;222    	REG_CorrectionA1=REG_CorrectionA1<<8;
-000192  88a8              LDRH     r0,[r5,#4]  ; Correct_Parametet
-000194  0200              LSLS     r0,r0,#8
-000196  80a8              STRH     r0,[r5,#4]
-;;;223    	REG_CorrectionA1=REG_CorrectionA1+EEPROM_READ_Byte(0x38);
-000198  2038              MOVS     r0,#0x38
-00019a  f7fffffe          BL       EEPROM_READ_Byte
-00019e  88a9              LDRH     r1,[r5,#4]  ; Correct_Parametet
-0001a0  4408              ADD      r0,r0,r1
-0001a2  80a8              STRH     r0,[r5,#4]
-;;;224    	
-;;;225    	REG_CorrectionR=EEPROM_READ_Byte(0x11);
-0001a4  2011              MOVS     r0,#0x11
-0001a6  f7fffffe          BL       EEPROM_READ_Byte
-0001aa  80e8              STRH     r0,[r5,#6]
-;;;226    	REG_CorrectionR=REG_CorrectionR<<8;
-0001ac  88e8              LDRH     r0,[r5,#6]  ; Correct_Parametet
-0001ae  0200              LSLS     r0,r0,#8
-0001b0  80e8              STRH     r0,[r5,#6]
-;;;227    	REG_CorrectionR=REG_CorrectionR+EEPROM_READ_Byte(0x12);
-0001b2  2012              MOVS     r0,#0x12
-0001b4  f7fffffe          BL       EEPROM_READ_Byte
-0001b8  88e9              LDRH     r1,[r5,#6]  ; Correct_Parametet
-0001ba  4408              ADD      r0,r0,r1
-0001bc  80e8              STRH     r0,[r5,#6]
+000140  6260              STR      r0,[r4,#0x24]  ; Correct_Strong
+;;;222    	REG_ReadRH_Offset=REG_ReadRH_Offset<<8;
+000142  6a60              LDR      r0,[r4,#0x24]  ; Correct_Strong
+000144  0200              LSLS     r0,r0,#8
+000146  6260              STR      r0,[r4,#0x24]  ; Correct_Strong
+;;;223    	REG_ReadRH_Offset=REG_ReadRH_Offset+EEPROM_READ_Byte(0x95);
+000148  2095              MOVS     r0,#0x95
+00014a  f7fffffe          BL       EEPROM_READ_Byte
+00014e  6a61              LDR      r1,[r4,#0x24]  ; Correct_Strong
+000150  4408              ADD      r0,r0,r1
+000152  6260              STR      r0,[r4,#0x24]  ; Correct_Strong
+;;;224    	REG_ReadRH_Offset=REG_ReadRH_Offset<<8;
+000154  6a60              LDR      r0,[r4,#0x24]  ; Correct_Strong
+000156  0200              LSLS     r0,r0,#8
+000158  6260              STR      r0,[r4,#0x24]  ; Correct_Strong
+;;;225    	REG_ReadRH_Offset=REG_ReadRH_Offset+EEPROM_READ_Byte(0x96);
+00015a  2096              MOVS     r0,#0x96
+00015c  f7fffffe          BL       EEPROM_READ_Byte
+000160  6a61              LDR      r1,[r4,#0x24]  ; Correct_Strong
+000162  4408              ADD      r0,r0,r1
+000164  6260              STR      r0,[r4,#0x24]  ; Correct_Strong
+;;;226    	REG_ReadRH_Offset=REG_ReadRH_Offset<<8;
+000166  6a60              LDR      r0,[r4,#0x24]  ; Correct_Strong
+000168  0200              LSLS     r0,r0,#8
+00016a  6260              STR      r0,[r4,#0x24]  ; Correct_Strong
+;;;227    	REG_ReadRH_Offset=REG_ReadRH_Offset+EEPROM_READ_Byte(0x97);
+00016c  2097              MOVS     r0,#0x97
+00016e  f7fffffe          BL       EEPROM_READ_Byte
+000172  6a61              LDR      r1,[r4,#0x24]  ; Correct_Strong
+000174  4408              ADD      r0,r0,r1
+000176  6260              STR      r0,[r4,#0x24]  ; Correct_Strong
 ;;;228    	
-;;;229    	Polar=EEPROM_READ_Byte(0x13);
-0001be  2013              MOVS     r0,#0x13
-0001c0  f7fffffe          BL       EEPROM_READ_Byte
-0001c4  8128              STRH     r0,[r5,#8]
-;;;230    	Polar3=EEPROM_READ_Byte(0x46);
-0001c6  2046              MOVS     r0,#0x46
-0001c8  f7fffffe          BL       EEPROM_READ_Byte
-0001cc  82e8              STRH     r0,[r5,#0x16]
-;;;231    /*******************ʨ׃ӎ˽ׁȡ****************************/
-;;;232    	SET_ReadV_Offset=EEPROM_READ_Byte(0x14);
-0001ce  2014              MOVS     r0,#0x14
-0001d0  f7fffffe          BL       EEPROM_READ_Byte
-0001d4  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
-;;;233    	SET_ReadV_Offset=SET_ReadV_Offset<<8;
-0001d6  6920              LDR      r0,[r4,#0x10]  ; Correct_Strong
-0001d8  0200              LSLS     r0,r0,#8
-0001da  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
-;;;234    	SET_ReadV_Offset=SET_ReadV_Offset+EEPROM_READ_Byte(0x15);
-0001dc  2015              MOVS     r0,#0x15
-0001de  f7fffffe          BL       EEPROM_READ_Byte
-0001e2  6921              LDR      r1,[r4,#0x10]  ; Correct_Strong
-0001e4  4408              ADD      r0,r0,r1
-0001e6  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
-;;;235    	SET_ReadV_Offset=SET_ReadV_Offset<<8;
-0001e8  6920              LDR      r0,[r4,#0x10]  ; Correct_Strong
-0001ea  0200              LSLS     r0,r0,#8
-0001ec  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
-;;;236    	SET_ReadV_Offset=SET_ReadV_Offset+EEPROM_READ_Byte(0x16);
-0001ee  2016              MOVS     r0,#0x16
-0001f0  f7fffffe          BL       EEPROM_READ_Byte
-0001f4  6921              LDR      r1,[r4,#0x10]  ; Correct_Strong
-0001f6  4408              ADD      r0,r0,r1
-0001f8  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
-;;;237    	SET_ReadV_Offset=SET_ReadV_Offset<<8;
-0001fa  6920              LDR      r0,[r4,#0x10]  ; Correct_Strong
-0001fc  0200              LSLS     r0,r0,#8
-0001fe  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
-;;;238    	SET_ReadV_Offset=SET_ReadV_Offset+EEPROM_READ_Byte(0x17);
-000200  2017              MOVS     r0,#0x17
-000202  f7fffffe          BL       EEPROM_READ_Byte
-000206  6921              LDR      r1,[r4,#0x10]  ; Correct_Strong
-000208  4408              ADD      r0,r0,r1
-00020a  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
-;;;239    	
-;;;240    	SET_ReadA_Offset=EEPROM_READ_Byte(0x18);
-00020c  2018              MOVS     r0,#0x18
-00020e  f7fffffe          BL       EEPROM_READ_Byte
-000212  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
-;;;241    	SET_ReadA_Offset=SET_ReadA_Offset<<8;
-000214  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
-000216  0200              LSLS     r0,r0,#8
-000218  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
-;;;242    	SET_ReadA_Offset=SET_ReadA_Offset+EEPROM_READ_Byte(0x19);
-00021a  2019              MOVS     r0,#0x19
-00021c  f7fffffe          BL       EEPROM_READ_Byte
-000220  6961              LDR      r1,[r4,#0x14]  ; Correct_Strong
-000222  4408              ADD      r0,r0,r1
-000224  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
-;;;243    	SET_ReadA_Offset=SET_ReadA_Offset<<8;
-000226  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
-000228  0200              LSLS     r0,r0,#8
-00022a  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
-;;;244    	SET_ReadA_Offset=SET_ReadA_Offset+EEPROM_READ_Byte(0x1A);
-00022c  201a              MOVS     r0,#0x1a
-00022e  f7fffffe          BL       EEPROM_READ_Byte
-000232  6961              LDR      r1,[r4,#0x14]  ; Correct_Strong
-000234  4408              ADD      r0,r0,r1
-000236  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
-;;;245    	SET_ReadA_Offset=SET_ReadA_Offset<<8;
-000238  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
-00023a  0200              LSLS     r0,r0,#8
-00023c  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
-;;;246    	SET_ReadA_Offset=SET_ReadA_Offset+EEPROM_READ_Byte(0x1B);
-00023e  201b              MOVS     r0,#0x1b
-000240  f7fffffe          BL       EEPROM_READ_Byte
-000244  6961              LDR      r1,[r4,#0x14]  ; Correct_Strong
-000246  4408              ADD      r0,r0,r1
-000248  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
-;;;247    	
-;;;248    	SET_ReadA1_Offset=EEPROM_READ_Byte(0x39);
-00024a  2039              MOVS     r0,#0x39
-00024c  f7fffffe          BL       EEPROM_READ_Byte
-000250  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
-;;;249    	SET_ReadA1_Offset=SET_ReadA1_Offset<<8;
-000252  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
+;;;229    	REG_CorrectionV=EEPROM_READ_Byte(0x0D);
+000178  200d              MOVS     r0,#0xd
+00017a  f7fffffe          BL       EEPROM_READ_Byte
+00017e  4da2              LDR      r5,|L1.1032|
+000180  8028              STRH     r0,[r5,#0]
+;;;230    	REG_CorrectionV=REG_CorrectionV<<8;
+000182  8828              LDRH     r0,[r5,#0]  ; Correct_Parametet
+000184  0200              LSLS     r0,r0,#8
+000186  8028              STRH     r0,[r5,#0]
+;;;231    	REG_CorrectionV=REG_CorrectionV+EEPROM_READ_Byte(0x0E);
+000188  200e              MOVS     r0,#0xe
+00018a  f7fffffe          BL       EEPROM_READ_Byte
+00018e  8829              LDRH     r1,[r5,#0]  ; Correct_Parametet
+000190  4408              ADD      r0,r0,r1
+000192  8028              STRH     r0,[r5,#0]
+;;;232    	
+;;;233    	REG_CorrectionV1=EEPROM_READ_Byte(0x44);
+000194  2044              MOVS     r0,#0x44
+000196  f7fffffe          BL       EEPROM_READ_Byte
+00019a  8328              STRH     r0,[r5,#0x18]
+;;;234    	REG_CorrectionV1=REG_CorrectionV1<<8;
+00019c  8b28              LDRH     r0,[r5,#0x18]  ; Correct_Parametet
+00019e  0200              LSLS     r0,r0,#8
+0001a0  8328              STRH     r0,[r5,#0x18]
+;;;235    	REG_CorrectionV1=REG_CorrectionV1+EEPROM_READ_Byte(0x45);
+0001a2  2045              MOVS     r0,#0x45
+0001a4  f7fffffe          BL       EEPROM_READ_Byte
+0001a8  8b29              LDRH     r1,[r5,#0x18]  ; Correct_Parametet
+0001aa  4408              ADD      r0,r0,r1
+0001ac  8328              STRH     r0,[r5,#0x18]
+;;;236    	
+;;;237    	REG_CorrectionA=EEPROM_READ_Byte(0x0F);
+0001ae  200f              MOVS     r0,#0xf
+0001b0  f7fffffe          BL       EEPROM_READ_Byte
+0001b4  8068              STRH     r0,[r5,#2]
+;;;238    	REG_CorrectionA=REG_CorrectionA<<8;
+0001b6  8868              LDRH     r0,[r5,#2]  ; Correct_Parametet
+0001b8  0200              LSLS     r0,r0,#8
+0001ba  8068              STRH     r0,[r5,#2]
+;;;239    	REG_CorrectionA=REG_CorrectionA+EEPROM_READ_Byte(0x10);
+0001bc  2010              MOVS     r0,#0x10
+0001be  f7fffffe          BL       EEPROM_READ_Byte
+0001c2  8869              LDRH     r1,[r5,#2]  ; Correct_Parametet
+0001c4  4408              ADD      r0,r0,r1
+0001c6  8068              STRH     r0,[r5,#2]
+;;;240    	
+;;;241    	REG_CorrectionA1=EEPROM_READ_Byte(0x37);
+0001c8  2037              MOVS     r0,#0x37
+0001ca  f7fffffe          BL       EEPROM_READ_Byte
+0001ce  80a8              STRH     r0,[r5,#4]
+;;;242    	REG_CorrectionA1=REG_CorrectionA1<<8;
+0001d0  88a8              LDRH     r0,[r5,#4]  ; Correct_Parametet
+0001d2  0200              LSLS     r0,r0,#8
+0001d4  80a8              STRH     r0,[r5,#4]
+;;;243    	REG_CorrectionA1=REG_CorrectionA1+EEPROM_READ_Byte(0x38);
+0001d6  2038              MOVS     r0,#0x38
+0001d8  f7fffffe          BL       EEPROM_READ_Byte
+0001dc  88a9              LDRH     r1,[r5,#4]  ; Correct_Parametet
+0001de  4408              ADD      r0,r0,r1
+0001e0  80a8              STRH     r0,[r5,#4]
+;;;244    	
+;;;245    	REG_CorrectionR=EEPROM_READ_Byte(0x11);
+0001e2  2011              MOVS     r0,#0x11
+0001e4  f7fffffe          BL       EEPROM_READ_Byte
+0001e8  80e8              STRH     r0,[r5,#6]
+;;;246    	REG_CorrectionR=REG_CorrectionR<<8;
+0001ea  88e8              LDRH     r0,[r5,#6]  ; Correct_Parametet
+0001ec  0200              LSLS     r0,r0,#8
+0001ee  80e8              STRH     r0,[r5,#6]
+;;;247    	REG_CorrectionR=REG_CorrectionR+EEPROM_READ_Byte(0x12);
+0001f0  2012              MOVS     r0,#0x12
+0001f2  f7fffffe          BL       EEPROM_READ_Byte
+0001f6  88e9              LDRH     r1,[r5,#6]  ; Correct_Parametet
+0001f8  4408              ADD      r0,r0,r1
+0001fa  80e8              STRH     r0,[r5,#6]
+;;;248        
+;;;249        REG_CorrectionRH=EEPROM_READ_Byte(0x98);
+0001fc  2098              MOVS     r0,#0x98
+0001fe  f7fffffe          BL       EEPROM_READ_Byte
+000202  8368              STRH     r0,[r5,#0x1a]
+;;;250    	REG_CorrectionRH=REG_CorrectionRH<<8;
+000204  8b68              LDRH     r0,[r5,#0x1a]  ; Correct_Parametet
+000206  0200              LSLS     r0,r0,#8
+000208  8368              STRH     r0,[r5,#0x1a]
+;;;251    	REG_CorrectionRH=REG_CorrectionRH+EEPROM_READ_Byte(0x99);
+00020a  2099              MOVS     r0,#0x99
+00020c  f7fffffe          BL       EEPROM_READ_Byte
+000210  8b69              LDRH     r1,[r5,#0x1a]  ; Correct_Parametet
+000212  4408              ADD      r0,r0,r1
+000214  8368              STRH     r0,[r5,#0x1a]
+;;;252    	
+;;;253    	Polar=EEPROM_READ_Byte(0x13);
+000216  2013              MOVS     r0,#0x13
+000218  f7fffffe          BL       EEPROM_READ_Byte
+00021c  8128              STRH     r0,[r5,#8]
+;;;254    	Polar3=EEPROM_READ_Byte(0x46);
+00021e  2046              MOVS     r0,#0x46
+000220  f7fffffe          BL       EEPROM_READ_Byte
+000224  82e8              STRH     r0,[r5,#0x16]
+;;;255    /*******************ʨ׃ӎ˽ׁȡ****************************/
+;;;256    	SET_ReadV_Offset=EEPROM_READ_Byte(0x14);
+000226  2014              MOVS     r0,#0x14
+000228  f7fffffe          BL       EEPROM_READ_Byte
+00022c  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
+;;;257    	SET_ReadV_Offset=SET_ReadV_Offset<<8;
+00022e  6920              LDR      r0,[r4,#0x10]  ; Correct_Strong
+000230  0200              LSLS     r0,r0,#8
+000232  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
+;;;258    	SET_ReadV_Offset=SET_ReadV_Offset+EEPROM_READ_Byte(0x15);
+000234  2015              MOVS     r0,#0x15
+000236  f7fffffe          BL       EEPROM_READ_Byte
+00023a  6921              LDR      r1,[r4,#0x10]  ; Correct_Strong
+00023c  4408              ADD      r0,r0,r1
+00023e  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
+;;;259    	SET_ReadV_Offset=SET_ReadV_Offset<<8;
+000240  6920              LDR      r0,[r4,#0x10]  ; Correct_Strong
+000242  0200              LSLS     r0,r0,#8
+000244  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
+;;;260    	SET_ReadV_Offset=SET_ReadV_Offset+EEPROM_READ_Byte(0x16);
+000246  2016              MOVS     r0,#0x16
+000248  f7fffffe          BL       EEPROM_READ_Byte
+00024c  6921              LDR      r1,[r4,#0x10]  ; Correct_Strong
+00024e  4408              ADD      r0,r0,r1
+000250  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
+;;;261    	SET_ReadV_Offset=SET_ReadV_Offset<<8;
+000252  6920              LDR      r0,[r4,#0x10]  ; Correct_Strong
 000254  0200              LSLS     r0,r0,#8
-000256  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
-;;;250    	SET_ReadA1_Offset=SET_ReadA1_Offset+EEPROM_READ_Byte(0x3A);
-000258  203a              MOVS     r0,#0x3a
+000256  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
+;;;262    	SET_ReadV_Offset=SET_ReadV_Offset+EEPROM_READ_Byte(0x17);
+000258  2017              MOVS     r0,#0x17
 00025a  f7fffffe          BL       EEPROM_READ_Byte
-00025e  69a1              LDR      r1,[r4,#0x18]  ; Correct_Strong
+00025e  6921              LDR      r1,[r4,#0x10]  ; Correct_Strong
 000260  4408              ADD      r0,r0,r1
-000262  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
-;;;251    	SET_ReadA1_Offset=SET_ReadA1_Offset<<8;
-000264  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
-000266  0200              LSLS     r0,r0,#8
-000268  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
-;;;252    	SET_ReadA1_Offset=SET_ReadA1_Offset+EEPROM_READ_Byte(0x3B);
-00026a  203b              MOVS     r0,#0x3b
-00026c  f7fffffe          BL       EEPROM_READ_Byte
-000270  69a1              LDR      r1,[r4,#0x18]  ; Correct_Strong
-000272  4408              ADD      r0,r0,r1
-000274  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
-;;;253    	SET_ReadA1_Offset=SET_ReadA1_Offset<<8;
-000276  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
-000278  0200              LSLS     r0,r0,#8
-00027a  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
-;;;254    	SET_ReadA1_Offset=SET_ReadA1_Offset+EEPROM_READ_Byte(0x3C);
-00027c  203c              MOVS     r0,#0x3c
-00027e  f7fffffe          BL       EEPROM_READ_Byte
-000282  69a1              LDR      r1,[r4,#0x18]  ; Correct_Strong
-000284  4408              ADD      r0,r0,r1
-000286  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
-;;;255    	
-;;;256    	SET_CorrectionV=EEPROM_READ_Byte(0x1C);
-000288  201c              MOVS     r0,#0x1c
-00028a  f7fffffe          BL       EEPROM_READ_Byte
-00028e  8168              STRH     r0,[r5,#0xa]
-;;;257    	SET_CorrectionV=SET_CorrectionV<<8;
-000290  8968              LDRH     r0,[r5,#0xa]  ; Correct_Parametet
-000292  0200              LSLS     r0,r0,#8
-000294  8168              STRH     r0,[r5,#0xa]
-;;;258    	SET_CorrectionV=SET_CorrectionV+EEPROM_READ_Byte(0x1D);
-000296  201d              MOVS     r0,#0x1d
-000298  f7fffffe          BL       EEPROM_READ_Byte
-00029c  8969              LDRH     r1,[r5,#0xa]  ; Correct_Parametet
-00029e  4408              ADD      r0,r0,r1
-0002a0  8168              STRH     r0,[r5,#0xa]
-;;;259    	
-;;;260    	SET_CorrectionA=EEPROM_READ_Byte(0x1E);
-0002a2  201e              MOVS     r0,#0x1e
-0002a4  f7fffffe          BL       EEPROM_READ_Byte
-0002a8  81a8              STRH     r0,[r5,#0xc]
-;;;261    	SET_CorrectionA=SET_CorrectionA<<8;
-0002aa  89a8              LDRH     r0,[r5,#0xc]  ; Correct_Parametet
-0002ac  0200              LSLS     r0,r0,#8
-0002ae  81a8              STRH     r0,[r5,#0xc]
-;;;262    	SET_CorrectionA=SET_CorrectionA+EEPROM_READ_Byte(0x1F);
-0002b0  201f              MOVS     r0,#0x1f
-0002b2  f7fffffe          BL       EEPROM_READ_Byte
-0002b6  89a9              LDRH     r1,[r5,#0xc]  ; Correct_Parametet
-0002b8  4408              ADD      r0,r0,r1
-0002ba  81a8              STRH     r0,[r5,#0xc]
+000262  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
 ;;;263    	
-;;;264    	SET_CorrectionA1=EEPROM_READ_Byte(0x3D);
-0002bc  203d              MOVS     r0,#0x3d
-0002be  f7fffffe          BL       EEPROM_READ_Byte
-0002c2  81e8              STRH     r0,[r5,#0xe]
-;;;265    	SET_CorrectionA1=SET_CorrectionA1<<8;
-0002c4  89e8              LDRH     r0,[r5,#0xe]  ; Correct_Parametet
-0002c6  0200              LSLS     r0,r0,#8
-0002c8  81e8              STRH     r0,[r5,#0xe]
-;;;266    	SET_CorrectionA1=SET_CorrectionA1+EEPROM_READ_Byte(0x3E);
-0002ca  203e              MOVS     r0,#0x3e
-0002cc  f7fffffe          BL       EEPROM_READ_Byte
-0002d0  89e9              LDRH     r1,[r5,#0xe]  ; Correct_Parametet
-0002d2  4408              ADD      r0,r0,r1
-0002d4  81e8              STRH     r0,[r5,#0xe]
-;;;267    	
-;;;268    	
-;;;269    	Polar1=EEPROM_READ_Byte(0x20);
-0002d6  2020              MOVS     r0,#0x20
-0002d8  f7fffffe          BL       EEPROM_READ_Byte
-0002dc  8268              STRH     r0,[r5,#0x12]
-;;;270    	
-;;;271    	CON_CorrectionA=EEPROM_READ_Byte(0x21);
-0002de  2021              MOVS     r0,#0x21
-0002e0  f7fffffe          BL       EEPROM_READ_Byte
-0002e4  8228              STRH     r0,[r5,#0x10]
-;;;272    	CON_CorrectionA=CON_CorrectionA<<8;
-0002e6  8a28              LDRH     r0,[r5,#0x10]  ; Correct_Parametet
-0002e8  0200              LSLS     r0,r0,#8
-0002ea  8228              STRH     r0,[r5,#0x10]
-;;;273    	CON_CorrectionA=CON_CorrectionA+EEPROM_READ_Byte(0x22);
-0002ec  2022              MOVS     r0,#0x22
-0002ee  f7fffffe          BL       EEPROM_READ_Byte
-0002f2  8a29              LDRH     r1,[r5,#0x10]  ; Correct_Parametet
-0002f4  4408              ADD      r0,r0,r1
-0002f6  8228              STRH     r0,[r5,#0x10]
-;;;274    	
-;;;275    	CON_ReadA_Offset=EEPROM_READ_Byte(0x23);
-0002f8  2023              MOVS     r0,#0x23
-0002fa  f7fffffe          BL       EEPROM_READ_Byte
-0002fe  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
-;;;276    	CON_ReadA_Offset=CON_ReadA_Offset<<8;
-000300  69e0              LDR      r0,[r4,#0x1c]  ; Correct_Strong
-000302  0200              LSLS     r0,r0,#8
-000304  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
-;;;277    	CON_ReadA_Offset=CON_ReadA_Offset+EEPROM_READ_Byte(0x24);
-000306  2024              MOVS     r0,#0x24
-000308  f7fffffe          BL       EEPROM_READ_Byte
-00030c  69e1              LDR      r1,[r4,#0x1c]  ; Correct_Strong
-00030e  4408              ADD      r0,r0,r1
-000310  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
-;;;278    	CON_ReadA_Offset=CON_ReadA_Offset<<8;
-000312  69e0              LDR      r0,[r4,#0x1c]  ; Correct_Strong
-000314  0200              LSLS     r0,r0,#8
-000316  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
-;;;279    	CON_ReadA_Offset=CON_ReadA_Offset+EEPROM_READ_Byte(0x25);
-000318  2025              MOVS     r0,#0x25
-00031a  f7fffffe          BL       EEPROM_READ_Byte
-00031e  69e1              LDR      r1,[r4,#0x1c]  ; Correct_Strong
-000320  4408              ADD      r0,r0,r1
-000322  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
-;;;280    	CON_ReadA_Offset=CON_ReadA_Offset<<8;
-000324  69e0              LDR      r0,[r4,#0x1c]  ; Correct_Strong
-000326  0200              LSLS     r0,r0,#8
-000328  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
-;;;281    	CON_ReadA_Offset=CON_ReadA_Offset+EEPROM_READ_Byte(0x26);
-00032a  2026              MOVS     r0,#0x26
-00032c  f7fffffe          BL       EEPROM_READ_Byte
-000330  69e1              LDR      r1,[r4,#0x1c]  ; Correct_Strong
-000332  4408              ADD      r0,r0,r1
-000334  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
-;;;282    	Polar2=EEPROM_READ_Byte(0x27);
-000336  2027              MOVS     r0,#0x27
-000338  f7fffffe          BL       EEPROM_READ_Byte
-00033c  82a8              STRH     r0,[r5,#0x14]
+;;;264    	SET_ReadA_Offset=EEPROM_READ_Byte(0x18);
+000264  2018              MOVS     r0,#0x18
+000266  f7fffffe          BL       EEPROM_READ_Byte
+00026a  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
+;;;265    	SET_ReadA_Offset=SET_ReadA_Offset<<8;
+00026c  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
+00026e  0200              LSLS     r0,r0,#8
+000270  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
+;;;266    	SET_ReadA_Offset=SET_ReadA_Offset+EEPROM_READ_Byte(0x19);
+000272  2019              MOVS     r0,#0x19
+000274  f7fffffe          BL       EEPROM_READ_Byte
+000278  6961              LDR      r1,[r4,#0x14]  ; Correct_Strong
+00027a  4408              ADD      r0,r0,r1
+00027c  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
+;;;267    	SET_ReadA_Offset=SET_ReadA_Offset<<8;
+00027e  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
+000280  0200              LSLS     r0,r0,#8
+000282  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
+;;;268    	SET_ReadA_Offset=SET_ReadA_Offset+EEPROM_READ_Byte(0x1A);
+000284  201a              MOVS     r0,#0x1a
+000286  f7fffffe          BL       EEPROM_READ_Byte
+00028a  6961              LDR      r1,[r4,#0x14]  ; Correct_Strong
+00028c  4408              ADD      r0,r0,r1
+00028e  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
+;;;269    	SET_ReadA_Offset=SET_ReadA_Offset<<8;
+000290  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
+000292  0200              LSLS     r0,r0,#8
+000294  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
+;;;270    	SET_ReadA_Offset=SET_ReadA_Offset+EEPROM_READ_Byte(0x1B);
+000296  201b              MOVS     r0,#0x1b
+000298  f7fffffe          BL       EEPROM_READ_Byte
+00029c  6961              LDR      r1,[r4,#0x14]  ; Correct_Strong
+00029e  4408              ADD      r0,r0,r1
+0002a0  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
+;;;271    	
+;;;272    	SET_ReadA1_Offset=EEPROM_READ_Byte(0x39);
+0002a2  2039              MOVS     r0,#0x39
+0002a4  f7fffffe          BL       EEPROM_READ_Byte
+0002a8  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
+;;;273    	SET_ReadA1_Offset=SET_ReadA1_Offset<<8;
+0002aa  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
+0002ac  0200              LSLS     r0,r0,#8
+0002ae  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
+;;;274    	SET_ReadA1_Offset=SET_ReadA1_Offset+EEPROM_READ_Byte(0x3A);
+0002b0  203a              MOVS     r0,#0x3a
+0002b2  f7fffffe          BL       EEPROM_READ_Byte
+0002b6  69a1              LDR      r1,[r4,#0x18]  ; Correct_Strong
+0002b8  4408              ADD      r0,r0,r1
+0002ba  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
+;;;275    	SET_ReadA1_Offset=SET_ReadA1_Offset<<8;
+0002bc  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
+0002be  0200              LSLS     r0,r0,#8
+0002c0  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
+;;;276    	SET_ReadA1_Offset=SET_ReadA1_Offset+EEPROM_READ_Byte(0x3B);
+0002c2  203b              MOVS     r0,#0x3b
+0002c4  f7fffffe          BL       EEPROM_READ_Byte
+0002c8  69a1              LDR      r1,[r4,#0x18]  ; Correct_Strong
+0002ca  4408              ADD      r0,r0,r1
+0002cc  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
+;;;277    	SET_ReadA1_Offset=SET_ReadA1_Offset<<8;
+0002ce  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
+0002d0  0200              LSLS     r0,r0,#8
+0002d2  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
+;;;278    	SET_ReadA1_Offset=SET_ReadA1_Offset+EEPROM_READ_Byte(0x3C);
+0002d4  203c              MOVS     r0,#0x3c
+0002d6  f7fffffe          BL       EEPROM_READ_Byte
+0002da  69a1              LDR      r1,[r4,#0x18]  ; Correct_Strong
+0002dc  4408              ADD      r0,r0,r1
+0002de  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
+;;;279    	
+;;;280    	SET_CorrectionV=EEPROM_READ_Byte(0x1C);
+0002e0  201c              MOVS     r0,#0x1c
+0002e2  f7fffffe          BL       EEPROM_READ_Byte
+0002e6  8168              STRH     r0,[r5,#0xa]
+;;;281    	SET_CorrectionV=SET_CorrectionV<<8;
+0002e8  8968              LDRH     r0,[r5,#0xa]  ; Correct_Parametet
+0002ea  0200              LSLS     r0,r0,#8
+0002ec  8168              STRH     r0,[r5,#0xa]
+;;;282    	SET_CorrectionV=SET_CorrectionV+EEPROM_READ_Byte(0x1D);
+0002ee  201d              MOVS     r0,#0x1d
+0002f0  f7fffffe          BL       EEPROM_READ_Byte
+0002f4  8969              LDRH     r1,[r5,#0xa]  ; Correct_Parametet
+0002f6  4408              ADD      r0,r0,r1
+0002f8  8168              STRH     r0,[r5,#0xa]
 ;;;283    	
-;;;284    /*****************ׁȡژܺǰʨ׃ֵ*************************/
-;;;285    	pow_v=EEPROM_READ_Byte(0x2A);
-00033e  202a              MOVS     r0,#0x2a
-000340  f7fffffe          BL       EEPROM_READ_Byte
-000344  4c31              LDR      r4,|L1.1036|
-000346  8020              STRH     r0,[r4,#0]
-;;;286    	pow_v=pow_v<<8;
-000348  8820              LDRH     r0,[r4,#0]  ; Run_Control
-00034a  0200              LSLS     r0,r0,#8
-00034c  8020              STRH     r0,[r4,#0]
-;;;287    	pow_v=pow_v+EEPROM_READ_Byte(0x2B);
-00034e  202b              MOVS     r0,#0x2b
-000350  f7fffffe          BL       EEPROM_READ_Byte
-000354  8821              LDRH     r1,[r4,#0]  ; Run_Control
-000356  4408              ADD      r0,r0,r1
-000358  8020              STRH     r0,[r4,#0]
-;;;288    	
-;;;289    	pow_c=EEPROM_READ_Byte(0x2C);
-00035a  202c              MOVS     r0,#0x2c
-00035c  f7fffffe          BL       EEPROM_READ_Byte
-000360  80a0              STRH     r0,[r4,#4]
-;;;290    	pow_c=pow_c<<8;
-000362  88a0              LDRH     r0,[r4,#4]  ; Run_Control
-000364  0200              LSLS     r0,r0,#8
-000366  80a0              STRH     r0,[r4,#4]
-;;;291    	pow_c=pow_c+EEPROM_READ_Byte(0x2D);
-000368  202d              MOVS     r0,#0x2d
-00036a  f7fffffe          BL       EEPROM_READ_Byte
-00036e  88a1              LDRH     r1,[r4,#4]  ; Run_Control
-000370  4408              ADD      r0,r0,r1
-000372  80a0              STRH     r0,[r4,#4]
-000374  f1a40450          SUB      r4,r4,#0x50
+;;;284    	SET_CorrectionA=EEPROM_READ_Byte(0x1E);
+0002fa  201e              MOVS     r0,#0x1e
+0002fc  f7fffffe          BL       EEPROM_READ_Byte
+000300  81a8              STRH     r0,[r5,#0xc]
+;;;285    	SET_CorrectionA=SET_CorrectionA<<8;
+000302  89a8              LDRH     r0,[r5,#0xc]  ; Correct_Parametet
+000304  0200              LSLS     r0,r0,#8
+000306  81a8              STRH     r0,[r5,#0xc]
+;;;286    	SET_CorrectionA=SET_CorrectionA+EEPROM_READ_Byte(0x1F);
+000308  201f              MOVS     r0,#0x1f
+00030a  f7fffffe          BL       EEPROM_READ_Byte
+00030e  89a9              LDRH     r1,[r5,#0xc]  ; Correct_Parametet
+000310  4408              ADD      r0,r0,r1
+000312  81a8              STRH     r0,[r5,#0xc]
+;;;287    	
+;;;288    	SET_CorrectionA1=EEPROM_READ_Byte(0x3D);
+000314  203d              MOVS     r0,#0x3d
+000316  f7fffffe          BL       EEPROM_READ_Byte
+00031a  81e8              STRH     r0,[r5,#0xe]
+;;;289    	SET_CorrectionA1=SET_CorrectionA1<<8;
+00031c  89e8              LDRH     r0,[r5,#0xe]  ; Correct_Parametet
+00031e  0200              LSLS     r0,r0,#8
+000320  81e8              STRH     r0,[r5,#0xe]
+;;;290    	SET_CorrectionA1=SET_CorrectionA1+EEPROM_READ_Byte(0x3E);
+000322  203e              MOVS     r0,#0x3e
+000324  f7fffffe          BL       EEPROM_READ_Byte
+000328  89e9              LDRH     r1,[r5,#0xe]  ; Correct_Parametet
+00032a  4408              ADD      r0,r0,r1
+00032c  81e8              STRH     r0,[r5,#0xe]
+;;;291    	
 ;;;292    	
-;;;293    	TEMP_OFFSET=EEPROM_READ_Byte(0x28);
-000378  f04f0028          MOV      r0,#0x28
-00037c  f7fffffe          BL       EEPROM_READ_Byte
-000380  4d23              LDR      r5,|L1.1040|
-000382  8028              STRH     r0,[r5,#0]
-;;;294    	TEMP_OFFSET=TEMP_OFFSET<<8;
-000384  8828              LDRH     r0,[r5,#0]  ; TEMP_OFFSET
-000386  0200              LSLS     r0,r0,#8
-000388  8028              STRH     r0,[r5,#0]
-;;;295    	TEMP_OFFSET=TEMP_OFFSET+EEPROM_READ_Byte(0x29);
-00038a  2029              MOVS     r0,#0x29
-00038c  f7fffffe          BL       EEPROM_READ_Byte
-000390  8829              LDRH     r1,[r5,#0]  ; TEMP_OFFSET
-000392  4408              ADD      r0,r0,r1
-000394  8028              STRH     r0,[r5,#0]
-;;;296    
-;;;297    /*****************ׁȡؤĹǷ״̬*************************/
-;;;298    //	Beep_Flag=EEPROM_READ_Byte(0x2E);
-;;;299    	t_beep=EEPROM_READ_Byte(0x2F);
-000396  202f              MOVS     r0,#0x2f
+;;;293    	Polar1=EEPROM_READ_Byte(0x20);
+00032e  2020              MOVS     r0,#0x20
+000330  f7fffffe          BL       EEPROM_READ_Byte
+000334  8268              STRH     r0,[r5,#0x12]
+;;;294    	
+;;;295    	CON_CorrectionA=EEPROM_READ_Byte(0x21);
+000336  2021              MOVS     r0,#0x21
+000338  f7fffffe          BL       EEPROM_READ_Byte
+00033c  8228              STRH     r0,[r5,#0x10]
+;;;296    	CON_CorrectionA=CON_CorrectionA<<8;
+00033e  8a28              LDRH     r0,[r5,#0x10]  ; Correct_Parametet
+000340  0200              LSLS     r0,r0,#8
+000342  8228              STRH     r0,[r5,#0x10]
+;;;297    	CON_CorrectionA=CON_CorrectionA+EEPROM_READ_Byte(0x22);
+000344  2022              MOVS     r0,#0x22
+000346  f7fffffe          BL       EEPROM_READ_Byte
+00034a  8a29              LDRH     r1,[r5,#0x10]  ; Correct_Parametet
+00034c  4408              ADD      r0,r0,r1
+00034e  8228              STRH     r0,[r5,#0x10]
+;;;298    	
+;;;299    	CON_ReadA_Offset=EEPROM_READ_Byte(0x23);
+000350  2023              MOVS     r0,#0x23
+000352  f7fffffe          BL       EEPROM_READ_Byte
+000356  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
+;;;300    	CON_ReadA_Offset=CON_ReadA_Offset<<8;
+000358  69e0              LDR      r0,[r4,#0x1c]  ; Correct_Strong
+00035a  0200              LSLS     r0,r0,#8
+00035c  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
+;;;301    	CON_ReadA_Offset=CON_ReadA_Offset+EEPROM_READ_Byte(0x24);
+00035e  2024              MOVS     r0,#0x24
+000360  f7fffffe          BL       EEPROM_READ_Byte
+000364  69e1              LDR      r1,[r4,#0x1c]  ; Correct_Strong
+000366  4408              ADD      r0,r0,r1
+000368  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
+;;;302    	CON_ReadA_Offset=CON_ReadA_Offset<<8;
+00036a  69e0              LDR      r0,[r4,#0x1c]  ; Correct_Strong
+00036c  0200              LSLS     r0,r0,#8
+00036e  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
+;;;303    	CON_ReadA_Offset=CON_ReadA_Offset+EEPROM_READ_Byte(0x25);
+000370  2025              MOVS     r0,#0x25
+000372  f7fffffe          BL       EEPROM_READ_Byte
+000376  69e1              LDR      r1,[r4,#0x1c]  ; Correct_Strong
+000378  4408              ADD      r0,r0,r1
+00037a  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
+;;;304    	CON_ReadA_Offset=CON_ReadA_Offset<<8;
+00037c  69e0              LDR      r0,[r4,#0x1c]  ; Correct_Strong
+00037e  0200              LSLS     r0,r0,#8
+000380  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
+;;;305    	CON_ReadA_Offset=CON_ReadA_Offset+EEPROM_READ_Byte(0x26);
+000382  2026              MOVS     r0,#0x26
+000384  f7fffffe          BL       EEPROM_READ_Byte
+000388  69e1              LDR      r1,[r4,#0x1c]  ; Correct_Strong
+00038a  4408              ADD      r0,r0,r1
+00038c  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
+;;;306    	Polar2=EEPROM_READ_Byte(0x27);
+00038e  2027              MOVS     r0,#0x27
+000390  f7fffffe          BL       EEPROM_READ_Byte
+000394  82a8              STRH     r0,[r5,#0x14]
+;;;307    	
+;;;308    /*****************ׁȡژܺǰʨ׃ֵ*************************/
+;;;309    	pow_v=EEPROM_READ_Byte(0x2A);
+000396  202a              MOVS     r0,#0x2a
 000398  f7fffffe          BL       EEPROM_READ_Byte
-00039c  491d              LDR      r1,|L1.1044|
-00039e  7008              STRB     r0,[r1,#0]
-;;;300        para_set4 = EEPROM_READ_Byte(0x56);
-0003a0  2056              MOVS     r0,#0x56
-0003a2  f7fffffe          BL       EEPROM_READ_Byte
-0003a6  491c              LDR      r1,|L1.1048|
-0003a8  7008              STRB     r0,[r1,#0]
-;;;301        para_set2 = EEPROM_READ_Byte(0x55);
-0003aa  2055              MOVS     r0,#0x55
-0003ac  f7fffffe          BL       EEPROM_READ_Byte
-0003b0  491a              LDR      r1,|L1.1052|
-0003b2  7008              STRB     r0,[r1,#0]
-;;;302        lang = EEPROM_READ_Byte(0x74);
-0003b4  2074              MOVS     r0,#0x74
-0003b6  f7fffffe          BL       EEPROM_READ_Byte
-0003ba  4919              LDR      r1,|L1.1056|
-0003bc  7008              STRB     r0,[r1,#0]
-;;;303        b_type = EEPROM_READ_Byte(0x57);
-0003be  2057              MOVS     r0,#0x57
-0003c0  f7fffffe          BL       EEPROM_READ_Byte
-0003c4  4917              LDR      r1,|L1.1060|
-0003c6  7008              STRB     r0,[r1,#0]
-;;;304        buffer = EEPROM_READ_Byte(0x58);
-0003c8  2058              MOVS     r0,#0x58
-0003ca  f7fffffe          BL       EEPROM_READ_Byte
-0003ce  4916              LDR      r1,|L1.1064|
-0003d0  7008              STRB     r0,[r1,#0]
-;;;305        para_set1 = EEPROM_READ_Byte(0x59);
-0003d2  2059              MOVS     r0,#0x59
+00039c  4c1b              LDR      r4,|L1.1036|
+00039e  8020              STRH     r0,[r4,#0]
+;;;310    	pow_v=pow_v<<8;
+0003a0  8820              LDRH     r0,[r4,#0]  ; Run_Control
+0003a2  0200              LSLS     r0,r0,#8
+0003a4  8020              STRH     r0,[r4,#0]
+;;;311    	pow_v=pow_v+EEPROM_READ_Byte(0x2B);
+0003a6  202b              MOVS     r0,#0x2b
+0003a8  f7fffffe          BL       EEPROM_READ_Byte
+0003ac  8821              LDRH     r1,[r4,#0]  ; Run_Control
+0003ae  4408              ADD      r0,r0,r1
+0003b0  8020              STRH     r0,[r4,#0]
+;;;312    	
+;;;313    	pow_c=EEPROM_READ_Byte(0x2C);
+0003b2  202c              MOVS     r0,#0x2c
+0003b4  f7fffffe          BL       EEPROM_READ_Byte
+0003b8  80a0              STRH     r0,[r4,#4]
+;;;314    	pow_c=pow_c<<8;
+0003ba  88a0              LDRH     r0,[r4,#4]  ; Run_Control
+0003bc  0200              LSLS     r0,r0,#8
+0003be  80a0              STRH     r0,[r4,#4]
+;;;315    	pow_c=pow_c+EEPROM_READ_Byte(0x2D);
+0003c0  202d              MOVS     r0,#0x2d
+0003c2  f7fffffe          BL       EEPROM_READ_Byte
+0003c6  88a1              LDRH     r1,[r4,#4]  ; Run_Control
+0003c8  4408              ADD      r0,r0,r1
+0003ca  80a0              STRH     r0,[r4,#4]
+0003cc  f1a40450          SUB      r4,r4,#0x50
+;;;316    	
+;;;317    	TEMP_OFFSET=EEPROM_READ_Byte(0x28);
+0003d0  f04f0028          MOV      r0,#0x28
 0003d4  f7fffffe          BL       EEPROM_READ_Byte
-0003d8  4914              LDR      r1,|L1.1068|
-0003da  7008              STRB     r0,[r1,#0]
-;;;306        year1 = EEPROM_READ_Byte(0x5A);
-0003dc  205a              MOVS     r0,#0x5a
-0003de  f7fffffe          BL       EEPROM_READ_Byte
-0003e2  4913              LDR      r1,|L1.1072|
-0003e4  8008              STRH     r0,[r1,#0]
-;;;307        year2 = EEPROM_READ_Byte(0x5B);
-0003e6  205b              MOVS     r0,#0x5b
-0003e8  f7fffffe          BL       EEPROM_READ_Byte
-0003ec  4911              LDR      r1,|L1.1076|
-0003ee  8008              STRH     r0,[r1,#0]
-;;;308        year3 = EEPROM_READ_Byte(0x5C);
-0003f0  205c              MOVS     r0,#0x5c
-0003f2  f7fffffe          BL       EEPROM_READ_Byte
-0003f6  4910              LDR      r1,|L1.1080|
-0003f8  8008              STRH     r0,[r1,#0]
-;;;309        year4 = EEPROM_READ_Byte(0x5D);
-0003fa  205d              MOVS     r0,#0x5d
-0003fc  f7fffffe          BL       EEPROM_READ_Byte
-000400  490e              LDR      r1,|L1.1084|
-000402  e01d              B        |L1.1088|
+0003d8  4d0d              LDR      r5,|L1.1040|
+0003da  8028              STRH     r0,[r5,#0]
+;;;318    	TEMP_OFFSET=TEMP_OFFSET<<8;
+0003dc  8828              LDRH     r0,[r5,#0]  ; TEMP_OFFSET
+0003de  0200              LSLS     r0,r0,#8
+0003e0  8028              STRH     r0,[r5,#0]
+;;;319    	TEMP_OFFSET=TEMP_OFFSET+EEPROM_READ_Byte(0x29);
+0003e2  2029              MOVS     r0,#0x29
+0003e4  f7fffffe          BL       EEPROM_READ_Byte
+0003e8  8829              LDRH     r1,[r5,#0]  ; TEMP_OFFSET
+0003ea  4408              ADD      r0,r0,r1
+0003ec  8028              STRH     r0,[r5,#0]
+;;;320    
+;;;321    /*****************ׁȡؤĹǷ״̬*************************/
+;;;322    //	Beep_Flag=EEPROM_READ_Byte(0x2E);
+;;;323    	t_beep=EEPROM_READ_Byte(0x2F);
+0003ee  202f              MOVS     r0,#0x2f
+0003f0  f7fffffe          BL       EEPROM_READ_Byte
+0003f4  4907              LDR      r1,|L1.1044|
+0003f6  7008              STRB     r0,[r1,#0]
+;;;324        para_set4 = EEPROM_READ_Byte(0x56);
+0003f8  2056              MOVS     r0,#0x56
+0003fa  f7fffffe          BL       EEPROM_READ_Byte
+0003fe  4906              LDR      r1,|L1.1048|
+000400  7008              STRB     r0,[r1,#0]
+;;;325        para_set2 = EEPROM_READ_Byte(0x55);
+000402  e00b              B        |L1.1052|
                   |L1.1028|
                           DCD      Correct_Strong
                   |L1.1032|
@@ -600,520 +607,563 @@
                   |L1.1048|
                           DCD      para_set4
                   |L1.1052|
-                          DCD      para_set2
-                  |L1.1056|
-                          DCD      lang
-                  |L1.1060|
-                          DCD      b_type
-                  |L1.1064|
-                          DCD      buffer
-                  |L1.1068|
-                          DCD      para_set1
-                  |L1.1072|
-                          DCD      year1
-                  |L1.1076|
-                          DCD      year2
-                  |L1.1080|
-                          DCD      year3
-                  |L1.1084|
-                          DCD      year4
-                  |L1.1088|
-000440  8008              STRH     r0,[r1,#0]
-;;;310        month1 = EEPROM_READ_Byte(0x5E);
-000442  205e              MOVS     r0,#0x5e
-000444  f7fffffe          BL       EEPROM_READ_Byte
-000448  49c5              LDR      r1,|L1.1888|
-00044a  7008              STRB     r0,[r1,#0]
-;;;311        month2 = EEPROM_READ_Byte(0x5F);
-00044c  205f              MOVS     r0,#0x5f
-00044e  f7fffffe          BL       EEPROM_READ_Byte
-000452  49c4              LDR      r1,|L1.1892|
-000454  7008              STRB     r0,[r1,#0]
-;;;312        day1 = EEPROM_READ_Byte(0x60);
-000456  2060              MOVS     r0,#0x60
-000458  f7fffffe          BL       EEPROM_READ_Byte
-00045c  49c2              LDR      r1,|L1.1896|
-00045e  7008              STRB     r0,[r1,#0]
-;;;313        day2 = EEPROM_READ_Byte(0x61);
-000460  2061              MOVS     r0,#0x61
-000462  f7fffffe          BL       EEPROM_READ_Byte
-000466  49c1              LDR      r1,|L1.1900|
-000468  7008              STRB     r0,[r1,#0]
-;;;314        code1 = EEPROM_READ_Byte(0x62);
-00046a  2062              MOVS     r0,#0x62
-00046c  f7fffffe          BL       EEPROM_READ_Byte
-000470  49bf              LDR      r1,|L1.1904|
-000472  7008              STRB     r0,[r1,#0]
-;;;315        code2 = EEPROM_READ_Byte(0x63);
-000474  2063              MOVS     r0,#0x63
-000476  f7fffffe          BL       EEPROM_READ_Byte
-00047a  49be              LDR      r1,|L1.1908|
-00047c  7008              STRB     r0,[r1,#0]
-;;;316        code3 = EEPROM_READ_Byte(0x64);
-00047e  2064              MOVS     r0,#0x64
-000480  f7fffffe          BL       EEPROM_READ_Byte
-000484  49bc              LDR      r1,|L1.1912|
-000486  7008              STRB     r0,[r1,#0]
-;;;317        code4 = EEPROM_READ_Byte(0x65);
-000488  2065              MOVS     r0,#0x65
-00048a  f7fffffe          BL       EEPROM_READ_Byte
-00048e  49bb              LDR      r1,|L1.1916|
-000490  7008              STRB     r0,[r1,#0]
-;;;318        code5 = EEPROM_READ_Byte(0x66);
-000492  2066              MOVS     r0,#0x66
-000494  f7fffffe          BL       EEPROM_READ_Byte
-000498  49b9              LDR      r1,|L1.1920|
-00049a  7008              STRB     r0,[r1,#0]
-;;;319        code6 = EEPROM_READ_Byte(0x67);
-00049c  2067              MOVS     r0,#0x67
-00049e  f7fffffe          BL       EEPROM_READ_Byte
-0004a2  49b8              LDR      r1,|L1.1924|
-0004a4  7008              STRB     r0,[r1,#0]
-;;;320        code7 = EEPROM_READ_Byte(0x68);
-0004a6  2068              MOVS     r0,#0x68
-0004a8  f7fffffe          BL       EEPROM_READ_Byte
-0004ac  49b6              LDR      r1,|L1.1928|
-0004ae  7008              STRB     r0,[r1,#0]
-;;;321        code8 = EEPROM_READ_Byte(0x69);
-0004b0  2069              MOVS     r0,#0x69
-0004b2  f7fffffe          BL       EEPROM_READ_Byte
-0004b6  49b5              LDR      r1,|L1.1932|
-0004b8  7008              STRB     r0,[r1,#0]
-;;;322        steptime = EEPROM_READ_Byte(0x75);
-0004ba  2075              MOVS     r0,#0x75
-0004bc  f7fffffe          BL       EEPROM_READ_Byte
-0004c0  49b3              LDR      r1,|L1.1936|
-0004c2  8008              STRH     r0,[r1,#0]
-;;;323    // 	if(Beep_Flag==set_1_off)
-;;;324    // 	{
-;;;325    // 		Flag_Beep_OFF=1;
-;;;326    // 	}
-;;;327    // 	else
-;;;328    // 	{
-;;;329    // 		Flag_Beep_OFF=0;
-;;;330    // 	}
-;;;331    	t_lock=EEPROM_READ_Byte(0x30);
-0004c4  2030              MOVS     r0,#0x30
-0004c6  f7fffffe          BL       EEPROM_READ_Byte
-0004ca  49b2              LDR      r1,|L1.1940|
-0004cc  7008              STRB     r0,[r1,#0]
-;;;332    	/***************ׁѾַܺ֘*********************************/
-;;;333    	ADDR=EEPROM_READ_Byte(0x31);
-0004ce  2031              MOVS     r0,#0x31
-0004d0  f7fffffe          BL       EEPROM_READ_Byte
-0004d4  49b0              LDR      r1,|L1.1944|
-0004d6  7008              STRB     r0,[r1,#0]
-;;;334    	OFFSET_Zore=EEPROM_READ_Byte(0x32);
-0004d8  2032              MOVS     r0,#0x32
-0004da  f7fffffe          BL       EEPROM_READ_Byte
-0004de  49af              LDR      r1,|L1.1948|
-0004e0  7008              STRB     r0,[r1,#0]
-;;;335    	if(OFFSET_Zore>10)
-0004e2  7808              LDRB     r0,[r1,#0]  ; OFFSET_Zore
-0004e4  280a              CMP      r0,#0xa
-0004e6  d901              BLS      |L1.1260|
-;;;336    	{
-;;;337    		OFFSET_Zore=0;
-0004e8  2000              MOVS     r0,#0
-0004ea  7008              STRB     r0,[r1,#0]
-                  |L1.1260|
-;;;338    	}
-;;;339    /*****************读取系统设置上下限*************************/
-;;;340    	set_max_v=EEPROM_READ_Byte(0x47);
-0004ec  2047              MOVS     r0,#0x47
-0004ee  f7fffffe          BL       EEPROM_READ_Byte
-0004f2  f8240f1c          STRH     r0,[r4,#0x1c]!
-;;;341    	set_max_v=set_max_v<<8;
-0004f6  8820              LDRH     r0,[r4,#0]  ; Run_Control
-0004f8  0200              LSLS     r0,r0,#8
-0004fa  8020              STRH     r0,[r4,#0]
-;;;342    	set_max_v=set_max_v+EEPROM_READ_Byte(0x48);
-0004fc  2048              MOVS     r0,#0x48
-0004fe  f7fffffe          BL       EEPROM_READ_Byte
-000502  8821              LDRH     r1,[r4,#0]  ; Run_Control
-000504  4408              ADD      r0,r0,r1
-000506  8020              STRH     r0,[r4,#0]
-;;;343    	
-;;;344    	set_min_v=EEPROM_READ_Byte(0x49);
-000508  2049              MOVS     r0,#0x49
-00050a  f7fffffe          BL       EEPROM_READ_Byte
-00050e  8060              STRH     r0,[r4,#2]
-;;;345    	set_min_v=set_min_v<<8;
-000510  8860              LDRH     r0,[r4,#2]  ; Run_Control
-000512  0200              LSLS     r0,r0,#8
-000514  8060              STRH     r0,[r4,#2]
-;;;346    	set_min_v=set_min_v+EEPROM_READ_Byte(0x4A);
-000516  204a              MOVS     r0,#0x4a
-000518  f7fffffe          BL       EEPROM_READ_Byte
-00051c  8861              LDRH     r1,[r4,#2]  ; Run_Control
-00051e  4408              ADD      r0,r0,r1
-000520  8060              STRH     r0,[r4,#2]
-;;;347        
-;;;348    	set_max_r=EEPROM_READ_Byte(0x4B);
-000522  204b              MOVS     r0,#0x4b
-000524  f7fffffe          BL       EEPROM_READ_Byte
-000528  80a0              STRH     r0,[r4,#4]
-;;;349    	set_max_r=set_max_r<<8;
-00052a  88a0              LDRH     r0,[r4,#4]  ; Run_Control
+00041c  2055              MOVS     r0,#0x55
+00041e  f7fffffe          BL       EEPROM_READ_Byte
+000422  49dc              LDR      r1,|L1.1940|
+000424  7008              STRB     r0,[r1,#0]
+;;;326        lang = EEPROM_READ_Byte(0x74);
+000426  2074              MOVS     r0,#0x74
+000428  f7fffffe          BL       EEPROM_READ_Byte
+00042c  49da              LDR      r1,|L1.1944|
+00042e  7008              STRB     r0,[r1,#0]
+;;;327        b_type = EEPROM_READ_Byte(0x57);
+000430  2057              MOVS     r0,#0x57
+000432  f7fffffe          BL       EEPROM_READ_Byte
+000436  49d9              LDR      r1,|L1.1948|
+000438  7008              STRB     r0,[r1,#0]
+;;;328        buffer = EEPROM_READ_Byte(0x58);
+00043a  2058              MOVS     r0,#0x58
+00043c  f7fffffe          BL       EEPROM_READ_Byte
+000440  49d7              LDR      r1,|L1.1952|
+000442  7008              STRB     r0,[r1,#0]
+;;;329        para_set1 = EEPROM_READ_Byte(0x59);
+000444  2059              MOVS     r0,#0x59
+000446  f7fffffe          BL       EEPROM_READ_Byte
+00044a  49d6              LDR      r1,|L1.1956|
+00044c  7008              STRB     r0,[r1,#0]
+;;;330        year1 = EEPROM_READ_Byte(0x5A);
+00044e  205a              MOVS     r0,#0x5a
+000450  f7fffffe          BL       EEPROM_READ_Byte
+000454  49d4              LDR      r1,|L1.1960|
+000456  8008              STRH     r0,[r1,#0]
+;;;331        year2 = EEPROM_READ_Byte(0x5B);
+000458  205b              MOVS     r0,#0x5b
+00045a  f7fffffe          BL       EEPROM_READ_Byte
+00045e  49d3              LDR      r1,|L1.1964|
+000460  8008              STRH     r0,[r1,#0]
+;;;332        year3 = EEPROM_READ_Byte(0x5C);
+000462  205c              MOVS     r0,#0x5c
+000464  f7fffffe          BL       EEPROM_READ_Byte
+000468  49d1              LDR      r1,|L1.1968|
+00046a  8008              STRH     r0,[r1,#0]
+;;;333        year4 = EEPROM_READ_Byte(0x5D);
+00046c  205d              MOVS     r0,#0x5d
+00046e  f7fffffe          BL       EEPROM_READ_Byte
+000472  49d0              LDR      r1,|L1.1972|
+000474  8008              STRH     r0,[r1,#0]
+;;;334        month1 = EEPROM_READ_Byte(0x5E);
+000476  205e              MOVS     r0,#0x5e
+000478  f7fffffe          BL       EEPROM_READ_Byte
+00047c  49ce              LDR      r1,|L1.1976|
+00047e  7008              STRB     r0,[r1,#0]
+;;;335        month2 = EEPROM_READ_Byte(0x5F);
+000480  205f              MOVS     r0,#0x5f
+000482  f7fffffe          BL       EEPROM_READ_Byte
+000486  49cd              LDR      r1,|L1.1980|
+000488  7008              STRB     r0,[r1,#0]
+;;;336        day1 = EEPROM_READ_Byte(0x60);
+00048a  2060              MOVS     r0,#0x60
+00048c  f7fffffe          BL       EEPROM_READ_Byte
+000490  49cb              LDR      r1,|L1.1984|
+000492  7008              STRB     r0,[r1,#0]
+;;;337        day2 = EEPROM_READ_Byte(0x61);
+000494  2061              MOVS     r0,#0x61
+000496  f7fffffe          BL       EEPROM_READ_Byte
+00049a  49ca              LDR      r1,|L1.1988|
+00049c  7008              STRB     r0,[r1,#0]
+;;;338        code1 = EEPROM_READ_Byte(0x62);
+00049e  2062              MOVS     r0,#0x62
+0004a0  f7fffffe          BL       EEPROM_READ_Byte
+0004a4  49c8              LDR      r1,|L1.1992|
+0004a6  7008              STRB     r0,[r1,#0]
+;;;339        code2 = EEPROM_READ_Byte(0x63);
+0004a8  2063              MOVS     r0,#0x63
+0004aa  f7fffffe          BL       EEPROM_READ_Byte
+0004ae  49c7              LDR      r1,|L1.1996|
+0004b0  7008              STRB     r0,[r1,#0]
+;;;340        code3 = EEPROM_READ_Byte(0x64);
+0004b2  2064              MOVS     r0,#0x64
+0004b4  f7fffffe          BL       EEPROM_READ_Byte
+0004b8  49c5              LDR      r1,|L1.2000|
+0004ba  7008              STRB     r0,[r1,#0]
+;;;341        code4 = EEPROM_READ_Byte(0x65);
+0004bc  2065              MOVS     r0,#0x65
+0004be  f7fffffe          BL       EEPROM_READ_Byte
+0004c2  49c4              LDR      r1,|L1.2004|
+0004c4  7008              STRB     r0,[r1,#0]
+;;;342        code5 = EEPROM_READ_Byte(0x66);
+0004c6  2066              MOVS     r0,#0x66
+0004c8  f7fffffe          BL       EEPROM_READ_Byte
+0004cc  49c2              LDR      r1,|L1.2008|
+0004ce  7008              STRB     r0,[r1,#0]
+;;;343        code6 = EEPROM_READ_Byte(0x67);
+0004d0  2067              MOVS     r0,#0x67
+0004d2  f7fffffe          BL       EEPROM_READ_Byte
+0004d6  49c1              LDR      r1,|L1.2012|
+0004d8  7008              STRB     r0,[r1,#0]
+;;;344        code7 = EEPROM_READ_Byte(0x68);
+0004da  2068              MOVS     r0,#0x68
+0004dc  f7fffffe          BL       EEPROM_READ_Byte
+0004e0  49bf              LDR      r1,|L1.2016|
+0004e2  7008              STRB     r0,[r1,#0]
+;;;345        code8 = EEPROM_READ_Byte(0x69);
+0004e4  2069              MOVS     r0,#0x69
+0004e6  f7fffffe          BL       EEPROM_READ_Byte
+0004ea  49be              LDR      r1,|L1.2020|
+0004ec  7008              STRB     r0,[r1,#0]
+;;;346        steptime = EEPROM_READ_Byte(0x75);
+0004ee  2075              MOVS     r0,#0x75
+0004f0  f7fffffe          BL       EEPROM_READ_Byte
+0004f4  49bc              LDR      r1,|L1.2024|
+0004f6  8008              STRH     r0,[r1,#0]
+;;;347    // 	if(Beep_Flag==set_1_off)
+;;;348    // 	{
+;;;349    // 		Flag_Beep_OFF=1;
+;;;350    // 	}
+;;;351    // 	else
+;;;352    // 	{
+;;;353    // 		Flag_Beep_OFF=0;
+;;;354    // 	}
+;;;355    	t_lock=EEPROM_READ_Byte(0x30);
+0004f8  2030              MOVS     r0,#0x30
+0004fa  f7fffffe          BL       EEPROM_READ_Byte
+0004fe  49bb              LDR      r1,|L1.2028|
+000500  7008              STRB     r0,[r1,#0]
+;;;356    	/***************ׁѾַܺ֘*********************************/
+;;;357    	ADDR=EEPROM_READ_Byte(0x31);
+000502  2031              MOVS     r0,#0x31
+000504  f7fffffe          BL       EEPROM_READ_Byte
+000508  49b9              LDR      r1,|L1.2032|
+00050a  7008              STRB     r0,[r1,#0]
+;;;358    	OFFSET_Zore=EEPROM_READ_Byte(0x32);
+00050c  2032              MOVS     r0,#0x32
+00050e  f7fffffe          BL       EEPROM_READ_Byte
+000512  49b8              LDR      r1,|L1.2036|
+000514  7008              STRB     r0,[r1,#0]
+;;;359    	if(OFFSET_Zore>10)
+000516  7808              LDRB     r0,[r1,#0]  ; OFFSET_Zore
+000518  280a              CMP      r0,#0xa
+00051a  d901              BLS      |L1.1312|
+;;;360    	{
+;;;361    		OFFSET_Zore=0;
+00051c  2000              MOVS     r0,#0
+00051e  7008              STRB     r0,[r1,#0]
+                  |L1.1312|
+;;;362    	}
+;;;363    /*****************读取系统设置上下限*************************/
+;;;364    	set_max_v=EEPROM_READ_Byte(0x47);
+000520  2047              MOVS     r0,#0x47
+000522  f7fffffe          BL       EEPROM_READ_Byte
+000526  f8240f1c          STRH     r0,[r4,#0x1c]!
+;;;365    	set_max_v=set_max_v<<8;
+00052a  8820              LDRH     r0,[r4,#0]  ; Run_Control
 00052c  0200              LSLS     r0,r0,#8
-00052e  80a0              STRH     r0,[r4,#4]
-;;;350    	set_max_r=set_max_r+EEPROM_READ_Byte(0x4C);
-000530  204c              MOVS     r0,#0x4c
+00052e  8020              STRH     r0,[r4,#0]
+;;;366    	set_max_v=set_max_v+EEPROM_READ_Byte(0x48);
+000530  2048              MOVS     r0,#0x48
 000532  f7fffffe          BL       EEPROM_READ_Byte
-000536  88a1              LDRH     r1,[r4,#4]  ; Run_Control
+000536  8821              LDRH     r1,[r4,#0]  ; Run_Control
 000538  4408              ADD      r0,r0,r1
-00053a  80a0              STRH     r0,[r4,#4]
-;;;351    	
-;;;352    	set_min_r=EEPROM_READ_Byte(0x4D);
-00053c  204d              MOVS     r0,#0x4d
+00053a  8020              STRH     r0,[r4,#0]
+;;;367    	
+;;;368    	set_min_v=EEPROM_READ_Byte(0x49);
+00053c  2049              MOVS     r0,#0x49
 00053e  f7fffffe          BL       EEPROM_READ_Byte
-000542  80e0              STRH     r0,[r4,#6]
-;;;353    	set_min_r=set_min_r<<8;
-000544  88e0              LDRH     r0,[r4,#6]  ; Run_Control
+000542  8060              STRH     r0,[r4,#2]
+;;;369    	set_min_v=set_min_v<<8;
+000544  8860              LDRH     r0,[r4,#2]  ; Run_Control
 000546  0200              LSLS     r0,r0,#8
-000548  80e0              STRH     r0,[r4,#6]
-;;;354    	set_min_r=set_min_r+EEPROM_READ_Byte(0x4E);
-00054a  204e              MOVS     r0,#0x4e
+000548  8060              STRH     r0,[r4,#2]
+;;;370    	set_min_v=set_min_v+EEPROM_READ_Byte(0x4A);
+00054a  204a              MOVS     r0,#0x4a
 00054c  f7fffffe          BL       EEPROM_READ_Byte
-000550  88e1              LDRH     r1,[r4,#6]  ; Run_Control
+000550  8861              LDRH     r1,[r4,#2]  ; Run_Control
 000552  4408              ADD      r0,r0,r1
-000554  80e0              STRH     r0,[r4,#6]
-;;;355    
-;;;356        set_max_c=EEPROM_READ_Byte(0x4F);
-000556  204f              MOVS     r0,#0x4f
-000558  f7fffffe          BL       EEPROM_READ_Byte
-00055c  8120              STRH     r0,[r4,#8]
-;;;357    	set_max_c=set_max_c<<8;
-00055e  8920              LDRH     r0,[r4,#8]  ; Run_Control
-000560  0200              LSLS     r0,r0,#8
-000562  8120              STRH     r0,[r4,#8]
-;;;358    	set_max_c=set_max_c+EEPROM_READ_Byte(0x50);
-000564  2050              MOVS     r0,#0x50
-000566  f7fffffe          BL       EEPROM_READ_Byte
-00056a  8921              LDRH     r1,[r4,#8]  ; Run_Control
-00056c  4408              ADD      r0,r0,r1
-00056e  8120              STRH     r0,[r4,#8]
-;;;359    	
-;;;360    	set_min_c=EEPROM_READ_Byte(0x51);
-000570  2051              MOVS     r0,#0x51
-000572  f7fffffe          BL       EEPROM_READ_Byte
-000576  8160              STRH     r0,[r4,#0xa]
-;;;361    	set_min_c=set_min_c<<8;
-000578  8960              LDRH     r0,[r4,#0xa]  ; Run_Control
-00057a  0200              LSLS     r0,r0,#8
-00057c  8160              STRH     r0,[r4,#0xa]
-;;;362    	set_min_c=set_min_c+EEPROM_READ_Byte(0x52);  
-00057e  2052              MOVS     r0,#0x52
-000580  f7fffffe          BL       EEPROM_READ_Byte
-000584  8961              LDRH     r1,[r4,#0xa]  ; Run_Control
-000586  4408              ADD      r0,r0,r1
-000588  8160              STRH     r0,[r4,#0xa]
-;;;363    
-;;;364        load_c=EEPROM_READ_Byte(0x53);
-00058a  2053              MOVS     r0,#0x53
-00058c  f7fffffe          BL       EEPROM_READ_Byte
-000590  85e0              STRH     r0,[r4,#0x2e]
-;;;365    	load_c=load_c<<8;
-000592  8de0              LDRH     r0,[r4,#0x2e]  ; Run_Control
-000594  0200              LSLS     r0,r0,#8
-000596  85e0              STRH     r0,[r4,#0x2e]
-;;;366    	load_c=load_c+EEPROM_READ_Byte(0x54); 
-000598  2054              MOVS     r0,#0x54
-00059a  f7fffffe          BL       EEPROM_READ_Byte
-00059e  8de1              LDRH     r1,[r4,#0x2e]  ; Run_Control
-0005a0  4408              ADD      r0,r0,r1
-0005a2  85e0              STRH     r0,[r4,#0x2e]
-;;;367        
-;;;368        set_init_c=EEPROM_READ_Byte(0x70);
-0005a4  2070              MOVS     r0,#0x70
-0005a6  f7fffffe          BL       EEPROM_READ_Byte
-0005aa  8220              STRH     r0,[r4,#0x10]
-;;;369    	set_init_c=set_init_c<<8;
-0005ac  8a20              LDRH     r0,[r4,#0x10]  ; Run_Control
-0005ae  0200              LSLS     r0,r0,#8
-0005b0  8220              STRH     r0,[r4,#0x10]
-;;;370    	set_init_c=set_init_c+EEPROM_READ_Byte(0x71);
-0005b2  2071              MOVS     r0,#0x71
-0005b4  f7fffffe          BL       EEPROM_READ_Byte
-0005b8  8a21              LDRH     r1,[r4,#0x10]  ; Run_Control
-0005ba  4408              ADD      r0,r0,r1
-0005bc  8220              STRH     r0,[r4,#0x10]
+000554  8060              STRH     r0,[r4,#2]
 ;;;371        
-;;;372        set_sbs_c=EEPROM_READ_Byte(0x72);
-0005be  2072              MOVS     r0,#0x72
+;;;372    	set_max_r=EEPROM_READ_Byte(0x4B);
+000556  204b              MOVS     r0,#0x4b
+000558  f7fffffe          BL       EEPROM_READ_Byte
+00055c  80a0              STRH     r0,[r4,#4]
+;;;373    	set_max_r=set_max_r<<8;
+00055e  88a0              LDRH     r0,[r4,#4]  ; Run_Control
+000560  0200              LSLS     r0,r0,#8
+000562  80a0              STRH     r0,[r4,#4]
+;;;374    	set_max_r=set_max_r+EEPROM_READ_Byte(0x4C);
+000564  204c              MOVS     r0,#0x4c
+000566  f7fffffe          BL       EEPROM_READ_Byte
+00056a  88a1              LDRH     r1,[r4,#4]  ; Run_Control
+00056c  4408              ADD      r0,r0,r1
+00056e  80a0              STRH     r0,[r4,#4]
+;;;375    	
+;;;376    	set_min_r=EEPROM_READ_Byte(0x4D);
+000570  204d              MOVS     r0,#0x4d
+000572  f7fffffe          BL       EEPROM_READ_Byte
+000576  80e0              STRH     r0,[r4,#6]
+;;;377    	set_min_r=set_min_r<<8;
+000578  88e0              LDRH     r0,[r4,#6]  ; Run_Control
+00057a  0200              LSLS     r0,r0,#8
+00057c  80e0              STRH     r0,[r4,#6]
+;;;378    	set_min_r=set_min_r+EEPROM_READ_Byte(0x4E);
+00057e  204e              MOVS     r0,#0x4e
+000580  f7fffffe          BL       EEPROM_READ_Byte
+000584  88e1              LDRH     r1,[r4,#6]  ; Run_Control
+000586  4408              ADD      r0,r0,r1
+000588  80e0              STRH     r0,[r4,#6]
+;;;379    
+;;;380        set_max_c=EEPROM_READ_Byte(0x4F);
+00058a  204f              MOVS     r0,#0x4f
+00058c  f7fffffe          BL       EEPROM_READ_Byte
+000590  8120              STRH     r0,[r4,#8]
+;;;381    	set_max_c=set_max_c<<8;
+000592  8920              LDRH     r0,[r4,#8]  ; Run_Control
+000594  0200              LSLS     r0,r0,#8
+000596  8120              STRH     r0,[r4,#8]
+;;;382    	set_max_c=set_max_c+EEPROM_READ_Byte(0x50);
+000598  2050              MOVS     r0,#0x50
+00059a  f7fffffe          BL       EEPROM_READ_Byte
+00059e  8921              LDRH     r1,[r4,#8]  ; Run_Control
+0005a0  4408              ADD      r0,r0,r1
+0005a2  8120              STRH     r0,[r4,#8]
+;;;383    	
+;;;384    	set_min_c=EEPROM_READ_Byte(0x51);
+0005a4  2051              MOVS     r0,#0x51
+0005a6  f7fffffe          BL       EEPROM_READ_Byte
+0005aa  8160              STRH     r0,[r4,#0xa]
+;;;385    	set_min_c=set_min_c<<8;
+0005ac  8960              LDRH     r0,[r4,#0xa]  ; Run_Control
+0005ae  0200              LSLS     r0,r0,#8
+0005b0  8160              STRH     r0,[r4,#0xa]
+;;;386    	set_min_c=set_min_c+EEPROM_READ_Byte(0x52);  
+0005b2  2052              MOVS     r0,#0x52
+0005b4  f7fffffe          BL       EEPROM_READ_Byte
+0005b8  8961              LDRH     r1,[r4,#0xa]  ; Run_Control
+0005ba  4408              ADD      r0,r0,r1
+0005bc  8160              STRH     r0,[r4,#0xa]
+;;;387    
+;;;388        load_c=EEPROM_READ_Byte(0x53);
+0005be  2053              MOVS     r0,#0x53
 0005c0  f7fffffe          BL       EEPROM_READ_Byte
-0005c4  8260              STRH     r0,[r4,#0x12]
-;;;373    	set_sbs_c=set_sbs_c<<8;
-0005c6  8a60              LDRH     r0,[r4,#0x12]  ; Run_Control
+0005c4  85e0              STRH     r0,[r4,#0x2e]
+;;;389    	load_c=load_c<<8;
+0005c6  8de0              LDRH     r0,[r4,#0x2e]  ; Run_Control
 0005c8  0200              LSLS     r0,r0,#8
-0005ca  8260              STRH     r0,[r4,#0x12]
-;;;374    	set_sbs_c=set_sbs_c+EEPROM_READ_Byte(0x73);
-0005cc  2073              MOVS     r0,#0x73
+0005ca  85e0              STRH     r0,[r4,#0x2e]
+;;;390    	load_c=load_c+EEPROM_READ_Byte(0x54); 
+0005cc  2054              MOVS     r0,#0x54
 0005ce  f7fffffe          BL       EEPROM_READ_Byte
-0005d2  8a61              LDRH     r1,[r4,#0x12]  ; Run_Control
+0005d2  8de1              LDRH     r1,[r4,#0x2e]  ; Run_Control
 0005d4  4408              ADD      r0,r0,r1
-0005d6  8260              STRH     r0,[r4,#0x12]
-;;;375        
-;;;376        opv1=EEPROM_READ_Byte(0x76);
-0005d8  2076              MOVS     r0,#0x76
-0005da  f7fffffe          BL       EEPROM_READ_Byte
-0005de  8460              STRH     r0,[r4,#0x22]
-;;;377    	opv1=opv1<<8;
-0005e0  8c60              LDRH     r0,[r4,#0x22]  ; Run_Control
-0005e2  0200              LSLS     r0,r0,#8
-0005e4  8460              STRH     r0,[r4,#0x22]
-;;;378    	opv1=opv1+EEPROM_READ_Byte(0x77);
-0005e6  2077              MOVS     r0,#0x77
-0005e8  f7fffffe          BL       EEPROM_READ_Byte
-0005ec  8c61              LDRH     r1,[r4,#0x22]  ; Run_Control
-0005ee  4408              ADD      r0,r0,r1
-0005f0  8460              STRH     r0,[r4,#0x22]
-;;;379        
-;;;380        opv2=EEPROM_READ_Byte(0x7C);
-0005f2  207c              MOVS     r0,#0x7c
-0005f4  f7fffffe          BL       EEPROM_READ_Byte
-0005f8  84a0              STRH     r0,[r4,#0x24]
-;;;381    	opv2=opv2<<8;
-0005fa  8ca0              LDRH     r0,[r4,#0x24]  ; Run_Control
-0005fc  0200              LSLS     r0,r0,#8
-0005fe  84a0              STRH     r0,[r4,#0x24]
-;;;382    	opv2=opv2+EEPROM_READ_Byte(0x7D);
-000600  207d              MOVS     r0,#0x7d
-000602  f7fffffe          BL       EEPROM_READ_Byte
-000606  8ca1              LDRH     r1,[r4,#0x24]  ; Run_Control
-000608  4408              ADD      r0,r0,r1
-00060a  84a0              STRH     r0,[r4,#0x24]
-;;;383        
-;;;384        opv3=EEPROM_READ_Byte(0x7E);
-00060c  207e              MOVS     r0,#0x7e
-00060e  f7fffffe          BL       EEPROM_READ_Byte
-000612  84e0              STRH     r0,[r4,#0x26]
-;;;385    	opv3=opv3<<8;
-000614  8ce0              LDRH     r0,[r4,#0x26]  ; Run_Control
-000616  0200              LSLS     r0,r0,#8
-000618  84e0              STRH     r0,[r4,#0x26]
-;;;386    	opv3=opv3+EEPROM_READ_Byte(0x7F);
-00061a  207f              MOVS     r0,#0x7f
-00061c  f7fffffe          BL       EEPROM_READ_Byte
-000620  8ce1              LDRH     r1,[r4,#0x26]  ; Run_Control
-000622  4408              ADD      r0,r0,r1
-000624  84e0              STRH     r0,[r4,#0x26]
-;;;387        
-;;;388        cov1=EEPROM_READ_Byte(0x86);
-000626  2086              MOVS     r0,#0x86
-000628  f7fffffe          BL       EEPROM_READ_Byte
-00062c  4d5c              LDR      r5,|L1.1952|
-00062e  8028              STRH     r0,[r5,#0]
-;;;389    	cov1=cov1<<8;
-000630  8828              LDRH     r0,[r5,#0]  ; coff
-000632  0200              LSLS     r0,r0,#8
-000634  8028              STRH     r0,[r5,#0]
-;;;390    	cov1=cov1+EEPROM_READ_Byte(0x87);
-000636  2087              MOVS     r0,#0x87
-000638  f7fffffe          BL       EEPROM_READ_Byte
-00063c  8829              LDRH     r1,[r5,#0]  ; coff
-00063e  4408              ADD      r0,r0,r1
-000640  8028              STRH     r0,[r5,#0]
+0005d6  85e0              STRH     r0,[r4,#0x2e]
 ;;;391        
-;;;392        cov2=EEPROM_READ_Byte(0x88);
-000642  2088              MOVS     r0,#0x88
-000644  f7fffffe          BL       EEPROM_READ_Byte
-000648  8068              STRH     r0,[r5,#2]
-;;;393    	cov2=cov2<<8;
-00064a  8868              LDRH     r0,[r5,#2]  ; coff
-00064c  0200              LSLS     r0,r0,#8
-00064e  8068              STRH     r0,[r5,#2]
-;;;394    	cov2=cov2+EEPROM_READ_Byte(0x89);
-000650  2089              MOVS     r0,#0x89
-000652  f7fffffe          BL       EEPROM_READ_Byte
-000656  8869              LDRH     r1,[r5,#2]  ; coff
-000658  4408              ADD      r0,r0,r1
-00065a  8068              STRH     r0,[r5,#2]
+;;;392        set_init_c=EEPROM_READ_Byte(0x70);
+0005d8  2070              MOVS     r0,#0x70
+0005da  f7fffffe          BL       EEPROM_READ_Byte
+0005de  8220              STRH     r0,[r4,#0x10]
+;;;393    	set_init_c=set_init_c<<8;
+0005e0  8a20              LDRH     r0,[r4,#0x10]  ; Run_Control
+0005e2  0200              LSLS     r0,r0,#8
+0005e4  8220              STRH     r0,[r4,#0x10]
+;;;394    	set_init_c=set_init_c+EEPROM_READ_Byte(0x71);
+0005e6  2071              MOVS     r0,#0x71
+0005e8  f7fffffe          BL       EEPROM_READ_Byte
+0005ec  8a21              LDRH     r1,[r4,#0x10]  ; Run_Control
+0005ee  4408              ADD      r0,r0,r1
+0005f0  8220              STRH     r0,[r4,#0x10]
 ;;;395        
-;;;396        cov3=EEPROM_READ_Byte(0x8A);
-00065c  208a              MOVS     r0,#0x8a
-00065e  f7fffffe          BL       EEPROM_READ_Byte
-000662  80a8              STRH     r0,[r5,#4]
-;;;397    	cov3=cov3<<8;
-000664  88a8              LDRH     r0,[r5,#4]  ; coff
-000666  0200              LSLS     r0,r0,#8
-000668  80a8              STRH     r0,[r5,#4]
-;;;398    	cov3=cov3+EEPROM_READ_Byte(0x8B);
-00066a  208b              MOVS     r0,#0x8b
-00066c  f7fffffe          BL       EEPROM_READ_Byte
-000670  88a9              LDRH     r1,[r5,#4]  ; coff
-000672  4408              ADD      r0,r0,r1
-000674  80a8              STRH     r0,[r5,#4]
+;;;396        set_sbs_c=EEPROM_READ_Byte(0x72);
+0005f2  2072              MOVS     r0,#0x72
+0005f4  f7fffffe          BL       EEPROM_READ_Byte
+0005f8  8260              STRH     r0,[r4,#0x12]
+;;;397    	set_sbs_c=set_sbs_c<<8;
+0005fa  8a60              LDRH     r0,[r4,#0x12]  ; Run_Control
+0005fc  0200              LSLS     r0,r0,#8
+0005fe  8260              STRH     r0,[r4,#0x12]
+;;;398    	set_sbs_c=set_sbs_c+EEPROM_READ_Byte(0x73);
+000600  2073              MOVS     r0,#0x73
+000602  f7fffffe          BL       EEPROM_READ_Byte
+000606  8a61              LDRH     r1,[r4,#0x12]  ; Run_Control
+000608  4408              ADD      r0,r0,r1
+00060a  8260              STRH     r0,[r4,#0x12]
 ;;;399        
-;;;400        opc1=EEPROM_READ_Byte(0x78);
-000676  2078              MOVS     r0,#0x78
-000678  f7fffffe          BL       EEPROM_READ_Byte
-00067c  8520              STRH     r0,[r4,#0x28]
-;;;401    	opc1=opc1<<8;
-00067e  8d20              LDRH     r0,[r4,#0x28]  ; Run_Control
-000680  0200              LSLS     r0,r0,#8
-000682  8520              STRH     r0,[r4,#0x28]
-;;;402    	opc1=opc1+EEPROM_READ_Byte(0x79);
-000684  2079              MOVS     r0,#0x79
-000686  f7fffffe          BL       EEPROM_READ_Byte
-00068a  8d21              LDRH     r1,[r4,#0x28]  ; Run_Control
-00068c  4408              ADD      r0,r0,r1
-00068e  8520              STRH     r0,[r4,#0x28]
+;;;400        opv1=EEPROM_READ_Byte(0x76);
+00060c  2076              MOVS     r0,#0x76
+00060e  f7fffffe          BL       EEPROM_READ_Byte
+000612  8460              STRH     r0,[r4,#0x22]
+;;;401    	opv1=opv1<<8;
+000614  8c60              LDRH     r0,[r4,#0x22]  ; Run_Control
+000616  0200              LSLS     r0,r0,#8
+000618  8460              STRH     r0,[r4,#0x22]
+;;;402    	opv1=opv1+EEPROM_READ_Byte(0x77);
+00061a  2077              MOVS     r0,#0x77
+00061c  f7fffffe          BL       EEPROM_READ_Byte
+000620  8c61              LDRH     r1,[r4,#0x22]  ; Run_Control
+000622  4408              ADD      r0,r0,r1
+000624  8460              STRH     r0,[r4,#0x22]
 ;;;403        
-;;;404        opc2=EEPROM_READ_Byte(0x80);
-000690  2080              MOVS     r0,#0x80
-000692  f7fffffe          BL       EEPROM_READ_Byte
-000696  8560              STRH     r0,[r4,#0x2a]
-;;;405    	opc2=opc2<<8;
-000698  8d60              LDRH     r0,[r4,#0x2a]  ; Run_Control
-00069a  0200              LSLS     r0,r0,#8
-00069c  8560              STRH     r0,[r4,#0x2a]
-;;;406    	opc2=opc2+EEPROM_READ_Byte(0x81);
-00069e  2081              MOVS     r0,#0x81
-0006a0  f7fffffe          BL       EEPROM_READ_Byte
-0006a4  8d61              LDRH     r1,[r4,#0x2a]  ; Run_Control
-0006a6  4408              ADD      r0,r0,r1
-0006a8  8560              STRH     r0,[r4,#0x2a]
+;;;404        opv2=EEPROM_READ_Byte(0x7C);
+000626  207c              MOVS     r0,#0x7c
+000628  f7fffffe          BL       EEPROM_READ_Byte
+00062c  84a0              STRH     r0,[r4,#0x24]
+;;;405    	opv2=opv2<<8;
+00062e  8ca0              LDRH     r0,[r4,#0x24]  ; Run_Control
+000630  0200              LSLS     r0,r0,#8
+000632  84a0              STRH     r0,[r4,#0x24]
+;;;406    	opv2=opv2+EEPROM_READ_Byte(0x7D);
+000634  207d              MOVS     r0,#0x7d
+000636  f7fffffe          BL       EEPROM_READ_Byte
+00063a  8ca1              LDRH     r1,[r4,#0x24]  ; Run_Control
+00063c  4408              ADD      r0,r0,r1
+00063e  84a0              STRH     r0,[r4,#0x24]
 ;;;407        
-;;;408        opc3=EEPROM_READ_Byte(0x82);
-0006aa  2082              MOVS     r0,#0x82
-0006ac  f7fffffe          BL       EEPROM_READ_Byte
-0006b0  85a0              STRH     r0,[r4,#0x2c]
-;;;409    	opc3=opc3<<8;
-0006b2  8da0              LDRH     r0,[r4,#0x2c]  ; Run_Control
-0006b4  0200              LSLS     r0,r0,#8
-0006b6  85a0              STRH     r0,[r4,#0x2c]
-;;;410    	opc3=opc3+EEPROM_READ_Byte(0x83);
-0006b8  2083              MOVS     r0,#0x83
-0006ba  f7fffffe          BL       EEPROM_READ_Byte
-0006be  8da1              LDRH     r1,[r4,#0x2c]  ; Run_Control
-0006c0  4408              ADD      r0,r0,r1
-0006c2  85a0              STRH     r0,[r4,#0x2c]
-0006c4  f1a4041c          SUB      r4,r4,#0x1c
+;;;408        opv3=EEPROM_READ_Byte(0x7E);
+000640  207e              MOVS     r0,#0x7e
+000642  f7fffffe          BL       EEPROM_READ_Byte
+000646  84e0              STRH     r0,[r4,#0x26]
+;;;409    	opv3=opv3<<8;
+000648  8ce0              LDRH     r0,[r4,#0x26]  ; Run_Control
+00064a  0200              LSLS     r0,r0,#8
+00064c  84e0              STRH     r0,[r4,#0x26]
+;;;410    	opv3=opv3+EEPROM_READ_Byte(0x7F);
+00064e  207f              MOVS     r0,#0x7f
+000650  f7fffffe          BL       EEPROM_READ_Byte
+000654  8ce1              LDRH     r1,[r4,#0x26]  ; Run_Control
+000656  4408              ADD      r0,r0,r1
+000658  84e0              STRH     r0,[r4,#0x26]
 ;;;411        
-;;;412        coc1=EEPROM_READ_Byte(0x8C);
-0006c8  f04f008c          MOV      r0,#0x8c
-0006cc  f7fffffe          BL       EEPROM_READ_Byte
-0006d0  80e8              STRH     r0,[r5,#6]
-;;;413    	coc1=coc1<<8;
-0006d2  88e8              LDRH     r0,[r5,#6]  ; coff
-0006d4  0200              LSLS     r0,r0,#8
-0006d6  80e8              STRH     r0,[r5,#6]
-;;;414    	coc1=coc1+EEPROM_READ_Byte(0x8D);
-0006d8  208d              MOVS     r0,#0x8d
-0006da  f7fffffe          BL       EEPROM_READ_Byte
-0006de  88e9              LDRH     r1,[r5,#6]  ; coff
-0006e0  4408              ADD      r0,r0,r1
-0006e2  80e8              STRH     r0,[r5,#6]
+;;;412        cov1=EEPROM_READ_Byte(0x86);
+00065a  2086              MOVS     r0,#0x86
+00065c  f7fffffe          BL       EEPROM_READ_Byte
+000660  4d65              LDR      r5,|L1.2040|
+000662  8028              STRH     r0,[r5,#0]
+;;;413    	cov1=cov1<<8;
+000664  8828              LDRH     r0,[r5,#0]  ; coff
+000666  0200              LSLS     r0,r0,#8
+000668  8028              STRH     r0,[r5,#0]
+;;;414    	cov1=cov1+EEPROM_READ_Byte(0x87);
+00066a  2087              MOVS     r0,#0x87
+00066c  f7fffffe          BL       EEPROM_READ_Byte
+000670  8829              LDRH     r1,[r5,#0]  ; coff
+000672  4408              ADD      r0,r0,r1
+000674  8028              STRH     r0,[r5,#0]
 ;;;415        
-;;;416        coc2=EEPROM_READ_Byte(0x8E);
-0006e4  208e              MOVS     r0,#0x8e
-0006e6  f7fffffe          BL       EEPROM_READ_Byte
-0006ea  8128              STRH     r0,[r5,#8]
-;;;417    	coc2=coc2<<8;
-0006ec  8928              LDRH     r0,[r5,#8]  ; coff
-0006ee  0200              LSLS     r0,r0,#8
-0006f0  8128              STRH     r0,[r5,#8]
-;;;418    	coc2=coc2+EEPROM_READ_Byte(0x8F);
-0006f2  208f              MOVS     r0,#0x8f
-0006f4  f7fffffe          BL       EEPROM_READ_Byte
-0006f8  8929              LDRH     r1,[r5,#8]  ; coff
-0006fa  4408              ADD      r0,r0,r1
-0006fc  8128              STRH     r0,[r5,#8]
+;;;416        cov2=EEPROM_READ_Byte(0x88);
+000676  2088              MOVS     r0,#0x88
+000678  f7fffffe          BL       EEPROM_READ_Byte
+00067c  8068              STRH     r0,[r5,#2]
+;;;417    	cov2=cov2<<8;
+00067e  8868              LDRH     r0,[r5,#2]  ; coff
+000680  0200              LSLS     r0,r0,#8
+000682  8068              STRH     r0,[r5,#2]
+;;;418    	cov2=cov2+EEPROM_READ_Byte(0x89);
+000684  2089              MOVS     r0,#0x89
+000686  f7fffffe          BL       EEPROM_READ_Byte
+00068a  8869              LDRH     r1,[r5,#2]  ; coff
+00068c  4408              ADD      r0,r0,r1
+00068e  8068              STRH     r0,[r5,#2]
 ;;;419        
-;;;420        coc3=EEPROM_READ_Byte(0x90);
-0006fe  2090              MOVS     r0,#0x90
-000700  f7fffffe          BL       EEPROM_READ_Byte
-000704  8168              STRH     r0,[r5,#0xa]
-;;;421    	coc3=coc3<<8;
-000706  8968              LDRH     r0,[r5,#0xa]  ; coff
-000708  0200              LSLS     r0,r0,#8
-00070a  8168              STRH     r0,[r5,#0xa]
-;;;422    	coc3=coc3+EEPROM_READ_Byte(0x91);
-00070c  2091              MOVS     r0,#0x91
-00070e  f7fffffe          BL       EEPROM_READ_Byte
-000712  8969              LDRH     r1,[r5,#0xa]  ; coff
-000714  4408              ADD      r0,r0,r1
-000716  8168              STRH     r0,[r5,#0xa]
+;;;420        cov3=EEPROM_READ_Byte(0x8A);
+000690  208a              MOVS     r0,#0x8a
+000692  f7fffffe          BL       EEPROM_READ_Byte
+000696  80a8              STRH     r0,[r5,#4]
+;;;421    	cov3=cov3<<8;
+000698  88a8              LDRH     r0,[r5,#4]  ; coff
+00069a  0200              LSLS     r0,r0,#8
+00069c  80a8              STRH     r0,[r5,#4]
+;;;422    	cov3=cov3+EEPROM_READ_Byte(0x8B);
+00069e  208b              MOVS     r0,#0x8b
+0006a0  f7fffffe          BL       EEPROM_READ_Byte
+0006a4  88a9              LDRH     r1,[r5,#4]  ; coff
+0006a6  4408              ADD      r0,r0,r1
+0006a8  80a8              STRH     r0,[r5,#4]
 ;;;423        
-;;;424        set_loop_count=EEPROM_READ_Byte(0x84);
-000718  2084              MOVS     r0,#0x84
+;;;424        opc1=EEPROM_READ_Byte(0x78);
+0006aa  2078              MOVS     r0,#0x78
+0006ac  f7fffffe          BL       EEPROM_READ_Byte
+0006b0  8520              STRH     r0,[r4,#0x28]
+;;;425    	opc1=opc1<<8;
+0006b2  8d20              LDRH     r0,[r4,#0x28]  ; Run_Control
+0006b4  0200              LSLS     r0,r0,#8
+0006b6  8520              STRH     r0,[r4,#0x28]
+;;;426    	opc1=opc1+EEPROM_READ_Byte(0x79);
+0006b8  2079              MOVS     r0,#0x79
+0006ba  f7fffffe          BL       EEPROM_READ_Byte
+0006be  8d21              LDRH     r1,[r4,#0x28]  ; Run_Control
+0006c0  4408              ADD      r0,r0,r1
+0006c2  8520              STRH     r0,[r4,#0x28]
+;;;427        
+;;;428        opc2=EEPROM_READ_Byte(0x80);
+0006c4  2080              MOVS     r0,#0x80
+0006c6  f7fffffe          BL       EEPROM_READ_Byte
+0006ca  8560              STRH     r0,[r4,#0x2a]
+;;;429    	opc2=opc2<<8;
+0006cc  8d60              LDRH     r0,[r4,#0x2a]  ; Run_Control
+0006ce  0200              LSLS     r0,r0,#8
+0006d0  8560              STRH     r0,[r4,#0x2a]
+;;;430    	opc2=opc2+EEPROM_READ_Byte(0x81);
+0006d2  2081              MOVS     r0,#0x81
+0006d4  f7fffffe          BL       EEPROM_READ_Byte
+0006d8  8d61              LDRH     r1,[r4,#0x2a]  ; Run_Control
+0006da  4408              ADD      r0,r0,r1
+0006dc  8560              STRH     r0,[r4,#0x2a]
+;;;431        
+;;;432        opc3=EEPROM_READ_Byte(0x82);
+0006de  2082              MOVS     r0,#0x82
+0006e0  f7fffffe          BL       EEPROM_READ_Byte
+0006e4  85a0              STRH     r0,[r4,#0x2c]
+;;;433    	opc3=opc3<<8;
+0006e6  8da0              LDRH     r0,[r4,#0x2c]  ; Run_Control
+0006e8  0200              LSLS     r0,r0,#8
+0006ea  85a0              STRH     r0,[r4,#0x2c]
+;;;434    	opc3=opc3+EEPROM_READ_Byte(0x83);
+0006ec  2083              MOVS     r0,#0x83
+0006ee  f7fffffe          BL       EEPROM_READ_Byte
+0006f2  8da1              LDRH     r1,[r4,#0x2c]  ; Run_Control
+0006f4  4408              ADD      r0,r0,r1
+0006f6  85a0              STRH     r0,[r4,#0x2c]
+0006f8  f1a4041c          SUB      r4,r4,#0x1c
+;;;435        
+;;;436        coc1=EEPROM_READ_Byte(0x8C);
+0006fc  f04f008c          MOV      r0,#0x8c
+000700  f7fffffe          BL       EEPROM_READ_Byte
+000704  80e8              STRH     r0,[r5,#6]
+;;;437    	coc1=coc1<<8;
+000706  88e8              LDRH     r0,[r5,#6]  ; coff
+000708  0200              LSLS     r0,r0,#8
+00070a  80e8              STRH     r0,[r5,#6]
+;;;438    	coc1=coc1+EEPROM_READ_Byte(0x8D);
+00070c  208d              MOVS     r0,#0x8d
+00070e  f7fffffe          BL       EEPROM_READ_Byte
+000712  88e9              LDRH     r1,[r5,#6]  ; coff
+000714  4408              ADD      r0,r0,r1
+000716  80e8              STRH     r0,[r5,#6]
+;;;439        
+;;;440        coc2=EEPROM_READ_Byte(0x8E);
+000718  208e              MOVS     r0,#0x8e
 00071a  f7fffffe          BL       EEPROM_READ_Byte
-00071e  4921              LDR      r1,|L1.1956|
-000720  7008              STRB     r0,[r1,#0]
-;;;425        
-;;;426        cdc_dc=EEPROM_READ_Byte(0x7A);
-000722  207a              MOVS     r0,#0x7a
-000724  f7fffffe          BL       EEPROM_READ_Byte
-000728  f1040436          ADD      r4,r4,#0x36
-00072c  83a0              STRH     r0,[r4,#0x1c]
-;;;427    	cdc_dc=cdc_dc<<8;
-00072e  8ba0              LDRH     r0,[r4,#0x1c]  ; Run_Control
-000730  ea4f2000          LSL      r0,r0,#8
-000734  83a0              STRH     r0,[r4,#0x1c]
-;;;428    	cdc_dc=cdc_dc+EEPROM_READ_Byte(0x7B);
-000736  f04f007b          MOV      r0,#0x7b
-00073a  f7fffffe          BL       EEPROM_READ_Byte
-00073e  8ba1              LDRH     r1,[r4,#0x1c]  ; Run_Control
-000740  4408              ADD      r0,r0,r1
-000742  83a0              STRH     r0,[r4,#0x1c]
-;;;429        
-;;;430        set_dc_cutoff_v=EEPROM_READ_Byte(0x92);
-000744  2092              MOVS     r0,#0x92
-000746  f7fffffe          BL       EEPROM_READ_Byte
-00074a  8020              STRH     r0,[r4,#0]
-;;;431    	set_dc_cutoff_v=set_dc_cutoff_v<<8;
-00074c  8820              LDRH     r0,[r4,#0]  ; Run_Control
-00074e  0200              LSLS     r0,r0,#8
-000750  8020              STRH     r0,[r4,#0]
-;;;432    	set_dc_cutoff_v=set_dc_cutoff_v+EEPROM_READ_Byte(0x93);
-000752  2093              MOVS     r0,#0x93
-000754  f7fffffe          BL       EEPROM_READ_Byte
-000758  8821              LDRH     r1,[r4,#0]  ; Run_Control
-00075a  4408              ADD      r0,r0,r1
-00075c  8020              STRH     r0,[r4,#0]
-;;;433        
-;;;434    
-;;;435    }
-00075e  bd70              POP      {r4-r6,pc}
-;;;436    /****************************************************************************/
+00071e  8128              STRH     r0,[r5,#8]
+;;;441    	coc2=coc2<<8;
+000720  8928              LDRH     r0,[r5,#8]  ; coff
+000722  0200              LSLS     r0,r0,#8
+000724  8128              STRH     r0,[r5,#8]
+;;;442    	coc2=coc2+EEPROM_READ_Byte(0x8F);
+000726  208f              MOVS     r0,#0x8f
+000728  f7fffffe          BL       EEPROM_READ_Byte
+00072c  8929              LDRH     r1,[r5,#8]  ; coff
+00072e  4408              ADD      r0,r0,r1
+000730  8128              STRH     r0,[r5,#8]
+;;;443        
+;;;444        coc3=EEPROM_READ_Byte(0x90);
+000732  2090              MOVS     r0,#0x90
+000734  f7fffffe          BL       EEPROM_READ_Byte
+000738  8168              STRH     r0,[r5,#0xa]
+;;;445    	coc3=coc3<<8;
+00073a  8968              LDRH     r0,[r5,#0xa]  ; coff
+00073c  0200              LSLS     r0,r0,#8
+00073e  8168              STRH     r0,[r5,#0xa]
+;;;446    	coc3=coc3+EEPROM_READ_Byte(0x91);
+000740  2091              MOVS     r0,#0x91
+000742  f7fffffe          BL       EEPROM_READ_Byte
+000746  8969              LDRH     r1,[r5,#0xa]  ; coff
+000748  4408              ADD      r0,r0,r1
+00074a  8168              STRH     r0,[r5,#0xa]
+;;;447        
+;;;448        set_loop_count=EEPROM_READ_Byte(0x84);
+00074c  2084              MOVS     r0,#0x84
+00074e  f7fffffe          BL       EEPROM_READ_Byte
+000752  492a              LDR      r1,|L1.2044|
+000754  7008              STRB     r0,[r1,#0]
+;;;449        
+;;;450        cdc_dc=EEPROM_READ_Byte(0x7A);
+000756  207a              MOVS     r0,#0x7a
+000758  f7fffffe          BL       EEPROM_READ_Byte
+00075c  f1040436          ADD      r4,r4,#0x36
+000760  83a0              STRH     r0,[r4,#0x1c]
+;;;451    	cdc_dc=cdc_dc<<8;
+000762  8ba0              LDRH     r0,[r4,#0x1c]  ; Run_Control
+000764  ea4f2000          LSL      r0,r0,#8
+000768  83a0              STRH     r0,[r4,#0x1c]
+;;;452    	cdc_dc=cdc_dc+EEPROM_READ_Byte(0x7B);
+00076a  f04f007b          MOV      r0,#0x7b
+00076e  f7fffffe          BL       EEPROM_READ_Byte
+000772  8ba1              LDRH     r1,[r4,#0x1c]  ; Run_Control
+000774  4408              ADD      r0,r0,r1
+000776  83a0              STRH     r0,[r4,#0x1c]
+;;;453        
+;;;454        set_dc_cutoff_v=EEPROM_READ_Byte(0x92);
+000778  2092              MOVS     r0,#0x92
+00077a  f7fffffe          BL       EEPROM_READ_Byte
+00077e  8020              STRH     r0,[r4,#0]
+;;;455    	set_dc_cutoff_v=set_dc_cutoff_v<<8;
+000780  8820              LDRH     r0,[r4,#0]  ; Run_Control
+000782  0200              LSLS     r0,r0,#8
+000784  8020              STRH     r0,[r4,#0]
+;;;456    	set_dc_cutoff_v=set_dc_cutoff_v+EEPROM_READ_Byte(0x93);
+000786  2093              MOVS     r0,#0x93
+000788  f7fffffe          BL       EEPROM_READ_Byte
+00078c  8821              LDRH     r1,[r4,#0]  ; Run_Control
+00078e  4408              ADD      r0,r0,r1
+000790  8020              STRH     r0,[r4,#0]
+;;;457        
+;;;458    
+;;;459    }
+000792  bd70              POP      {r4-r6,pc}
+;;;460    /****************************************************************************/
                           ENDP
 
-                  |L1.1888|
-                          DCD      month1
-                  |L1.1892|
-                          DCD      month2
-                  |L1.1896|
-                          DCD      day1
-                  |L1.1900|
-                          DCD      day2
-                  |L1.1904|
-                          DCD      code1
-                  |L1.1908|
-                          DCD      code2
-                  |L1.1912|
-                          DCD      code3
-                  |L1.1916|
-                          DCD      code4
-                  |L1.1920|
-                          DCD      code5
-                  |L1.1924|
-                          DCD      code6
-                  |L1.1928|
-                          DCD      code7
-                  |L1.1932|
-                          DCD      code8
-                  |L1.1936|
-                          DCD      steptime
                   |L1.1940|
-                          DCD      t_lock
+                          DCD      para_set2
                   |L1.1944|
-                          DCD      ADDR
+                          DCD      lang
                   |L1.1948|
-                          DCD      OFFSET_Zore
+                          DCD      b_type
                   |L1.1952|
-                          DCD      coff
+                          DCD      buffer
                   |L1.1956|
+                          DCD      para_set1
+                  |L1.1960|
+                          DCD      year1
+                  |L1.1964|
+                          DCD      year2
+                  |L1.1968|
+                          DCD      year3
+                  |L1.1972|
+                          DCD      year4
+                  |L1.1976|
+                          DCD      month1
+                  |L1.1980|
+                          DCD      month2
+                  |L1.1984|
+                          DCD      day1
+                  |L1.1988|
+                          DCD      day2
+                  |L1.1992|
+                          DCD      code1
+                  |L1.1996|
+                          DCD      code2
+                  |L1.2000|
+                          DCD      code3
+                  |L1.2004|
+                          DCD      code4
+                  |L1.2008|
+                          DCD      code5
+                  |L1.2012|
+                          DCD      code6
+                  |L1.2016|
+                          DCD      code7
+                  |L1.2020|
+                          DCD      code8
+                  |L1.2024|
+                          DCD      steptime
+                  |L1.2028|
+                          DCD      t_lock
+                  |L1.2032|
+                          DCD      ADDR
+                  |L1.2036|
+                          DCD      OFFSET_Zore
+                  |L1.2040|
+                          DCD      coff
+                  |L1.2044|
                           DCD      set_loop_count
 
                           AREA ||i.Flash_Write_all||, CODE, READONLY, ALIGN=2
@@ -1126,7 +1176,7 @@
 ;;;44     	vu8 data_8bit;
 ;;;45     /***********************�������ݴ洢****************************/
 ;;;46       data_8bit = REG_ReadV_Offset >> 24;
-000002  4ca1              LDR      r4,|L2.648|
+000002  4cb1              LDR      r4,|L2.712|
 000004  6820              LDR      r0,[r4,#0]  ; Correct_Strong
 000006  0e01              LSRS     r1,r0,#24
 ;;;47     	EEPROM_WriteByte(0x01, data_8bit);
@@ -1221,296 +1271,332 @@
 0000ac  b2c1              UXTB     r1,r0
 0000ae  200c              MOVS     r0,#0xc
 0000b0  f7fffffe          BL       EEPROM_WriteByte
-;;;77     	
-;;;78     	data_8bit = REG_ReadV1_Offset >> 24;
-0000b4  6a20              LDR      r0,[r4,#0x20]  ; Correct_Strong
+;;;77         
+;;;78         data_8bit = REG_ReadRH_Offset >> 24;
+0000b4  6a60              LDR      r0,[r4,#0x24]  ; Correct_Strong
 0000b6  0e01              LSRS     r1,r0,#24
-;;;79     	EEPROM_WriteByte(0x40, data_8bit);
-0000b8  2040              MOVS     r0,#0x40
+;;;79     	EEPROM_WriteByte(0x94, data_8bit);
+0000b8  2094              MOVS     r0,#0x94
 0000ba  f7fffffe          BL       EEPROM_WriteByte
-;;;80     	data_8bit = REG_ReadV1_Offset >> 16;
-0000be  6a20              LDR      r0,[r4,#0x20]  ; Correct_Strong
+;;;80     	data_8bit = REG_ReadRH_Offset >> 16;
+0000be  6a60              LDR      r0,[r4,#0x24]  ; Correct_Strong
 0000c0  f3c04107          UBFX     r1,r0,#16,#8
-;;;81     	EEPROM_WriteByte(0x41, data_8bit);
-0000c4  2041              MOVS     r0,#0x41
+;;;81     	EEPROM_WriteByte(0x95, data_8bit);
+0000c4  2095              MOVS     r0,#0x95
 0000c6  f7fffffe          BL       EEPROM_WriteByte
-;;;82     	data_8bit = REG_ReadV1_Offset >> 8;
-0000ca  6a20              LDR      r0,[r4,#0x20]  ; Correct_Strong
+;;;82     	data_8bit = REG_ReadRH_Offset >> 8;
+0000ca  6a60              LDR      r0,[r4,#0x24]  ; Correct_Strong
 0000cc  f3c02107          UBFX     r1,r0,#8,#8
-;;;83     	EEPROM_WriteByte(0x42, data_8bit);
-0000d0  2042              MOVS     r0,#0x42
+;;;83     	EEPROM_WriteByte(0x96, data_8bit);
+0000d0  2096              MOVS     r0,#0x96
 0000d2  f7fffffe          BL       EEPROM_WriteByte
-;;;84     	EEPROM_WriteByte(0x43, REG_ReadV1_Offset);//��Դ��ѹ*
-0000d6  6a20              LDR      r0,[r4,#0x20]  ; Correct_Strong
+;;;84     	EEPROM_WriteByte(0x97, REG_ReadRH_Offset);//Śب
+0000d6  6a60              LDR      r0,[r4,#0x24]  ; Correct_Strong
 0000d8  b2c1              UXTB     r1,r0
-0000da  2043              MOVS     r0,#0x43
+0000da  2097              MOVS     r0,#0x97
 0000dc  f7fffffe          BL       EEPROM_WriteByte
 ;;;85     	
-;;;86     	data_8bit=REG_CorrectionV>>8;
-0000e0  4d6a              LDR      r5,|L2.652|
-0000e2  8828              LDRH     r0,[r5,#0]  ; Correct_Parametet
-0000e4  0a01              LSRS     r1,r0,#8
-;;;87     	EEPROM_WriteByte(0x0D, data_8bit);
-0000e6  200d              MOVS     r0,#0xd
-0000e8  f7fffffe          BL       EEPROM_WriteByte
-;;;88     	EEPROM_WriteByte(0x0E, REG_CorrectionV);
-0000ec  8828              LDRH     r0,[r5,#0]  ; Correct_Parametet
-0000ee  b2c1              UXTB     r1,r0
-0000f0  200e              MOVS     r0,#0xe
+;;;86     	data_8bit = REG_ReadV1_Offset >> 24;
+0000e0  6a20              LDR      r0,[r4,#0x20]  ; Correct_Strong
+0000e2  0e01              LSRS     r1,r0,#24
+;;;87     	EEPROM_WriteByte(0x40, data_8bit);
+0000e4  2040              MOVS     r0,#0x40
+0000e6  f7fffffe          BL       EEPROM_WriteByte
+;;;88     	data_8bit = REG_ReadV1_Offset >> 16;
+0000ea  6a20              LDR      r0,[r4,#0x20]  ; Correct_Strong
+0000ec  f3c04107          UBFX     r1,r0,#16,#8
+;;;89     	EEPROM_WriteByte(0x41, data_8bit);
+0000f0  2041              MOVS     r0,#0x41
 0000f2  f7fffffe          BL       EEPROM_WriteByte
-;;;89     	
-;;;90     	data_8bit=REG_CorrectionA>>8;
-0000f6  8868              LDRH     r0,[r5,#2]  ; Correct_Parametet
-0000f8  0a01              LSRS     r1,r0,#8
-;;;91     	EEPROM_WriteByte(0x0F, data_8bit);
-0000fa  200f              MOVS     r0,#0xf
-0000fc  f7fffffe          BL       EEPROM_WriteByte
-;;;92     	EEPROM_WriteByte(0x10, REG_CorrectionA);
-000100  8868              LDRH     r0,[r5,#2]  ; Correct_Parametet
-000102  b2c1              UXTB     r1,r0
-000104  2010              MOVS     r0,#0x10
-000106  f7fffffe          BL       EEPROM_WriteByte
+;;;90     	data_8bit = REG_ReadV1_Offset >> 8;
+0000f6  6a20              LDR      r0,[r4,#0x20]  ; Correct_Strong
+0000f8  f3c02107          UBFX     r1,r0,#8,#8
+;;;91     	EEPROM_WriteByte(0x42, data_8bit);
+0000fc  2042              MOVS     r0,#0x42
+0000fe  f7fffffe          BL       EEPROM_WriteByte
+;;;92     	EEPROM_WriteByte(0x43, REG_ReadV1_Offset);//��Դ��ѹ*
+000102  6a20              LDR      r0,[r4,#0x20]  ; Correct_Strong
+000104  b2c1              UXTB     r1,r0
+000106  2043              MOVS     r0,#0x43
+000108  f7fffffe          BL       EEPROM_WriteByte
 ;;;93     	
-;;;94     	data_8bit=REG_CorrectionA1>>8;
-00010a  88a8              LDRH     r0,[r5,#4]  ; Correct_Parametet
-00010c  0a01              LSRS     r1,r0,#8
-;;;95     	EEPROM_WriteByte(0x37, data_8bit);
-00010e  2037              MOVS     r0,#0x37
-000110  f7fffffe          BL       EEPROM_WriteByte
-;;;96     	EEPROM_WriteByte(0x38, REG_CorrectionA1);
-000114  88a8              LDRH     r0,[r5,#4]  ; Correct_Parametet
-000116  b2c1              UXTB     r1,r0
-000118  2038              MOVS     r0,#0x38
-00011a  f7fffffe          BL       EEPROM_WriteByte
+;;;94     	data_8bit=REG_CorrectionV>>8;
+00010c  4d6f              LDR      r5,|L2.716|
+00010e  8828              LDRH     r0,[r5,#0]  ; Correct_Parametet
+000110  0a01              LSRS     r1,r0,#8
+;;;95     	EEPROM_WriteByte(0x0D, data_8bit);
+000112  200d              MOVS     r0,#0xd
+000114  f7fffffe          BL       EEPROM_WriteByte
+;;;96     	EEPROM_WriteByte(0x0E, REG_CorrectionV);
+000118  8828              LDRH     r0,[r5,#0]  ; Correct_Parametet
+00011a  b2c1              UXTB     r1,r0
+00011c  200e              MOVS     r0,#0xe
+00011e  f7fffffe          BL       EEPROM_WriteByte
 ;;;97     	
-;;;98     	data_8bit=REG_CorrectionR>>8;
-00011e  88e8              LDRH     r0,[r5,#6]  ; Correct_Parametet
-000120  0a01              LSRS     r1,r0,#8
-;;;99     	EEPROM_WriteByte(0x11, data_8bit);
-000122  2011              MOVS     r0,#0x11
-000124  f7fffffe          BL       EEPROM_WriteByte
-;;;100    	EEPROM_WriteByte(0x12, REG_CorrectionR);
-000128  88e8              LDRH     r0,[r5,#6]  ; Correct_Parametet
-00012a  b2c1              UXTB     r1,r0
-00012c  2012              MOVS     r0,#0x12
-00012e  f7fffffe          BL       EEPROM_WriteByte
+;;;98     	data_8bit=REG_CorrectionA>>8;
+000122  8868              LDRH     r0,[r5,#2]  ; Correct_Parametet
+000124  0a01              LSRS     r1,r0,#8
+;;;99     	EEPROM_WriteByte(0x0F, data_8bit);
+000126  200f              MOVS     r0,#0xf
+000128  f7fffffe          BL       EEPROM_WriteByte
+;;;100    	EEPROM_WriteByte(0x10, REG_CorrectionA);
+00012c  8868              LDRH     r0,[r5,#2]  ; Correct_Parametet
+00012e  b2c1              UXTB     r1,r0
+000130  2010              MOVS     r0,#0x10
+000132  f7fffffe          BL       EEPROM_WriteByte
 ;;;101    	
-;;;102    	data_8bit=REG_CorrectionV1>>8;
-000132  8b28              LDRH     r0,[r5,#0x18]  ; Correct_Parametet
-000134  0a01              LSRS     r1,r0,#8
-;;;103    	EEPROM_WriteByte(0x44, data_8bit);
-000136  2044              MOVS     r0,#0x44
-000138  f7fffffe          BL       EEPROM_WriteByte
-;;;104    	EEPROM_WriteByte(0x45, REG_CorrectionV1);//��Դ��ѹ*
-00013c  8b28              LDRH     r0,[r5,#0x18]  ; Correct_Parametet
-00013e  b2c1              UXTB     r1,r0
-000140  2045              MOVS     r0,#0x45
-000142  f7fffffe          BL       EEPROM_WriteByte
+;;;102    	data_8bit=REG_CorrectionA1>>8;
+000136  88a8              LDRH     r0,[r5,#4]  ; Correct_Parametet
+000138  0a01              LSRS     r1,r0,#8
+;;;103    	EEPROM_WriteByte(0x37, data_8bit);
+00013a  2037              MOVS     r0,#0x37
+00013c  f7fffffe          BL       EEPROM_WriteByte
+;;;104    	EEPROM_WriteByte(0x38, REG_CorrectionA1);
+000140  88a8              LDRH     r0,[r5,#4]  ; Correct_Parametet
+000142  b2c1              UXTB     r1,r0
+000144  2038              MOVS     r0,#0x38
+000146  f7fffffe          BL       EEPROM_WriteByte
 ;;;105    	
-;;;106    	EEPROM_WriteByte(0x13,Polar);
-000146  8928              LDRH     r0,[r5,#8]  ; Correct_Parametet
-000148  b2c1              UXTB     r1,r0
-00014a  2013              MOVS     r0,#0x13
-00014c  f7fffffe          BL       EEPROM_WriteByte
-;;;107    	EEPROM_WriteByte(0x46,Polar3);//��Դ��ѹ*
-000150  8ae8              LDRH     r0,[r5,#0x16]  ; Correct_Parametet
-000152  b2c1              UXTB     r1,r0
-000154  2046              MOVS     r0,#0x46
-000156  f7fffffe          BL       EEPROM_WriteByte
-;;;108    /***********************�������ݴ洢****************************/
-;;;109    	data_8bit = SET_ReadV_Offset >> 24;
-00015a  6920              LDR      r0,[r4,#0x10]  ; Correct_Strong
-00015c  0e01              LSRS     r1,r0,#24
-;;;110    	EEPROM_WriteByte(0x14, data_8bit);
-00015e  2014              MOVS     r0,#0x14
-000160  f7fffffe          BL       EEPROM_WriteByte
-;;;111    	data_8bit = SET_ReadV_Offset >> 16;
-000164  6920              LDR      r0,[r4,#0x10]  ; Correct_Strong
-000166  f3c04107          UBFX     r1,r0,#16,#8
-;;;112    	EEPROM_WriteByte(0x15, data_8bit);
-00016a  2015              MOVS     r0,#0x15
-00016c  f7fffffe          BL       EEPROM_WriteByte
-;;;113    	data_8bit = SET_ReadV_Offset >> 8;
-000170  6920              LDR      r0,[r4,#0x10]  ; Correct_Strong
-000172  f3c02107          UBFX     r1,r0,#8,#8
-;;;114    	EEPROM_WriteByte(0x16, data_8bit);
-000176  2016              MOVS     r0,#0x16
+;;;106    	data_8bit=REG_CorrectionR>>8;
+00014a  88e8              LDRH     r0,[r5,#6]  ; Correct_Parametet
+00014c  0a01              LSRS     r1,r0,#8
+;;;107    	EEPROM_WriteByte(0x11, data_8bit);
+00014e  2011              MOVS     r0,#0x11
+000150  f7fffffe          BL       EEPROM_WriteByte
+;;;108    	EEPROM_WriteByte(0x12, REG_CorrectionR);
+000154  88e8              LDRH     r0,[r5,#6]  ; Correct_Parametet
+000156  b2c1              UXTB     r1,r0
+000158  2012              MOVS     r0,#0x12
+00015a  f7fffffe          BL       EEPROM_WriteByte
+;;;109        
+;;;110        data_8bit=REG_CorrectionRH>>8;
+00015e  8b68              LDRH     r0,[r5,#0x1a]  ; Correct_Parametet
+000160  0a01              LSRS     r1,r0,#8
+;;;111    	EEPROM_WriteByte(0x98, data_8bit);
+000162  2098              MOVS     r0,#0x98
+000164  f7fffffe          BL       EEPROM_WriteByte
+;;;112    	EEPROM_WriteByte(0x99, REG_CorrectionRH);
+000168  8b68              LDRH     r0,[r5,#0x1a]  ; Correct_Parametet
+00016a  b2c1              UXTB     r1,r0
+00016c  2099              MOVS     r0,#0x99
+00016e  f7fffffe          BL       EEPROM_WriteByte
+;;;113    	
+;;;114    	data_8bit=REG_CorrectionV1>>8;
+000172  8b28              LDRH     r0,[r5,#0x18]  ; Correct_Parametet
+000174  0a01              LSRS     r1,r0,#8
+;;;115    	EEPROM_WriteByte(0x44, data_8bit);
+000176  2044              MOVS     r0,#0x44
 000178  f7fffffe          BL       EEPROM_WriteByte
-;;;115    	EEPROM_WriteByte(0x17, SET_ReadV_Offset);
-00017c  6920              LDR      r0,[r4,#0x10]  ; Correct_Strong
+;;;116    	EEPROM_WriteByte(0x45, REG_CorrectionV1);//��Դ��ѹ*
+00017c  8b28              LDRH     r0,[r5,#0x18]  ; Correct_Parametet
 00017e  b2c1              UXTB     r1,r0
-000180  2017              MOVS     r0,#0x17
+000180  2045              MOVS     r0,#0x45
 000182  f7fffffe          BL       EEPROM_WriteByte
-;;;116    	
-;;;117    	data_8bit = SET_ReadA_Offset >> 24;
-000186  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
-000188  0e01              LSRS     r1,r0,#24
-;;;118    	EEPROM_WriteByte(0x18, data_8bit);
-00018a  2018              MOVS     r0,#0x18
+;;;117    	
+;;;118    	EEPROM_WriteByte(0x13,Polar);
+000186  8928              LDRH     r0,[r5,#8]  ; Correct_Parametet
+000188  b2c1              UXTB     r1,r0
+00018a  2013              MOVS     r0,#0x13
 00018c  f7fffffe          BL       EEPROM_WriteByte
-;;;119    	data_8bit = SET_ReadA_Offset >> 16;
-000190  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
-000192  f3c04107          UBFX     r1,r0,#16,#8
-;;;120    	EEPROM_WriteByte(0x19, data_8bit);
-000196  2019              MOVS     r0,#0x19
-000198  f7fffffe          BL       EEPROM_WriteByte
-;;;121    	data_8bit = SET_ReadA_Offset >> 8;
-00019c  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
-00019e  f3c02107          UBFX     r1,r0,#8,#8
-;;;122    	EEPROM_WriteByte(0x1A, data_8bit);
-0001a2  201a              MOVS     r0,#0x1a
-0001a4  f7fffffe          BL       EEPROM_WriteByte
-;;;123    	EEPROM_WriteByte(0x1B, SET_ReadA_Offset);
-0001a8  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
-0001aa  b2c1              UXTB     r1,r0
-0001ac  201b              MOVS     r0,#0x1b
-0001ae  f7fffffe          BL       EEPROM_WriteByte
-;;;124    	
-;;;125    	data_8bit = SET_ReadA1_Offset >> 24;
-0001b2  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
-0001b4  0e01              LSRS     r1,r0,#24
-;;;126    	EEPROM_WriteByte(0x39, data_8bit);
-0001b6  2039              MOVS     r0,#0x39
+;;;119    	EEPROM_WriteByte(0x46,Polar3);//��Դ��ѹ*
+000190  8ae8              LDRH     r0,[r5,#0x16]  ; Correct_Parametet
+000192  b2c1              UXTB     r1,r0
+000194  2046              MOVS     r0,#0x46
+000196  f7fffffe          BL       EEPROM_WriteByte
+;;;120    /***********************�������ݴ洢****************************/
+;;;121    	data_8bit = SET_ReadV_Offset >> 24;
+00019a  6920              LDR      r0,[r4,#0x10]  ; Correct_Strong
+00019c  0e01              LSRS     r1,r0,#24
+;;;122    	EEPROM_WriteByte(0x14, data_8bit);
+00019e  2014              MOVS     r0,#0x14
+0001a0  f7fffffe          BL       EEPROM_WriteByte
+;;;123    	data_8bit = SET_ReadV_Offset >> 16;
+0001a4  6920              LDR      r0,[r4,#0x10]  ; Correct_Strong
+0001a6  f3c04107          UBFX     r1,r0,#16,#8
+;;;124    	EEPROM_WriteByte(0x15, data_8bit);
+0001aa  2015              MOVS     r0,#0x15
+0001ac  f7fffffe          BL       EEPROM_WriteByte
+;;;125    	data_8bit = SET_ReadV_Offset >> 8;
+0001b0  6920              LDR      r0,[r4,#0x10]  ; Correct_Strong
+0001b2  f3c02107          UBFX     r1,r0,#8,#8
+;;;126    	EEPROM_WriteByte(0x16, data_8bit);
+0001b6  2016              MOVS     r0,#0x16
 0001b8  f7fffffe          BL       EEPROM_WriteByte
-;;;127    	data_8bit = SET_ReadA1_Offset >> 16;
-0001bc  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
-0001be  f3c04107          UBFX     r1,r0,#16,#8
-;;;128    	EEPROM_WriteByte(0x3A, data_8bit);
-0001c2  203a              MOVS     r0,#0x3a
-0001c4  f7fffffe          BL       EEPROM_WriteByte
-;;;129    	data_8bit = SET_ReadA1_Offset >> 8;
-0001c8  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
-0001ca  f3c02107          UBFX     r1,r0,#8,#8
-;;;130    	EEPROM_WriteByte(0x3B, data_8bit);
-0001ce  203b              MOVS     r0,#0x3b
-0001d0  f7fffffe          BL       EEPROM_WriteByte
-;;;131    	EEPROM_WriteByte(0x3C, SET_ReadA1_Offset);
-0001d4  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
-0001d6  b2c1              UXTB     r1,r0
-0001d8  203c              MOVS     r0,#0x3c
-0001da  f7fffffe          BL       EEPROM_WriteByte
-;;;132    	
-;;;133    	data_8bit=SET_CorrectionV>>8;
-0001de  8968              LDRH     r0,[r5,#0xa]  ; Correct_Parametet
-0001e0  0a01              LSRS     r1,r0,#8
-;;;134    	EEPROM_WriteByte(0x1C, data_8bit);
-0001e2  201c              MOVS     r0,#0x1c
+;;;127    	EEPROM_WriteByte(0x17, SET_ReadV_Offset);
+0001bc  6920              LDR      r0,[r4,#0x10]  ; Correct_Strong
+0001be  b2c1              UXTB     r1,r0
+0001c0  2017              MOVS     r0,#0x17
+0001c2  f7fffffe          BL       EEPROM_WriteByte
+;;;128    	
+;;;129    	data_8bit = SET_ReadA_Offset >> 24;
+0001c6  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
+0001c8  0e01              LSRS     r1,r0,#24
+;;;130    	EEPROM_WriteByte(0x18, data_8bit);
+0001ca  2018              MOVS     r0,#0x18
+0001cc  f7fffffe          BL       EEPROM_WriteByte
+;;;131    	data_8bit = SET_ReadA_Offset >> 16;
+0001d0  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
+0001d2  f3c04107          UBFX     r1,r0,#16,#8
+;;;132    	EEPROM_WriteByte(0x19, data_8bit);
+0001d6  2019              MOVS     r0,#0x19
+0001d8  f7fffffe          BL       EEPROM_WriteByte
+;;;133    	data_8bit = SET_ReadA_Offset >> 8;
+0001dc  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
+0001de  f3c02107          UBFX     r1,r0,#8,#8
+;;;134    	EEPROM_WriteByte(0x1A, data_8bit);
+0001e2  201a              MOVS     r0,#0x1a
 0001e4  f7fffffe          BL       EEPROM_WriteByte
-;;;135    	EEPROM_WriteByte(0x1D, SET_CorrectionV);
-0001e8  8968              LDRH     r0,[r5,#0xa]  ; Correct_Parametet
+;;;135    	EEPROM_WriteByte(0x1B, SET_ReadA_Offset);
+0001e8  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
 0001ea  b2c1              UXTB     r1,r0
-0001ec  201d              MOVS     r0,#0x1d
+0001ec  201b              MOVS     r0,#0x1b
 0001ee  f7fffffe          BL       EEPROM_WriteByte
 ;;;136    	
-;;;137    	data_8bit=SET_CorrectionA>>8;
-0001f2  89a8              LDRH     r0,[r5,#0xc]  ; Correct_Parametet
-0001f4  0a01              LSRS     r1,r0,#8
-;;;138    	EEPROM_WriteByte(0x1E, data_8bit);
-0001f6  201e              MOVS     r0,#0x1e
+;;;137    	data_8bit = SET_ReadA1_Offset >> 24;
+0001f2  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
+0001f4  0e01              LSRS     r1,r0,#24
+;;;138    	EEPROM_WriteByte(0x39, data_8bit);
+0001f6  2039              MOVS     r0,#0x39
 0001f8  f7fffffe          BL       EEPROM_WriteByte
-;;;139    	EEPROM_WriteByte(0x1F, SET_CorrectionA);
-0001fc  89a8              LDRH     r0,[r5,#0xc]  ; Correct_Parametet
-0001fe  b2c1              UXTB     r1,r0
-000200  201f              MOVS     r0,#0x1f
-000202  f7fffffe          BL       EEPROM_WriteByte
-;;;140    	
-;;;141    	data_8bit=SET_CorrectionA1>>8;
-000206  89e8              LDRH     r0,[r5,#0xe]  ; Correct_Parametet
-000208  0a01              LSRS     r1,r0,#8
-;;;142    	EEPROM_WriteByte(0x3D, data_8bit);
-00020a  203d              MOVS     r0,#0x3d
-00020c  f7fffffe          BL       EEPROM_WriteByte
-;;;143    	EEPROM_WriteByte(0x3E, SET_CorrectionA1);
-000210  89e8              LDRH     r0,[r5,#0xe]  ; Correct_Parametet
-000212  b2c1              UXTB     r1,r0
-000214  203e              MOVS     r0,#0x3e
-000216  f7fffffe          BL       EEPROM_WriteByte
+;;;139    	data_8bit = SET_ReadA1_Offset >> 16;
+0001fc  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
+0001fe  f3c04107          UBFX     r1,r0,#16,#8
+;;;140    	EEPROM_WriteByte(0x3A, data_8bit);
+000202  203a              MOVS     r0,#0x3a
+000204  f7fffffe          BL       EEPROM_WriteByte
+;;;141    	data_8bit = SET_ReadA1_Offset >> 8;
+000208  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
+00020a  f3c02107          UBFX     r1,r0,#8,#8
+;;;142    	EEPROM_WriteByte(0x3B, data_8bit);
+00020e  203b              MOVS     r0,#0x3b
+000210  f7fffffe          BL       EEPROM_WriteByte
+;;;143    	EEPROM_WriteByte(0x3C, SET_ReadA1_Offset);
+000214  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
+000216  b2c1              UXTB     r1,r0
+000218  203c              MOVS     r0,#0x3c
+00021a  f7fffffe          BL       EEPROM_WriteByte
 ;;;144    	
-;;;145    	EEPROM_WriteByte(0x20,Polar1);
-00021a  8a68              LDRH     r0,[r5,#0x12]  ; Correct_Parametet
-00021c  b2c1              UXTB     r1,r0
-00021e  2020              MOVS     r0,#0x20
-000220  f7fffffe          BL       EEPROM_WriteByte
-;;;146    /***********************************************************/
-;;;147    	data_8bit=CON_CorrectionA>>8;
-000224  8a28              LDRH     r0,[r5,#0x10]  ; Correct_Parametet
-000226  0a01              LSRS     r1,r0,#8
-;;;148    	EEPROM_WriteByte(0x21, data_8bit);
-000228  2021              MOVS     r0,#0x21
-00022a  f7fffffe          BL       EEPROM_WriteByte
-;;;149    	EEPROM_WriteByte(0x22, CON_CorrectionA);
-00022e  8a28              LDRH     r0,[r5,#0x10]  ; Correct_Parametet
-000230  b2c1              UXTB     r1,r0
-000232  2022              MOVS     r0,#0x22
-000234  f7fffffe          BL       EEPROM_WriteByte
-;;;150    	
-;;;151    	data_8bit = CON_ReadA_Offset >> 24;
-000238  69e0              LDR      r0,[r4,#0x1c]  ; Correct_Strong
-00023a  0e01              LSRS     r1,r0,#24
-;;;152    	EEPROM_WriteByte(0x23, data_8bit);
-00023c  2023              MOVS     r0,#0x23
-00023e  f7fffffe          BL       EEPROM_WriteByte
-;;;153    	data_8bit = CON_ReadA_Offset >> 16;
-000242  69e0              LDR      r0,[r4,#0x1c]  ; Correct_Strong
-000244  f3c04107          UBFX     r1,r0,#16,#8
-;;;154    	EEPROM_WriteByte(0x24, data_8bit);
-000248  2024              MOVS     r0,#0x24
-00024a  f7fffffe          BL       EEPROM_WriteByte
-;;;155    	data_8bit = CON_ReadA_Offset >> 8;
-00024e  69e0              LDR      r0,[r4,#0x1c]  ; Correct_Strong
-000250  f3c02107          UBFX     r1,r0,#8,#8
-;;;156    	EEPROM_WriteByte(0x25, data_8bit);
-000254  2025              MOVS     r0,#0x25
+;;;145    	data_8bit=SET_CorrectionV>>8;
+00021e  8968              LDRH     r0,[r5,#0xa]  ; Correct_Parametet
+000220  0a01              LSRS     r1,r0,#8
+;;;146    	EEPROM_WriteByte(0x1C, data_8bit);
+000222  201c              MOVS     r0,#0x1c
+000224  f7fffffe          BL       EEPROM_WriteByte
+;;;147    	EEPROM_WriteByte(0x1D, SET_CorrectionV);
+000228  8968              LDRH     r0,[r5,#0xa]  ; Correct_Parametet
+00022a  b2c1              UXTB     r1,r0
+00022c  201d              MOVS     r0,#0x1d
+00022e  f7fffffe          BL       EEPROM_WriteByte
+;;;148    	
+;;;149    	data_8bit=SET_CorrectionA>>8;
+000232  89a8              LDRH     r0,[r5,#0xc]  ; Correct_Parametet
+000234  0a01              LSRS     r1,r0,#8
+;;;150    	EEPROM_WriteByte(0x1E, data_8bit);
+000236  201e              MOVS     r0,#0x1e
+000238  f7fffffe          BL       EEPROM_WriteByte
+;;;151    	EEPROM_WriteByte(0x1F, SET_CorrectionA);
+00023c  89a8              LDRH     r0,[r5,#0xc]  ; Correct_Parametet
+00023e  b2c1              UXTB     r1,r0
+000240  201f              MOVS     r0,#0x1f
+000242  f7fffffe          BL       EEPROM_WriteByte
+;;;152    	
+;;;153    	data_8bit=SET_CorrectionA1>>8;
+000246  89e8              LDRH     r0,[r5,#0xe]  ; Correct_Parametet
+000248  0a01              LSRS     r1,r0,#8
+;;;154    	EEPROM_WriteByte(0x3D, data_8bit);
+00024a  203d              MOVS     r0,#0x3d
+00024c  f7fffffe          BL       EEPROM_WriteByte
+;;;155    	EEPROM_WriteByte(0x3E, SET_CorrectionA1);
+000250  89e8              LDRH     r0,[r5,#0xe]  ; Correct_Parametet
+000252  b2c1              UXTB     r1,r0
+000254  203e              MOVS     r0,#0x3e
 000256  f7fffffe          BL       EEPROM_WriteByte
-;;;157    	EEPROM_WriteByte(0x26, CON_ReadA_Offset);
-00025a  69e0              LDR      r0,[r4,#0x1c]  ; Correct_Strong
+;;;156    	
+;;;157    	EEPROM_WriteByte(0x20,Polar1);
+00025a  8a68              LDRH     r0,[r5,#0x12]  ; Correct_Parametet
 00025c  b2c1              UXTB     r1,r0
-00025e  2026              MOVS     r0,#0x26
+00025e  2020              MOVS     r0,#0x20
 000260  f7fffffe          BL       EEPROM_WriteByte
-;;;158    	
-;;;159    	EEPROM_WriteByte(0x27,Polar2);
-000264  8aa8              LDRH     r0,[r5,#0x14]  ; Correct_Parametet
-000266  b2c1              UXTB     r1,r0
-000268  2027              MOVS     r0,#0x27
+;;;158    /***********************************************************/
+;;;159    	data_8bit=CON_CorrectionA>>8;
+000264  8a28              LDRH     r0,[r5,#0x10]  ; Correct_Parametet
+000266  0a01              LSRS     r1,r0,#8
+;;;160    	EEPROM_WriteByte(0x21, data_8bit);
+000268  2021              MOVS     r0,#0x21
 00026a  f7fffffe          BL       EEPROM_WriteByte
-;;;160    	
-;;;161    	data_8bit=TEMP_OFFSET>>8;
-00026e  4c08              LDR      r4,|L2.656|
-000270  8820              LDRH     r0,[r4,#0]  ; TEMP_OFFSET
-000272  0a01              LSRS     r1,r0,#8
-;;;162    	EEPROM_WriteByte(0x28, data_8bit);
-000274  2028              MOVS     r0,#0x28
-000276  f7fffffe          BL       EEPROM_WriteByte
-;;;163    	EEPROM_WriteByte(0x29, TEMP_OFFSET);
-00027a  8820              LDRH     r0,[r4,#0]  ; TEMP_OFFSET
-00027c  e8bd4070          POP      {r4-r6,lr}
-000280  b2c1              UXTB     r1,r0
-000282  2029              MOVS     r0,#0x29
-000284  f7ffbffe          B.W      EEPROM_WriteByte
-;;;164    }
-;;;165    //===========================================================================//
+;;;161    	EEPROM_WriteByte(0x22, CON_CorrectionA);
+00026e  8a28              LDRH     r0,[r5,#0x10]  ; Correct_Parametet
+000270  b2c1              UXTB     r1,r0
+000272  2022              MOVS     r0,#0x22
+000274  f7fffffe          BL       EEPROM_WriteByte
+;;;162    	
+;;;163    	data_8bit = CON_ReadA_Offset >> 24;
+000278  69e0              LDR      r0,[r4,#0x1c]  ; Correct_Strong
+00027a  0e01              LSRS     r1,r0,#24
+;;;164    	EEPROM_WriteByte(0x23, data_8bit);
+00027c  2023              MOVS     r0,#0x23
+00027e  f7fffffe          BL       EEPROM_WriteByte
+;;;165    	data_8bit = CON_ReadA_Offset >> 16;
+000282  69e0              LDR      r0,[r4,#0x1c]  ; Correct_Strong
+000284  f3c04107          UBFX     r1,r0,#16,#8
+;;;166    	EEPROM_WriteByte(0x24, data_8bit);
+000288  2024              MOVS     r0,#0x24
+00028a  f7fffffe          BL       EEPROM_WriteByte
+;;;167    	data_8bit = CON_ReadA_Offset >> 8;
+00028e  69e0              LDR      r0,[r4,#0x1c]  ; Correct_Strong
+000290  f3c02107          UBFX     r1,r0,#8,#8
+;;;168    	EEPROM_WriteByte(0x25, data_8bit);
+000294  2025              MOVS     r0,#0x25
+000296  f7fffffe          BL       EEPROM_WriteByte
+;;;169    	EEPROM_WriteByte(0x26, CON_ReadA_Offset);
+00029a  69e0              LDR      r0,[r4,#0x1c]  ; Correct_Strong
+00029c  b2c1              UXTB     r1,r0
+00029e  2026              MOVS     r0,#0x26
+0002a0  f7fffffe          BL       EEPROM_WriteByte
+;;;170    	
+;;;171    	EEPROM_WriteByte(0x27,Polar2);
+0002a4  8aa8              LDRH     r0,[r5,#0x14]  ; Correct_Parametet
+0002a6  b2c1              UXTB     r1,r0
+0002a8  2027              MOVS     r0,#0x27
+0002aa  f7fffffe          BL       EEPROM_WriteByte
+;;;172    	
+;;;173    	data_8bit=TEMP_OFFSET>>8;
+0002ae  4c08              LDR      r4,|L2.720|
+0002b0  8820              LDRH     r0,[r4,#0]  ; TEMP_OFFSET
+0002b2  0a01              LSRS     r1,r0,#8
+;;;174    	EEPROM_WriteByte(0x28, data_8bit);
+0002b4  2028              MOVS     r0,#0x28
+0002b6  f7fffffe          BL       EEPROM_WriteByte
+;;;175    	EEPROM_WriteByte(0x29, TEMP_OFFSET);
+0002ba  8820              LDRH     r0,[r4,#0]  ; TEMP_OFFSET
+0002bc  e8bd4070          POP      {r4-r6,lr}
+0002c0  b2c1              UXTB     r1,r0
+0002c2  2029              MOVS     r0,#0x29
+0002c4  f7ffbffe          B.W      EEPROM_WriteByte
+;;;176    }
+;;;177    //===========================================================================//
                           ENDP
 
-                  |L2.648|
+                  |L2.712|
                           DCD      Correct_Strong
-                  |L2.652|
+                  |L2.716|
                           DCD      Correct_Parametet
-                  |L2.656|
+                  |L2.720|
                           DCD      TEMP_OFFSET
 
                           AREA ||i.Wite_adress||, CODE, READONLY, ALIGN=2
 
                   Wite_adress PROC
-;;;624    /************************************************************************/
-;;;625    void Wite_adress(void)
+;;;648    /************************************************************************/
+;;;649    void Wite_adress(void)
 000000  4802              LDR      r0,|L3.12|
-;;;626    {
-;;;627    	EEPROM_WriteByte(0x31,ADDR);
+;;;650    {
+;;;651    	EEPROM_WriteByte(0x31,ADDR);
 000002  7801              LDRB     r1,[r0,#0]  ; ADDR
 000004  2031              MOVS     r0,#0x31
 000006  f7ffbffe          B.W      EEPROM_WriteByte
-;;;628    }
-;;;629    /******************* (C) COPYRIGHT 2015 AVER *****END OF FILE*************************/
+;;;652    }
+;;;653    /******************* (C) COPYRIGHT 2015 AVER *****END OF FILE*************************/
                           ENDP
 
 00000a  0000              DCW      0x0000
@@ -1520,325 +1606,325 @@
                           AREA ||i.Write_Limits||, CODE, READONLY, ALIGN=2
 
                   Write_Limits PROC
-;;;454    
-;;;455    void Write_Limits(void)
+;;;478    
+;;;479    void Write_Limits(void)
 000000  b570              PUSH     {r4-r6,lr}
-;;;456    {
-;;;457        vu8 data_8bit;
-;;;458        
-;;;459    	data_8bit = set_max_v >> 8;
+;;;480    {
+;;;481        vu8 data_8bit;
+;;;482        
+;;;483    	data_8bit = set_max_v >> 8;
 000002  4c81              LDR      r4,|L4.520|
 000004  8820              LDRH     r0,[r4,#0]  ; Run_Control
 000006  0a01              LSRS     r1,r0,#8
-;;;460    	EEPROM_WriteByte(0x47, data_8bit);
+;;;484    	EEPROM_WriteByte(0x47, data_8bit);
 000008  2047              MOVS     r0,#0x47
 00000a  f7fffffe          BL       EEPROM_WriteByte
-;;;461    	EEPROM_WriteByte(0x48, set_max_v);
+;;;485    	EEPROM_WriteByte(0x48, set_max_v);
 00000e  8820              LDRH     r0,[r4,#0]  ; Run_Control
 000010  b2c1              UXTB     r1,r0
 000012  2048              MOVS     r0,#0x48
 000014  f7fffffe          BL       EEPROM_WriteByte
-;;;462    	
-;;;463    	data_8bit = set_min_v >> 8;
+;;;486    	
+;;;487    	data_8bit = set_min_v >> 8;
 000018  8860              LDRH     r0,[r4,#2]  ; Run_Control
 00001a  0a01              LSRS     r1,r0,#8
-;;;464    	EEPROM_WriteByte(0x49, data_8bit);
+;;;488    	EEPROM_WriteByte(0x49, data_8bit);
 00001c  2049              MOVS     r0,#0x49
 00001e  f7fffffe          BL       EEPROM_WriteByte
-;;;465    	EEPROM_WriteByte(0x4A, set_min_v);
+;;;489    	EEPROM_WriteByte(0x4A, set_min_v);
 000022  8860              LDRH     r0,[r4,#2]  ; Run_Control
 000024  b2c1              UXTB     r1,r0
 000026  204a              MOVS     r0,#0x4a
 000028  f7fffffe          BL       EEPROM_WriteByte
-;;;466        
-;;;467        data_8bit = set_max_r >> 8;
+;;;490        
+;;;491        data_8bit = set_max_r >> 8;
 00002c  88a0              LDRH     r0,[r4,#4]  ; Run_Control
 00002e  0a01              LSRS     r1,r0,#8
-;;;468    	EEPROM_WriteByte(0x4B, data_8bit);
+;;;492    	EEPROM_WriteByte(0x4B, data_8bit);
 000030  204b              MOVS     r0,#0x4b
 000032  f7fffffe          BL       EEPROM_WriteByte
-;;;469    	EEPROM_WriteByte(0x4C, set_max_r);
+;;;493    	EEPROM_WriteByte(0x4C, set_max_r);
 000036  88a0              LDRH     r0,[r4,#4]  ; Run_Control
 000038  b2c1              UXTB     r1,r0
 00003a  204c              MOVS     r0,#0x4c
 00003c  f7fffffe          BL       EEPROM_WriteByte
-;;;470    	
-;;;471    	data_8bit = set_min_r >> 8;
+;;;494    	
+;;;495    	data_8bit = set_min_r >> 8;
 000040  88e0              LDRH     r0,[r4,#6]  ; Run_Control
 000042  0a01              LSRS     r1,r0,#8
-;;;472    	EEPROM_WriteByte(0x4D, data_8bit);
+;;;496    	EEPROM_WriteByte(0x4D, data_8bit);
 000044  204d              MOVS     r0,#0x4d
 000046  f7fffffe          BL       EEPROM_WriteByte
-;;;473    	EEPROM_WriteByte(0x4E, set_min_r);
+;;;497    	EEPROM_WriteByte(0x4E, set_min_r);
 00004a  88e0              LDRH     r0,[r4,#6]  ; Run_Control
 00004c  b2c1              UXTB     r1,r0
 00004e  204e              MOVS     r0,#0x4e
 000050  f7fffffe          BL       EEPROM_WriteByte
-;;;474        
-;;;475        data_8bit = set_max_c >> 8;
+;;;498        
+;;;499        data_8bit = set_max_c >> 8;
 000054  8920              LDRH     r0,[r4,#8]  ; Run_Control
 000056  0a01              LSRS     r1,r0,#8
-;;;476    	EEPROM_WriteByte(0x4F, data_8bit);
+;;;500    	EEPROM_WriteByte(0x4F, data_8bit);
 000058  204f              MOVS     r0,#0x4f
 00005a  f7fffffe          BL       EEPROM_WriteByte
-;;;477    	EEPROM_WriteByte(0x50, set_max_c);
+;;;501    	EEPROM_WriteByte(0x50, set_max_c);
 00005e  8920              LDRH     r0,[r4,#8]  ; Run_Control
 000060  b2c1              UXTB     r1,r0
 000062  2050              MOVS     r0,#0x50
 000064  f7fffffe          BL       EEPROM_WriteByte
-;;;478    	
-;;;479    	data_8bit = set_min_c >> 8;
+;;;502    	
+;;;503    	data_8bit = set_min_c >> 8;
 000068  8960              LDRH     r0,[r4,#0xa]  ; Run_Control
 00006a  0a01              LSRS     r1,r0,#8
-;;;480    	EEPROM_WriteByte(0x51, data_8bit);
+;;;504    	EEPROM_WriteByte(0x51, data_8bit);
 00006c  2051              MOVS     r0,#0x51
 00006e  f7fffffe          BL       EEPROM_WriteByte
-;;;481    	EEPROM_WriteByte(0x52, set_min_c);
+;;;505    	EEPROM_WriteByte(0x52, set_min_c);
 000072  8960              LDRH     r0,[r4,#0xa]  ; Run_Control
 000074  b2c1              UXTB     r1,r0
 000076  2052              MOVS     r0,#0x52
 000078  f7fffffe          BL       EEPROM_WriteByte
-;;;482        
-;;;483    	data_8bit = pow_v >> 8;
+;;;506        
+;;;507    	data_8bit = pow_v >> 8;
 00007c  8ea0              LDRH     r0,[r4,#0x34]  ; Run_Control
 00007e  0a01              LSRS     r1,r0,#8
-;;;484    	EEPROM_WriteByte(0x2A, data_8bit);
+;;;508    	EEPROM_WriteByte(0x2A, data_8bit);
 000080  202a              MOVS     r0,#0x2a
 000082  f7fffffe          BL       EEPROM_WriteByte
-;;;485    	EEPROM_WriteByte(0x2B, pow_v);
+;;;509    	EEPROM_WriteByte(0x2B, pow_v);
 000086  8ea0              LDRH     r0,[r4,#0x34]  ; Run_Control
 000088  b2c1              UXTB     r1,r0
 00008a  202b              MOVS     r0,#0x2b
 00008c  f7fffffe          BL       EEPROM_WriteByte
-;;;486    	
-;;;487    	data_8bit = pow_c >> 8;
+;;;510    	
+;;;511    	data_8bit = pow_c >> 8;
 000090  8f20              LDRH     r0,[r4,#0x38]  ; Run_Control
 000092  0a01              LSRS     r1,r0,#8
-;;;488    	EEPROM_WriteByte(0x2C, data_8bit);
+;;;512    	EEPROM_WriteByte(0x2C, data_8bit);
 000094  202c              MOVS     r0,#0x2c
 000096  f7fffffe          BL       EEPROM_WriteByte
-;;;489    	EEPROM_WriteByte(0x2D, pow_c);
+;;;513    	EEPROM_WriteByte(0x2D, pow_c);
 00009a  8f20              LDRH     r0,[r4,#0x38]  ; Run_Control
 00009c  b2c1              UXTB     r1,r0
 00009e  202d              MOVS     r0,#0x2d
 0000a0  f7fffffe          BL       EEPROM_WriteByte
-;;;490        
-;;;491        data_8bit = load_c >> 8;
+;;;514        
+;;;515        data_8bit = load_c >> 8;
 0000a4  8de0              LDRH     r0,[r4,#0x2e]  ; Run_Control
 0000a6  0a01              LSRS     r1,r0,#8
-;;;492    	EEPROM_WriteByte(0x53, data_8bit);
+;;;516    	EEPROM_WriteByte(0x53, data_8bit);
 0000a8  2053              MOVS     r0,#0x53
 0000aa  f7fffffe          BL       EEPROM_WriteByte
-;;;493    	EEPROM_WriteByte(0x54, load_c);
+;;;517    	EEPROM_WriteByte(0x54, load_c);
 0000ae  8de0              LDRH     r0,[r4,#0x2e]  ; Run_Control
 0000b0  b2c1              UXTB     r1,r0
 0000b2  2054              MOVS     r0,#0x54
 0000b4  f7fffffe          BL       EEPROM_WriteByte
-;;;494        
-;;;495        data_8bit = set_init_c >> 8;
+;;;518        
+;;;519        data_8bit = set_init_c >> 8;
 0000b8  8a20              LDRH     r0,[r4,#0x10]  ; Run_Control
 0000ba  0a01              LSRS     r1,r0,#8
-;;;496    	EEPROM_WriteByte(0x70, data_8bit);
+;;;520    	EEPROM_WriteByte(0x70, data_8bit);
 0000bc  2070              MOVS     r0,#0x70
 0000be  f7fffffe          BL       EEPROM_WriteByte
-;;;497    	EEPROM_WriteByte(0x71, set_init_c);
+;;;521    	EEPROM_WriteByte(0x71, set_init_c);
 0000c2  8a20              LDRH     r0,[r4,#0x10]  ; Run_Control
 0000c4  b2c1              UXTB     r1,r0
 0000c6  2071              MOVS     r0,#0x71
 0000c8  f7fffffe          BL       EEPROM_WriteByte
-;;;498        
-;;;499        data_8bit = set_sbs_c >> 8;
+;;;522        
+;;;523        data_8bit = set_sbs_c >> 8;
 0000cc  8a60              LDRH     r0,[r4,#0x12]  ; Run_Control
 0000ce  0a01              LSRS     r1,r0,#8
-;;;500    	EEPROM_WriteByte(0x72, data_8bit);
+;;;524    	EEPROM_WriteByte(0x72, data_8bit);
 0000d0  2072              MOVS     r0,#0x72
 0000d2  f7fffffe          BL       EEPROM_WriteByte
-;;;501    	EEPROM_WriteByte(0x73, set_sbs_c);
+;;;525    	EEPROM_WriteByte(0x73, set_sbs_c);
 0000d6  8a60              LDRH     r0,[r4,#0x12]  ; Run_Control
 0000d8  b2c1              UXTB     r1,r0
 0000da  2073              MOVS     r0,#0x73
 0000dc  f7fffffe          BL       EEPROM_WriteByte
-;;;502        
-;;;503        data_8bit = opv1 >> 8;
+;;;526        
+;;;527        data_8bit = opv1 >> 8;
 0000e0  8c60              LDRH     r0,[r4,#0x22]  ; Run_Control
 0000e2  0a01              LSRS     r1,r0,#8
-;;;504    	EEPROM_WriteByte(0x76, data_8bit);
+;;;528    	EEPROM_WriteByte(0x76, data_8bit);
 0000e4  2076              MOVS     r0,#0x76
 0000e6  f7fffffe          BL       EEPROM_WriteByte
-;;;505    	EEPROM_WriteByte(0x77, opv1);
+;;;529    	EEPROM_WriteByte(0x77, opv1);
 0000ea  8c60              LDRH     r0,[r4,#0x22]  ; Run_Control
 0000ec  b2c1              UXTB     r1,r0
 0000ee  2077              MOVS     r0,#0x77
 0000f0  f7fffffe          BL       EEPROM_WriteByte
-;;;506        
-;;;507        data_8bit = opv2 >> 8;
+;;;530        
+;;;531        data_8bit = opv2 >> 8;
 0000f4  8ca0              LDRH     r0,[r4,#0x24]  ; Run_Control
 0000f6  0a01              LSRS     r1,r0,#8
-;;;508    	EEPROM_WriteByte(0x7C, data_8bit);
+;;;532    	EEPROM_WriteByte(0x7C, data_8bit);
 0000f8  207c              MOVS     r0,#0x7c
 0000fa  f7fffffe          BL       EEPROM_WriteByte
-;;;509    	EEPROM_WriteByte(0x7D, opv2);
+;;;533    	EEPROM_WriteByte(0x7D, opv2);
 0000fe  8ca0              LDRH     r0,[r4,#0x24]  ; Run_Control
 000100  b2c1              UXTB     r1,r0
 000102  207d              MOVS     r0,#0x7d
 000104  f7fffffe          BL       EEPROM_WriteByte
-;;;510        
-;;;511        data_8bit = opv3 >> 8;
+;;;534        
+;;;535        data_8bit = opv3 >> 8;
 000108  8ce0              LDRH     r0,[r4,#0x26]  ; Run_Control
 00010a  0a01              LSRS     r1,r0,#8
-;;;512    	EEPROM_WriteByte(0x7E, data_8bit);
+;;;536    	EEPROM_WriteByte(0x7E, data_8bit);
 00010c  207e              MOVS     r0,#0x7e
 00010e  f7fffffe          BL       EEPROM_WriteByte
-;;;513    	EEPROM_WriteByte(0x7F, opv3);
+;;;537    	EEPROM_WriteByte(0x7F, opv3);
 000112  8ce0              LDRH     r0,[r4,#0x26]  ; Run_Control
 000114  b2c1              UXTB     r1,r0
 000116  207f              MOVS     r0,#0x7f
 000118  f7fffffe          BL       EEPROM_WriteByte
-;;;514        
-;;;515        data_8bit = cov1 >> 8;
+;;;538        
+;;;539        data_8bit = cov1 >> 8;
 00011c  4d3b              LDR      r5,|L4.524|
 00011e  8828              LDRH     r0,[r5,#0]  ; coff
 000120  0a01              LSRS     r1,r0,#8
-;;;516    	EEPROM_WriteByte(0x86, data_8bit);
+;;;540    	EEPROM_WriteByte(0x86, data_8bit);
 000122  2086              MOVS     r0,#0x86
 000124  f7fffffe          BL       EEPROM_WriteByte
-;;;517    	EEPROM_WriteByte(0x87, cov1);
+;;;541    	EEPROM_WriteByte(0x87, cov1);
 000128  8828              LDRH     r0,[r5,#0]  ; coff
 00012a  b2c1              UXTB     r1,r0
 00012c  2087              MOVS     r0,#0x87
 00012e  f7fffffe          BL       EEPROM_WriteByte
-;;;518        
-;;;519        data_8bit = cov2 >> 8;
+;;;542        
+;;;543        data_8bit = cov2 >> 8;
 000132  8868              LDRH     r0,[r5,#2]  ; coff
 000134  0a01              LSRS     r1,r0,#8
-;;;520    	EEPROM_WriteByte(0x88, data_8bit);
+;;;544    	EEPROM_WriteByte(0x88, data_8bit);
 000136  2088              MOVS     r0,#0x88
 000138  f7fffffe          BL       EEPROM_WriteByte
-;;;521    	EEPROM_WriteByte(0x89, cov2);
+;;;545    	EEPROM_WriteByte(0x89, cov2);
 00013c  8868              LDRH     r0,[r5,#2]  ; coff
 00013e  b2c1              UXTB     r1,r0
 000140  2089              MOVS     r0,#0x89
 000142  f7fffffe          BL       EEPROM_WriteByte
-;;;522        
-;;;523        data_8bit = cov3 >> 8;
+;;;546        
+;;;547        data_8bit = cov3 >> 8;
 000146  88a8              LDRH     r0,[r5,#4]  ; coff
 000148  0a01              LSRS     r1,r0,#8
-;;;524    	EEPROM_WriteByte(0x8A, data_8bit);
+;;;548    	EEPROM_WriteByte(0x8A, data_8bit);
 00014a  208a              MOVS     r0,#0x8a
 00014c  f7fffffe          BL       EEPROM_WriteByte
-;;;525    	EEPROM_WriteByte(0x8B, cov3);
+;;;549    	EEPROM_WriteByte(0x8B, cov3);
 000150  88a8              LDRH     r0,[r5,#4]  ; coff
 000152  b2c1              UXTB     r1,r0
 000154  208b              MOVS     r0,#0x8b
 000156  f7fffffe          BL       EEPROM_WriteByte
-;;;526        
-;;;527        data_8bit = opc1 >> 8;
+;;;550        
+;;;551        data_8bit = opc1 >> 8;
 00015a  8d20              LDRH     r0,[r4,#0x28]  ; Run_Control
 00015c  0a01              LSRS     r1,r0,#8
-;;;528    	EEPROM_WriteByte(0x78, data_8bit);
+;;;552    	EEPROM_WriteByte(0x78, data_8bit);
 00015e  2078              MOVS     r0,#0x78
 000160  f7fffffe          BL       EEPROM_WriteByte
-;;;529    	EEPROM_WriteByte(0x79, opc1);
+;;;553    	EEPROM_WriteByte(0x79, opc1);
 000164  8d20              LDRH     r0,[r4,#0x28]  ; Run_Control
 000166  b2c1              UXTB     r1,r0
 000168  2079              MOVS     r0,#0x79
 00016a  f7fffffe          BL       EEPROM_WriteByte
-;;;530        
-;;;531        data_8bit = opc2 >> 8;
+;;;554        
+;;;555        data_8bit = opc2 >> 8;
 00016e  8d60              LDRH     r0,[r4,#0x2a]  ; Run_Control
 000170  0a01              LSRS     r1,r0,#8
-;;;532    	EEPROM_WriteByte(0x80, data_8bit);
+;;;556    	EEPROM_WriteByte(0x80, data_8bit);
 000172  2080              MOVS     r0,#0x80
 000174  f7fffffe          BL       EEPROM_WriteByte
-;;;533    	EEPROM_WriteByte(0x81, opc2);
+;;;557    	EEPROM_WriteByte(0x81, opc2);
 000178  8d60              LDRH     r0,[r4,#0x2a]  ; Run_Control
 00017a  b2c1              UXTB     r1,r0
 00017c  2081              MOVS     r0,#0x81
 00017e  f7fffffe          BL       EEPROM_WriteByte
-;;;534        
-;;;535        data_8bit = opc3 >> 8;
+;;;558        
+;;;559        data_8bit = opc3 >> 8;
 000182  8da0              LDRH     r0,[r4,#0x2c]  ; Run_Control
 000184  0a01              LSRS     r1,r0,#8
-;;;536    	EEPROM_WriteByte(0x82, data_8bit);
+;;;560    	EEPROM_WriteByte(0x82, data_8bit);
 000186  2082              MOVS     r0,#0x82
 000188  f7fffffe          BL       EEPROM_WriteByte
-;;;537    	EEPROM_WriteByte(0x83, opc3);
+;;;561    	EEPROM_WriteByte(0x83, opc3);
 00018c  8da0              LDRH     r0,[r4,#0x2c]  ; Run_Control
 00018e  b2c1              UXTB     r1,r0
 000190  2083              MOVS     r0,#0x83
 000192  f7fffffe          BL       EEPROM_WriteByte
-;;;538        
-;;;539        data_8bit = coc1 >> 8;
+;;;562        
+;;;563        data_8bit = coc1 >> 8;
 000196  88e8              LDRH     r0,[r5,#6]  ; coff
 000198  0a01              LSRS     r1,r0,#8
-;;;540    	EEPROM_WriteByte(0x8C, data_8bit);
+;;;564    	EEPROM_WriteByte(0x8C, data_8bit);
 00019a  208c              MOVS     r0,#0x8c
 00019c  f7fffffe          BL       EEPROM_WriteByte
-;;;541    	EEPROM_WriteByte(0x8D, coc1);
+;;;565    	EEPROM_WriteByte(0x8D, coc1);
 0001a0  88e8              LDRH     r0,[r5,#6]  ; coff
 0001a2  b2c1              UXTB     r1,r0
 0001a4  208d              MOVS     r0,#0x8d
 0001a6  f7fffffe          BL       EEPROM_WriteByte
-;;;542        
-;;;543        data_8bit = coc2 >> 8;
+;;;566        
+;;;567        data_8bit = coc2 >> 8;
 0001aa  8928              LDRH     r0,[r5,#8]  ; coff
 0001ac  0a01              LSRS     r1,r0,#8
-;;;544    	EEPROM_WriteByte(0x8E, data_8bit);
+;;;568    	EEPROM_WriteByte(0x8E, data_8bit);
 0001ae  208e              MOVS     r0,#0x8e
 0001b0  f7fffffe          BL       EEPROM_WriteByte
-;;;545    	EEPROM_WriteByte(0x8F, coc2);
+;;;569    	EEPROM_WriteByte(0x8F, coc2);
 0001b4  8928              LDRH     r0,[r5,#8]  ; coff
 0001b6  b2c1              UXTB     r1,r0
 0001b8  208f              MOVS     r0,#0x8f
 0001ba  f7fffffe          BL       EEPROM_WriteByte
-;;;546        
-;;;547        data_8bit = coc3 >> 8;
+;;;570        
+;;;571        data_8bit = coc3 >> 8;
 0001be  8968              LDRH     r0,[r5,#0xa]  ; coff
 0001c0  0a01              LSRS     r1,r0,#8
-;;;548    	EEPROM_WriteByte(0x90, data_8bit);
+;;;572    	EEPROM_WriteByte(0x90, data_8bit);
 0001c2  2090              MOVS     r0,#0x90
 0001c4  f7fffffe          BL       EEPROM_WriteByte
-;;;549    	EEPROM_WriteByte(0x91, coc3);
+;;;573    	EEPROM_WriteByte(0x91, coc3);
 0001c8  8968              LDRH     r0,[r5,#0xa]  ; coff
 0001ca  b2c1              UXTB     r1,r0
 0001cc  2091              MOVS     r0,#0x91
 0001ce  f7fffffe          BL       EEPROM_WriteByte
-;;;550        
-;;;551    	EEPROM_WriteByte(0x84, set_loop_count);
+;;;574        
+;;;575    	EEPROM_WriteByte(0x84, set_loop_count);
 0001d2  480f              LDR      r0,|L4.528|
 0001d4  7801              LDRB     r1,[r0,#0]  ; set_loop_count
 0001d6  2084              MOVS     r0,#0x84
 0001d8  f7fffffe          BL       EEPROM_WriteByte
-;;;552        
-;;;553        data_8bit = cdc_dc >> 8;
+;;;576        
+;;;577        data_8bit = cdc_dc >> 8;
 0001dc  8ee0              LDRH     r0,[r4,#0x36]  ; Run_Control
 0001de  0a01              LSRS     r1,r0,#8
-;;;554    	EEPROM_WriteByte(0x7A, data_8bit);
+;;;578    	EEPROM_WriteByte(0x7A, data_8bit);
 0001e0  207a              MOVS     r0,#0x7a
 0001e2  f7fffffe          BL       EEPROM_WriteByte
-;;;555    	EEPROM_WriteByte(0x7B, cdc_dc);
+;;;579    	EEPROM_WriteByte(0x7B, cdc_dc);
 0001e6  8ee0              LDRH     r0,[r4,#0x36]  ; Run_Control
 0001e8  b2c1              UXTB     r1,r0
 0001ea  207b              MOVS     r0,#0x7b
 0001ec  f7fffffe          BL       EEPROM_WriteByte
-;;;556        
-;;;557        data_8bit = set_dc_cutoff_v >> 8;
+;;;580        
+;;;581        data_8bit = set_dc_cutoff_v >> 8;
 0001f0  8b60              LDRH     r0,[r4,#0x1a]  ; Run_Control
 0001f2  0a01              LSRS     r1,r0,#8
-;;;558    	EEPROM_WriteByte(0x92, data_8bit);
+;;;582    	EEPROM_WriteByte(0x92, data_8bit);
 0001f4  2092              MOVS     r0,#0x92
 0001f6  f7fffffe          BL       EEPROM_WriteByte
-;;;559    	EEPROM_WriteByte(0x93, set_dc_cutoff_v);
+;;;583    	EEPROM_WriteByte(0x93, set_dc_cutoff_v);
 0001fa  8b60              LDRH     r0,[r4,#0x1a]  ; Run_Control
 0001fc  e8bd4070          POP      {r4-r6,lr}
 000200  b2c1              UXTB     r1,r0
 000202  2093              MOVS     r0,#0x93
 000204  f7ffbffe          B.W      EEPROM_WriteByte
-;;;560        
-;;;561    
-;;;562        
-;;;563    }
-;;;564    void Wrtite_Beep(void)//ѣզBEEP״ׁ̬FLASHא
+;;;584        
+;;;585    
+;;;586        
+;;;587    }
+;;;588    void Wrtite_Beep(void)//ѣզBEEP״ׁ̬FLASHא
                           ENDP
 
                   |L4.520|
@@ -1851,16 +1937,16 @@
                           AREA ||i.Write_alarm||, CODE, READONLY, ALIGN=2
 
                   Write_alarm PROC
-;;;602    /************************************************************************/
-;;;603    void Write_alarm(void)
+;;;626    /************************************************************************/
+;;;627    void Write_alarm(void)
 000000  4802              LDR      r0,|L5.12|
-;;;604    {
-;;;605    	EEPROM_WriteByte(0x56,para_set4);
+;;;628    {
+;;;629    	EEPROM_WriteByte(0x56,para_set4);
 000002  7801              LDRB     r1,[r0,#0]  ; para_set4
 000004  2056              MOVS     r0,#0x56
 000006  f7ffbffe          B.W      EEPROM_WriteByte
-;;;606    }
-;;;607    /************************************************************************/
+;;;630    }
+;;;631    /************************************************************************/
                           ENDP
 
 00000a  0000              DCW      0x0000
@@ -1870,23 +1956,23 @@
                           AREA ||i.Write_btype||, CODE, READONLY, ALIGN=2
 
                   Write_btype PROC
-;;;596    
-;;;597    void Write_btype(void)
+;;;620    
+;;;621    void Write_btype(void)
 000000  b510              PUSH     {r4,lr}
-;;;598    {
-;;;599    	EEPROM_WriteByte(0x57,b_type);
+;;;622    {
+;;;623    	EEPROM_WriteByte(0x57,b_type);
 000002  4806              LDR      r0,|L6.28|
 000004  7801              LDRB     r1,[r0,#0]  ; b_type
 000006  2057              MOVS     r0,#0x57
 000008  f7fffffe          BL       EEPROM_WriteByte
-;;;600        EEPROM_WriteByte(0x58,buffer);
+;;;624        EEPROM_WriteByte(0x58,buffer);
 00000c  4804              LDR      r0,|L6.32|
 00000e  7801              LDRB     r1,[r0,#0]  ; buffer
 000010  e8bd4010          POP      {r4,lr}
 000014  2058              MOVS     r0,#0x58
 000016  f7ffbffe          B.W      EEPROM_WriteByte
-;;;601    }
-;;;602    /************************************************************************/
+;;;625    }
+;;;626    /************************************************************************/
                           ENDP
 
 00001a  0000              DCW      0x0000
@@ -1898,98 +1984,98 @@
                           AREA ||i.Write_info||, CODE, READONLY, ALIGN=2
 
                   Write_info PROC
-;;;575    
-;;;576    void Write_info(void)
+;;;599    
+;;;600    void Write_info(void)
 000000  b510              PUSH     {r4,lr}
-;;;577    {
-;;;578    	EEPROM_WriteByte(0x5A,year1);
+;;;601    {
+;;;602    	EEPROM_WriteByte(0x5A,year1);
 000002  482b              LDR      r0,|L7.176|
 000004  8800              LDRH     r0,[r0,#0]  ; year1
 000006  b2c1              UXTB     r1,r0
 000008  205a              MOVS     r0,#0x5a
 00000a  f7fffffe          BL       EEPROM_WriteByte
-;;;579        EEPROM_WriteByte(0x5B,year2);
+;;;603        EEPROM_WriteByte(0x5B,year2);
 00000e  4829              LDR      r0,|L7.180|
 000010  8800              LDRH     r0,[r0,#0]  ; year2
 000012  b2c1              UXTB     r1,r0
 000014  205b              MOVS     r0,#0x5b
 000016  f7fffffe          BL       EEPROM_WriteByte
-;;;580        EEPROM_WriteByte(0x5C,year3);
+;;;604        EEPROM_WriteByte(0x5C,year3);
 00001a  4827              LDR      r0,|L7.184|
 00001c  8800              LDRH     r0,[r0,#0]  ; year3
 00001e  b2c1              UXTB     r1,r0
 000020  205c              MOVS     r0,#0x5c
 000022  f7fffffe          BL       EEPROM_WriteByte
-;;;581        EEPROM_WriteByte(0x5D,year4);
+;;;605        EEPROM_WriteByte(0x5D,year4);
 000026  4825              LDR      r0,|L7.188|
 000028  8800              LDRH     r0,[r0,#0]  ; year4
 00002a  b2c1              UXTB     r1,r0
 00002c  205d              MOVS     r0,#0x5d
 00002e  f7fffffe          BL       EEPROM_WriteByte
-;;;582        EEPROM_WriteByte(0x5E,month1);
+;;;606        EEPROM_WriteByte(0x5E,month1);
 000032  4823              LDR      r0,|L7.192|
 000034  7801              LDRB     r1,[r0,#0]  ; month1
 000036  205e              MOVS     r0,#0x5e
 000038  f7fffffe          BL       EEPROM_WriteByte
-;;;583        EEPROM_WriteByte(0x5F,month2);
+;;;607        EEPROM_WriteByte(0x5F,month2);
 00003c  4821              LDR      r0,|L7.196|
 00003e  7801              LDRB     r1,[r0,#0]  ; month2
 000040  205f              MOVS     r0,#0x5f
 000042  f7fffffe          BL       EEPROM_WriteByte
-;;;584        EEPROM_WriteByte(0x60,day1);
+;;;608        EEPROM_WriteByte(0x60,day1);
 000046  4820              LDR      r0,|L7.200|
 000048  7801              LDRB     r1,[r0,#0]  ; day1
 00004a  2060              MOVS     r0,#0x60
 00004c  f7fffffe          BL       EEPROM_WriteByte
-;;;585        EEPROM_WriteByte(0x61,day2);
+;;;609        EEPROM_WriteByte(0x61,day2);
 000050  481e              LDR      r0,|L7.204|
 000052  7801              LDRB     r1,[r0,#0]  ; day2
 000054  2061              MOVS     r0,#0x61
 000056  f7fffffe          BL       EEPROM_WriteByte
-;;;586        EEPROM_WriteByte(0x62,code1);
+;;;610        EEPROM_WriteByte(0x62,code1);
 00005a  481d              LDR      r0,|L7.208|
 00005c  7801              LDRB     r1,[r0,#0]  ; code1
 00005e  2062              MOVS     r0,#0x62
 000060  f7fffffe          BL       EEPROM_WriteByte
-;;;587        EEPROM_WriteByte(0x63,code2);
+;;;611        EEPROM_WriteByte(0x63,code2);
 000064  481b              LDR      r0,|L7.212|
 000066  7801              LDRB     r1,[r0,#0]  ; code2
 000068  2063              MOVS     r0,#0x63
 00006a  f7fffffe          BL       EEPROM_WriteByte
-;;;588        EEPROM_WriteByte(0x64,code3);
+;;;612        EEPROM_WriteByte(0x64,code3);
 00006e  481a              LDR      r0,|L7.216|
 000070  7801              LDRB     r1,[r0,#0]  ; code3
 000072  2064              MOVS     r0,#0x64
 000074  f7fffffe          BL       EEPROM_WriteByte
-;;;589        EEPROM_WriteByte(0x65,code4);
+;;;613        EEPROM_WriteByte(0x65,code4);
 000078  4818              LDR      r0,|L7.220|
 00007a  7801              LDRB     r1,[r0,#0]  ; code4
 00007c  2065              MOVS     r0,#0x65
 00007e  f7fffffe          BL       EEPROM_WriteByte
-;;;590        EEPROM_WriteByte(0x66,code5);
+;;;614        EEPROM_WriteByte(0x66,code5);
 000082  4817              LDR      r0,|L7.224|
 000084  7801              LDRB     r1,[r0,#0]  ; code5
 000086  2066              MOVS     r0,#0x66
 000088  f7fffffe          BL       EEPROM_WriteByte
-;;;591        EEPROM_WriteByte(0x67,code6);
+;;;615        EEPROM_WriteByte(0x67,code6);
 00008c  4815              LDR      r0,|L7.228|
 00008e  7801              LDRB     r1,[r0,#0]  ; code6
 000090  2067              MOVS     r0,#0x67
 000092  f7fffffe          BL       EEPROM_WriteByte
-;;;592        EEPROM_WriteByte(0x68,code7);
+;;;616        EEPROM_WriteByte(0x68,code7);
 000096  4814              LDR      r0,|L7.232|
 000098  7801              LDRB     r1,[r0,#0]  ; code7
 00009a  2068              MOVS     r0,#0x68
 00009c  f7fffffe          BL       EEPROM_WriteByte
-;;;593        EEPROM_WriteByte(0x69,code8);
+;;;617        EEPROM_WriteByte(0x69,code8);
 0000a0  4812              LDR      r0,|L7.236|
 0000a2  7801              LDRB     r1,[r0,#0]  ; code8
 0000a4  e8bd4010          POP      {r4,lr}
 0000a8  2069              MOVS     r0,#0x69
 0000aa  f7ffbffe          B.W      EEPROM_WriteByte
-;;;594        
-;;;595    }
-;;;596    
+;;;618        
+;;;619    }
+;;;620    
                           ENDP
 
 0000ae  0000              DCW      0x0000
@@ -2029,16 +2115,16 @@
                           AREA ||i.Write_oct||, CODE, READONLY, ALIGN=2
 
                   Write_oct PROC
-;;;607    /************************************************************************/
-;;;608    void Write_oct(void)
+;;;631    /************************************************************************/
+;;;632    void Write_oct(void)
 000000  4802              LDR      r0,|L8.12|
-;;;609    {
-;;;610    	EEPROM_WriteByte(0x55,para_set2);
+;;;633    {
+;;;634    	EEPROM_WriteByte(0x55,para_set2);
 000002  7801              LDRB     r1,[r0,#0]  ; para_set2
 000004  2055              MOVS     r0,#0x55
 000006  f7ffbffe          B.W      EEPROM_WriteByte
-;;;611    }
-;;;612    
+;;;635    }
+;;;636    
                           ENDP
 
 00000a  0000              DCW      0x0000
@@ -2048,23 +2134,23 @@
                           AREA ||i.Wrtite_Beep||, CODE, READONLY, ALIGN=2
 
                   Wrtite_Beep PROC
-;;;563    }
-;;;564    void Wrtite_Beep(void)//ѣզBEEP״ׁ̬FLASHא
+;;;587    }
+;;;588    void Wrtite_Beep(void)//ѣզBEEP״ׁ̬FLASHא
 000000  b510              PUSH     {r4,lr}
-;;;565    {
-;;;566    	EEPROM_WriteByte(0x2E, Beep_Flag);
+;;;589    {
+;;;590    	EEPROM_WriteByte(0x2E, Beep_Flag);
 000002  4806              LDR      r0,|L9.28|
 000004  7801              LDRB     r1,[r0,#0]  ; Beep_Flag
 000006  202e              MOVS     r0,#0x2e
 000008  f7fffffe          BL       EEPROM_WriteByte
-;;;567    	EEPROM_WriteByte(0x2F, t_beep);
+;;;591    	EEPROM_WriteByte(0x2F, t_beep);
 00000c  4804              LDR      r0,|L9.32|
 00000e  7801              LDRB     r1,[r0,#0]  ; t_beep
 000010  e8bd4010          POP      {r4,lr}
 000014  202f              MOVS     r0,#0x2f
 000016  f7ffbffe          B.W      EEPROM_WriteByte
-;;;568    }
-;;;569    /*****************************************************************************/
+;;;592    }
+;;;593    /*****************************************************************************/
                           ENDP
 
 00001a  0000              DCW      0x0000
@@ -2076,16 +2162,16 @@
                           AREA ||i.Wrtite_Lock||, CODE, READONLY, ALIGN=2
 
                   Wrtite_Lock PROC
-;;;618    /******************************************************************************/
-;;;619    void Wrtite_Lock(void)
+;;;642    /******************************************************************************/
+;;;643    void Wrtite_Lock(void)
 000000  4802              LDR      r0,|L10.12|
-;;;620    {
-;;;621    	EEPROM_WriteByte(0x30, t_lock);
+;;;644    {
+;;;645    	EEPROM_WriteByte(0x30, t_lock);
 000002  7801              LDRB     r1,[r0,#0]  ; t_lock
 000004  2030              MOVS     r0,#0x30
 000006  f7ffbffe          B.W      EEPROM_WriteByte
-;;;622    }
-;;;623    
+;;;646    }
+;;;647    
                           ENDP
 
 00000a  0000              DCW      0x0000
@@ -2095,23 +2181,23 @@
                           AREA ||i.Wrtite_S||, CODE, READONLY, ALIGN=2
 
                   Wrtite_S PROC
-;;;569    /*****************************************************************************/
-;;;570    void Wrtite_S(void)//ѣզBEEP״ׁ̬FLASHא
+;;;593    /*****************************************************************************/
+;;;594    void Wrtite_S(void)//ѣզBEEP״ׁ̬FLASHא
 000000  b510              PUSH     {r4,lr}
-;;;571    {
-;;;572    	EEPROM_WriteByte(0x59, para_set1);
+;;;595    {
+;;;596    	EEPROM_WriteByte(0x59, para_set1);
 000002  4806              LDR      r0,|L11.28|
 000004  7801              LDRB     r1,[r0,#0]  ; para_set1
 000006  2059              MOVS     r0,#0x59
 000008  f7fffffe          BL       EEPROM_WriteByte
-;;;573        EEPROM_WriteByte(0x74, lang);
+;;;597        EEPROM_WriteByte(0x74, lang);
 00000c  4804              LDR      r0,|L11.32|
 00000e  7801              LDRB     r1,[r0,#0]  ; lang
 000010  e8bd4010          POP      {r4,lr}
 000014  2074              MOVS     r0,#0x74
 000016  f7ffbffe          B.W      EEPROM_WriteByte
-;;;574    }
-;;;575    
+;;;598    }
+;;;599    
                           ENDP
 
 00001a  0000              DCW      0x0000
@@ -2123,40 +2209,40 @@
                           AREA ||i.Wrtite_SetVA||, CODE, READONLY, ALIGN=2
 
                   Wrtite_SetVA PROC
-;;;440    }
-;;;441    void Wrtite_SetVA(void)
+;;;464    }
+;;;465    void Wrtite_SetVA(void)
 000000  b510              PUSH     {r4,lr}
-;;;442    {
-;;;443    	vu8 data_8bit;
-;;;444      /*********************************************/
-;;;445    	data_8bit = SET_Voltage >> 8;
+;;;466    {
+;;;467    	vu8 data_8bit;
+;;;468      /*********************************************/
+;;;469    	data_8bit = SET_Voltage >> 8;
 000002  4c0b              LDR      r4,|L12.48|
 000004  8860              LDRH     r0,[r4,#2]  ; Run_Control
 000006  0a01              LSRS     r1,r0,#8
-;;;446    	EEPROM_WriteByte(0x2A, data_8bit);
+;;;470    	EEPROM_WriteByte(0x2A, data_8bit);
 000008  202a              MOVS     r0,#0x2a
 00000a  f7fffffe          BL       EEPROM_WriteByte
-;;;447    	EEPROM_WriteByte(0x2B, SET_Voltage);
+;;;471    	EEPROM_WriteByte(0x2B, SET_Voltage);
 00000e  8860              LDRH     r0,[r4,#2]  ; Run_Control
 000010  b2c1              UXTB     r1,r0
 000012  202b              MOVS     r0,#0x2b
 000014  f7fffffe          BL       EEPROM_WriteByte
-;;;448    	
-;;;449    	data_8bit = SET_Current >> 8;
+;;;472    	
+;;;473    	data_8bit = SET_Current >> 8;
 000018  88a0              LDRH     r0,[r4,#4]  ; Run_Control
 00001a  0a01              LSRS     r1,r0,#8
-;;;450    	EEPROM_WriteByte(0x2C, data_8bit);
+;;;474    	EEPROM_WriteByte(0x2C, data_8bit);
 00001c  202c              MOVS     r0,#0x2c
 00001e  f7fffffe          BL       EEPROM_WriteByte
-;;;451    	EEPROM_WriteByte(0x2D, SET_Current);
+;;;475    	EEPROM_WriteByte(0x2D, SET_Current);
 000022  88a0              LDRH     r0,[r4,#4]  ; Run_Control
 000024  e8bd4010          POP      {r4,lr}
 000028  b2c1              UXTB     r1,r0
 00002a  202d              MOVS     r0,#0x2d
 00002c  f7ffbffe          B.W      EEPROM_WriteByte
-;;;452    	/********************************************/
-;;;453    }
-;;;454    
+;;;476    	/********************************************/
+;;;477    }
+;;;478    
                           ENDP
 
                   |L12.48|
@@ -2165,16 +2251,16 @@
                           AREA ||i.Wrtite_Zore||, CODE, READONLY, ALIGN=2
 
                   Wrtite_Zore PROC
-;;;436    /****************************************************************************/
-;;;437    void Wrtite_Zore(void)
+;;;460    /****************************************************************************/
+;;;461    void Wrtite_Zore(void)
 000000  4802              LDR      r0,|L13.12|
-;;;438    {
-;;;439    	EEPROM_WriteByte(0x32, OFFSET_Zore);
+;;;462    {
+;;;463    	EEPROM_WriteByte(0x32, OFFSET_Zore);
 000002  7801              LDRB     r1,[r0,#0]  ; OFFSET_Zore
 000004  2032              MOVS     r0,#0x32
 000006  f7ffbffe          B.W      EEPROM_WriteByte
-;;;440    }
-;;;441    void Wrtite_SetVA(void)
+;;;464    }
+;;;465    void Wrtite_SetVA(void)
                           ENDP
 
 00000a  0000              DCW      0x0000
@@ -2184,17 +2270,17 @@
                           AREA ||i.Wrtite_step||, CODE, READONLY, ALIGN=2
 
                   Wrtite_step PROC
-;;;612    
-;;;613    void Wrtite_step(void)
+;;;636    
+;;;637    void Wrtite_step(void)
 000000  4802              LDR      r0,|L14.12|
-;;;614    {
-;;;615    	EEPROM_WriteByte(0x75, steptime);
+;;;638    {
+;;;639    	EEPROM_WriteByte(0x75, steptime);
 000002  8800              LDRH     r0,[r0,#0]  ; steptime
 000004  b2c1              UXTB     r1,r0
 000006  2075              MOVS     r0,#0x75
 000008  f7ffbffe          B.W      EEPROM_WriteByte
-;;;616    }
-;;;617    
+;;;640    }
+;;;641    
                           ENDP
 
                   |L14.12|

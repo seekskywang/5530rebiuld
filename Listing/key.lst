@@ -34939,7 +34939,7 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu16 Correct_Parametet[13];
+Nextern vu16 Correct_Parametet[14];
 N#define  REG_CorrectionV   Correct_Parametet[0]
 N#define  REG_CorrectionA   Correct_Parametet[1]
 N#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -34953,9 +34953,10 @@ N#define  Polar1            Correct_Parametet[9]
 N#define  Polar2						 Correct_Parametet[10]
 N#define  Polar3						 Correct_Parametet[11]
 N#define  REG_CorrectionV1  Correct_Parametet[12]
+N#define  REG_CorrectionRH   Correct_Parametet[13]
 N
 N
-Nextern vu32 Correct_Strong[9];//У׼ϵ��
+Nextern vu32 Correct_Strong[10];//У׼ϵ��
 N#define  REG_ReadV_Offset   Correct_Strong[0]
 N#define  REG_ReadA_Offset   Correct_Strong[1]
 N#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -34965,6 +34966,7 @@ N#define  SET_ReadA_Offset   Correct_Strong[5]
 N#define  SET_ReadA1_Offset  Correct_Strong[6]
 N#define  CON_ReadA_Offset   Correct_Strong[7]
 N#define  REG_ReadV1_Offset  Correct_Strong[8]
+N#define  REG_ReadRH_Offset   Correct_Strong[9]
 N
 N/*
 N************************************************************************
@@ -35405,7 +35407,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu16 Correct_Parametet[13];
+Sextern vu16 Correct_Parametet[14];
 S#define  REG_CorrectionV   Correct_Parametet[0]
 S#define  REG_CorrectionA   Correct_Parametet[1]
 S#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -35419,9 +35421,10 @@ S#define  Polar1            Correct_Parametet[9]
 S#define  Polar2						 Correct_Parametet[10]
 S#define  Polar3						 Correct_Parametet[11]
 S#define  REG_CorrectionV1  Correct_Parametet[12]
+S#define  REG_CorrectionRH   Correct_Parametet[13]
 S
 S
-Sextern vu32 Correct_Strong[9];//У׼ϵ��
+Sextern vu32 Correct_Strong[10];//У׼ϵ��
 S#define  REG_ReadV_Offset   Correct_Strong[0]
 S#define  REG_ReadA_Offset   Correct_Strong[1]
 S#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -35431,6 +35434,7 @@ S#define  SET_ReadA_Offset   Correct_Strong[5]
 S#define  SET_ReadA1_Offset  Correct_Strong[6]
 S#define  CON_ReadA_Offset   Correct_Strong[7]
 S#define  REG_ReadV1_Offset  Correct_Strong[8]
+S#define  REG_ReadRH_Offset   Correct_Strong[9]
 S
 S/*
 S************************************************************************
@@ -35894,7 +35898,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu16 Correct_Parametet[13];
+Sextern vu16 Correct_Parametet[14];
 S#define  REG_CorrectionV   Correct_Parametet[0]
 S#define  REG_CorrectionA   Correct_Parametet[1]
 S#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -35908,9 +35912,10 @@ S#define  Polar1            Correct_Parametet[9]
 S#define  Polar2						 Correct_Parametet[10]
 S#define  Polar3						 Correct_Parametet[11]
 S#define  REG_CorrectionV1  Correct_Parametet[12]
+S#define  REG_CorrectionRH   Correct_Parametet[13]
 S
 S
-Sextern vu32 Correct_Strong[9];//У׼ϵ��
+Sextern vu32 Correct_Strong[10];//У׼ϵ��
 S#define  REG_ReadV_Offset   Correct_Strong[0]
 S#define  REG_ReadA_Offset   Correct_Strong[1]
 S#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -35920,6 +35925,7 @@ S#define  SET_ReadA_Offset   Correct_Strong[5]
 S#define  SET_ReadA1_Offset  Correct_Strong[6]
 S#define  CON_ReadA_Offset   Correct_Strong[7]
 S#define  REG_ReadV1_Offset  Correct_Strong[8]
+S#define  REG_ReadRH_Offset   Correct_Strong[9]
 S
 S/*
 S************************************************************************
@@ -50190,7 +50196,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu16 Correct_Parametet[13];
+Sextern vu16 Correct_Parametet[14];
 S#define  REG_CorrectionV   Correct_Parametet[0]
 S#define  REG_CorrectionA   Correct_Parametet[1]
 S#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -50204,9 +50210,10 @@ S#define  Polar1            Correct_Parametet[9]
 S#define  Polar2						 Correct_Parametet[10]
 S#define  Polar3						 Correct_Parametet[11]
 S#define  REG_CorrectionV1  Correct_Parametet[12]
+S#define  REG_CorrectionRH   Correct_Parametet[13]
 S
 S
-Sextern vu32 Correct_Strong[9];//У׼ϵ��
+Sextern vu32 Correct_Strong[10];//У׼ϵ��
 S#define  REG_ReadV_Offset   Correct_Strong[0]
 S#define  REG_ReadA_Offset   Correct_Strong[1]
 S#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -50216,6 +50223,7 @@ S#define  SET_ReadA_Offset   Correct_Strong[5]
 S#define  SET_ReadA1_Offset  Correct_Strong[6]
 S#define  CON_ReadA_Offset   Correct_Strong[7]
 S#define  REG_ReadV1_Offset  Correct_Strong[8]
+S#define  REG_ReadRH_Offset   Correct_Strong[9]
 S
 S/*
 S************************************************************************
@@ -50809,6 +50817,9 @@ N                    {
 N                        if(admin == 1)
 N                        {
 N                            INPUT_INFO(3);    
+N                        }else if(cal == 1){
+W "..\drive\key.c" 364 29 function "Rhigh_cal" declared implicitly
+N                            Rhigh_cal(3);
 N                        }else{
 N                            pass += 3;
 N                        }
@@ -50873,6 +50884,9 @@ N                    {
 N                        if(admin == 1)
 N                        {
 N                            INPUT_INFO(4);    
+N                        }else if(cal == 1){
+W "..\drive\key.c" 422 29 function "Rhigh_cal" declared implicitly
+N                            Rhigh_cal(4);
 N                        }else{
 N                            pass += 4;
 N                        }
@@ -51331,7 +51345,7 @@ N                switch(page_sw){
 N                    case face_set:  //系统设置
 X                    case 5:  
 N                    {
-W "..\drive\key.c" 819 25 function "SET_OP_LEFT" declared implicitly
+W "..\drive\key.c" 823 25 function "SET_OP_LEFT" declared implicitly
 N                        SET_OP_LEFT();  //设置选项切换
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51342,7 +51356,7 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 828 29 function "SYS_INFO_LEFT" declared implicitly
+W "..\drive\key.c" 832 29 function "SYS_INFO_LEFT" declared implicitly
 N                            SYS_INFO_LEFT();  //设置选项切换
 N                        } 
 N                        KeyCounter = 0;
@@ -51352,7 +51366,7 @@ N                    }
 N                    case face_cdc:  //系统设置
 X                    case 1:  
 N                    {
-W "..\drive\key.c" 836 25 function "CDC_OP_LEFT" declared implicitly
+W "..\drive\key.c" 840 25 function "CDC_OP_LEFT" declared implicitly
 N                        CDC_OP_LEFT();  //设置选项切换
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣噿
@@ -51368,7 +51382,7 @@ N                switch(page_sw){
 N                    case face_set:  //系统设置
 X                    case 5:  
 N                    {
-W "..\drive\key.c" 849 25 function "SET_OP_RIGHT" declared implicitly
+W "..\drive\key.c" 853 25 function "SET_OP_RIGHT" declared implicitly
 N                        SET_OP_RIGHT();  //设置选项切换
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51379,7 +51393,7 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 858 29 function "SYS_INFO_RIGHT" declared implicitly
+W "..\drive\key.c" 862 29 function "SYS_INFO_RIGHT" declared implicitly
 N                            SYS_INFO_RIGHT();  //设置选项切换
 N                        } 
 N                        KeyCounter = 0;
@@ -51389,7 +51403,7 @@ N                    }
 N                    case face_cdc:  //系统设置
 X                    case 1:  
 N                    {
-W "..\drive\key.c" 866 25 function "CDC_OP_RIGHT" declared implicitly
+W "..\drive\key.c" 870 25 function "CDC_OP_RIGHT" declared implicitly
 N                        CDC_OP_RIGHT();  //设置选项切换
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣噿
@@ -51407,7 +51421,7 @@ X                    case 2:
 N                    {
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
-W "..\drive\key.c" 881 25 function "MENU_OP_UP" declared implicitly
+W "..\drive\key.c" 885 25 function "MENU_OP_UP" declared implicitly
 N                        MENU_OP_UP();
 N                        break;
 N                    }                    
@@ -51422,7 +51436,7 @@ N                    }
 N                    case face_set:
 X                    case 5:
 N                    {
-W "..\drive\key.c" 893 25 function "SET_OP_UP" declared implicitly
+W "..\drive\key.c" 897 25 function "SET_OP_UP" declared implicitly
 N                        SET_OP_UP();  //设置选项切换
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51434,7 +51448,7 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 902 29 function "OC_OP_UP" declared implicitly
+W "..\drive\key.c" 906 29 function "OC_OP_UP" declared implicitly
 N                            OC_OP_UP();
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -51445,7 +51459,7 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 911 25 function "CDC_OP_UP" declared implicitly
+W "..\drive\key.c" 915 25 function "CDC_OP_UP" declared implicitly
 N                        CDC_OP_UP();
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51456,7 +51470,7 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 920 29 function "SYS_INFO_UP" declared implicitly
+W "..\drive\key.c" 924 29 function "SYS_INFO_UP" declared implicitly
 N                            SYS_INFO_UP();  //设置选项切换
 N                        }                        
 N                        KeyCounter = 0;
@@ -51476,7 +51490,7 @@ X                    case 2:
 N                    {
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
-W "..\drive\key.c" 937 25 function "MENU_OP_DOWN" declared implicitly
+W "..\drive\key.c" 941 25 function "MENU_OP_DOWN" declared implicitly
 N                        MENU_OP_DOWN();
 N                        break;
 N                    }  
@@ -51491,7 +51505,7 @@ N                    }
 N                    case face_set:  //系统设置
 X                    case 5:  
 N                    {
-W "..\drive\key.c" 949 25 function "SET_OP_DOWN" declared implicitly
+W "..\drive\key.c" 953 25 function "SET_OP_DOWN" declared implicitly
 N                        SET_OP_DOWN();  //设置选项切换
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51503,7 +51517,7 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 958 29 function "OC_OP_DOWN" declared implicitly
+W "..\drive\key.c" 962 29 function "OC_OP_DOWN" declared implicitly
 N                            OC_OP_DOWN();
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -51513,7 +51527,7 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 966 25 function "CDC_OP_DOWN" declared implicitly
+W "..\drive\key.c" 970 25 function "CDC_OP_DOWN" declared implicitly
 N                        CDC_OP_DOWN();
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51524,7 +51538,7 @@ X                    case 7:
 N                    {
 N                        if(admin == 1)
 N                        {
-W "..\drive\key.c" 975 29 function "SYS_INFO_DOWN" declared implicitly
+W "..\drive\key.c" 979 29 function "SYS_INFO_DOWN" declared implicitly
 N                            SYS_INFO_DOWN();  //设置选项切换
 N                        } 
 N                        KeyCounter = 0;
@@ -51544,7 +51558,7 @@ N                switch(page_sw){
 N                    case face_menu:
 X                    case 2:
 N                    {
-W "..\drive\key.c" 992 25 function "MENU_SET" declared implicitly
+W "..\drive\key.c" 996 25 function "MENU_SET" declared implicitly
 N                        MENU_SET();
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51553,7 +51567,7 @@ N                    }
 N                    case face_set:
 X                    case 5:
 N                    {
-W "..\drive\key.c" 999 25 function "PARA_SET" declared implicitly
+W "..\drive\key.c" 1003 25 function "PARA_SET" declared implicitly
 N                        PARA_SET();  //参数设置
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51565,7 +51579,7 @@ N                    {
 N                        if(para_set2 == set_2_on)
 X                        if(para_set2 == 0xff)
 N                        {
-W "..\drive\key.c" 1008 29 function "OC_SET" declared implicitly
+W "..\drive\key.c" 1012 29 function "OC_SET" declared implicitly
 N                            OC_SET();
 N                            KeyCounter = 0;
 N                            BEEP_Tiggr();//触发蜂鸣器
@@ -51575,7 +51589,7 @@ N                    }
 N                    case face_load:
 X                    case 4:
 N                    {
-W "..\drive\key.c" 1016 25 function "LOAD_SET" declared implicitly
+W "..\drive\key.c" 1020 25 function "LOAD_SET" declared implicitly
 N                        LOAD_SET();
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51584,7 +51598,7 @@ N                    }
 N                    case face_cdc:
 X                    case 1:
 N                    {
-W "..\drive\key.c" 1023 25 function "CDC_SET" declared implicitly
+W "..\drive\key.c" 1027 25 function "CDC_SET" declared implicitly
 N                        CDC_SET();
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51593,7 +51607,7 @@ N                    }
 N                    case face_sys_info:
 X                    case 7:
 N                    {
-W "..\drive\key.c" 1030 25 function "CFM_PASS" declared implicitly
+W "..\drive\key.c" 1034 25 function "CFM_PASS" declared implicitly
 N                        CFM_PASS();
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣器
@@ -51677,7 +51691,7 @@ N                        WM_DeleteWindow(load_wind);
 N                        WM_DeleteWindow(hWinsysinfo);
 N                        WM_DeleteWindow(hWincdc);
 N                        WM_DeleteWindow(hWinset);
-W "..\drive\key.c" 1107 25 function "CreateCDC" declared implicitly
+W "..\drive\key.c" 1111 25 function "CreateCDC" declared implicitly
 N                        CreateCDC();
 N                        KeyCounter = 0;
 N                        BEEP_Tiggr();//触发蜂鸣噿
@@ -51974,7 +51988,7 @@ N                    WM_DeleteWindow(load_wind);
 N                    WM_DeleteWindow(hWinsysinfo);
 N                    WM_DeleteWindow(hWincdc);
 N                    WM_DeleteWindow(hWinset);
-W "..\drive\key.c" 1362 21 function "CreateCDC" declared implicitly
+W "..\drive\key.c" 1366 21 function "CreateCDC" declared implicitly
 N                    CreateCDC();                
 N                    KeyCounter = 0;
 N                    BEEP_Tiggr();//触发蜂鸣噿
@@ -52005,7 +52019,7 @@ N                    WM_DeleteWindow(load_wind);
 N                    WM_DeleteWindow(hWinsysinfo);
 N                    WM_DeleteWindow(hWincdc);
 N                    WM_DeleteWindow(hWinset);
-W "..\drive\key.c" 1390 21 function "Createsysinfo" declared implicitly
+W "..\drive\key.c" 1394 21 function "Createsysinfo" declared implicitly
 N                    Createsysinfo();
 N                    KeyCounter = 0;
 N                    BEEP_Tiggr();//触发蜂鸣噿

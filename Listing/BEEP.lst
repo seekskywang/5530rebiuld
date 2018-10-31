@@ -34938,7 +34938,7 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu16 Correct_Parametet[13];
+Nextern vu16 Correct_Parametet[14];
 N#define  REG_CorrectionV   Correct_Parametet[0]
 N#define  REG_CorrectionA   Correct_Parametet[1]
 N#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -34952,9 +34952,10 @@ N#define  Polar1            Correct_Parametet[9]
 N#define  Polar2						 Correct_Parametet[10]
 N#define  Polar3						 Correct_Parametet[11]
 N#define  REG_CorrectionV1  Correct_Parametet[12]
+N#define  REG_CorrectionRH   Correct_Parametet[13]
 N
 N
-Nextern vu32 Correct_Strong[9];//校准系数
+Nextern vu32 Correct_Strong[10];//校准系数
 N#define  REG_ReadV_Offset   Correct_Strong[0]
 N#define  REG_ReadA_Offset   Correct_Strong[1]
 N#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -34964,6 +34965,7 @@ N#define  SET_ReadA_Offset   Correct_Strong[5]
 N#define  SET_ReadA1_Offset  Correct_Strong[6]
 N#define  CON_ReadA_Offset   Correct_Strong[7]
 N#define  REG_ReadV1_Offset  Correct_Strong[8]
+N#define  REG_ReadRH_Offset   Correct_Strong[9]
 N
 N/*
 N************************************************************************

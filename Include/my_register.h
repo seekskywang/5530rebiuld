@@ -238,7 +238,7 @@ extern vu16 coff[6];
 extern vu16 Contr_Voltage;//
 extern vu16 Contr_Current;//
 extern vu16 Contr_Laod;//
-extern vu16 Correct_Parametet[13];
+extern vu16 Correct_Parametet[14];
 #define  REG_CorrectionV   Correct_Parametet[0]
 #define  REG_CorrectionA   Correct_Parametet[1]
 #define  REG_CorrectionA1  Correct_Parametet[2]
@@ -252,9 +252,10 @@ extern vu16 Correct_Parametet[13];
 #define  Polar2						 Correct_Parametet[10]
 #define  Polar3						 Correct_Parametet[11]
 #define  REG_CorrectionV1  Correct_Parametet[12]
+#define  REG_CorrectionRH   Correct_Parametet[13]
 
 
-extern vu32 Correct_Strong[9];//校准系数
+extern vu32 Correct_Strong[10];//校准系数
 #define  REG_ReadV_Offset   Correct_Strong[0]
 #define  REG_ReadA_Offset   Correct_Strong[1]
 #define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -264,6 +265,7 @@ extern vu32 Correct_Strong[9];//校准系数
 #define  SET_ReadA1_Offset  Correct_Strong[6]
 #define  CON_ReadA_Offset   Correct_Strong[7]
 #define  REG_ReadV1_Offset  Correct_Strong[8]
+#define  REG_ReadRH_Offset   Correct_Strong[9]
 
 /*
 ************************************************************************

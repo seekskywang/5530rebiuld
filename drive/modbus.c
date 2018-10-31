@@ -33,8 +33,8 @@ vu16 Modify_A_ACT;
 vu16 Modify_B_READ;
 vu16 Modify_D_READ;
 vu16 Modify_B_ACT;
-vu16 Correct_Parametet[13];//校准参数
-vu32 Correct_Strong[9];//校准系数
+vu16 Correct_Parametet[14];//校准参数
+vu32 Correct_Strong[10];//校准系数
 /*************************变量定义***********************************/
 vu16 Run_Control[43];
 vu8 ADDR;
@@ -265,6 +265,23 @@ void Transformation_ADC(void)
 	var32 = var32 >> 12;
 	if (var32 < 5) var32 = 0;				  //40mV以下清零
 	R_VLUE = var32;
+    if(R_VLUE > 100)
+    {
+        var32 = Rmon_value;
+        var32 = var32 * REG_CorrectionRH;  
+        if ((Polar1 & 0x04) == 0x04)		  
+        {
+            if (var32 < REG_ReadRH_Offset) 
+            {
+                var32 = 0;
+            }
+            else var32 = var32 - REG_ReadRH_Offset;
+        }
+        else var32 = var32 + REG_ReadRH_Offset;
+        var32 = var32 >> 12;
+        if (var32 < 5) var32 = 0;				  //40mV訑袀去拢
+        R_VLUE = var32;
+    }
 	var32 = 0;	
     
 /*****************************稳压电源测量电流转换*******************************************/

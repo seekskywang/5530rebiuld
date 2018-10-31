@@ -34939,7 +34939,7 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu16 Correct_Parametet[13];
+Nextern vu16 Correct_Parametet[14];
 N#define  REG_CorrectionV   Correct_Parametet[0]
 N#define  REG_CorrectionA   Correct_Parametet[1]
 N#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -34953,9 +34953,10 @@ N#define  Polar1            Correct_Parametet[9]
 N#define  Polar2						 Correct_Parametet[10]
 N#define  Polar3						 Correct_Parametet[11]
 N#define  REG_CorrectionV1  Correct_Parametet[12]
+N#define  REG_CorrectionRH   Correct_Parametet[13]
 N
 N
-Nextern vu32 Correct_Strong[9];//校准系数
+Nextern vu32 Correct_Strong[10];//校准系数
 N#define  REG_ReadV_Offset   Correct_Strong[0]
 N#define  REG_ReadA_Offset   Correct_Strong[1]
 N#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -34965,6 +34966,7 @@ N#define  SET_ReadA_Offset   Correct_Strong[5]
 N#define  SET_ReadA1_Offset  Correct_Strong[6]
 N#define  CON_ReadA_Offset   Correct_Strong[7]
 N#define  REG_ReadV1_Offset  Correct_Strong[8]
+N#define  REG_ReadRH_Offset   Correct_Strong[9]
 N
 N/*
 N************************************************************************
@@ -35430,7 +35432,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu16 Correct_Parametet[13];
+Sextern vu16 Correct_Parametet[14];
 S#define  REG_CorrectionV   Correct_Parametet[0]
 S#define  REG_CorrectionA   Correct_Parametet[1]
 S#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -35444,9 +35446,10 @@ S#define  Polar1            Correct_Parametet[9]
 S#define  Polar2						 Correct_Parametet[10]
 S#define  Polar3						 Correct_Parametet[11]
 S#define  REG_CorrectionV1  Correct_Parametet[12]
+S#define  REG_CorrectionRH   Correct_Parametet[13]
 S
 S
-Sextern vu32 Correct_Strong[9];//校准系数
+Sextern vu32 Correct_Strong[10];//校准系数
 S#define  REG_ReadV_Offset   Correct_Strong[0]
 S#define  REG_ReadA_Offset   Correct_Strong[1]
 S#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -35456,6 +35459,7 @@ S#define  SET_ReadA_Offset   Correct_Strong[5]
 S#define  SET_ReadA1_Offset  Correct_Strong[6]
 S#define  CON_ReadA_Offset   Correct_Strong[7]
 S#define  REG_ReadV1_Offset  Correct_Strong[8]
+S#define  REG_ReadRH_Offset   Correct_Strong[9]
 S
 S/*
 S************************************************************************
@@ -35679,8 +35683,8 @@ N
 Nvu16 Modify_B_READ;
 Nvu16 Modify_D_READ;
 Nvu16 Modify_B_ACT;
-Nvu16 Correct_Parametet[13];//校准参数
-Nvu32 Correct_Strong[9];//校准系数
+Nvu16 Correct_Parametet[14];//校准参数
+Nvu32 Correct_Strong[10];//校准系数
 N/*************************变量定义***********************************/
 Nvu16 Run_Control[43];
 Nvu8 ADDR;
@@ -35948,6 +35952,30 @@ N	var32 = var32 >> 12;
 N	if (var32 < 5) var32 = 0;				  //40mV以下清零
 N	R_VLUE = var32;
 X	Run_Control[13] = var32;
+N    if(R_VLUE > 100)
+X    if(Run_Control[13] > 100)
+N    {
+N        var32 = Rmon_value;
+N        var32 = var32 * REG_CorrectionRH;  
+X        var32 = var32 * Correct_Parametet[13];  
+N        if ((Polar1 & 0x04) == 0x04)		  
+X        if ((Correct_Parametet[9] & 0x04) == 0x04)		  
+N        {
+N            if (var32 < REG_ReadRH_Offset) 
+X            if (var32 < Correct_Strong[9]) 
+N            {
+N                var32 = 0;
+N            }
+N            else var32 = var32 - REG_ReadRH_Offset;
+X            else var32 = var32 - Correct_Strong[9];
+N        }
+N        else var32 = var32 + REG_ReadRH_Offset;
+X        else var32 = var32 + Correct_Strong[9];
+N        var32 = var32 >> 12;
+N        if (var32 < 5) var32 = 0;				  //40mV訑袀去拢
+N        R_VLUE = var32;
+X        Run_Control[13] = var32;
+N    }
 N	var32 = 0;	
 N    
 N/*****************************稳压电源测量电流转换*******************************************/

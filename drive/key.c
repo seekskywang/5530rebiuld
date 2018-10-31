@@ -360,6 +360,8 @@ void Key_Funtion(void)
                         if(admin == 1)
                         {
                             INPUT_INFO(3);    
+                        }else if(cal == 1){
+                            Rhigh_cal(3);
                         }else{
                             pass += 3;
                         }
@@ -416,6 +418,8 @@ void Key_Funtion(void)
                         if(admin == 1)
                         {
                             INPUT_INFO(4);    
+                        }else if(cal == 1){
+                            Rhigh_cal(4);
                         }else{
                             pass += 4;
                         }

@@ -34939,7 +34939,7 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu16 Correct_Parametet[13];
+Nextern vu16 Correct_Parametet[14];
 N#define  REG_CorrectionV   Correct_Parametet[0]
 N#define  REG_CorrectionA   Correct_Parametet[1]
 N#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -34953,9 +34953,10 @@ N#define  Polar1            Correct_Parametet[9]
 N#define  Polar2						 Correct_Parametet[10]
 N#define  Polar3						 Correct_Parametet[11]
 N#define  REG_CorrectionV1  Correct_Parametet[12]
+N#define  REG_CorrectionRH   Correct_Parametet[13]
 N
 N
-Nextern vu32 Correct_Strong[9];//校准系数
+Nextern vu32 Correct_Strong[10];//校准系数
 N#define  REG_ReadV_Offset   Correct_Strong[0]
 N#define  REG_ReadA_Offset   Correct_Strong[1]
 N#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -34965,6 +34966,7 @@ N#define  SET_ReadA_Offset   Correct_Strong[5]
 N#define  SET_ReadA1_Offset  Correct_Strong[6]
 N#define  CON_ReadA_Offset   Correct_Strong[7]
 N#define  REG_ReadV1_Offset  Correct_Strong[8]
+N#define  REG_ReadRH_Offset   Correct_Strong[9]
 N
 N/*
 N************************************************************************
@@ -35381,7 +35383,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu16 Correct_Parametet[13];
+Sextern vu16 Correct_Parametet[14];
 S#define  REG_CorrectionV   Correct_Parametet[0]
 S#define  REG_CorrectionA   Correct_Parametet[1]
 S#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -35395,9 +35397,10 @@ S#define  Polar1            Correct_Parametet[9]
 S#define  Polar2						 Correct_Parametet[10]
 S#define  Polar3						 Correct_Parametet[11]
 S#define  REG_CorrectionV1  Correct_Parametet[12]
+S#define  REG_CorrectionRH   Correct_Parametet[13]
 S
 S
-Sextern vu32 Correct_Strong[9];//校准系数
+Sextern vu32 Correct_Strong[10];//校准系数
 S#define  REG_ReadV_Offset   Correct_Strong[0]
 S#define  REG_ReadA_Offset   Correct_Strong[1]
 S#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -35407,6 +35410,7 @@ S#define  SET_ReadA_Offset   Correct_Strong[5]
 S#define  SET_ReadA1_Offset  Correct_Strong[6]
 S#define  CON_ReadA_Offset   Correct_Strong[7]
 S#define  REG_ReadV1_Offset  Correct_Strong[8]
+S#define  REG_ReadRH_Offset   Correct_Strong[9]
 S
 S/*
 S************************************************************************
@@ -35688,6 +35692,18 @@ X	data_8bit = Correct_Strong[3] >> 8;
 N	EEPROM_WriteByte(0x0B, data_8bit);
 N	EEPROM_WriteByte(0x0C, REG_ReadR_Offset);//内阻
 X	EEPROM_WriteByte(0x0C, Correct_Strong[3]);
+N    
+N    data_8bit = REG_ReadRH_Offset >> 24;
+X    data_8bit = Correct_Strong[9] >> 24;
+N	EEPROM_WriteByte(0x94, data_8bit);
+N	data_8bit = REG_ReadRH_Offset >> 16;
+X	data_8bit = Correct_Strong[9] >> 16;
+N	EEPROM_WriteByte(0x95, data_8bit);
+N	data_8bit = REG_ReadRH_Offset >> 8;
+X	data_8bit = Correct_Strong[9] >> 8;
+N	EEPROM_WriteByte(0x96, data_8bit);
+N	EEPROM_WriteByte(0x97, REG_ReadRH_Offset);//艢亘
+X	EEPROM_WriteByte(0x97, Correct_Strong[9]);
 N	
 N	data_8bit = REG_ReadV1_Offset >> 24;
 X	data_8bit = Correct_Strong[8] >> 24;
@@ -35724,6 +35740,12 @@ X	data_8bit=Correct_Parametet[3]>>8;
 N	EEPROM_WriteByte(0x11, data_8bit);
 N	EEPROM_WriteByte(0x12, REG_CorrectionR);
 X	EEPROM_WriteByte(0x12, Correct_Parametet[3]);
+N    
+N    data_8bit=REG_CorrectionRH>>8;
+X    data_8bit=Correct_Parametet[13]>>8;
+N	EEPROM_WriteByte(0x98, data_8bit);
+N	EEPROM_WriteByte(0x99, REG_CorrectionRH);
+X	EEPROM_WriteByte(0x99, Correct_Parametet[13]);
 N	
 N	data_8bit=REG_CorrectionV1>>8;
 X	data_8bit=Correct_Parametet[12]>>8;
@@ -35896,6 +35918,21 @@ N	REG_ReadR_Offset=REG_ReadR_Offset<<8;
 X	Correct_Strong[3]=Correct_Strong[3]<<8;
 N	REG_ReadR_Offset=REG_ReadR_Offset+EEPROM_READ_Byte(0x0C);
 X	Correct_Strong[3]=Correct_Strong[3]+EEPROM_READ_Byte(0x0C);
+N    
+N    REG_ReadRH_Offset=EEPROM_READ_Byte(0x94);
+X    Correct_Strong[9]=EEPROM_READ_Byte(0x94);
+N	REG_ReadRH_Offset=REG_ReadRH_Offset<<8;
+X	Correct_Strong[9]=Correct_Strong[9]<<8;
+N	REG_ReadRH_Offset=REG_ReadRH_Offset+EEPROM_READ_Byte(0x95);
+X	Correct_Strong[9]=Correct_Strong[9]+EEPROM_READ_Byte(0x95);
+N	REG_ReadRH_Offset=REG_ReadRH_Offset<<8;
+X	Correct_Strong[9]=Correct_Strong[9]<<8;
+N	REG_ReadRH_Offset=REG_ReadRH_Offset+EEPROM_READ_Byte(0x96);
+X	Correct_Strong[9]=Correct_Strong[9]+EEPROM_READ_Byte(0x96);
+N	REG_ReadRH_Offset=REG_ReadRH_Offset<<8;
+X	Correct_Strong[9]=Correct_Strong[9]<<8;
+N	REG_ReadRH_Offset=REG_ReadRH_Offset+EEPROM_READ_Byte(0x97);
+X	Correct_Strong[9]=Correct_Strong[9]+EEPROM_READ_Byte(0x97);
 N	
 N	REG_CorrectionV=EEPROM_READ_Byte(0x0D);
 X	Correct_Parametet[0]=EEPROM_READ_Byte(0x0D);
@@ -35931,6 +35968,13 @@ N	REG_CorrectionR=REG_CorrectionR<<8;
 X	Correct_Parametet[3]=Correct_Parametet[3]<<8;
 N	REG_CorrectionR=REG_CorrectionR+EEPROM_READ_Byte(0x12);
 X	Correct_Parametet[3]=Correct_Parametet[3]+EEPROM_READ_Byte(0x12);
+N    
+N    REG_CorrectionRH=EEPROM_READ_Byte(0x98);
+X    Correct_Parametet[13]=EEPROM_READ_Byte(0x98);
+N	REG_CorrectionRH=REG_CorrectionRH<<8;
+X	Correct_Parametet[13]=Correct_Parametet[13]<<8;
+N	REG_CorrectionRH=REG_CorrectionRH+EEPROM_READ_Byte(0x99);
+X	Correct_Parametet[13]=Correct_Parametet[13]+EEPROM_READ_Byte(0x99);
 N	
 N	Polar=EEPROM_READ_Byte(0x13);
 X	Correct_Parametet[4]=EEPROM_READ_Byte(0x13);

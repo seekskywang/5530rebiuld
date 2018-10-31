@@ -48775,7 +48775,7 @@ N
 Nextern vu16 Contr_Voltage;//
 Nextern vu16 Contr_Current;//
 Nextern vu16 Contr_Laod;//
-Nextern vu16 Correct_Parametet[13];
+Nextern vu16 Correct_Parametet[14];
 N#define  REG_CorrectionV   Correct_Parametet[0]
 N#define  REG_CorrectionA   Correct_Parametet[1]
 N#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -48789,9 +48789,10 @@ N#define  Polar1            Correct_Parametet[9]
 N#define  Polar2						 Correct_Parametet[10]
 N#define  Polar3						 Correct_Parametet[11]
 N#define  REG_CorrectionV1  Correct_Parametet[12]
+N#define  REG_CorrectionRH   Correct_Parametet[13]
 N
 N
-Nextern vu32 Correct_Strong[9];//У׼ϵ��
+Nextern vu32 Correct_Strong[10];//У׼ϵ��
 N#define  REG_ReadV_Offset   Correct_Strong[0]
 N#define  REG_ReadA_Offset   Correct_Strong[1]
 N#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -48801,6 +48802,7 @@ N#define  SET_ReadA_Offset   Correct_Strong[5]
 N#define  SET_ReadA1_Offset  Correct_Strong[6]
 N#define  CON_ReadA_Offset   Correct_Strong[7]
 N#define  REG_ReadV1_Offset  Correct_Strong[8]
+N#define  REG_ReadRH_Offset   Correct_Strong[9]
 N
 N/*
 N************************************************************************
@@ -49218,7 +49220,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu16 Correct_Parametet[13];
+Sextern vu16 Correct_Parametet[14];
 S#define  REG_CorrectionV   Correct_Parametet[0]
 S#define  REG_CorrectionA   Correct_Parametet[1]
 S#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -49232,9 +49234,10 @@ S#define  Polar1            Correct_Parametet[9]
 S#define  Polar2						 Correct_Parametet[10]
 S#define  Polar3						 Correct_Parametet[11]
 S#define  REG_CorrectionV1  Correct_Parametet[12]
+S#define  REG_CorrectionRH   Correct_Parametet[13]
 S
 S
-Sextern vu32 Correct_Strong[9];//У׼ϵ��
+Sextern vu32 Correct_Strong[10];//У׼ϵ��
 S#define  REG_ReadV_Offset   Correct_Strong[0]
 S#define  REG_ReadA_Offset   Correct_Strong[1]
 S#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -49244,6 +49247,7 @@ S#define  SET_ReadA_Offset   Correct_Strong[5]
 S#define  SET_ReadA1_Offset  Correct_Strong[6]
 S#define  CON_ReadA_Offset   Correct_Strong[7]
 S#define  REG_ReadV1_Offset  Correct_Strong[8]
+S#define  REG_ReadRH_Offset   Correct_Strong[9]
 S
 S/*
 S************************************************************************
@@ -51647,7 +51651,7 @@ S
 Sextern vu16 Contr_Voltage;//
 Sextern vu16 Contr_Current;//
 Sextern vu16 Contr_Laod;//
-Sextern vu16 Correct_Parametet[13];
+Sextern vu16 Correct_Parametet[14];
 S#define  REG_CorrectionV   Correct_Parametet[0]
 S#define  REG_CorrectionA   Correct_Parametet[1]
 S#define  REG_CorrectionA1  Correct_Parametet[2]
@@ -51661,9 +51665,10 @@ S#define  Polar1            Correct_Parametet[9]
 S#define  Polar2						 Correct_Parametet[10]
 S#define  Polar3						 Correct_Parametet[11]
 S#define  REG_CorrectionV1  Correct_Parametet[12]
+S#define  REG_CorrectionRH   Correct_Parametet[13]
 S
 S
-Sextern vu32 Correct_Strong[9];//У׼ϵ��
+Sextern vu32 Correct_Strong[10];//У׼ϵ��
 S#define  REG_ReadV_Offset   Correct_Strong[0]
 S#define  REG_ReadA_Offset   Correct_Strong[1]
 S#define  REG_ReadA1_Offset  Correct_Strong[2]
@@ -51673,6 +51678,7 @@ S#define  SET_ReadA_Offset   Correct_Strong[5]
 S#define  SET_ReadA1_Offset  Correct_Strong[6]
 S#define  CON_ReadA_Offset   Correct_Strong[7]
 S#define  REG_ReadV1_Offset  Correct_Strong[8]
+S#define  REG_ReadRH_Offset   Correct_Strong[9]
 S
 S/*
 S************************************************************************
@@ -54389,6 +54395,69 @@ X                Correct_Parametet[11] &= ~0x01;
 N            }
 N//---------------------------------------------------------------------------------------//
 W "..\APP\sysinfo.c" 1481 13 function "Flash_Write_all" declared implicitly
+N            Flash_Write_all();	//参数写进FLASH
+N            flag_OverV=0;
+X            (flagG . bit1)=0;
+N            Flag_DAC_OFF=0;
+X            (flagB . bit3)=0;
+N        }
+N        flag_ADJ_VH=0;//清掉标志位防止一直进入
+X        (flagF . bit3)=0;
+N    }
+N}
+N
+Nvoid Rhigh_cal(u8 step)
+N{
+N    if(step == 3)
+N    {
+N        Modify_A_READ = Rmon_value;//测量电压值
+N		Modify_A_ACT = 0x64;//读取低段
+N    }else if(step == 4){
+N        vu16 var16;
+N        vu32 var32a;
+N        vu32 var32b;
+N        
+N        vu16 var16a;
+N        vu32 var32c;
+N        vu32 var32d;
+N        Modify_B_READ =Rmon_value;//测量电压值
+N        flag_OverV=1;
+X        (flagG . bit1)=1;
+N        Modify_B_ACT = 0xC8;//读取高段
+N        if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
+X        if((flagG . bit1)==1)
+N        {
+N            var32a = Modify_B_ACT;
+N            var32a = var32a - Modify_A_ACT;
+N            var32a = var32a << 12;
+N            var16 = Modify_B_READ - Modify_A_READ;
+N            var32a = var32a / var16;
+N            REG_CorrectionRH = var32a;
+X            Correct_Parametet[13] = var32a;
+N            var32a=0;
+N            var32a = Modify_B_ACT;
+N            var32a = var32a << 12;
+N            var32b = Modify_B_READ;
+N            var32b = var32b * REG_CorrectionRH;
+X            var32b = var32b * Correct_Parametet[13];
+N            if (var32a < var32b)
+N            {
+N                var32b = var32b - var32a;
+N                REG_ReadRH_Offset = var32b;
+X                Correct_Strong[9] = var32b;
+N                Polar3 |= 0x01;
+X                Correct_Parametet[11] |= 0x01;
+N            }
+N            else 
+N            {
+N                var32a = var32a - var32b;
+N                REG_ReadRH_Offset = var32a;
+X                Correct_Strong[9] = var32a;
+N                Polar3 &= ~0x01;
+X                Correct_Parametet[11] &= ~0x01;
+N            }
+N//---------------------------------------------------------------------------------------//
+W "..\APP\sysinfo.c" 1532 13 function "Flash_Write_all" declared implicitly
 N            Flash_Write_all();	//参数写进FLASH
 N            flag_OverV=0;
 X            (flagG . bit1)=0;
