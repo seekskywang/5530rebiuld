@@ -53160,32 +53160,38 @@ N                }
 N            
 N        }
 N               
-N
-N        if(para_set2 == set_2_on)
-X        if(para_set2 == 0xff)
+N        
+N        if(para_set1 == set_1_on && oct_sw == oct_off && DISS_Voltage > 1)
+X        if(para_set1 == 0xff && oct_sw == 0 && DISS_Voltage > 1)
 N        {
-N            if(para_set1 == set_1_on && oct_sw == oct_off && finish == 1)
-X            if(para_set1 == 0xff && oct_sw == 0 && finish == 1)
-N            {
-N                 test_r();
-N            }else
-N            {
-N                TM1650_SET_LED(0x68,0x70);
-N                GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
-X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
-N            }
-N        }else{
-N            if(para_set1 == set_1_on && DISS_Voltage > 1)
-X            if(para_set1 == 0xff && DISS_Voltage > 1)
-N            {
-N                 test_r();
-N            }else
-N            {
-N                TM1650_SET_LED(0x68,0x70);
-N                GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
-X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
-N            }
+N             test_r();
+N        }else
+N        {
+N            TM1650_SET_LED(0x68,0x70);
+N            GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
+X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
+N//            led_sw = 1;
 N        }
+N//         if(para_set2 == set_2_on)
+N//         {
+N//             if(para_set1 == set_1_on && oct_sw == oct_off && finish == 1)
+N//             {
+N//                  test_r();
+N//             }else
+N//             {
+N//                 TM1650_SET_LED(0x68,0x70);
+N//                 GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
+N//             }
+N//         }else{
+N//             if(para_set1 == set_1_on && DISS_Voltage > 1)
+N//             {
+N//                  test_r();
+N//             }else
+N//             {
+N//                 TM1650_SET_LED(0x68,0x70);
+N//                 GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
+N//             }
+N//         }
 N
 N        
 N        if(oct_sw == oct_off)
@@ -53196,8 +53202,8 @@ N            {
 N                case Lion:
 X                case 1:
 N                {
-W "..\APP\R_Face.c" 658 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 658 63 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 667 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 667 63 single-precision operand implicitly converted to double-precision
 N                    if(R_VLUE != 0  && DISS_Voltage >= 3.4 && DISS_Voltage <= 4.2)
 X                    if(Run_Control[13] != 0  && DISS_Voltage >= 3.4 && DISS_Voltage <= 4.2)
 N                    {
@@ -53225,8 +53231,8 @@ N                }
 N                case NiMH:
 X                case 2:
 N                {
-W "..\APP\R_Face.c" 679 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 679 63 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 688 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 688 63 single-precision operand implicitly converted to double-precision
 N                    if(R_VLUE != 0  && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
 X                    if(Run_Control[13] != 0  && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
 N                    {
@@ -53254,8 +53260,8 @@ N                }
 N                case NiCd:
 X                case 3:
 N                {
-W "..\APP\R_Face.c" 700 39 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 700 62 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 709 39 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 709 62 single-precision operand implicitly converted to double-precision
 N                    if(R_VLUE != 0 && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
 X                    if(Run_Control[13] != 0 && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
 N                    {
@@ -53283,8 +53289,8 @@ N                }
 N                case SLA:
 X                case 4:
 N                {
-W "..\APP\R_Face.c" 721 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 721 63 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 730 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 730 63 single-precision operand implicitly converted to double-precision
 N                    if(R_VLUE != 0  && DISS_Voltage >= 1.8 && DISS_Voltage <= 2.4)
 X                    if(Run_Control[13] != 0  && DISS_Voltage >= 1.8 && DISS_Voltage <= 2.4)
 N                    {
@@ -53312,8 +53318,8 @@ N                }
 N                case LiMH:
 X                case 5:
 N                {
-W "..\APP\R_Face.c" 742 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 742 63 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 751 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 751 63 single-precision operand implicitly converted to double-precision
 N                    if(R_VLUE != 0  && DISS_Voltage >= 2.8 && DISS_Voltage <= 3.3)
 X                    if(Run_Control[13] != 0  && DISS_Voltage >= 2.8 && DISS_Voltage <= 3.3)
 N                    {
@@ -54585,7 +54591,7 @@ N    char sbs_c[5];
 N    float change_sbs_c;
 N    static float crec1,crec2;
 N
-W "..\APP\R_Face.c" 1731 27 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 1740 27 single-precision operand implicitly converted to double-precision
 N    if(v - DISS_Voltage > v*0.9 && para_set2 == set_2_on)
 X    if(v - DISS_Voltage > v*0.9 && para_set2 == 0xff)
 N    {
@@ -54702,9 +54708,11 @@ N                if(para_set4 == set_4_on){
 X                if(para_set4 == 0xff){
 N                    BEEP_Tiggr();
 N                }
+N                
 N                TM1650_SET_LED(0x68,0x70);//FAIL灯
 N                GPIO_SetBits(GPIOD,GPIO_Pin_12);//
 X                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)),((uint16_t)0x1000));
+N                
 N                if(R_VLUE > set_max_r || R_VLUE < set_min_r)
 X                if(Run_Control[13] > Run_Control[16] || Run_Control[13] < Run_Control[17])
 N                {

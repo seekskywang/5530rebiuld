@@ -35181,8 +35181,8 @@ N	GPIO_InitStructure.GPIO_Speed =GPIO_Speed_50MHz;
 X	GPIO_InitStructure.GPIO_Speed =GPIO_Fast_Speed;
 N	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
 N	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-N	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;//
-X	GPIO_InitStructure.GPIO_Pin = ((uint16_t)0x2000);
+N	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13|GPIO_Pin_12;;//
+X	GPIO_InitStructure.GPIO_Pin = ((uint16_t)0x2000)|((uint16_t)0x1000);;
 N	GPIO_Init(GPIOD, &GPIO_InitStructure);//
 X	GPIO_Init(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0C00)), &GPIO_InitStructure);
 N	

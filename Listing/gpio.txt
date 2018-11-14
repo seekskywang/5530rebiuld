@@ -7,7 +7,7 @@
                   GPIO_Conf PROC
 ;;;13     
 ;;;14     void GPIO_Conf(void)
-000000  e92d47fc          PUSH     {r2-r10,lr}
+000000  e92d41fc          PUSH     {r2-r8,lr}
 ;;;15     {
 ;;;16     /**********************GPIO*******************************************************/
 ;;;17     	GPIO_InitTypeDef GPIO_InitStructure;//
@@ -43,24 +43,24 @@
 000038  f2414002          MOV      r0,#0x1402
 00003c  9000              STR      r0,[sp,#0]
 ;;;30     	GPIO_Init(GPIOC, &GPIO_InitStructure);//
-00003e  f8df8090          LDR      r8,|L1.208|
-000042  4669              MOV      r1,sp
-000044  4640              MOV      r0,r8
-000046  f7fffffe          BL       GPIO_Init
+00003e  4f24              LDR      r7,|L1.208|
+000040  4669              MOV      r1,sp
+000042  4638              MOV      r0,r7
+000044  f7fffffe          BL       GPIO_Init
 ;;;31     	
 ;;;32     	GPIO_InitStructure.GPIO_Speed =GPIO_Speed_50MHz;
-00004a  f88d6005          STRB     r6,[sp,#5]
+000048  f88d6005          STRB     r6,[sp,#5]
 ;;;33     	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-00004e  f88d4004          STRB     r4,[sp,#4]
+00004c  f88d4004          STRB     r4,[sp,#4]
 ;;;34     	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-000052  f88d5006          STRB     r5,[sp,#6]
-;;;35     	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;//
-000056  0367              LSLS     r7,r4,#13
-000058  9700              STR      r7,[sp,#0]
+000050  f88d5006          STRB     r5,[sp,#6]
+;;;35     	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13|GPIO_Pin_12;;//
+000054  f44f5040          MOV      r0,#0x3000
+000058  9000              STR      r0,[sp,#0]
 ;;;36     	GPIO_Init(GPIOD, &GPIO_InitStructure);//
-00005a  f8df9078          LDR      r9,|L1.212|
+00005a  f8df8078          LDR      r8,|L1.212|
 00005e  4669              MOV      r1,sp
-000060  4648              MOV      r0,r9
+000060  4640              MOV      r0,r8
 000062  f7fffffe          BL       GPIO_Init
 ;;;37     	
 ;;;38     	GPIO_InitStructure.GPIO_Speed =GPIO_Speed_50MHz;
@@ -74,7 +74,7 @@
 000074  9000              STR      r0,[sp,#0]
 ;;;42     	GPIO_Init(GPIOC, &GPIO_InitStructure);//
 000076  4669              MOV      r1,sp
-000078  4640              MOV      r0,r8
+000078  4638              MOV      r0,r7
 00007a  f7fffffe          BL       GPIO_Init
 ;;;43     	
 ;;;44     	GPIO_InitStructure.GPIO_Speed =GPIO_Speed_50MHz;
@@ -102,23 +102,23 @@
 0000a4  9000              STR      r0,[sp,#0]
 ;;;54     	GPIO_Init(GPIOC, &GPIO_InitStructure);//
 0000a6  4669              MOV      r1,sp
-0000a8  4640              MOV      r0,r8
+0000a8  4638              MOV      r0,r7
 0000aa  f7fffffe          BL       GPIO_Init
 ;;;55     	
 ;;;56     	GPIO_SetBits(GPIOD,GPIO_Pin_13);//复位LCD
-0000ae  4639              MOV      r1,r7
-0000b0  4648              MOV      r0,r9
+0000ae  0361              LSLS     r1,r4,#13
+0000b0  4640              MOV      r0,r8
 0000b2  f7fffffe          BL       GPIO_SetBits
 ;;;57     	GPIO_ResetBits(GPIOC,GPIO_Pin_6);//复位LCD
 0000b6  2140              MOVS     r1,#0x40
-0000b8  4640              MOV      r0,r8
+0000b8  4638              MOV      r0,r7
 0000ba  f7fffffe          BL       GPIO_ResetBits
 ;;;58     	GPIO_SetBits(GPIOC,GPIO_Pin_6);//LCD复位完成
 0000be  2140              MOVS     r1,#0x40
-0000c0  4640              MOV      r0,r8
+0000c0  4638              MOV      r0,r7
 0000c2  f7fffffe          BL       GPIO_SetBits
 ;;;59     }
-0000c6  e8bd87fc          POP      {r2-r10,pc}
+0000c6  e8bd81fc          POP      {r2-r8,pc}
 ;;;60     
                           ENDP
 

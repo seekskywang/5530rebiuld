@@ -626,27 +626,36 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             
         }
                
-
-        if(para_set2 == set_2_on)
+        
+        if(para_set1 == set_1_on && oct_sw == oct_off && DISS_Voltage > 1)
         {
-            if(para_set1 == set_1_on && oct_sw == oct_off && finish == 1)
-            {
-                 test_r();
-            }else
-            {
-                TM1650_SET_LED(0x68,0x70);
-                GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
-            }
-        }else{
-            if(para_set1 == set_1_on && DISS_Voltage > 1)
-            {
-                 test_r();
-            }else
-            {
-                TM1650_SET_LED(0x68,0x70);
-                GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
-            }
+             test_r();
+        }else
+        {
+            TM1650_SET_LED(0x68,0x70);
+            GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
+//            led_sw = 1;
         }
+//         if(para_set2 == set_2_on)
+//         {
+//             if(para_set1 == set_1_on && oct_sw == oct_off && finish == 1)
+//             {
+//                  test_r();
+//             }else
+//             {
+//                 TM1650_SET_LED(0x68,0x70);
+//                 GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
+//             }
+//         }else{
+//             if(para_set1 == set_1_on && DISS_Voltage > 1)
+//             {
+//                  test_r();
+//             }else
+//             {
+//                 TM1650_SET_LED(0x68,0x70);
+//                 GPIO_ResetBits(GPIOD,GPIO_Pin_12);//灭灯
+//             }
+//         }
 
         
         if(oct_sw == oct_off)
@@ -1810,8 +1819,10 @@ void test_r(void)
                 if(para_set4 == set_4_on){
                     BEEP_Tiggr();
                 }
+                
                 TM1650_SET_LED(0x68,0x70);//FAIL灯
                 GPIO_SetBits(GPIOD,GPIO_Pin_12);//
+                
                 if(R_VLUE > set_max_r || R_VLUE < set_min_r)
                 {
                     hItem = WM_GetDialogItem(hWinR, ID_TEXT_81);
