@@ -39530,6 +39530,9 @@ Nvoid INPUT_LOAD(char* num);
 Nvoid INPUT_INFO(vu8 num);  
 Nvoid Rlow_cal(u8 step);
 Nvoid short_test(void);
+Nuint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
+Nvoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+Nvoid RecHandle(void);
 N
 N//=============================================================================
 N#define NOP   __nop();	  //空指令
@@ -39681,7 +39684,39 @@ Nextern vu8 finish;
 Nextern vu16 restart_time;
 Nextern vu8 set_loop_count;
 Nextern vu8 short_flag;
+Nextern u8 usartocflag;
+Nextern u8 usartshortflag;
+Nextern float oc_data;
 N
+N#define SLAVE_REG_P00		0x0000       //R_VOLU
+N#define SLAVE_REG_P01		0x0001      //Load_Voltage
+N#define SLAVE_REG_P02		0x0002      //Load_Current
+N#define SLAVE_REG_P03		0x0003		//Change_Voltage
+N#define SLAVE_REG_P04		0x0004		//Change_Current
+N#define SLAVE_REG_P05		0x0005		//Load_OCP
+N#define SLAVE_REG_P06		0x0006		//Change_OCP
+N#define SLAVE_REG_P07		0x0007		//Short_Time
+N#define SLAVE_REG_P08		0x0008		//Leak_Current
+N#define SLAVE_REG_P09		0x0009		//R1_Volu
+N#define SLAVE_REG_P10		0x000A		//R2_Volu
+N#define SLAVE_REG_P11		0x000B		//Temper
+N#define SLAVE_REG_P12		0x000C		//DHQ_Voltage
+N#define SLAVE_REG_P13		0x000D		//MODE
+N#define SLAVE_REG_P14		0x000E		//Load_Mode
+N#define SLAVE_REG_P15		0x000F		//Load_SET_Voltage
+N#define SLAVE_REG_P16		0x0010		//Load_SET_Current
+N#define SLAVE_REG_P17		0x0011		//Change_SET_Voltage
+N#define SLAVE_REG_P18		0x0012		//Change_SET_Current
+N
+N/* RTU 应答代码 */
+N#define RSP_OK				0		/* 成功 */
+N#define RSP_ERR_CMD			0x01	/* 不支持的功能码 */
+N#define RSP_ERR_REG_ADDR	0x02	/* 寄存器地址错误 */
+N#define RSP_ERR_VALUE		0x03	/* 数据值域错误 */
+N#define RSP_ERR_WRITE		0x04	/* 写入失败 */
+N
+N#define S_RX_BUF_SIZE		30
+N#define S_TX_BUF_SIZE		128
 N
 Nextern vu16 Run_Control[43];	
 N#define onoff_ch                        Run_Control[0]  //ON/OFF
@@ -39902,6 +39937,20 @@ Nextern vu16 ADC_Imon_Filt[50];
 Nextern vu8 UART_Buffer_Rece[16];
 Nextern vu8 UART_Buffer_Send[20];
 N//============================================================================= 
+N//============================================================================= 
+Nstruct MODS_T
+N{
+N	uint8_t RxBuf[S_RX_BUF_SIZE];
+X	uint8_t RxBuf[30];
+N	uint8_t TxBuf[S_TX_BUF_SIZE];
+X	uint8_t TxBuf[128];
+N	uint8_t RxCount;
+N	uint8_t RxStatus;
+N	uint8_t RxNewFlag;
+N	uint8_t RspCode;
+N	
+N	uint8_t TxCount;
+N};
 N#define Receive_BUFFERSIZE   10
 N//=============================================================================
 N#endif

@@ -11,7 +11,15 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx.h"
 #include "tim6.h"
+void MODS_Poll(void);
+
 vu8 resetflag;
+extern u8 g_mods_timeout;
+extern struct MODS_T g_tModS;
+u32 Tick_10ms=0;
+u32 OldTick;
+u8 usartocflag = 0;//涓婁綅鏈鸿繃娴佹爣蹇椾綅
+u8 usartshortflag = 0;//涓婁綅鏈虹煭璺爣蹇椾綅
 /*****************************************************************/
 /*****************************************************************/
 // void TIM6_Config(void)
@@ -221,3 +229,120 @@ void TIM3_IRQHandler(void)
     }    
     
 }
+
+void TIM5_Int_Init(u16 arr,u16 psc)
+{
+    TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+    NVIC_InitTypeDef NVIC_InitStructure;
+    
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5,ENABLE); //脵使艤 TIM3 时讚
+    TIM_TimeBaseInitStructure.TIM_Period = arr; //財织讟装諛值
+    TIM_TimeBaseInitStructure.TIM_Prescaler=psc; //吱时欠貣频
+    TIM_TimeBaseInitStructure.TIM_CounterMode=TIM_CounterMode_Up; //胁蕪輪私模式
+    TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;
+    TIM_TimeBaseInit(TIM5,&TIM_TimeBaseInitStructure);// 脷缘始郫吱时欠 TIM3
+    TIM_ITConfig(TIM5,TIM_IT_Update,ENABLE); //脹諍循吱时欠 3 偌褌讗讖
+    NVIC_InitStructure.NVIC_IRQChannel=TIM5_IRQn; //吱时欠 3 讗讖
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0x01; //葊占詤袌芏 1
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority=0x02; //鞋应詤袌芏 3
+    NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
+    NVIC_Init(&NVIC_InitStructure);// 脺缘始郫 NVIC
+    TIM_Cmd(TIM5,ENABLE); //脻使艤吱时欠 3
+}
+
+
+void TIM5_IRQHandler(void)
+{
+    
+    if(TIM_GetITStatus(TIM5,TIM_IT_Update)==SET) //缨远讗讖
+    {
+        TIM_ClearITPendingBit(TIM5,TIM_IT_Update); //娓呴櫎涓柇鏍囧織浣?
+        Tick_10ms ++;
+        MODS_Poll();
+    }
+}
+
+void MODS_Poll(void)
+{
+	uint16_t addr;
+	static uint16_t crc1;
+    static u32 testi;
+	/* 瓒呰繃3.5涓瓧绗︽椂闂村悗鎵цMODH_RxTimeOut()鍑芥暟銆傚叏灞�鍙橀噺 g_rtu_timeout = 1; 閫氱煡涓荤▼搴忓紑濮嬭В鐮?*/
+//	if (g_mods_timeout == 0)	
+//	{
+//		return;								/* 娌℃湁瓒呮椂锛岀户缁帴鏀躲�備笉瑕佹竻闆?g_tModS.RxCount */
+//	}
+
+    testi=g_tModS.RxCount;
+    testi=g_tModS.RxCount;
+    testi=g_tModS.RxCount;
+	if(testi>7)				/* 接收到的数据小于4个字节就认为错误 */
+	{
+		testi=testi;
+	}
+	testi=g_tModS.RxCount;
+    if(testi==8)				/* 接收到的数据小于4个字节就认为错误 */
+	{
+		testi=testi+1;
+	}
+	//判断通讯接收是否超时
+	if(OldTick!=Tick_10ms)
+  	{  
+	  OldTick=Tick_10ms;
+	   if(g_mods_timeout>0)
+      { 
+	    g_mods_timeout--;
+      }
+	  if(g_mods_timeout==0 && g_tModS.RxCount>0)   //有数但超时了
+      { 
+		// goto err_ret;
+	
+      }
+      else if(g_mods_timeout==0 && g_tModS.RxCount==0) //没数超时了
+         return;
+      else //没超时了，继续收
+         return;
+	}
+	else   //没有到10ms，不进入解析
+		return;
+	//g_mods_timeout = 0;	 					/* 清标志 */
+
+	if (g_tModS.RxCount < 4)				/* 接收到的数据小于4个字节就认为错误 */
+	{
+		goto err_ret;
+	}
+
+	/* 计算CRC校验和 */
+	crc1 = CRC16(g_tModS.RxBuf, g_tModS.RxCount);
+	if (crc1 != 0)
+	{
+		goto err_ret;
+	}
+
+// 	/* 站地址 (1字节） */
+// 	addr = g_tModS.RxBuf[0];				/* 第1字节 站号 */
+// 	if (addr != SADDR485)		 			/* 判断主机发送的命令地址是否符合 */
+// 	{
+// 		goto err_ret;
+// 	}
+
+	/* 鍒嗘瀽搴旂敤灞傚崗璁?*/
+    if(UART_Buffer_Rece[2] == 0xA5)
+    {
+        UART_Action();
+    }else{
+        usartocflag = 1;
+        RecHandle();
+    }
+							
+	
+err_ret:
+#if 0										/* 姝ら儴鍒嗕负浜嗕覆鍙ｆ墦鍗扮粨鏋?瀹為檯杩愮敤涓彲涓嶈 */
+	g_tPrint.Rxlen = g_tModS.RxCount;
+	memcpy(g_tPrint.RxBuf, g_tModS.RxBuf, g_tModS.RxCount);
+#endif
+	
+ 	g_tModS.RxCount = 0;					/* 蹇呴』娓呴浂璁℃暟鍣紝鏂逛究涓嬫甯у悓姝?*/
+}
+
+

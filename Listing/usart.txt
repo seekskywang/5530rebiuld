@@ -164,8 +164,8 @@
 00004a  f7fffffe          BL       GPIO_Init
 ;;;66     	
 ;;;67     	/* USART1 mode config */
-;;;68     	USART_InitStructure.USART_BaudRate = 19200;
-00004e  f44f4096          MOV      r0,#0x4b00
+;;;68     	USART_InitStructure.USART_BaudRate = 9600;
+00004e  f44f5016          MOV      r0,#0x2580
 000052  9000              STR      r0,[sp,#0]
 ;;;69     	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
 000054  f8ad4004          STRH     r4,[sp,#4]

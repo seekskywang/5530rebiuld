@@ -50,6 +50,7 @@ int main(void)
 	GPIO_Conf();
 	TIM1_PWM_Config();
 	TIM2_PWM_Config();
+    TIM5_Int_Init(100-1,8400-1);
 //	TIM6_Config();
     TIM3_Int_Init(10-1,8400-1);
 	ADC1_DMA_Init();

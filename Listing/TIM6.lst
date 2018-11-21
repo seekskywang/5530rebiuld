@@ -34727,6 +34727,9 @@ Nvoid INPUT_LOAD(char* num);
 Nvoid INPUT_INFO(vu8 num);  
 Nvoid Rlow_cal(u8 step);
 Nvoid short_test(void);
+Nuint16_t CRC16(uint8_t *_pBuf, uint16_t _usLen);
+Nvoid MODS_SendWithCRC(uint8_t *_pBuf, uint8_t _ucLen);
+Nvoid RecHandle(void);
 N
 N//=============================================================================
 N#define NOP   __nop();	  //空指令
@@ -34878,7 +34881,39 @@ Nextern vu8 finish;
 Nextern vu16 restart_time;
 Nextern vu8 set_loop_count;
 Nextern vu8 short_flag;
+Nextern u8 usartocflag;
+Nextern u8 usartshortflag;
+Nextern float oc_data;
 N
+N#define SLAVE_REG_P00		0x0000       //R_VOLU
+N#define SLAVE_REG_P01		0x0001      //Load_Voltage
+N#define SLAVE_REG_P02		0x0002      //Load_Current
+N#define SLAVE_REG_P03		0x0003		//Change_Voltage
+N#define SLAVE_REG_P04		0x0004		//Change_Current
+N#define SLAVE_REG_P05		0x0005		//Load_OCP
+N#define SLAVE_REG_P06		0x0006		//Change_OCP
+N#define SLAVE_REG_P07		0x0007		//Short_Time
+N#define SLAVE_REG_P08		0x0008		//Leak_Current
+N#define SLAVE_REG_P09		0x0009		//R1_Volu
+N#define SLAVE_REG_P10		0x000A		//R2_Volu
+N#define SLAVE_REG_P11		0x000B		//Temper
+N#define SLAVE_REG_P12		0x000C		//DHQ_Voltage
+N#define SLAVE_REG_P13		0x000D		//MODE
+N#define SLAVE_REG_P14		0x000E		//Load_Mode
+N#define SLAVE_REG_P15		0x000F		//Load_SET_Voltage
+N#define SLAVE_REG_P16		0x0010		//Load_SET_Current
+N#define SLAVE_REG_P17		0x0011		//Change_SET_Voltage
+N#define SLAVE_REG_P18		0x0012		//Change_SET_Current
+N
+N/* RTU 应答代码 */
+N#define RSP_OK				0		/* 成功 */
+N#define RSP_ERR_CMD			0x01	/* 不支持的功能码 */
+N#define RSP_ERR_REG_ADDR	0x02	/* 寄存器地址错误 */
+N#define RSP_ERR_VALUE		0x03	/* 数据值域错误 */
+N#define RSP_ERR_WRITE		0x04	/* 写入失败 */
+N
+N#define S_RX_BUF_SIZE		30
+N#define S_TX_BUF_SIZE		128
 N
 Nextern vu16 Run_Control[43];	
 N#define onoff_ch                        Run_Control[0]  //ON/OFF
@@ -35099,6 +35134,20 @@ Nextern vu16 ADC_Imon_Filt[50];
 Nextern vu8 UART_Buffer_Rece[16];
 Nextern vu8 UART_Buffer_Send[20];
 N//============================================================================= 
+N//============================================================================= 
+Nstruct MODS_T
+N{
+N	uint8_t RxBuf[S_RX_BUF_SIZE];
+X	uint8_t RxBuf[30];
+N	uint8_t TxBuf[S_TX_BUF_SIZE];
+X	uint8_t TxBuf[128];
+N	uint8_t RxCount;
+N	uint8_t RxStatus;
+N	uint8_t RxNewFlag;
+N	uint8_t RspCode;
+N	
+N	uint8_t TxCount;
+N};
 N#define Receive_BUFFERSIZE   10
 N//=============================================================================
 N#endif
@@ -35161,7 +35210,15 @@ Nvoid TIM3_Int_Init(u16 arr,u16 psc);
 Nvoid TIM3_IRQHandler(void);
 N#endif
 L 14 "..\drive\TIM6.c" 2
+Nvoid MODS_Poll(void);
+N
 Nvu8 resetflag;
+Nextern u8 g_mods_timeout;
+Nextern struct MODS_T g_tModS;
+Nu32 Tick_10ms=0;
+Nu32 OldTick;
+Nu8 usartocflag = 0;//涓婁綅鏈鸿繃娴佹爣蹇椾綅
+Nu8 usartshortflag = 0;//涓婁綅鏈虹煭璺爣蹇椾綅
 N/*****************************************************************/
 N/*****************************************************************/
 N// void TIM6_Config(void)
@@ -35234,11 +35291,11 @@ N//吱时欠 3 讗讖鼐媳诏私
 Nvoid TIM3_IRQHandler(void)
 N{
 N    static vu16 count1ms;
-W "..\drive\TIM6.c" 81 12 explicit type is missing ("int" assumed)
+W "..\drive\TIM6.c" 89 12 explicit type is missing ("int" assumed)
 N    static resetcount;
-W "..\drive\TIM6.c" 82 12 explicit type is missing ("int" assumed)
+W "..\drive\TIM6.c" 90 12 explicit type is missing ("int" assumed)
 N    static read1963;
-W "..\drive\TIM6.c" 83 12 explicit type is missing ("int" assumed)
+W "..\drive\TIM6.c" 91 12 explicit type is missing ("int" assumed)
 N    static scancount;
 N    
 N    if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) //缨远讗讖
@@ -35254,34 +35311,34 @@ N             if(resetflag == 1)
 N             {
 N                 if(resetcount == 1000)
 N                 {
-W "..\drive\TIM6.c" 95 22 function "LCD_Initializtion" declared implicitly
+W "..\drive\TIM6.c" 103 22 function "LCD_Initializtion" declared implicitly
 N                     LCD_Initializtion();
-W "..\drive\TIM6.c" 96 22 function "GUI_Init" declared implicitly
+W "..\drive\TIM6.c" 104 22 function "GUI_Init" declared implicitly
 N                     GUI_Init();
 N                     if(page_sw == face_menu)
 X                     if(page_sw == 2)
 N                     {
-W "..\drive\TIM6.c" 99 26 function "ResetPow" declared implicitly
+W "..\drive\TIM6.c" 107 26 function "ResetPow" declared implicitly
 N                         ResetPow();
 N                     }else if(page_sw == face_cdc){
 X                     }else if(page_sw == 1){
-W "..\drive\TIM6.c" 101 26 function "ResetCDC" declared implicitly
+W "..\drive\TIM6.c" 109 26 function "ResetCDC" declared implicitly
 N                         ResetCDC();
 N                     }else if(page_sw == face_r){
 X                     }else if(page_sw == 3){
-W "..\drive\TIM6.c" 103 26 function "ResetR" declared implicitly
+W "..\drive\TIM6.c" 111 26 function "ResetR" declared implicitly
 N                         ResetR();
 N                     }else if(page_sw == face_load){
 X                     }else if(page_sw == 4){
-W "..\drive\TIM6.c" 105 26 function "ResetLoad" declared implicitly
+W "..\drive\TIM6.c" 113 26 function "ResetLoad" declared implicitly
 N                         ResetLoad();
 N                     }else if(page_sw == face_graph){
 X                     }else if(page_sw == 0){
-W "..\drive\TIM6.c" 107 26 function "ResetG" declared implicitly
+W "..\drive\TIM6.c" 115 26 function "ResetG" declared implicitly
 N                         ResetG();
 N                     }else if(page_sw == face_set){
 X                     }else if(page_sw == 5){
-W "..\drive\TIM6.c" 109 26 function "ResetSET" declared implicitly
+W "..\drive\TIM6.c" 117 26 function "ResetSET" declared implicitly
 N                         ResetSET();
 N                     }
 N                     resetcount = 0;
@@ -35412,6 +35469,133 @@ N            }break;
 N        }
 N    }    
 N    
-W "..\drive\TIM6.c" 82 12 variable "read1963" was declared but never referenced
-W "..\drive\TIM6.c" 83 12 variable "scancount" was declared but never referenced
+W "..\drive\TIM6.c" 90 12 variable "read1963" was declared but never referenced
+W "..\drive\TIM6.c" 91 12 variable "scancount" was declared but never referenced
 N}
+N
+Nvoid TIM5_Int_Init(u16 arr,u16 psc)
+N{
+N    TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+N    NVIC_InitTypeDef NVIC_InitStructure;
+N    
+N    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5,ENABLE); //脵使艤 TIM3 时讚
+X    RCC_APB1PeriphClockCmd(((uint32_t)0x00000008),ENABLE); 
+N    TIM_TimeBaseInitStructure.TIM_Period = arr; //財织讟装諛值
+N    TIM_TimeBaseInitStructure.TIM_Prescaler=psc; //吱时欠貣频
+N    TIM_TimeBaseInitStructure.TIM_CounterMode=TIM_CounterMode_Up; //胁蕪輪私模式
+X    TIM_TimeBaseInitStructure.TIM_CounterMode=((uint16_t)0x0000); 
+N    TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;
+X    TIM_TimeBaseInitStructure.TIM_ClockDivision=((uint16_t)0x0000);
+N    TIM_TimeBaseInit(TIM5,&TIM_TimeBaseInitStructure);// 脷缘始郫吱时欠 TIM3
+X    TIM_TimeBaseInit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)),&TIM_TimeBaseInitStructure);
+N    TIM_ITConfig(TIM5,TIM_IT_Update,ENABLE); //脹諍循吱时欠 3 偌褌讗讖
+X    TIM_ITConfig(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)),((uint16_t)0x0001),ENABLE); 
+N    NVIC_InitStructure.NVIC_IRQChannel=TIM5_IRQn; //吱时欠 3 讗讖
+N    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0x01; //葊占詤袌芏 1
+N    NVIC_InitStructure.NVIC_IRQChannelSubPriority=0x02; //鞋应詤袌芏 3
+N    NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
+N    NVIC_Init(&NVIC_InitStructure);// 脺缘始郫 NVIC
+N    TIM_Cmd(TIM5,ENABLE); //脻使艤吱时欠 3
+X    TIM_Cmd(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)),ENABLE); 
+N}
+N
+N
+Nvoid TIM5_IRQHandler(void)
+N{
+N    
+N    if(TIM_GetITStatus(TIM5,TIM_IT_Update)==SET) //缨远讗讖
+X    if(TIM_GetITStatus(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)),((uint16_t)0x0001))==SET) 
+N    {
+N        TIM_ClearITPendingBit(TIM5,TIM_IT_Update); //娓呴櫎涓柇鏍囧織浣?
+X        TIM_ClearITPendingBit(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0C00)),((uint16_t)0x0001)); 
+N        Tick_10ms ++;
+N        MODS_Poll();
+N    }
+N}
+N
+Nvoid MODS_Poll(void)
+N{
+N	uint16_t addr;
+N	static uint16_t crc1;
+N    static u32 testi;
+N	/* 瓒呰繃3.5涓瓧绗︽椂闂村悗鎵цMODH_RxTimeOut()鍑芥暟銆傚叏灞�鍙橀噺 g_rtu_timeout = 1; 閫氱煡涓荤▼搴忓紑濮嬭В鐮?*/
+N//	if (g_mods_timeout == 0)	
+N//	{
+N//		return;								/* 娌℃湁瓒呮椂锛岀户缁帴鏀躲�備笉瑕佹竻闆?g_tModS.RxCount */
+N//	}
+N
+N    testi=g_tModS.RxCount;
+N    testi=g_tModS.RxCount;
+N    testi=g_tModS.RxCount;
+N	if(testi>7)				/* 接收到的数据小于4个字节就认为错误 */
+N	{
+N		testi=testi;
+N	}
+N	testi=g_tModS.RxCount;
+N    if(testi==8)				/* 接收到的数据小于4个字节就认为错误 */
+N	{
+N		testi=testi+1;
+N	}
+N	//判断通讯接收是否超时
+N	if(OldTick!=Tick_10ms)
+N  	{  
+N	  OldTick=Tick_10ms;
+N	   if(g_mods_timeout>0)
+N      { 
+N	    g_mods_timeout--;
+N      }
+N	  if(g_mods_timeout==0 && g_tModS.RxCount>0)   //有数但超时了
+N      { 
+N		// goto err_ret;
+N	
+N      }
+N      else if(g_mods_timeout==0 && g_tModS.RxCount==0) //没数超时了
+N         return;
+N      else //没超时了，继续收
+N         return;
+N	}
+N	else   //没有到10ms，不进入解析
+N		return;
+N	//g_mods_timeout = 0;	 					/* 清标志 */
+N
+N	if (g_tModS.RxCount < 4)				/* 接收到的数据小于4个字节就认为错误 */
+N	{
+N		goto err_ret;
+N	}
+N
+N	/* 计算CRC校验和 */
+N	crc1 = CRC16(g_tModS.RxBuf, g_tModS.RxCount);
+N	if (crc1 != 0)
+N	{
+N		goto err_ret;
+N	}
+N
+N// 	/* 站地址 (1字节） */
+N// 	addr = g_tModS.RxBuf[0];				/* 第1字节 站号 */
+N// 	if (addr != SADDR485)		 			/* 判断主机发送的命令地址是否符合 */
+N// 	{
+N// 		goto err_ret;
+N// 	}
+N
+N	/* 鍒嗘瀽搴旂敤灞傚崗璁?*/
+N    if(UART_Buffer_Rece[2] == 0xA5)
+N    {
+W "..\drive\TIM6.c" 332 9 function "UART_Action" declared implicitly
+N        UART_Action();
+N    }else{
+N        usartocflag = 1;
+N        RecHandle();
+N    }
+N							
+N	
+Nerr_ret:
+N#if 0										/* 姝ら儴鍒嗕负浜嗕覆鍙ｆ墦鍗扮粨鏋?瀹為檯杩愮敤涓彲涓嶈 */
+S	g_tPrint.Rxlen = g_tModS.RxCount;
+S	memcpy(g_tPrint.RxBuf, g_tModS.RxBuf, g_tModS.RxCount);
+N#endif
+N	
+N 	g_tModS.RxCount = 0;					/* 蹇呴』娓呴浂璁℃暟鍣紝鏂逛究涓嬫甯у悓姝?*/
+W "..\drive\TIM6.c" 267 11 variable "addr" was declared but never referenced
+N}
+N
+N
