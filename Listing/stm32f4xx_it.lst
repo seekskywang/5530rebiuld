@@ -35287,6 +35287,7 @@ Xextern volatile int32_t OS_TimeMS;
 Nu8 g_mods_timeout = 0;
 Nstruct MODS_T g_tModS;
 Nstatic void MODS_03H(void);
+Nextern float shortv;
 Nextern struct bitDefine
 N{
 N	unsigned bit0: 1;
@@ -35532,7 +35533,7 @@ N	uint16_t crc;
 N	uint8_t buf[S_TX_BUF_SIZE];
 X	uint8_t buf[128];
 N
-W "..\User\stm32f4xx_it.c" 275 2 function "memcpy" declared implicitly
+W "..\User\stm32f4xx_it.c" 276 2 function "memcpy" declared implicitly
 N	memcpy(buf, _pBuf, _ucLen);
 N	crc = CRC16(_pBuf, _ucLen);
 N	buf[_ucLen++] = crc >> 8;
@@ -35643,13 +35644,13 @@ N
 N        }break;
 N        default:break;
 N    }
-W "..\User\stm32f4xx_it.c" 359 8 variable "crec" was declared but never referenced
-W "..\User\stm32f4xx_it.c" 360 9 variable "csend" was declared but never referenced
-W "..\User\stm32f4xx_it.c" 361 16 variable "sendbuf" was declared but never referenced
-W "..\User\stm32f4xx_it.c" 362 8 variable "sendlen" was declared but never referenced
-W "..\User\stm32f4xx_it.c" 363 16 variable "recrc" was declared but never referenced
-W "..\User\stm32f4xx_it.c" 364 16 variable "scrc" was declared but never referenced
-W "..\User\stm32f4xx_it.c" 365 8 variable "i" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 360 8 variable "crec" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 361 9 variable "csend" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 362 16 variable "sendbuf" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 363 8 variable "sendlen" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 364 16 variable "recrc" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 365 16 variable "scrc" was declared but never referenced
+W "..\User\stm32f4xx_it.c" 366 8 variable "i" was declared but never referenced
 N}
 N
 N/*
@@ -35674,6 +35675,7 @@ X			value =	Run_Control[13];
 N			break;
 N		case SLAVE_REG_P01:
 X		case 0x0001:
+N            shortv = DISS_Voltage;
 N			value =	(int)(DISS_Voltage*1000);	
 N			break;
 N
@@ -35693,10 +35695,11 @@ N			break;
 N		case SLAVE_REG_P05:
 X		case 0x0005:
 N//			IO_OFF();
-N//            SET_Current_Laod = 1000;
-N//            usartocflag = 1; 
+N           SET_Current_Laod = 1000;
+X           Run_Control[4] = 1000;
+N            usartocflag = 1; 
 N//            while(usartocflag == 1);
-N            value = 0;
+N            value = (int)(oc_data*1000);
 N			break;
 N		case SLAVE_REG_P06:
 X		case 0x0006:
@@ -35819,7 +35822,7 @@ N			g_tModS.TxBuf[g_tModS.TxCount++] = reg_value[2*i+1];
 N		}
 N//         if(usartocflag == 0)
 N//         {
-N             MODS_SendWithCRC(g_tModS.TxBuf, g_tModS.TxCount);	/* 发送正确应答 */
+N//             MODS_SendWithCRC(g_tModS.TxBuf, g_tModS.TxCount);	/* 发送正确应答 */
 N//         }
 N	}
 N	else

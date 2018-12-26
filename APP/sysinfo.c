@@ -159,7 +159,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         GUI_SetFont(&GUI_Fontsymbol);
         GUI_UC_SetEncodeUTF8();
         GUI_SetTextMode(GUI_TM_TRANS);//ʨ׃τѾģʽΪ֗ɫ͸ķ
-        GUI_DispStringAt("Jinko", 5, 1);//SET
+//        GUI_DispStringAt("Jinko", 5, 1);//SET
         if(lang == 0)
         {  
             GUI_SetColor(GUI_WHITE);
@@ -190,12 +190,13 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         }
         GUI_SetColor(0x00BFFFFF);
         GUI_SetFont(&GUI_Font24_1);
-        GUI_DispStringAt("JK5530", 180, 50);
-        GUI_DispStringAt("Ver:2.5", 180, 75);
+        GUI_DispStringAt("5530", 180, 50);
+        GUI_DispStringAt("Ver:2.6", 180, 75);
         //1.7版本修改内阻测试判断测试结束与下一次测试开始的逻辑
         //1.8版本修正内阻测试短路后激活电池问题，添加手动测试功能，修正内阻显示不稳定问题
         //2.0版本添加英文
         //2.1版本添加步进时间设置
+        //2.6添加上位机通信协议
         GUI_DispStringAt("Ver:1.0", 180, 100);
         GUI_DispStringAt("-", 231, 125);
         GUI_DispStringAt("-", 267, 125);

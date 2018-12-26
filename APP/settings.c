@@ -163,7 +163,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 	GUI_SetFont(&GUI_Fontsymbol);
 	GUI_UC_SetEncodeUTF8();
 	GUI_SetTextMode(GUI_TM_TRANS);//ʨ׃τѾģʽΪ֗ɫ͸ķ
-	GUI_DispStringAt("Jinko", 5, 1);//SET
+//	GUI_DispStringAt("Jinko", 5, 1);//SET
     if(lang == 0)
     {
         GUI_SetColor(GUI_WHITE);

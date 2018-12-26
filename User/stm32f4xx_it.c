@@ -34,6 +34,7 @@ extern __IO int32_t OS_TimeMS;
 u8 g_mods_timeout = 0;
 struct MODS_T g_tModS;
 static void MODS_03H(void);
+extern float shortv;
 extern struct bitDefine
 {
 	unsigned bit0: 1;
@@ -397,6 +398,7 @@ static uint8_t MODS_ReadRegValue(uint16_t reg_addr, uint8_t *reg_value)
 			value =	R_VLUE;	
 			break;
 		case SLAVE_REG_P01:
+            shortv = DISS_Voltage;
 			value =	(int)(DISS_Voltage*1000);	
 			break;
 
@@ -412,10 +414,10 @@ static uint8_t MODS_ReadRegValue(uint16_t reg_addr, uint8_t *reg_value)
 			break;
 		case SLAVE_REG_P05:
 //			IO_OFF();
-//            SET_Current_Laod = 1000;
-//            usartocflag = 1; 
+           SET_Current_Laod = 1000;
+            usartocflag = 1; 
 //            while(usartocflag == 1);
-            value = 0;
+            value = (int)(oc_data*1000);
 			break;
 		case SLAVE_REG_P06:
 			value = 0;							/* 将寄存器值读出 */
@@ -520,7 +522,7 @@ err_ret:
 		}
 //         if(usartocflag == 0)
 //         {
-             MODS_SendWithCRC(g_tModS.TxBuf, g_tModS.TxCount);	/* 发送正确应答 */
+//             MODS_SendWithCRC(g_tModS.TxBuf, g_tModS.TxCount);	/* 发送正确应答 */
 //         }
 	}
 	else

@@ -43,7 +43,7 @@ vu16 dis_gate_v;
 float DISS_R;//内阻
 extern vu8 page_sw;
 static vu8 oc_sw = set_20;
-static float oc_data;
+float oc_data;
 static vu16 r;
 vu16 s_time;
 vu8 wait_flag;
@@ -193,7 +193,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 	GUI_SetFont(&GUI_Fontsymbol);
 	GUI_UC_SetEncodeUTF8();
 	GUI_SetTextMode(GUI_TM_TRANS);//设置文本模式为底色透明
-	GUI_DispStringAt("Jinko", 5, 1);//SET
+//	GUI_DispStringAt("Jinko", 5, 1);//SET
     if(lang == 0)
     {
         GUI_SetColor(GUI_WHITE);
@@ -272,6 +272,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                         short_finish = 0;
                         test_finish = 0;
                         r_test = 0;
+                        v = 0;
                     }
                 }else{
                     if(GUI_GetTime()/500 - test_ftime == 2)
@@ -288,6 +289,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                         short_finish = 0;
                         test_finish = 0;
                         r_test = 0;
+                        v = 0;
                     }
                 }                    
             }else{

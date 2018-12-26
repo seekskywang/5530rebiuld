@@ -1433,3 +1433,4 @@ void Mode_SW_CONT(vu8 mode)//ģʽȐۻ࠘׆
 		break;
 	}
 }
+

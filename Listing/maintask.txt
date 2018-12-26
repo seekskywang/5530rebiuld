@@ -52,9 +52,9 @@
 ;;;61     	RADIO_SetDefaultSkin(RADIO_SKIN_FLEX);
 00004c  483c              LDR      r0,|L1.320|
 00004e  f7fffffe          BL       RADIO_SetDefaultSkin
-;;;62         CreateSTARTER();
-000052  f7fffffe          BL       CreateSTARTER
-;;;63     //	CreateR();//开机进入内阻测试界面
+;;;62     //    CreateSTARTER();
+;;;63     	CreateR();//开机进入内阻测试界面
+000052  f7fffffe          BL       CreateR
 ;;;64     	Flag_Swtich_ON=0;
 000056  4c3b              LDR      r4,|L1.324|
 000058  6820              LDR      r0,[r4,#0]  ; flagA

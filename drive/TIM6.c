@@ -16,6 +16,8 @@ void MODS_Poll(void);
 vu8 resetflag;
 extern u8 g_mods_timeout;
 extern struct MODS_T g_tModS;
+float shortv;
+extern vu16 short_time;
 u32 Tick_10ms=0;
 u32 OldTick;
 u8 usartocflag = 0;//上位机过流标志位
@@ -89,6 +91,17 @@ void TIM3_IRQHandler(void)
     static resetcount;
     static read1963;
     static scancount;
+    static vu16 uocount;
+    static vu16 powcount;
+    static vu16 powflag;
+    static vu16 finishflag;
+    static float crec1,crec2;
+    u8 crec[6];
+    u8 *csend;
+    static u8 *sendbuf;
+    u8 sendlen;
+    static u16 recrc;
+    static u16 scrc;
     
     if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) //ӧԶא׏
     {
@@ -225,6 +238,108 @@ void TIM3_IRQHandler(void)
                     }
                 }
             }break;
+        }
+        
+        
+        if(usartocflag == 1)
+        {
+
+            Mode_SW_CONT(0x02);
+            GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+            crec2 = crec1;
+            crec1 = DISS_Current;
+            if(crec1 < crec2 && crec2 > 0.3)
+            {     
+                oc_data = crec2;
+                g_tModS.TxBuf[13] = (int)(oc_data*1000)>>8;
+                g_tModS.TxBuf[14] = (int)(oc_data*1000);
+                SET_Current_Laod = set_init_c;
+                GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
+//                MODS_SendWithCRC(g_tModS.TxBuf, g_tModS.TxCount);
+                t_onoff = 0;
+                usartocflag = 0;
+                crec1 = 0;
+                crec2 = 0;
+                powflag = 1;
+                
+            }else{
+                if(uocount == 10)
+                {
+                    SET_Current_Laod = SET_Current_Laod + 10;
+                    uocount = 0;
+                }else{
+                    uocount++;
+                }                  
+            }
+        }
+        if(powflag == 1)
+        {
+            if(powcount < 1000)
+            {
+                Mode_SW_CONT(0x03);
+                SET_Voltage = 2000;
+                SET_Current = 1000;
+                GPIO_SetBits(GPIOB,GPIO_Pin_13);
+                powcount++;
+//                 shortv = DISS_Voltage;
+            }else{
+                powcount = 0;
+                powflag = 0;
+                GPIO_ResetBits(GPIOB,GPIO_Pin_13);//关闭稳压电源输出
+                usartshortflag = 1;
+                
+            }
+        }
+        if(usartshortflag == 1)
+        {
+//             if(flag_Load_CC == 1)
+//             {
+//                 SET_Current_Laod = (int)(oc_data*1000)+5000; 
+//                 GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+//                 flag_Load_CC = 1;                              
+//                 GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+//                 GPIO_ResetBits(GPIOA,GPIO_Pin_15);//֧ؓغ՘On
+//             }else if(flag_Load_CC == 0){
+//                 SET_Voltage_Laod = 0;
+//                 GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV
+//                 flag_Load_CC = 0;
+//                 GPIO_ResetBits(GPIOA,GPIO_Pin_15);//֧ؓغ՘On
+//             }
+            SET_Current_Laod = (int)(oc_data*1000)+5000;
+            Mode_SW_CONT(0x02);
+            GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+            
+            if((shortv - DISS_Voltage) > shortv*0.6)
+            {
+                GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+                Mode_SW_CONT(0x01);
+                usartshortflag = 0;               
+                g_tModS.TxBuf[17] = (short_time/10)>>8;
+                g_tModS.TxBuf[18] = (short_time/10);
+                MODS_SendWithCRC(g_tModS.TxBuf, g_tModS.TxCount);
+                finishflag=1;
+                short_time = 0;
+            }else{
+                short_time++;                
+            }
+        }
+        if(finishflag == 1)
+        {
+            if(powcount < 1000)
+            {
+                Mode_SW_CONT(0x03);
+                SET_Voltage = 2000;
+                SET_Current = 1000;
+                GPIO_SetBits(GPIOB,GPIO_Pin_13);
+                powcount++;
+//                 shortv = DISS_Voltage;
+            }else{
+                SET_Current_Laod = 1000;
+                powcount = 0;
+                finishflag = 0;
+                GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+                Mode_SW_CONT(0x01);               
+            }
         }
     }    
     

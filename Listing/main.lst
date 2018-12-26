@@ -51763,8 +51763,7 @@ N	SysTick_Init();
 N	GPIO_Conf();
 N	TIM1_PWM_Config();
 N	TIM2_PWM_Config();
-W "..\User\main.c" 53 5 function "TIM5_Int_Init" declared implicitly
-N    TIM5_Int_Init(100-1,8400-1);
+N//    TIM5_Int_Init(100-1,8400-1);
 N//	TIM6_Config();
 N    TIM3_Int_Init(10-1,8400-1);
 N	ADC1_DMA_Init();

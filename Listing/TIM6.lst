@@ -35215,6 +35215,8 @@ N
 Nvu8 resetflag;
 Nextern u8 g_mods_timeout;
 Nextern struct MODS_T g_tModS;
+Nfloat shortv;
+Nextern vu16 short_time;
 Nu32 Tick_10ms=0;
 Nu32 OldTick;
 Nu8 usartocflag = 0;//上位机过流标志位
@@ -35291,12 +35293,23 @@ N//֨ʱǷ 3 א׏ؾϱگ˽
 Nvoid TIM3_IRQHandler(void)
 N{
 N    static vu16 count1ms;
-W "..\drive\TIM6.c" 89 12 explicit type is missing ("int" assumed)
-N    static resetcount;
-W "..\drive\TIM6.c" 90 12 explicit type is missing ("int" assumed)
-N    static read1963;
 W "..\drive\TIM6.c" 91 12 explicit type is missing ("int" assumed)
+N    static resetcount;
+W "..\drive\TIM6.c" 92 12 explicit type is missing ("int" assumed)
+N    static read1963;
+W "..\drive\TIM6.c" 93 12 explicit type is missing ("int" assumed)
 N    static scancount;
+N    static vu16 uocount;
+N    static vu16 powcount;
+N    static vu16 powflag;
+N    static vu16 finishflag;
+N    static float crec1,crec2;
+N    u8 crec[6];
+N    u8 *csend;
+N    static u8 *sendbuf;
+N    u8 sendlen;
+N    static u16 recrc;
+N    static u16 scrc;
 N    
 N    if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) //ӧԶא׏
 X    if(TIM_GetITStatus(((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400)),((uint16_t)0x0001))==SET) 
@@ -35311,34 +35324,34 @@ N             if(resetflag == 1)
 N             {
 N                 if(resetcount == 1000)
 N                 {
-W "..\drive\TIM6.c" 103 22 function "LCD_Initializtion" declared implicitly
+W "..\drive\TIM6.c" 116 22 function "LCD_Initializtion" declared implicitly
 N                     LCD_Initializtion();
-W "..\drive\TIM6.c" 104 22 function "GUI_Init" declared implicitly
+W "..\drive\TIM6.c" 117 22 function "GUI_Init" declared implicitly
 N                     GUI_Init();
 N                     if(page_sw == face_menu)
 X                     if(page_sw == 2)
 N                     {
-W "..\drive\TIM6.c" 107 26 function "ResetPow" declared implicitly
+W "..\drive\TIM6.c" 120 26 function "ResetPow" declared implicitly
 N                         ResetPow();
 N                     }else if(page_sw == face_cdc){
 X                     }else if(page_sw == 1){
-W "..\drive\TIM6.c" 109 26 function "ResetCDC" declared implicitly
+W "..\drive\TIM6.c" 122 26 function "ResetCDC" declared implicitly
 N                         ResetCDC();
 N                     }else if(page_sw == face_r){
 X                     }else if(page_sw == 3){
-W "..\drive\TIM6.c" 111 26 function "ResetR" declared implicitly
+W "..\drive\TIM6.c" 124 26 function "ResetR" declared implicitly
 N                         ResetR();
 N                     }else if(page_sw == face_load){
 X                     }else if(page_sw == 4){
-W "..\drive\TIM6.c" 113 26 function "ResetLoad" declared implicitly
+W "..\drive\TIM6.c" 126 26 function "ResetLoad" declared implicitly
 N                         ResetLoad();
 N                     }else if(page_sw == face_graph){
 X                     }else if(page_sw == 0){
-W "..\drive\TIM6.c" 115 26 function "ResetG" declared implicitly
+W "..\drive\TIM6.c" 128 26 function "ResetG" declared implicitly
 N                         ResetG();
 N                     }else if(page_sw == face_set){
 X                     }else if(page_sw == 5){
-W "..\drive\TIM6.c" 117 26 function "ResetSET" declared implicitly
+W "..\drive\TIM6.c" 130 26 function "ResetSET" declared implicitly
 N                         ResetSET();
 N                     }
 N                     resetcount = 0;
@@ -35467,10 +35480,141 @@ N                    }
 N                }
 N            }break;
 N        }
+N        
+N        
+N        if(usartocflag == 1)
+N        {
+N
+W "..\drive\TIM6.c" 247 13 function "Mode_SW_CONT" declared implicitly
+N            Mode_SW_CONT(0x02);
+N            GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N            crec2 = crec1;
+N            crec1 = DISS_Current;
+W "..\drive\TIM6.c" 251 33 single-precision operand implicitly converted to double-precision
+N            if(crec1 < crec2 && crec2 > 0.3)
+N            {     
+N                oc_data = crec2;
+N                g_tModS.TxBuf[13] = (int)(oc_data*1000)>>8;
+N                g_tModS.TxBuf[14] = (int)(oc_data*1000);
+N                SET_Current_Laod = set_init_c;
+X                Run_Control[4] = Run_Control[22];
+N                GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
+X                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N//                MODS_SendWithCRC(g_tModS.TxBuf, g_tModS.TxCount);
+N                t_onoff = 0;
+N                usartocflag = 0;
+N                crec1 = 0;
+N                crec2 = 0;
+N                powflag = 1;
+N                
+N            }else{
+N                if(uocount == 10)
+N                {
+N                    SET_Current_Laod = SET_Current_Laod + 10;
+X                    Run_Control[4] = Run_Control[4] + 10;
+N                    uocount = 0;
+N                }else{
+N                    uocount++;
+N                }                  
+N            }
+N        }
+N        if(powflag == 1)
+N        {
+N            if(powcount < 1000)
+N            {
+W "..\drive\TIM6.c" 279 17 function "Mode_SW_CONT" declared implicitly
+N                Mode_SW_CONT(0x03);
+N                SET_Voltage = 2000;
+X                Run_Control[1] = 2000;
+N                SET_Current = 1000;
+X                Run_Control[2] = 1000;
+N                GPIO_SetBits(GPIOB,GPIO_Pin_13);
+X                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                powcount++;
+N//                 shortv = DISS_Voltage;
+N            }else{
+N                powcount = 0;
+N                powflag = 0;
+N                GPIO_ResetBits(GPIOB,GPIO_Pin_13);//关闭稳压电源输出
+X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                usartshortflag = 1;
+N                
+N            }
+N        }
+N        if(usartshortflag == 1)
+N        {
+N//             if(flag_Load_CC == 1)
+N//             {
+N//                 SET_Current_Laod = (int)(oc_data*1000)+5000; 
+N//                 GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+N//                 flag_Load_CC = 1;                              
+N//                 GPIO_ResetBits(GPIOC,GPIO_Pin_10);//CC
+N//                 GPIO_ResetBits(GPIOA,GPIO_Pin_15);//֧ؓغ՘On
+N//             }else if(flag_Load_CC == 0){
+N//                 SET_Voltage_Laod = 0;
+N//                 GPIO_SetBits(GPIOC,GPIO_Pin_10);//CV
+N//                 flag_Load_CC = 0;
+N//                 GPIO_ResetBits(GPIOA,GPIO_Pin_15);//֧ؓغ՘On
+N//             }
+N            SET_Current_Laod = (int)(oc_data*1000)+5000;
+X            Run_Control[4] = (int)(oc_data*1000)+5000;
+W "..\drive\TIM6.c" 309 13 function "Mode_SW_CONT" declared implicitly
+N            Mode_SW_CONT(0x02);
+N            GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+X            GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
+N            
+W "..\drive\TIM6.c" 312 42 single-precision operand implicitly converted to double-precision
+N            if((shortv - DISS_Voltage) > shortv*0.6)
+N            {
+N                GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                Mode_SW_CONT(0x01);
+N                usartshortflag = 0;               
+N                g_tModS.TxBuf[17] = (short_time/10)>>8;
+N                g_tModS.TxBuf[18] = (short_time/10);
+N                MODS_SendWithCRC(g_tModS.TxBuf, g_tModS.TxCount);
+N                finishflag=1;
+N                short_time = 0;
+N            }else{
+N                short_time++;                
+N            }
+N        }
+N        if(finishflag == 1)
+N        {
+N            if(powcount < 1000)
+N            {
+W "..\drive\TIM6.c" 330 17 function "Mode_SW_CONT" declared implicitly
+N                Mode_SW_CONT(0x03);
+N                SET_Voltage = 2000;
+X                Run_Control[1] = 2000;
+N                SET_Current = 1000;
+X                Run_Control[2] = 1000;
+N                GPIO_SetBits(GPIOB,GPIO_Pin_13);
+X                GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+N                powcount++;
+N//                 shortv = DISS_Voltage;
+N            }else{
+N                SET_Current_Laod = 1000;
+X                Run_Control[4] = 1000;
+N                powcount = 0;
+N                finishflag = 0;
+N                GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+X                GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x2000));
+W "..\drive\TIM6.c" 341 17 function "Mode_SW_CONT" declared implicitly
+N                Mode_SW_CONT(0x01);               
+N            }
+N        }
 N    }    
 N    
-W "..\drive\TIM6.c" 90 12 variable "read1963" was declared but never referenced
-W "..\drive\TIM6.c" 91 12 variable "scancount" was declared but never referenced
+W "..\drive\TIM6.c" 92 12 variable "read1963" was declared but never referenced
+W "..\drive\TIM6.c" 93 12 variable "scancount" was declared but never referenced
+W "..\drive\TIM6.c" 99 8 variable "crec" was declared but never referenced
+W "..\drive\TIM6.c" 100 9 variable "csend" was declared but never referenced
+W "..\drive\TIM6.c" 101 16 variable "sendbuf" was declared but never referenced
+W "..\drive\TIM6.c" 102 8 variable "sendlen" was declared but never referenced
+W "..\drive\TIM6.c" 103 16 variable "recrc" was declared but never referenced
+W "..\drive\TIM6.c" 104 16 variable "scrc" was declared but never referenced
 N}
 N
 Nvoid TIM5_Int_Init(u16 arr,u16 psc)
@@ -35580,7 +35724,7 @@ N
 N	/* 分析应用层协�?*/
 N    if(UART_Buffer_Rece[2] == 0xA5)
 N    {
-W "..\drive\TIM6.c" 332 9 function "UART_Action" declared implicitly
+W "..\drive\TIM6.c" 447 9 function "UART_Action" declared implicitly
 N        UART_Action();
 N    }else{
 N        usartocflag = 1;
@@ -35595,7 +35739,7 @@ S	memcpy(g_tPrint.RxBuf, g_tModS.RxBuf, g_tModS.RxCount);
 N#endif
 N	
 N 	g_tModS.RxCount = 0;					/* 必须清零计数器，方便下次帧同�?*/
-W "..\drive\TIM6.c" 267 11 variable "addr" was declared but never referenced
+W "..\drive\TIM6.c" 382 11 variable "addr" was declared but never referenced
 N}
 N
 N

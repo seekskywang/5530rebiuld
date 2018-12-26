@@ -50696,9 +50696,8 @@ N	HEADER_SetDefaultSkin(HEADER_SKIN_FLEX);
 X	HEADER_SetDefaultSkin(HEADER_DrawSkinFlex);
 N	RADIO_SetDefaultSkin(RADIO_SKIN_FLEX);
 X	RADIO_SetDefaultSkin(RADIO_DrawSkinFlex);
-W "..\STemWinLibrary522\emWinTask\MainTask.c" 62 5 function "CreateSTARTER" declared implicitly
-N    CreateSTARTER();
-N//	CreateR();//开机进入内阻测试界面
+N//    CreateSTARTER();
+N	CreateR();//开机进入内阻测试界面
 N	Flag_Swtich_ON=0;
 X	(flagA . bit6)=0;
 N	while (1)
