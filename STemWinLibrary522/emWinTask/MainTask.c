@@ -59,8 +59,8 @@ void MainTask(void)
 	SLIDER_SetDefaultSkin(SLIDER_SKIN_FLEX);
 	HEADER_SetDefaultSkin(HEADER_SKIN_FLEX);
 	RADIO_SetDefaultSkin(RADIO_SKIN_FLEX);
-//    CreateSTARTER();
-	CreateR();//开机进入内阻测试界面
+    CreateSTARTER();
+//	CreateR();//开机进入内阻测试界面
 	Flag_Swtich_ON=0;
 	while (1)
 	{

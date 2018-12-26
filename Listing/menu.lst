@@ -52683,7 +52683,7 @@ N        GUI_SetFont(&GUI_Fontsymbol);
 N        GUI_UC_SetEncodeUTF8();
 N        GUI_SetTextMode(GUI_TM_TRANS);//设置文本模式为底色透明
 X        GUI_SetTextMode((1<<1));
-N//        GUI_DispStringAt("Jinko", 5, 1);//SET
+N        GUI_DispStringAt("Jinko", 5, 1);//SET
 N        if(lang == 0)
 N        {
 N            GUI_SetColor(GUI_WHITE);
