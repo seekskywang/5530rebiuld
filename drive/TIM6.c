@@ -17,8 +17,11 @@ vu8 resetflag;
 extern u8 g_mods_timeout;
 extern struct MODS_T g_tModS;
 float shortv;
+extern float v;
 extern vu16 short_time;
 u32 Tick_10ms=0;
+extern vu8 rpow;
+extern vu8 short_finish;
 u32 OldTick;
 u8 usartocflag = 0;//涓婁綅鏈鸿繃娴佹爣蹇椾綅
 u8 usartshortflag = 0;//涓婁綅鏈虹煭璺爣蹇椾綅
@@ -237,6 +240,41 @@ void TIM3_IRQHandler(void)
                         count1ms = 0;
                     }
                 }
+                
+                if(rpow == 1)
+                {
+                    if(powcount < 1000)
+                    {
+                        Mode_SW_CONT(0x03);
+                        SET_Voltage = 2000;
+                        SET_Current = 1000;
+                        GPIO_SetBits(GPIOB,GPIO_Pin_13);
+                        powcount++;
+        //                 shortv = DISS_Voltage;
+                    }else{
+                        powcount = 0;
+                        rpow = 0;
+                        short_flag = 1;
+                        GPIO_ResetBits(GPIOB,GPIO_Pin_13);//鍏抽棴绋冲帇鐢垫簮杈撳嚭
+                        
+                    }                   
+                }
+                if(short_flag == 1)
+                {
+                    SET_Current_Laod = (int)(oc_data*100)+300;
+                    Mode_SW_CONT(0x02);
+                    GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+                    
+                    if((v - DISS_Voltage) > v*0.6)
+                    {
+                        SET_Current_Laod = set_init_c;
+                        GPIO_SetBits(GPIOC,GPIO_Pin_1);//OFF
+                        short_flag = 0;
+                        short_finish = 1;
+                    }else{
+                        short_time++;                
+                    }
+                }
             }break;
         }
         
@@ -244,7 +282,7 @@ void TIM3_IRQHandler(void)
         if(usartocflag == 1)
         {
 
-            Mode_SW_CONT(0x02);
+            
             GPIO_ResetBits(GPIOC,GPIO_Pin_1);
             crec2 = crec1;
             crec1 = DISS_Current;
@@ -263,13 +301,8 @@ void TIM3_IRQHandler(void)
                 powflag = 1;
                 
             }else{
-                if(uocount == 10)
-                {
-                    SET_Current_Laod = SET_Current_Laod + 10;
-                    uocount = 0;
-                }else{
-                    uocount++;
-                }                  
+                    SET_Current_Laod = SET_Current_Laod + 1;
+                    uocount = 0;               
             }
         }
         if(powflag == 1)
@@ -305,7 +338,7 @@ void TIM3_IRQHandler(void)
 //                 flag_Load_CC = 0;
 //                 GPIO_ResetBits(GPIOA,GPIO_Pin_15);//支負睾諛On
 //             }
-            SET_Current_Laod = (int)(oc_data*1000)+5000;
+            SET_Current_Laod = (int)(oc_data*100)+300;
             Mode_SW_CONT(0x02);
             GPIO_ResetBits(GPIOC,GPIO_Pin_1);
             
@@ -314,8 +347,8 @@ void TIM3_IRQHandler(void)
                 GPIO_ResetBits(GPIOB,GPIO_Pin_13);
                 Mode_SW_CONT(0x01);
                 usartshortflag = 0;               
-                g_tModS.TxBuf[17] = (short_time/10)>>8;
-                g_tModS.TxBuf[18] = (short_time/10);
+                g_tModS.TxBuf[17] = (short_time)>>8;
+                g_tModS.TxBuf[18] = (short_time);
                 MODS_SendWithCRC(g_tModS.TxBuf, g_tModS.TxCount);
                 finishflag=1;
                 short_time = 0;
@@ -428,11 +461,11 @@ void MODS_Poll(void)
 	}
 
 	/* 计算CRC校验和 */
-	crc1 = CRC16(g_tModS.RxBuf, g_tModS.RxCount);
-	if (crc1 != 0)
-	{
-		goto err_ret;
-	}
+// 	crc1 = CRC16(g_tModS.RxBuf, g_tModS.RxCount);
+//	if (crc1 != 0)
+//	{
+//		goto err_ret;
+//	}
 
 // 	/* 站地址 (1字节） */
 // 	addr = g_tModS.RxBuf[0];				/* 第1字节 站号 */
@@ -442,7 +475,7 @@ void MODS_Poll(void)
 // 	}
 
 	/* 鍒嗘瀽搴旂敤灞傚崗璁?*/
-    if(UART_Buffer_Rece[2] == 0xA5)
+    if(g_tModS.RxBuf[2] == 0xA5)
     {
         UART_Action();
     }else{

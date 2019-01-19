@@ -414,8 +414,9 @@ static uint8_t MODS_ReadRegValue(uint16_t reg_addr, uint8_t *reg_value)
 			break;
 		case SLAVE_REG_P05:
 //			IO_OFF();
-           SET_Current_Laod = 1000;
-            usartocflag = 1; 
+           SET_Current_Laod = 100;
+           usartocflag = 1; 
+           Mode_SW_CONT(0x02);
 //            while(usartocflag == 1);
             value = (int)(oc_data*1000);
 			break;

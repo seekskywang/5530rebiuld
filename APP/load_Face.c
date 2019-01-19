@@ -140,9 +140,9 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
 	case WM_TIMER://定时模块消息
 	if(WM_GetTimerId(pMsg->Data.v) == ID_TimerTime1)
 	{
-        if(clear_flag3 == 1)
-        {
-            if(DISS_Voltage <= clear_lv)
+//        if(clear_flag3 == 1)
+//        {
+            if(DISS_Voltage <= 0.1)
             {
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
                 sprintf(buf,"%.2f",0.00);       
@@ -152,11 +152,11 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
                 sprintf(buf,"%.2f",DISS_Voltage);       
                 TEXT_SetText(hItem,buf);
             }
-        }else{
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
-            sprintf(buf,"%.2f",DISS_Voltage);       
-            TEXT_SetText(hItem,buf);
-        }
+//        }else{
+//            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_84);
+//            sprintf(buf,"%.2f",DISS_Voltage);       
+//            TEXT_SetText(hItem,buf);
+//        }
         if((float)SET_Current_Laod/100 * DISS_Voltage > 50){
             SET_Current_Laod = 0;
             hItem = WM_GetDialogItem(load_wind, ID_TEXT_49);
@@ -169,10 +169,16 @@ static void _cbDialog2(WM_MESSAGE * pMsg) {
             sprintf(buf,"%.2f",dis_load_c);
             TEXT_SetText(hItem,buf);
         }
-        
-        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_85);
-        sprintf(buf,"%.2f",DISS_Current);        
-		TEXT_SetText(hItem,buf);
+        if(DISS_Current <= 0.01)
+        {
+			hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_85);
+			sprintf(buf,"%.2f",0.00);        
+			TEXT_SetText(hItem,buf);
+		}else{
+			hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_85);
+			sprintf(buf,"%.2f",DISS_Current);        
+			TEXT_SetText(hItem,buf);
+		}
         
 //        test_load();
         

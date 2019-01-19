@@ -36,7 +36,7 @@ vu8 finish = 0;
 vu8 set_sw;
 char set_limit[5];
 vu16 stable_time;
-
+vu8 rpow;
 ////////////////////////////////////////////////////////
 
 vu16 dis_gate_v;
@@ -254,16 +254,16 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         
         if(para_set2 == set_2_on)
         {
-            if(short_finish == 1)
+            if(short_finish == 1 && test_finish == 1)
             {
                 if(gate_v == 0)
                 {
-                    if(GUI_GetTime()/500 - test_ftime == 1)
+                    if(GUI_GetTime()/500 - test_ftime == 2)
                     {
                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
                         Mode_SW_CONT(0x01);
                     }
-                    if(/*mode_sw == mode_pow && */DISS_Voltage < 0.3  && GUI_GetTime()/500 - test_ftime > 1 /*&&                         < 50*/)
+                    if(/*mode_sw == mode_pow && */DISS_Voltage < 0.3  && GUI_GetTime()/500 - test_ftime > 2 /*&&                         < 50*/)
                     {
                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);
                         Mode_SW_CONT(0x01);
@@ -403,10 +403,10 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
                 }else if(DISS_Voltage < 1){
                     r_stable = 0;
                 }                    
-                if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
+                if(DISS_Voltage <= 0.1)
                 {
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-                    sprintf(buf,"%.2f",0);       
+                    sprintf(buf,"%.2f",0.00);       
                     TEXT_SetText(hItem,buf);
                 }else{
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
@@ -475,57 +475,59 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             }else{
                 if(para_set2 == set_2_on)
                 {
-                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-                    sprintf(buf,"%.2f",v);       
-                    TEXT_SetText(hItem,buf);
-                    
-                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
-                    TEXT_SetFont(hItem,&GUI_FontD24x32);
-                    sprintf(buf,"%4d",r);       
-                    TEXT_SetText(hItem,buf);
-                    
-                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
-                    sprintf(buf,"%4d",short_time);
-                    TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体      
-                    TEXT_SetText(hItem,buf);
-                    
-                    if(short_finish == 0 ){
-                        if(DISS_Voltage < 1 && short_flag == 0 && oct_sw == oct_off)
-                        {
-                            SET_Voltage =1000;
-                            SET_Current = 1000;
-                            Mode_SW_CONT(0x03);
-                            GPIO_SetBits(GPIOB,GPIO_Pin_13);
-                            //GPIO_ResetBits(GPIOB,GPIO_Pin_13);
-                        }else if(oct_sw == oct_off && short_flag == 0){
-                            Mode_SW_CONT(0x02);
-                            SET_Current_Laod = 1000;
-                            short_flag =1;
-                            short_start = GUI_GetTime()*2;
-                        }
-                        if(short_flag == 1)
-                        {
-                            GPIO_ResetBits(GPIOC,GPIO_Pin_1);
-                            if(DISS_Voltage < 1){
-                                SET_Current_Laod = set_init_c;
-                                short_time = GUI_GetTime()*2 - short_start;
-                                short_flag = 0;
-                                short_finish = 1;
-                                hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
-                                sprintf(buf,"%4d",short_time);     
-                                TEXT_SetText(hItem,buf);
-                            }
-                        }
-                    }
+//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+//                     sprintf(buf,"%.2f",v);       
+//                     TEXT_SetText(hItem,buf);
+//                     
+//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);
+//                     TEXT_SetFont(hItem,&GUI_FontD24x32);
+//                     sprintf(buf,"%4d",r);       
+//                     TEXT_SetText(hItem,buf);
+//                     
+//                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+//                     sprintf(buf,"%4d",short_time);
+//                     TEXT_SetFont(hItem,&GUI_Font24_1);//设定文本字体      
+//                     TEXT_SetText(hItem,buf);
+//                     
+//                     if(short_finish == 0 ){
+//                         if(DISS_Voltage < 1 && short_flag == 0 && oct_sw == oct_off)
+//                         {
+//                             SET_Voltage =1000;
+//                             SET_Current = 1000;
+//                             Mode_SW_CONT(0x03);
+//                             GPIO_SetBits(GPIOB,GPIO_Pin_13);
+//                             //GPIO_ResetBits(GPIOB,GPIO_Pin_13);
+//                         }else if(oct_sw == oct_off && short_flag == 0){
+//                             Mode_SW_CONT(0x02);
+//                             SET_Current_Laod = 1000;
+//                             short_flag =1;
+//                             short_start = GUI_GetTime()*2;
+//                         }
+//                         if(short_flag == 1)
+//                         {
+//                             GPIO_ResetBits(GPIOC,GPIO_Pin_1);
+//                             if(DISS_Voltage < 1){
+//                                 SET_Current_Laod = set_init_c;
+//                                 short_time = GUI_GetTime()*2 - short_start;
+//                                 short_flag = 0;
+//                                 short_finish = 1;
+//                                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+//                                 sprintf(buf,"%4d",short_time);     
+//                                 TEXT_SetText(hItem,buf);
+//                             }
+//                         }
+//                     }
                     if(short_finish == 1 && test_finish == 0)
                     {
                         GPIO_SetBits(GPIOC,GPIO_Pin_1);
                         Mode_SW_CONT(0x03);
-                        SET_Voltage = 1000;
+                        SET_Voltage = 2000;
                         SET_Current = 1000;
                         GPIO_SetBits(GPIOB,GPIO_Pin_13);
                         
-                        
+                        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_117);
+                        sprintf(buf,"%4d",short_time);     
+                        TEXT_SetText(hItem,buf);
 //                         GPIO_ResetBits(GPIOB,GPIO_Pin_13);                                                
 //                         Mode_SW_CONT(0x01);
                         
@@ -570,7 +572,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
                 {
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-                    sprintf(buf,"%.2f",0);       
+                    sprintf(buf,"%.2f",0.00);       
                     TEXT_SetText(hItem,buf);
                 }else{
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
@@ -1754,6 +1756,7 @@ void OC_ADD(void){
         finish = 1;
         crec1 = 0;
         crec2 = 0;
+        rpow = 1;
     }else{
         SET_Current_Laod = SET_Current_Laod + set_sbs_c;
         crec2 = crec1;
@@ -1772,6 +1775,7 @@ void OC_ADD(void){
             finish = 1;
             crec1 = 0;
             crec2 = 0;
+            rpow = 1;
         }
     }        
 }

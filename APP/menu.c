@@ -138,20 +138,20 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 	{
 //         if(clear_flag2 == 1)
 //         {
-//             if(DISS_POW_Voltage <= clear_pv)
-//             {
-//                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
-//                 sprintf(buf,"%.2f",0);       
-//                 TEXT_SetText(hItem,buf);
-//             }else{
-//                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
-//                 sprintf(buf,"%.2f",DISS_POW_Voltage);       
-//                 TEXT_SetText(hItem,buf);
-//             }
+             if(DISS_POW_Voltage <= 0.1)
+             {
+                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
+                 sprintf(buf,"%.2f",0.00);       
+                 TEXT_SetText(hItem,buf);
+             }else{
+                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
+                 sprintf(buf,"%.2f",DISS_POW_Voltage);       
+                 TEXT_SetText(hItem,buf);
+             }
 //         }else{
-            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
-            sprintf(buf,"%.2f",DISS_POW_Voltage);       
-            TEXT_SetText(hItem,buf);
+//            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
+//            sprintf(buf,"%.2f",DISS_POW_Voltage);       
+//            TEXT_SetText(hItem,buf);
 //         }
         
         

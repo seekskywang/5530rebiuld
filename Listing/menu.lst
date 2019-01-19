@@ -6116,13 +6116,13 @@ N#ifndef GUI_DEBUG_H
 N#define GUI_DEBUG_H
 N
 N#include <stddef.h>
-L 1 "D:\Keil\ARM\RV31\Inc\stddef.h" 1
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h" 1
 N/* stddef.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.1.4 */
 N
 N/* Copyright (C) ARM Ltd., 1999
 N * All rights reserved
-N * RCS $Revision: 102466 $
-N * Checkin $Date: 2006-08-23 11:37:17 +0100 (Wed, 23 Aug 2006) $
+N * RCS $Revision$
+N * Checkin $Date$
 N * Revising $Author: agrant $
 N */
 N
@@ -6138,6 +6138,7 @@ N */
 N
 N#ifndef __stddef_h
 N#define __stddef_h
+N#define __ARMCLIB_VERSION 5060037
 N
 N  #ifndef __STDDEF_DECLS
 N  #define __STDDEF_DECLS
@@ -6150,15 +6151,29 @@ N    #else
 N      #define __CLIBNS
 N    #endif  /* __cplusplus */
 N
-Ntypedef signed int ptrdiff_t;
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S  typedef signed long ptrdiff_t;
+N#else
+N  typedef signed int ptrdiff_t;
+N#endif
 N
 N#if defined(__cplusplus) || !defined(__STRICT_ANSI__)
 X#if 0L || !0L
 N /* unconditional in C++ and non-strict C for consistency of debug info */
-N  typedef unsigned int size_t;
+N  #if __sizeof_ptr == 8
+X  #if 4 == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+N  #else
+N    typedef unsigned int size_t;   /* see <stddef.h> */
+N  #endif
 N#elif !defined(__size_t)
 S  #define __size_t 1
-S  typedef unsigned int size_t;   /* others (e.g. <stdio.h>) also define */
+S  #if __sizeof_ptr == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+S  #else
+S    typedef unsigned int size_t;   /* see <stddef.h> */
+S  #endif
 S   /* the unsigned integral type of the result of the sizeof operator. */
 N#endif
 N
@@ -6166,15 +6181,15 @@ N#ifndef __cplusplus  /* wchar_t is a builtin type for C++ */
 N  #if !defined(__STRICT_ANSI__)
 X  #if !0L
 N  /* unconditional in non-strict C for consistency of debug info */
-N    #if defined(__WCHAR32)
-X    #if 0L
+N    #if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
+X    #if 0L || (0L && __ARM_SIZEOF_WCHAR_T == 4)
 S      typedef unsigned int wchar_t; /* also in <stdlib.h> and <inttypes.h> */
 N    #else
 N      typedef unsigned short wchar_t; /* also in <stdlib.h> and <inttypes.h> */
 N    #endif
 N  #elif !defined(__wchar_t)
 S    #define __wchar_t 1
-S    #if defined(__WCHAR32)
+S    #if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
 S      typedef unsigned int wchar_t; /* also in <stdlib.h> and <inttypes.h> */
 S    #else
 S      typedef unsigned short wchar_t; /* also in <stdlib.h> and <inttypes.h> */
@@ -6193,8 +6208,17 @@ N#undef NULL  /* others (e.g. <stdio.h>) also define */
 N#define NULL 0
 N   /* null pointer constant. */
 N
+N#ifdef __clang__
+S  #define offsetof(t, d) __builtin_offsetof(t, d)
+N#else
 N  /* EDG uses __INTADDR__ to avoid errors when strict */
 N  #define offsetof(t, memb) ((__CLIBNS size_t)__INTADDR__(&(((t *)0)->memb)))
+N#endif
+N
+N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 201112L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+X#if !0L || (1L && 201112L <= 199409L) || (0L && 201103L <= __cplusplus)
+N  typedef long double max_align_t;
+N#endif
 N
 N    #ifdef __cplusplus
 S         }  /* extern "C" */
@@ -6207,12 +6231,16 @@ N  #ifdef __cplusplus
 S    #ifndef __STDDEF_NO_EXPORTS
 S      using ::std::size_t;
 S      using ::std::ptrdiff_t;
+S      #if !defined(__STRICT_ANSI__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+S        using ::std::max_align_t;
+S      #endif
 S    #endif 
 N  #endif /* __cplusplus */
 N
 N#endif
 N
 N/* end of stddef.h */
+N
 L 61 "..\STemWinLibrary522\inc\GUI_Debug.h" 2
 N
 N#include "GUI.h"
@@ -14510,18 +14538,40 @@ S  #endif
 N#endif
 N
 N#include <stdint.h>                      /* standard types definitions                      */
-L 1 "D:\Keil\ARM\RV31\Inc\stdint.h" 1
-N/* Copyright (C) ARM Ltd., 1999 */
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h" 1
+N/* Copyright (C) ARM Ltd., 1999,2014 */
 N/* All rights reserved */
 N
 N/*
-N * RCS $Revision: 137748 $
-N * Checkin $Date: 2008-09-11 17:34:24 +0100 (Thu, 11 Sep 2008) $
+N * RCS $Revision$
+N * Checkin $Date$
 N * Revising $Author: agrant $
 N */
 N
 N#ifndef __stdint_h
 N#define __stdint_h
+N#define __ARMCLIB_VERSION 5060037
+N
+N  #ifdef __INT64_TYPE__
+S    /* armclang predefines '__INT64_TYPE__' and '__INT64_C_SUFFIX__' */
+S    #define __INT64 __INT64_TYPE__
+N  #else
+N    /* armcc has builtin '__int64' which can be used in --strict mode */
+N    #define __INT64 __int64
+N    #define __INT64_C_SUFFIX__ ll
+N  #endif
+N  #define __PASTE2(x, y) x ## y
+N  #define __PASTE(x, y) __PASTE2(x, y)
+N  #define __INT64_C(x)  __ESCAPE__(__PASTE(x, __INT64_C_SUFFIX__))
+N  #define __UINT64_C(x)  __ESCAPE__(__PASTE(x ## u, __INT64_C_SUFFIX__))
+N  #if defined(__clang__) || (defined(__ARMCC_VERSION) && !defined(__STRICT_ANSI__))
+X  #if 0L || (1L && !0L)
+N    /* armclang and non-strict armcc allow 'long long' in system headers */
+N    #define __LONGLONG long long
+N  #else
+S    /* strict armcc has '__int64' */
+S    #define __LONGLONG __int64
+N  #endif
 N
 N  #ifndef __STDINT_DECLS
 N  #define __STDINT_DECLS
@@ -14540,8 +14590,6 @@ N
 N/*
 N * 'signed' is redundant below, except for 'signed char' and if
 N * the typedef is used to declare a bitfield.
-N * '__int64' is used instead of 'long long' so that this header
-N * can be used in --strict mode.
 N */
 N
 N    /* 7.18.1.1 */
@@ -14550,13 +14598,15 @@ N    /* exact-width signed integer types */
 Ntypedef   signed          char int8_t;
 Ntypedef   signed short     int int16_t;
 Ntypedef   signed           int int32_t;
-Ntypedef   signed       __int64 int64_t;
+Ntypedef   signed       __INT64 int64_t;
+Xtypedef   signed       __int64 int64_t;
 N
 N    /* exact-width unsigned integer types */
 Ntypedef unsigned          char uint8_t;
 Ntypedef unsigned short     int uint16_t;
 Ntypedef unsigned           int uint32_t;
-Ntypedef unsigned       __int64 uint64_t;
+Ntypedef unsigned       __INT64 uint64_t;
+Xtypedef unsigned       __int64 uint64_t;
 N
 N    /* 7.18.1.2 */
 N
@@ -14565,13 +14615,15 @@ N    /* minimum-width signed integer types */
 Ntypedef   signed          char int_least8_t;
 Ntypedef   signed short     int int_least16_t;
 Ntypedef   signed           int int_least32_t;
-Ntypedef   signed       __int64 int_least64_t;
+Ntypedef   signed       __INT64 int_least64_t;
+Xtypedef   signed       __int64 int_least64_t;
 N
 N    /* minimum-width unsigned integer types */
 Ntypedef unsigned          char uint_least8_t;
 Ntypedef unsigned short     int uint_least16_t;
 Ntypedef unsigned           int uint_least32_t;
-Ntypedef unsigned       __int64 uint_least64_t;
+Ntypedef unsigned       __INT64 uint_least64_t;
+Xtypedef unsigned       __int64 uint_least64_t;
 N
 N    /* 7.18.1.3 */
 N
@@ -14579,21 +14631,31 @@ N    /* fastest minimum-width signed integer types */
 Ntypedef   signed           int int_fast8_t;
 Ntypedef   signed           int int_fast16_t;
 Ntypedef   signed           int int_fast32_t;
-Ntypedef   signed       __int64 int_fast64_t;
+Ntypedef   signed       __INT64 int_fast64_t;
+Xtypedef   signed       __int64 int_fast64_t;
 N
 N    /* fastest minimum-width unsigned integer types */
 Ntypedef unsigned           int uint_fast8_t;
 Ntypedef unsigned           int uint_fast16_t;
 Ntypedef unsigned           int uint_fast32_t;
-Ntypedef unsigned       __int64 uint_fast64_t;
+Ntypedef unsigned       __INT64 uint_fast64_t;
+Xtypedef unsigned       __int64 uint_fast64_t;
 N
 N    /* 7.18.1.4 integer types capable of holding object pointers */
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+Stypedef   signed       __INT64 intptr_t;
+Stypedef unsigned       __INT64 uintptr_t;
+N#else
 Ntypedef   signed           int intptr_t;
 Ntypedef unsigned           int uintptr_t;
+N#endif
 N
 N    /* 7.18.1.5 greatest-width integer types */
-Ntypedef   signed       __int64 intmax_t;
-Ntypedef unsigned       __int64 uintmax_t;
+Ntypedef   signed     __LONGLONG intmax_t;
+Xtypedef   signed     long long intmax_t;
+Ntypedef unsigned     __LONGLONG uintmax_t;
+Xtypedef unsigned     long long uintmax_t;
 N
 N
 N#if !defined(__cplusplus) || defined(__STDC_LIMIT_MACROS)
@@ -14605,19 +14667,19 @@ N    /* minimum values of exact-width signed integer types */
 N#define INT8_MIN                   -128
 N#define INT16_MIN                -32768
 N#define INT32_MIN          (~0x7fffffff)   /* -2147483648 is unsigned */
-N#define INT64_MIN  __ESCAPE__(~0x7fffffffffffffffll) /* -9223372036854775808 is unsigned */
+N#define INT64_MIN  __INT64_C(~0x7fffffffffffffff) /* -9223372036854775808 is unsigned */
 N
 N    /* maximum values of exact-width signed integer types */
 N#define INT8_MAX                    127
 N#define INT16_MAX                 32767
 N#define INT32_MAX            2147483647
-N#define INT64_MAX  __ESCAPE__(9223372036854775807ll)
+N#define INT64_MAX  __INT64_C(9223372036854775807)
 N
 N    /* maximum values of exact-width unsigned integer types */
 N#define UINT8_MAX                   255
 N#define UINT16_MAX                65535
 N#define UINT32_MAX           4294967295u
-N#define UINT64_MAX __ESCAPE__(18446744073709551615ull)
+N#define UINT64_MAX __UINT64_C(18446744073709551615)
 N
 N    /* 7.18.2.2 */
 N
@@ -14625,19 +14687,19 @@ N    /* minimum values of minimum-width signed integer types */
 N#define INT_LEAST8_MIN                   -128
 N#define INT_LEAST16_MIN                -32768
 N#define INT_LEAST32_MIN          (~0x7fffffff)
-N#define INT_LEAST64_MIN  __ESCAPE__(~0x7fffffffffffffffll)
+N#define INT_LEAST64_MIN  __INT64_C(~0x7fffffffffffffff)
 N
 N    /* maximum values of minimum-width signed integer types */
 N#define INT_LEAST8_MAX                    127
 N#define INT_LEAST16_MAX                 32767
 N#define INT_LEAST32_MAX            2147483647
-N#define INT_LEAST64_MAX  __ESCAPE__(9223372036854775807ll)
+N#define INT_LEAST64_MAX  __INT64_C(9223372036854775807)
 N
 N    /* maximum values of minimum-width unsigned integer types */
 N#define UINT_LEAST8_MAX                   255
 N#define UINT_LEAST16_MAX                65535
 N#define UINT_LEAST32_MAX           4294967295u
-N#define UINT_LEAST64_MAX __ESCAPE__(18446744073709551615ull)
+N#define UINT_LEAST64_MAX __UINT64_C(18446744073709551615)
 N
 N    /* 7.18.2.3 */
 N
@@ -14645,30 +14707,45 @@ N    /* minimum values of fastest minimum-width signed integer types */
 N#define INT_FAST8_MIN           (~0x7fffffff)
 N#define INT_FAST16_MIN          (~0x7fffffff)
 N#define INT_FAST32_MIN          (~0x7fffffff)
-N#define INT_FAST64_MIN  __ESCAPE__(~0x7fffffffffffffffll)
+N#define INT_FAST64_MIN  __INT64_C(~0x7fffffffffffffff)
 N
 N    /* maximum values of fastest minimum-width signed integer types */
 N#define INT_FAST8_MAX             2147483647
 N#define INT_FAST16_MAX            2147483647
 N#define INT_FAST32_MAX            2147483647
-N#define INT_FAST64_MAX  __ESCAPE__(9223372036854775807ll)
+N#define INT_FAST64_MAX  __INT64_C(9223372036854775807)
 N
 N    /* maximum values of fastest minimum-width unsigned integer types */
 N#define UINT_FAST8_MAX            4294967295u
 N#define UINT_FAST16_MAX           4294967295u
 N#define UINT_FAST32_MAX           4294967295u
-N#define UINT_FAST64_MAX __ESCAPE__(18446744073709551615ull)
+N#define UINT_FAST64_MAX __UINT64_C(18446744073709551615)
 N
 N    /* 7.18.2.4 */
 N
 N    /* minimum value of pointer-holding signed integer type */
-N#define INTPTR_MIN (~0x7fffffff)
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define INTPTR_MIN INT64_MIN
+N#else
+N#define INTPTR_MIN INT32_MIN
+N#endif
 N
 N    /* maximum value of pointer-holding signed integer type */
-N#define INTPTR_MAX   2147483647
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define INTPTR_MAX INT64_MAX
+N#else
+N#define INTPTR_MAX INT32_MAX
+N#endif
 N
 N    /* maximum value of pointer-holding unsigned integer type */
-N#define UINTPTR_MAX  4294967295u
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define UINTPTR_MAX UINT64_MAX
+N#else
+N#define UINTPTR_MAX UINT32_MAX
+N#endif
 N
 N    /* 7.18.2.5 */
 N
@@ -14684,15 +14761,26 @@ N
 N    /* 7.18.3 */
 N
 N    /* limits of ptrdiff_t */
-N#define PTRDIFF_MIN (~0x7fffffff)
-N#define PTRDIFF_MAX   2147483647
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define PTRDIFF_MIN INT64_MIN
+S#define PTRDIFF_MAX INT64_MAX
+N#else
+N#define PTRDIFF_MIN INT32_MIN
+N#define PTRDIFF_MAX INT32_MAX
+N#endif
 N
 N    /* limits of sig_atomic_t */
 N#define SIG_ATOMIC_MIN (~0x7fffffff)
 N#define SIG_ATOMIC_MAX   2147483647
 N
 N    /* limit of size_t */
-N#define SIZE_MAX 4294967295u
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define SIZE_MAX UINT64_MAX
+N#else
+N#define SIZE_MAX UINT32_MAX
+N#endif
 N
 N    /* limits of wchar_t */
 N    /* NB we have to undef and redef because they're defined in both
@@ -14700,8 +14788,8 @@ N     * stdint.h and wchar.h */
 N#undef WCHAR_MIN
 N#undef WCHAR_MAX
 N
-N#if defined(__WCHAR32)
-X#if 0L
+N#if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
+X#if 0L || (0L && __ARM_SIZEOF_WCHAR_T == 4)
 S  #define WCHAR_MIN   0
 S  #define WCHAR_MAX   0xffffffffU
 N#else
@@ -14722,12 +14810,12 @@ N    /* 7.18.4.1 macros for minimum-width integer constants */
 N#define INT8_C(x)   (x)
 N#define INT16_C(x)  (x)
 N#define INT32_C(x)  (x)
-N#define INT64_C(x)  __ESCAPE__(x ## ll)
+N#define INT64_C(x)  __INT64_C(x)
 N
 N#define UINT8_C(x)  (x ## u)
 N#define UINT16_C(x) (x ## u)
 N#define UINT32_C(x) (x ## u)
-N#define UINT64_C(x) __ESCAPE__(x ## ull)
+N#define UINT64_C(x) __UINT64_C(x)
 N
 N    /* 7.18.4.2 macros for greatest-width integer constants */
 N#define INTMAX_C(x)  __ESCAPE__(x ## ll)
@@ -14771,39 +14859,54 @@ S      using ::std::intptr_t;
 S      using ::std::uintptr_t;
 S      using ::std::intmax_t;
 S      using ::std::uintmax_t;
-S    #endif 
+S    #endif
 N  #endif /* __cplusplus */
+N
+N#undef __INT64
+N#undef __LONGLONG
 N
 N#endif /* __stdint_h */
 N
 N/* end of stdint.h */
-N
-N
 L 169 "..\Libraries\CMSIS\inc\core_cm4.h" 2
 N#include <core_cmInstr.h>                /* Core Instruction Access                         */
-L 1 "D:\Keil\ARM\CMSIS\Include\core_cmInstr.h" 1
+L 1 "D:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h" 1
 N/**************************************************************************//**
 N * @file     core_cmInstr.h
 N * @brief    CMSIS Cortex-M Core Instruction Access Header File
-N * @version  V3.01
-N * @date     06. March 2012
+N * @version  V3.30
+N * @date     17. February 2014
 N *
 N * @note
-N * Copyright (C) 2009-2012 ARM Limited. All rights reserved.
-N *
-N * @par
-N * ARM Limited (ARM) is supplying this software for use with Cortex-M
-N * processor based microcontrollers.  This file can be freely distributed
-N * within development tools that are supporting such ARM based processors.
-N *
-N * @par
-N * THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
-N * OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
-N * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
-N * ARM SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
-N * CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
 N *
 N ******************************************************************************/
+N/* Copyright (c) 2009 - 2014 ARM LIMITED
+N
+N   All rights reserved.
+N   Redistribution and use in source and binary forms, with or without
+N   modification, are permitted provided that the following conditions are met:
+N   - Redistributions of source code must retain the above copyright
+N     notice, this list of conditions and the following disclaimer.
+N   - Redistributions in binary form must reproduce the above copyright
+N     notice, this list of conditions and the following disclaimer in the
+N     documentation and/or other materials provided with the distribution.
+N   - Neither the name of ARM nor the names of its contributors may be used
+N     to endorse or promote products derived from this software without
+N     specific prior written permission.
+N   *
+N   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+N   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+N   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+N   ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+N   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+N   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+N   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+N   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+N   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+N   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+N   POSSIBILITY OF SUCH DAMAGE.
+N   ---------------------------------------------------------------------------*/
+N
 N
 N#ifndef __CORE_CMINSTR_H
 N#define __CORE_CMINSTR_H
@@ -14820,7 +14923,7 @@ X#if   1L
 N/* ARM armcc specific functions */
 N
 N#if (__ARMCC_VERSION < 400677)
-X#if (410894 < 400677)
+X#if (5060750 < 400677)
 S  #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -14897,13 +15000,14 @@ N
 N    \param [in]    value  Value to reverse
 N    \return               Reversed value
 N */
+N#ifndef __NO_EMBEDDED_ASM
 N__attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(uint32_t value)
 X__attribute__((section(".rev16_text"))) static __inline __asm uint32_t __REV16(uint32_t value)
 N{
 N  rev16 r0, r0
 N  bx lr
 N}
-N
+N#endif
 N
 N/** \brief  Reverse byte order in signed short value
 N
@@ -14912,12 +15016,14 @@ N
 N    \param [in]    value  Value to reverse
 N    \return               Reversed value
 N */
+N#ifndef __NO_EMBEDDED_ASM
 N__attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(int32_t value)
 X__attribute__((section(".revsh_text"))) static __inline __asm int32_t __REVSH(int32_t value)
 N{
 N  revsh r0, r0
 N  bx lr
 N}
+N#endif
 N
 N
 N/** \brief  Rotate Right in unsigned value (32 bit)
@@ -14929,6 +15035,17 @@ N    \param [in]    value  Number of Bits to rotate
 N    \return               Rotated value
 N */
 N#define __ROR                             __ror
+N
+N
+N/** \brief  Breakpoint
+N
+N    This function causes the processor to enter Debug state.
+N    Debug tools can use this to investigate system state when the instruction at a particular address is reached.
+N
+N    \param [in]    value  is ignored by the processor.
+N                   If required, a debugger can use it to store additional information about the breakpoint.
+N */
+N#define __BKPT(value)                       __breakpoint(value)
 N
 N
 N#if       (__CORTEX_M >= 0x03)
@@ -15052,21 +15169,19 @@ N
 N#endif /* (__CORTEX_M >= 0x03) */
 N
 N
-N
-N#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
-S/* IAR iccarm specific functions */
-S
-S#include <cmsis_iar.h>
-S
-S
-S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
-S/* TI CCS specific functions */
-S
-S#include <cmsis_ccs.h>
-S
-S
-S#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+N#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
 S/* GNU gcc specific functions */
+S
+S/* Define macros for porting to both thumb1 and thumb2.
+S * For thumb1, use low register (r0-r7), specified by constrant "l"
+S * Otherwise, use general registers, specified by constrant "r" */
+S#if defined (__thumb__) && !defined (__thumb2__)
+S#define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+S#define __CMSIS_GCC_USE_REG(r) "l" (r)
+S#else
+S#define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+S#define __CMSIS_GCC_USE_REG(r) "r" (r)
+S#endif
 S
 S/** \brief  No Operation
 S
@@ -15153,10 +15268,14 @@ S    \return               Reversed value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __REV(uint32_t value)
 S{
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
+S  return __builtin_bswap32(value);
+S#else
 S  uint32_t result;
 S
-S  __ASM volatile ("rev %0, %1" : "=r" (result) : "r" (value) );
+S  __ASM volatile ("rev %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
 S  return(result);
+S#endif
 S}
 S
 S
@@ -15171,7 +15290,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __REV16(uint32_t va
 S{
 S  uint32_t result;
 S
-S  __ASM volatile ("rev16 %0, %1" : "=r" (result) : "r" (value) );
+S  __ASM volatile ("rev16 %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
 S  return(result);
 S}
 S
@@ -15185,10 +15304,14 @@ S    \return               Reversed value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE int32_t __REVSH(int32_t value)
 S{
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
+S  return (short)__builtin_bswap16(value);
+S#else
 S  uint32_t result;
 S
-S  __ASM volatile ("revsh %0, %1" : "=r" (result) : "r" (value) );
+S  __ASM volatile ("revsh %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
 S  return(result);
+S#endif
 S}
 S
 S
@@ -15202,10 +15325,19 @@ S    \return               Rotated value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 S{
-S
-S  __ASM volatile ("ror %0, %0, %1" : "+r" (op1) : "r" (op2) );
-S  return(op1);
+S  return (op1 >> op2) | (op1 << (32 - op2)); 
 S}
+S
+S
+S/** \brief  Breakpoint
+S
+S    This function causes the processor to enter Debug state.
+S    Debug tools can use this to investigate system state when the instruction at a particular address is reached.
+S
+S    \param [in]    value  is ignored by the processor.
+S                   If required, a debugger can use it to store additional information about the breakpoint.
+S */
+S#define __BKPT(value)                       __ASM volatile ("bkpt "#value)
 S
 S
 S#if       (__CORTEX_M >= 0x03)
@@ -15235,10 +15367,17 @@ S    \return             value of type uint8_t at (*ptr)
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint8_t __LDREXB(volatile uint8_t *addr)
 S{
-S    uint8_t result;
+S    uint32_t result;
 S
-S   __ASM volatile ("ldrexb %0, [%1]" : "=r" (result) : "r" (addr) );
-S   return(result);
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
+S   __ASM volatile ("ldrexb %0, %1" : "=r" (result) : "Q" (*addr) );
+S#else
+S    /* Prior to GCC 4.8, "Q" will be expanded to [rx, #0] which is not
+S       accepted by assembler. So has to use following less efficient pattern.
+S    */
+S   __ASM volatile ("ldrexb %0, [%1]" : "=r" (result) : "r" (addr) : "memory" );
+S#endif
+S   return ((uint8_t) result);    /* Add explicit type cast here */
 S}
 S
 S
@@ -15251,10 +15390,17 @@ S    \return        value of type uint16_t at (*ptr)
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint16_t __LDREXH(volatile uint16_t *addr)
 S{
-S    uint16_t result;
+S    uint32_t result;
 S
-S   __ASM volatile ("ldrexh %0, [%1]" : "=r" (result) : "r" (addr) );
-S   return(result);
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
+S   __ASM volatile ("ldrexh %0, %1" : "=r" (result) : "Q" (*addr) );
+S#else
+S    /* Prior to GCC 4.8, "Q" will be expanded to [rx, #0] which is not
+S       accepted by assembler. So has to use following less efficient pattern.
+S    */
+S   __ASM volatile ("ldrexh %0, [%1]" : "=r" (result) : "r" (addr) : "memory" );
+S#endif
+S   return ((uint16_t) result);    /* Add explicit type cast here */
 S}
 S
 S
@@ -15269,7 +15415,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __LDREXW(volatile u
 S{
 S    uint32_t result;
 S
-S   __ASM volatile ("ldrex %0, [%1]" : "=r" (result) : "r" (addr) );
+S   __ASM volatile ("ldrex %0, %1" : "=r" (result) : "Q" (*addr) );
 S   return(result);
 S}
 S
@@ -15287,7 +15433,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __STREXB(uint8_t va
 S{
 S   uint32_t result;
 S
-S   __ASM volatile ("strexb %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+S   __ASM volatile ("strexb %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" ((uint32_t)value) );
 S   return(result);
 S}
 S
@@ -15305,7 +15451,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __STREXH(uint16_t v
 S{
 S   uint32_t result;
 S
-S   __ASM volatile ("strexh %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+S   __ASM volatile ("strexh %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" ((uint32_t)value) );
 S   return(result);
 S}
 S
@@ -15323,7 +15469,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __STREXW(uint32_t v
 S{
 S   uint32_t result;
 S
-S   __ASM volatile ("strex %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+S   __ASM volatile ("strex %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" (value) );
 S   return(result);
 S}
 S
@@ -15335,7 +15481,7 @@ S
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __CLREX(void)
 S{
-S  __ASM volatile ("clrex");
+S  __ASM volatile ("clrex" ::: "memory");
 S}
 S
 S
@@ -15382,25 +15528,37 @@ S    \return             number of leading zeros in value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint8_t __CLZ(uint32_t value)
 S{
-S  uint8_t result;
+S  uint32_t result;
 S
 S  __ASM volatile ("clz %0, %1" : "=r" (result) : "r" (value) );
-S  return(result);
+S   return ((uint8_t) result);    /* Add explicit type cast here */
 S}
 S
 S#endif /* (__CORTEX_M >= 0x03) */
 S
 S
+S#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
+S/* IAR iccarm specific functions */
+S#include <cmsis_iar.h>
+S
+S
+S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
+S/* TI CCS specific functions */
+S#include <cmsis_ccs.h>
 S
 S
 S#elif defined ( __TASKING__ ) /*------------------ TASKING Compiler --------------*/
 S/* TASKING carm specific functions */
-S
 S/*
 S * The CMSIS functions have been implemented as intrinsics in the compiler.
 S * Please use "carm -?i" to get an up to date list of all intrinsics,
 S * Including the CMSIS ones.
 S */
+S
+S
+S#elif defined ( __CSMC__ ) /*------------------ COSMIC Compiler -------------------*/
+S/* Cosmic specific functions */
+S#include <cmsis_csm.h>
 S
 N#endif
 N
@@ -15409,29 +15567,43 @@ N
 N#endif /* __CORE_CMINSTR_H */
 L 170 "..\Libraries\CMSIS\inc\core_cm4.h" 2
 N#include <core_cmFunc.h>                 /* Core Function Access                            */
-L 1 "D:\Keil\ARM\CMSIS\Include\core_cmFunc.h" 1
+L 1 "D:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h" 1
 N/**************************************************************************//**
 N * @file     core_cmFunc.h
 N * @brief    CMSIS Cortex-M Core Function Access Header File
-N * @version  V3.01
-N * @date     06. March 2012
+N * @version  V3.30
+N * @date     17. February 2014
 N *
 N * @note
-N * Copyright (C) 2009-2012 ARM Limited. All rights reserved.
-N *
-N * @par
-N * ARM Limited (ARM) is supplying this software for use with Cortex-M
-N * processor based microcontrollers.  This file can be freely distributed
-N * within development tools that are supporting such ARM based processors.
-N *
-N * @par
-N * THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
-N * OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
-N * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
-N * ARM SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
-N * CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
 N *
 N ******************************************************************************/
+N/* Copyright (c) 2009 - 2014 ARM LIMITED
+N
+N   All rights reserved.
+N   Redistribution and use in source and binary forms, with or without
+N   modification, are permitted provided that the following conditions are met:
+N   - Redistributions of source code must retain the above copyright
+N     notice, this list of conditions and the following disclaimer.
+N   - Redistributions in binary form must reproduce the above copyright
+N     notice, this list of conditions and the following disclaimer in the
+N     documentation and/or other materials provided with the distribution.
+N   - Neither the name of ARM nor the names of its contributors may be used
+N     to endorse or promote products derived from this software without
+N     specific prior written permission.
+N   *
+N   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+N   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+N   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+N   ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+N   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+N   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+N   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+N   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+N   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+N   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+N   POSSIBILITY OF SUCH DAMAGE.
+N   ---------------------------------------------------------------------------*/
+N
 N
 N#ifndef __CORE_CMFUNC_H
 N#define __CORE_CMFUNC_H
@@ -15448,7 +15620,7 @@ X#if   1L
 N/* ARM armcc specific functions */
 N
 N#if (__ARMCC_VERSION < 400677)
-X#if (410894 < 400677)
+X#if (5060750 < 400677)
 S  #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -15744,19 +15916,7 @@ N
 N#endif /* (__CORTEX_M == 0x04) */
 N
 N
-N#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
-S/* IAR iccarm specific functions */
-S
-S#include <cmsis_iar.h>
-S
-S
-S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
-S/* TI CCS specific functions */
-S
-S#include <cmsis_ccs.h>
-S
-S
-S#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+N#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
 S/* GNU gcc specific functions */
 S
 S/** \brief  Enable IRQ Interrupts
@@ -15766,7 +15926,7 @@ S  Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
 S{
-S  __ASM volatile ("cpsie i");
+S  __ASM volatile ("cpsie i" : : : "memory");
 S}
 S
 S
@@ -15777,7 +15937,7 @@ S  Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
 S{
-S  __ASM volatile ("cpsid i");
+S  __ASM volatile ("cpsid i" : : : "memory");
 S}
 S
 S
@@ -15804,7 +15964,7 @@ S    \param [in]    control  Control Register value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_CONTROL(uint32_t control)
 S{
-S  __ASM volatile ("MSR control, %0" : : "r" (control) );
+S  __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
 S}
 S
 S
@@ -15876,7 +16036,7 @@ S    \param [in]    topOfProcStack  Process Stack Pointer value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
 S{
-S  __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) );
+S  __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) : "sp");
 S}
 S
 S
@@ -15903,7 +16063,7 @@ S    \param [in]    topOfMainStack  Main Stack Pointer value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
 S{
-S  __ASM volatile ("MSR msp, %0\n" : : "r" (topOfMainStack) );
+S  __ASM volatile ("MSR msp, %0\n" : : "r" (topOfMainStack) : "sp");
 S}
 S
 S
@@ -15930,7 +16090,7 @@ S    \param [in]    priMask  Priority Mask
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
 S{
-S  __ASM volatile ("MSR primask, %0" : : "r" (priMask) );
+S  __ASM volatile ("MSR primask, %0" : : "r" (priMask) : "memory");
 S}
 S
 S
@@ -15943,7 +16103,7 @@ S    Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_fault_irq(void)
 S{
-S  __ASM volatile ("cpsie f");
+S  __ASM volatile ("cpsie f" : : : "memory");
 S}
 S
 S
@@ -15954,7 +16114,7 @@ S    Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_fault_irq(void)
 S{
-S  __ASM volatile ("cpsid f");
+S  __ASM volatile ("cpsid f" : : : "memory");
 S}
 S
 S
@@ -15981,7 +16141,7 @@ S    \param [in]    basePri  Base Priority value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_BASEPRI(uint32_t value)
 S{
-S  __ASM volatile ("MSR basepri, %0" : : "r" (value) );
+S  __ASM volatile ("MSR basepri, %0" : : "r" (value) : "memory");
 S}
 S
 S
@@ -16008,7 +16168,7 @@ S    \param [in]    faultMask  Fault Mask value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
 S{
-S  __ASM volatile ("MSR faultmask, %0" : : "r" (faultMask) );
+S  __ASM volatile ("MSR faultmask, %0" : : "r" (faultMask) : "memory");
 S}
 S
 S#endif /* (__CORTEX_M >= 0x03) */
@@ -16027,7 +16187,10 @@ S{
 S#if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
 S  uint32_t result;
 S
+S  /* Empty asm statement works as a scheduling barrier */
+S  __ASM volatile ("");
 S  __ASM volatile ("VMRS %0, fpscr" : "=r" (result) );
+S  __ASM volatile ("");
 S  return(result);
 S#else
 S   return(0);
@@ -16044,26 +16207,42 @@ S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 S{
 S#if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
-S  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) );
+S  /* Empty asm statement works as a scheduling barrier */
+S  __ASM volatile ("");
+S  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc");
+S  __ASM volatile ("");
 S#endif
 S}
 S
 S#endif /* (__CORTEX_M == 0x04) */
 S
 S
+S#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
+S/* IAR iccarm specific functions */
+S#include <cmsis_iar.h>
+S
+S
+S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
+S/* TI CCS specific functions */
+S#include <cmsis_ccs.h>
+S
+S
 S#elif defined ( __TASKING__ ) /*------------------ TASKING Compiler --------------*/
 S/* TASKING carm specific functions */
-S
 S/*
 S * The CMSIS functions have been implemented as intrinsics in the compiler.
-S * Please use "carm -?i" to get an up to date list of all instrinsics,
+S * Please use "carm -?i" to get an up to date list of all intrinsics,
 S * Including the CMSIS ones.
 S */
+S
+S
+S#elif defined ( __CSMC__ ) /*------------------ COSMIC Compiler -------------------*/
+S/* Cosmic specific functions */
+S#include <cmsis_csm.h>
 S
 N#endif
 N
 N/*@} end of CMSIS_Core_RegAccFunctions */
-N
 N
 N#endif /* __CORE_CMFUNC_H */
 L 171 "..\Libraries\CMSIS\inc\core_cm4.h" 2
@@ -49530,14 +49709,14 @@ Nvoid TM1650_SET_LED(vu8 addr,vu8 dat);
 N#endif
 L 12 "..\APP\menu.c" 2
 N#include "stdio.h"
-L 1 "D:\Keil\ARM\RV31\Inc\stdio.h" 1
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h" 1
 N/* stdio.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.9 */
 N/* Copyright (C) Codemist Ltd., 1988-1993                       */
 N/* Copyright 1991-1998 ARM Limited. All rights reserved.        */
 N
 N/*
-N * RCS $Revision: 137287 $
-N * Checkin $Date: 2008-08-27 13:36:52 +0100 (Wed, 27 Aug 2008) $
+N * RCS $Revision$
+N * Checkin $Date$
 N * Revising $Author: sdouglas $
 N */
 N
@@ -49550,6 +49729,19 @@ N */
 N
 N#ifndef __stdio_h
 N#define __stdio_h
+N#define __ARMCLIB_VERSION 5060037
+N
+N/*
+N * Depending on compiler version __int64 or __INT64_TYPE__ should be defined.
+N */
+N#ifndef __int64
+N  #ifdef __INT64_TYPE__
+S    #define __int64 __INT64_TYPE__
+N  #endif
+N  /* On some architectures neither of these may be defined - if so, fall
+N     through and error out if used. */
+N#endif
+N
 N
 N#define _ARMABI __declspec(__nothrow)
 N
@@ -49568,7 +49760,12 @@ N
 N#if defined(__cplusplus) || !defined(__STRICT_ANSI__) || !defined(__size_t)
 X#if 0L || !0L || !0L
 N /* always defined in C++ and non-strict C for consistency of debug info */
-N  typedef unsigned int size_t;   /* see <stddef.h> */
+N  #if __sizeof_ptr == 8
+X  #if 4 == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+N  #else
+N    typedef unsigned int size_t;   /* see <stddef.h> */
+N  #endif
 N  #if !defined(__cplusplus) && defined(__STRICT_ANSI__)
 X  #if !0L && 0L
 S    #define __size_t 1
@@ -49580,10 +49777,14 @@ N#define NULL 0                   /* see <stddef.h> */
 N
 N/* ANSI forbids va_list to be defined here */
 N/* keep in step with <stdarg.h> and <wchar.h> */
-N#if defined(__cplusplus) || !defined(__STRICT_ANSI__) || !defined(__va_list_defined)
-X#if 0L || !0L || !0L
+N#if !defined(__va_list) && (defined(__cplusplus) || !defined(__STRICT_ANSI__) || !defined(__va_list_defined))
+X#if !0L && (0L || !0L || !0L)
 N/* always defined in C++ and non-strict C for consistency of debug info */
-N  typedef struct __va_list __va_list;
+N  #ifdef __clang__
+S    typedef __builtin_va_list __va_list;
+N  #else
+N    typedef struct __va_list __va_list;
+N  #endif
 N  #if !defined(__cplusplus) && defined(__STRICT_ANSI__)
 X  #if !0L && 0L
 S    #define __va_list_defined 1
@@ -49631,6 +49832,27 @@ N    * error has occurred and an end-of-file indicator that records whether the
 N    * end-of-file has been reached.
 N    * Its structure is not made known to library clients.
 N    */
+N
+N#if defined(__STRICT_ANSI__) && !__FILE_INCOMPLETE
+X#if 0L && !__FILE_INCOMPLETE
+Sstruct __FILE {
+S    union {
+S        long __FILE_alignment;
+S#ifdef __TARGET_ARCH_AARCH64
+S        char __FILE_size[136];
+S#else /* __TARGET_ARCH_AARCH64 */
+S        char __FILE_size[84];
+S#endif /* __TARGET_ARCH_AARCH64 */
+S    } __FILE_opaque;
+S};
+S    /*
+S     * FILE must be an object type (C99 - 7.19.1) and an object type fully
+S     * describes an object [including its static size] (C99 - 6.2.5).
+S     * This definition is a placeholder which matches the struct __FILE in
+S     * size and alignment as used internally by libc.
+S     */
+N#endif
+N
 N
 Nextern FILE __stdin, __stdout, __stderr;
 Nextern FILE *__aeabi_stdin, *__aeabi_stdout, *__aeabi_stderr;
@@ -49715,9 +49937,9 @@ N     * file.
 N     */
 N#define _IOBIN            0x04     /* binary stream */
 N
-N#define STDIN_BUFSIZ  (64)  /* default stdin buffer size */
-N#define STDOUT_BUFSIZ (64)  /* default stdout buffer size */
-N#define STDERR_BUFSIZ (16)  /* default stderr buffer size */
+N#define __STDIN_BUFSIZ  (64)  /* default stdin buffer size */
+N#define __STDOUT_BUFSIZ (64)  /* default stdout buffer size */
+N#define __STDERR_BUFSIZ (16)  /* default stderr buffer size */
 N
 Nextern _ARMABI int remove(const char * /*filename*/) __attribute__((__nonnull__(1)));
 Xextern __declspec(__nothrow) int remove(const char *  ) __attribute__((__nonnull__(1)));
@@ -49944,8 +50166,14 @@ N    * is equivalent to sprintf, but does not support floating-point formats.
 N    * You can use instead of sprintf to improve code size.
 N    * Returns: as sprintf.
 N    */
-N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__)
-X#if !0L || (1L && 199901L <= 199409L)
+N
+N#pragma __printf_args
+Nextern _ARMABI int __ARM_snprintf(char * __restrict /*s*/, size_t /*n*/,
+Xextern __declspec(__nothrow) int __ARM_snprintf(char * __restrict  , size_t  ,
+N                     const char * __restrict /*format*/, ...) __attribute__((__nonnull__(3)));
+N
+N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+X#if !0L || (1L && 199901L <= 199409L) || (0L && 201103L <= __cplusplus)
 N#pragma __printf_args
 Nextern _ARMABI int snprintf(char * __restrict /*s*/, size_t /*n*/,
 Xextern __declspec(__nothrow) int snprintf(char * __restrict  , size_t  ,
@@ -50064,8 +50292,8 @@ N    * is equivalent to sscanf, but does not support floating-point formats.
 N    * You can use instead of sscanf to improve code size.
 N    * Returns: as sscanf.
 N    */
-N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__)
-X#if !0L || (1L && 199901L <= 199409L)
+N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+X#if !0L || (1L && 199901L <= 199409L) || (0L && 201103L <= __cplusplus)
 N/* C99 additions */
 Nextern _ARMABI int vfscanf(FILE * __restrict /*stream*/, const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1,2)));
 Xextern __declspec(__nothrow) int vfscanf(FILE * __restrict  , const char * __restrict  , __va_list) __attribute__((__nonnull__(1,2)));
@@ -50080,6 +50308,8 @@ Nextern _ARMABI int _vscanf(const char * __restrict /*format*/, __va_list) __att
 Xextern __declspec(__nothrow) int _vscanf(const char * __restrict  , __va_list) __attribute__((__nonnull__(1)));
 Nextern _ARMABI int _vsscanf(const char * __restrict /*s*/, const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1,2)));
 Xextern __declspec(__nothrow) int _vsscanf(const char * __restrict  , const char * __restrict  , __va_list) __attribute__((__nonnull__(1,2)));
+Nextern _ARMABI int __ARM_vsscanf(const char * __restrict /*s*/, const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1,2)));
+Xextern __declspec(__nothrow) int __ARM_vsscanf(const char * __restrict  , const char * __restrict  , __va_list) __attribute__((__nonnull__(1,2)));
 N
 Nextern _ARMABI int vprintf(const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(1)));
 Xextern __declspec(__nothrow) int vprintf(const char * __restrict  , __va_list  ) __attribute__((__nonnull__(1)));
@@ -50119,8 +50349,11 @@ N    * va_end function.
 N    * Returns: the number of characters written in the array, not counting the
 N    *          terminating null character.
 N    */
-N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__)
-X#if !0L || (1L && 199901L <= 199409L)
+Nextern _ARMABI int __ARM_vsnprintf(char * __restrict /*s*/, size_t /*n*/,
+Xextern __declspec(__nothrow) int __ARM_vsnprintf(char * __restrict  , size_t  ,
+N                     const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(3)));
+N#if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+X#if !0L || (1L && 199901L <= 199409L) || (0L && 201103L <= __cplusplus)
 Nextern _ARMABI int vsnprintf(char * __restrict /*s*/, size_t /*n*/,
 Xextern __declspec(__nothrow) int vsnprintf(char * __restrict  , size_t  ,
 N                     const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(3)));
@@ -50158,6 +50391,30 @@ N    * is equivalent to vsnprintf, but does not support floating-point formats.
 N    * You can use instead of vsnprintf to improve code size.
 N    * Returns: as vsnprintf.
 N    */
+N#if !defined(__STRICT_ANSI__)
+X#if !0L
+N#pragma __printf_args
+Nextern _ARMABI int asprintf(char ** /*strp*/, const char * __restrict /*format*/, ...) __attribute__((__nonnull__(2)));
+Xextern __declspec(__nothrow) int asprintf(char **  , const char * __restrict  , ...) __attribute__((__nonnull__(2)));
+Nextern _ARMABI int vasprintf(char ** /*strp*/, const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(2)));
+Xextern __declspec(__nothrow) int vasprintf(char **  , const char * __restrict  , __va_list  ) __attribute__((__nonnull__(2)));
+N#endif
+N#pragma __printf_args
+Nextern _ARMABI int __ARM_asprintf(char ** /*strp*/, const char * __restrict /*format*/, ...) __attribute__((__nonnull__(2)));
+Xextern __declspec(__nothrow) int __ARM_asprintf(char **  , const char * __restrict  , ...) __attribute__((__nonnull__(2)));
+Nextern _ARMABI int __ARM_vasprintf(char ** /*strp*/, const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(2)));
+Xextern __declspec(__nothrow) int __ARM_vasprintf(char **  , const char * __restrict  , __va_list  ) __attribute__((__nonnull__(2)));
+N   /*
+N    * dynamically allocates a buffer of the right size for the
+N    * formatted string, and returns it in (*strp). Formal return value
+N    * is the same as any other printf variant, except that it returns
+N    * -1 if the buffer could not be allocated.
+N    *
+N    * (The functions with __ARM_ prefixed names are identical to the
+N    * ones without, but are available in all compilation modes without
+N    * violating user namespace.)
+N    */
+N
 Nextern _ARMABI int fgetc(FILE * /*stream*/) __attribute__((__nonnull__(1)));
 Xextern __declspec(__nothrow) int fgetc(FILE *  ) __attribute__((__nonnull__(1)));
 N   /*
@@ -50498,7 +50755,7 @@ S    using ::std::printf;
 S    using ::std::_printf;
 S    using ::std::sprintf;
 S    using ::std::_sprintf;
-S    #if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__)
+S    #if !defined(__STRICT_ANSI__) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
 S      using ::std::snprintf;
 S      using ::std::vsnprintf;
 S      using ::std::vfscanf;
@@ -50507,6 +50764,15 @@ S      using ::std::vsscanf;
 S    #endif
 S    using ::std::_snprintf;
 S    using ::std::_vsnprintf;
+S#if !defined(__STRICT_ANSI__)
+S    using ::std::asprintf;
+S    using ::std::vasprintf;
+S#endif
+S    using ::std::__ARM_asprintf;
+S    using ::std::__ARM_vasprintf;
+S    using ::std::__ARM_vsnprintf;
+S    using ::std::__ARM_snprintf;
+S    using ::std::__ARM_vsscanf;
 S    using ::std::fscanf;
 S    using ::std::_fscanf;
 S    using ::std::scanf;
@@ -50553,15 +50819,16 @@ N
 N#endif /* ndef __stdio_h */
 N
 N/* end of stdio.h */
+N
 L 13 "..\APP\menu.c" 2
 N#include "stdlib.h"
-L 1 "D:\Keil\ARM\RV31\Inc\stdlib.h" 1
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h" 1
 N/* stdlib.h: ANSI draft (X3J11 May 88) library header, section 4.10 */
 N/* Copyright (C) Codemist Ltd., 1988-1993.                          */
-N/* Copyright 1991-1998 ARM Limited. All rights reserved.            */
+N/* Copyright 1991-1998,2014 ARM Limited. All rights reserved.       */
 N/*
-N * RCS $Revision: 152811 $
-N * Checkin $Date: 2010-03-04 09:02:00 +0000 (Thu, 04 Mar 2010) $
+N * RCS $Revision$
+N * Checkin $Date$
 N * Revising $Author: agrant $
 N */
 N 
@@ -50572,9 +50839,19 @@ N */
 N
 N#ifndef __stdlib_h
 N#define __stdlib_h
+N#define __ARMCLIB_VERSION 5060037
+N
+N#if defined(__clang__) || (defined(__ARMCC_VERSION) && !defined(__STRICT_ANSI__))
+X#if 0L || (1L && !0L)
+N  /* armclang and non-strict armcc allow 'long long' in system headers */
+N  #define __LONGLONG long long
+N#else
+S  /* strict armcc has '__int64' */
+S  #define __LONGLONG __int64
+N#endif
 N
 N#define _ARMABI __declspec(__nothrow)
-N#define _ARMABI_PURE __declspec(__nothrow) __pure
+N#define _ARMABI_PURE __declspec(__nothrow) __attribute__((const))
 N#define _ARMABI_NORETURN __declspec(__nothrow) __declspec(__noreturn)
 N#define _ARMABI_THROW
 N
@@ -50586,8 +50863,8 @@ N   * Some of these declarations are new in C99.  To access them in C++
 N   * you can use -D__USE_C99_STDLIB (or -D__USE_C99ALL).
 N   */
 N  #ifndef __USE_C99_STDLIB
-N    #if defined(__USE_C99_ALL) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__)
-X    #if 0L || (1L && 199901L <= 199409L)
+N    #if defined(__USE_C99_ALL) || (defined(__STDC_VERSION__) && 199901L <= __STDC_VERSION__) || (defined(__cplusplus) && 201103L <= __cplusplus)
+X    #if 0L || (1L && 199901L <= 199409L) || (0L && 201103L <= __cplusplus)
 S      #define __USE_C99_STDLIB 1
 N    #endif
 N  #endif
@@ -50605,10 +50882,19 @@ N
 N#if defined(__cplusplus) || !defined(__STRICT_ANSI__)
 X#if 0L || !0L
 N /* unconditional in C++ and non-strict C for consistency of debug info */
-N  typedef unsigned int size_t;
+N  #if __sizeof_ptr == 8
+X  #if 4 == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+N  #else
+N    typedef unsigned int size_t;   /* see <stddef.h> */
+N  #endif
 N#elif !defined(__size_t)
 S  #define __size_t 1
-S  typedef unsigned int size_t;   /* see <stddef.h> */
+S  #if __sizeof_ptr == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+S  #else
+S    typedef unsigned int size_t;   /* see <stddef.h> */
+S  #endif
 N#endif
 N
 N#undef NULL
@@ -50618,15 +50904,15 @@ N#ifndef __cplusplus  /* wchar_t is a builtin type for C++ */
 N  #if !defined(__STRICT_ANSI__)
 X  #if !0L
 N   /* unconditional in non-strict C for consistency of debug info */
-N   #if defined(__WCHAR32)
-X   #if 0L
+N   #if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
+X   #if 0L || (0L && __ARM_SIZEOF_WCHAR_T == 4)
 S    typedef unsigned int wchar_t; /* see <stddef.h> */
 N   #else
 N    typedef unsigned short wchar_t; /* see <stddef.h> */
 N   #endif
 N  #elif !defined(__wchar_t)
 S    #define __wchar_t 1
-S   #if defined(__WCHAR32)
+S   #if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
 S    typedef unsigned int wchar_t; /* see <stddef.h> */
 S   #else
 S    typedef unsigned short wchar_t; /* see <stddef.h> */
@@ -50640,7 +50926,8 @@ Ntypedef struct ldiv_t { long int quot, rem; } ldiv_t;
 N   /* type of the value returned by the ldiv function. */
 N#if !defined(__STRICT_ANSI__) || __USE_C99_STDLIB
 X#if !0L || __USE_C99_STDLIB
-Ntypedef struct lldiv_t { __int64 quot, rem; } lldiv_t;
+Ntypedef struct lldiv_t { __LONGLONG quot, rem; } lldiv_t;
+Xtypedef struct lldiv_t { long long quot, rem; } lldiv_t;
 N   /* type of the value returned by the lldiv function. */
 N#endif
 N
@@ -50722,8 +51009,8 @@ N    * Returns: the converted value.
 N    */
 N#if !defined(__STRICT_ANSI__) || __USE_C99_STDLIB
 X#if !0L || __USE_C99_STDLIB
-Nextern _ARMABI __int64 atoll(const char * /*nptr*/) __attribute__((__nonnull__(1)));
-Xextern __declspec(__nothrow) __int64 atoll(const char *  ) __attribute__((__nonnull__(1)));
+Nextern _ARMABI __LONGLONG atoll(const char * /*nptr*/) __attribute__((__nonnull__(1)));
+Xextern __declspec(__nothrow) long long atoll(const char *  ) __attribute__((__nonnull__(1)));
 N   /*
 N    * converts the initial part of the string pointed to by nptr to
 N    * long long int representation.
@@ -50827,18 +51114,20 @@ N    *          the macro ERANGE is stored in errno.
 N    */
 N
 N/* C90 reserves all names beginning with 'str' */
-Nextern _ARMABI __int64 strtoll(const char * __restrict /*nptr*/,
-Xextern __declspec(__nothrow) __int64 strtoll(const char * __restrict  ,
-N                               char ** __restrict /*endptr*/, int /*base*/) __attribute__((__nonnull__(1)));
+Nextern _ARMABI __LONGLONG strtoll(const char * __restrict /*nptr*/,
+Xextern __declspec(__nothrow) long long strtoll(const char * __restrict  ,
+N                                  char ** __restrict /*endptr*/, int /*base*/)
+N                          __attribute__((__nonnull__(1)));
 N   /*
 N    * as strtol but returns a long long int value.  If the correct value is
 N    * outside the range of representable values,  LLONG_MAX or LLONG_MIN is
 N    * returned (according to the sign of the value), and the value of the
 N    * macro ERANGE is stored in errno.
 N    */
-Nextern _ARMABI unsigned __int64 strtoull(const char * __restrict /*nptr*/,
-Xextern __declspec(__nothrow) unsigned __int64 strtoull(const char * __restrict  ,
-N                                         char ** __restrict /*endptr*/, int /*base*/) __attribute__((__nonnull__(1)));
+Nextern _ARMABI unsigned __LONGLONG strtoull(const char * __restrict /*nptr*/,
+Xextern __declspec(__nothrow) unsigned long long strtoull(const char * __restrict  ,
+N                                            char ** __restrict /*endptr*/, int /*base*/)
+N                                   __attribute__((__nonnull__(1)));
 N   /*
 N    * as strtoul but returns an unsigned long long int value.  If the correct
 N    * value is outside the range of representable values, ULLONG_MAX is returned,
@@ -50995,8 +51284,12 @@ N    * arguments at normal program termination. It is possible to register at
 N    * least 32 functions.
 N    * Returns: zero if the registration succeeds, nonzero if it fails.
 N    */
-N#if defined(__cplusplus) && !defined(__GNUC__)
-X#if 0L && !0L
+N#if defined(__EDG__) && !defined(__GNUC__)
+X#if 1L && !0L
+N#define __LANGUAGE_LINKAGE_CHANGES_FUNCTION_TYPE
+N#endif
+N#if defined(__cplusplus) && defined(__LANGUAGE_LINKAGE_CHANGES_FUNCTION_TYPE) 
+X#if 0L && 1L 
 S    /* atexit that takes a ptr to a function with C++ linkage 
 S     * but not in GNU mode  
 S     */
@@ -51083,8 +51376,8 @@ N    * Returns: a pointer to a matching member of the array, or a null pointer
 N    *          if no match is found. If two members compare as equal, which
 N    *          member is matched is unspecified.
 N    */
-N#if defined(__cplusplus) && !defined(__GNUC__)
-X#if 0L && !0L
+N#if defined(__cplusplus) && defined(__LANGUAGE_LINKAGE_CHANGES_FUNCTION_TYPE)
+X#if 0L && 1L
 S    /* bsearch that takes a ptr to a function with C++ linkage 
 S     * but not in GNU mode
 S     */
@@ -51117,8 +51410,8 @@ N    * than the second. If two members compare as equal, their order in the
 N    * sorted array is unspecified.
 N    */
 N
-N#if defined(__cplusplus) && !defined(__GNUC__)
-X#if 0L && !0L
+N#if defined(__cplusplus) && defined(__LANGUAGE_LINKAGE_CHANGES_FUNCTION_TYPE)
+X#if 0L && 1L
 S    /* qsort that takes a ptr to a function with C++ linkage 
 S     * but not in GNU mode
 S     */    
@@ -51133,7 +51426,7 @@ S    }
 N#endif
 N
 Nextern _ARMABI_PURE int abs(int /*j*/);
-Xextern __declspec(__nothrow) __pure int abs(int  );
+Xextern __declspec(__nothrow) __attribute__((const)) int abs(int  );
 N   /*
 N    * computes the absolute value of an integer j. If the result cannot be
 N    * represented, the behaviour is undefined.
@@ -51141,7 +51434,7 @@ N    * Returns: the absolute value.
 N    */
 N
 Nextern _ARMABI_PURE div_t div(int /*numer*/, int /*denom*/);
-Xextern __declspec(__nothrow) __pure div_t div(int  , int  );
+Xextern __declspec(__nothrow) __attribute__((const)) div_t div(int  , int  );
 N   /*
 N    * computes the quotient and remainder of the division of the numerator
 N    * numer by the denominator denom. If the division is inexact, the resulting
@@ -51154,7 +51447,7 @@ N    *          in either order.
 N    *          int quot; int rem;
 N    */
 Nextern _ARMABI_PURE long int labs(long int /*j*/);
-Xextern __declspec(__nothrow) __pure long int labs(long int  );
+Xextern __declspec(__nothrow) __attribute__((const)) long int labs(long int  );
 N   /*
 N    * computes the absolute value of an long integer j. If the result cannot be
 N    * represented, the behaviour is undefined.
@@ -51165,7 +51458,7 @@ S   extern "C++" inline _ARMABI_PURE long abs(long int x) { return labs(x); }
 N#endif
 N
 Nextern _ARMABI_PURE ldiv_t ldiv(long int /*numer*/, long int /*denom*/);
-Xextern __declspec(__nothrow) __pure ldiv_t ldiv(long int  , long int  );
+Xextern __declspec(__nothrow) __attribute__((const)) ldiv_t ldiv(long int  , long int  );
 N   /*
 N    * computes the quotient and remainder of the division of the numerator
 N    * numer by the denominator denom. If the division is inexact, the sign of
@@ -51187,19 +51480,19 @@ N#endif
 N
 N#if !defined(__STRICT_ANSI__) || __USE_C99_STDLIB
 X#if !0L || __USE_C99_STDLIB
-Nextern _ARMABI_PURE __int64 llabs(__int64 /*j*/);
-Xextern __declspec(__nothrow) __pure __int64 llabs(__int64  );
+Nextern _ARMABI_PURE __LONGLONG llabs(__LONGLONG /*j*/);
+Xextern __declspec(__nothrow) __attribute__((const)) long long llabs(long long  );
 N   /*
-N    * computes the absolute value of a __int64 integer j. If the
+N    * computes the absolute value of a long long integer j. If the
 N    * result cannot be represented, the behaviour is undefined.
 N    * Returns: the absolute value.
 N    */
 N#ifdef __cplusplus
-S   extern "C++" inline _ARMABI_PURE __int64 abs(__int64 x) { return llabs(x); }
+S   extern "C++" inline _ARMABI_PURE __LONGLONG abs(__LONGLONG x) { return llabs(x); }
 N#endif
 N
-Nextern _ARMABI_PURE lldiv_t lldiv(__int64 /*numer*/, __int64 /*denom*/);
-Xextern __declspec(__nothrow) __pure lldiv_t lldiv(__int64  , __int64  );
+Nextern _ARMABI_PURE lldiv_t lldiv(__LONGLONG /*numer*/, __LONGLONG /*denom*/);
+Xextern __declspec(__nothrow) __attribute__((const)) lldiv_t lldiv(long long  , long long  );
 N   /*
 N    * computes the quotient and remainder of the division of the numerator
 N    * numer by the denominator denom. If the division is inexact, the sign of
@@ -51214,12 +51507,13 @@ N    *          in either order.
 N    *          long long quot; long long rem;
 N    */
 N#ifdef __cplusplus
-S   extern "C++" inline _ARMABI_PURE lldiv_t div(__int64 __numer, __int64 __denom) {
+S   extern "C++" inline _ARMABI_PURE lldiv_t div(__LONGLONG __numer, __LONGLONG __denom) {
 S       return lldiv(__numer, __denom);
 S   }
 N#endif
 N#endif
 N
+N#if !(__ARM_NO_DEPRECATED_FUNCTIONS)
 N/*
 N * ARM real-time divide functions for guaranteed performance
 N */
@@ -51229,26 +51523,27 @@ N   /* used int so that values return in separate regs, although 16-bit */
 Ntypedef struct __sdiv64by32 { int rem, quot; } __sdiv64by32;
 N
 N__value_in_regs extern _ARMABI_PURE __sdiv32by16 __rt_sdiv32by16(
-X__value_in_regs extern __declspec(__nothrow) __pure __sdiv32by16 __rt_sdiv32by16(
+X__value_in_regs extern __declspec(__nothrow) __attribute__((const)) __sdiv32by16 __rt_sdiv32by16(
 N     int /*numer*/,
 N     short int /*denom*/);
 N   /*
 N    * Signed divide: (16-bit quot), (16-bit rem) = (32-bit) / (16-bit)
 N    */
 N__value_in_regs extern _ARMABI_PURE __udiv32by16 __rt_udiv32by16(
-X__value_in_regs extern __declspec(__nothrow) __pure __udiv32by16 __rt_udiv32by16(
+X__value_in_regs extern __declspec(__nothrow) __attribute__((const)) __udiv32by16 __rt_udiv32by16(
 N     unsigned int /*numer*/,
 N     unsigned short /*denom*/);
 N   /*
 N    * Unsigned divide: (16-bit quot), (16-bit rem) = (32-bit) / (16-bit)
 N    */
 N__value_in_regs extern _ARMABI_PURE __sdiv64by32 __rt_sdiv64by32(
-X__value_in_regs extern __declspec(__nothrow) __pure __sdiv64by32 __rt_sdiv64by32(
+X__value_in_regs extern __declspec(__nothrow) __attribute__((const)) __sdiv64by32 __rt_sdiv64by32(
 N     int /*numer_h*/, unsigned int /*numer_l*/,
 N     int /*denom*/);
 N   /*
 N    * Signed divide: (32-bit quot), (32-bit rem) = (64-bit) / (32-bit)
 N    */
+N#endif
 N
 N/*
 N * ARM floating-point mask/status function (for both hardfp and softfp)
@@ -51467,12 +51762,14 @@ S      #if !defined(__STRICT_ANSI__) || __USE_C99_STDLIB
 S        using ::std::llabs;
 S        using ::std::lldiv;
 S      #endif /* !defined(__STRICT_ANSI__) || __USE_C99_STDLIB */
+S#if !(__ARM_NO_DEPRECATED_FUNCTIONS)
 S      using ::std::__sdiv32by16;
 S      using ::std::__udiv32by16;
 S      using ::std::__sdiv64by32;
 S      using ::std::__rt_sdiv32by16;
 S      using ::std::__rt_udiv32by16;
 S      using ::std::__rt_sdiv64by32;
+S#endif
 S      using ::std::__fp_status;
 S      using ::std::mblen;
 S      using ::std::mbtowc;
@@ -51491,7 +51788,10 @@ S      using ::std::__aeabi_MB_CUR_MAX;
 S    #endif /* __STDLIB_NO_EXPORTS */
 N  #endif /* __cplusplus */
 N
-N#endif
+N#undef __LONGLONG
+N
+N#endif /* __stdlib_h */
+N
 N/* end of stdlib.h */
 L 14 "..\APP\menu.c" 2
 N#include "key.h"
@@ -52010,15 +52310,15 @@ N
 N
 L 15 "..\APP\menu.c" 2
 N#include "string.h"
-L 1 "D:\Keil\ARM\RV31\Inc\string.h" 1
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h" 1
 N/* string.h: ANSI 'C' (X3J11 Oct 88) library header, section 4.11 */
 N/* Copyright (C) Codemist Ltd., 1988-1993.                        */
 N/* Copyright 1991-1993 ARM Limited. All rights reserved.          */
 N/* version 0.04 */
 N
 N/*
-N * RCS $Revision: 137748 $
-N * Checkin $Date: 2008-09-11 17:34:24 +0100 (Thu, 11 Sep 2008) $
+N * RCS $Revision$
+N * Checkin $Date$
 N */
 N
 N/*
@@ -52032,6 +52332,7 @@ N */
 N
 N#ifndef __string_h
 N#define __string_h
+N#define __ARMCLIB_VERSION 5060037
 N
 N#define _ARMABI __declspec(__nothrow)
 N
@@ -52051,10 +52352,19 @@ N
 N#if defined(__cplusplus) || !defined(__STRICT_ANSI__)
 X#if 0L || !0L
 N /* unconditional in C++ and non-strict C for consistency of debug info */
-N  typedef unsigned int size_t;
+N  #if __sizeof_ptr == 8
+X  #if 4 == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+N  #else
+N    typedef unsigned int size_t;   /* see <stddef.h> */
+N  #endif
 N#elif !defined(__size_t)
 S  #define __size_t 1
-S  typedef unsigned int size_t;   /* see <stddef.h> */
+S  #if __sizeof_ptr == 8
+S    typedef unsigned long size_t;   /* see <stddef.h> */
+S  #else
+S    typedef unsigned int size_t;   /* see <stddef.h> */
+S  #endif
 N#endif
 N
 N#undef NULL
@@ -52548,6 +52858,7 @@ N
 N#endif
 N
 N/* end of string.h */
+N
 L 16 "..\APP\menu.c" 2
 N#include "beep.h"
 L 1 "..\Include\beep.h" 1
@@ -52727,21 +53038,23 @@ X	if(WM_GetTimerId(pMsg->Data.v) == 3)
 N	{
 N//         if(clear_flag2 == 1)
 N//         {
-N//             if(DISS_POW_Voltage <= clear_pv)
-N//             {
-N//                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
-N//                 sprintf(buf,"%.2f",0);       
-N//                 TEXT_SetText(hItem,buf);
-N//             }else{
-N//                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
-N//                 sprintf(buf,"%.2f",DISS_POW_Voltage);       
-N//                 TEXT_SetText(hItem,buf);
-N//             }
+W "..\APP\menu.c" 141 17 single-precision operand implicitly converted to double-precision
+N             if(DISS_POW_Voltage <= 0.1)
+N             {
+N                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
+X                 hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x93));
+N                 sprintf(buf,"%.2f",0.00);       
+N                 TEXT_SetText(hItem,buf);
+N             }else{
+N                 hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
+X                 hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x93));
+N                 sprintf(buf,"%.2f",DISS_POW_Voltage);       
+N                 TEXT_SetText(hItem,buf);
+N             }
 N//         }else{
-N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
-X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x93));
-N            sprintf(buf,"%.2f",DISS_POW_Voltage);       
-N            TEXT_SetText(hItem,buf);
+N//            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
+N//            sprintf(buf,"%.2f",DISS_POW_Voltage);       
+N//            TEXT_SetText(hItem,buf);
 N//         }
 N        
 N        

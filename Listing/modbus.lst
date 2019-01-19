@@ -676,18 +676,40 @@ S  #endif
 N#endif
 N
 N#include <stdint.h>                      /* standard types definitions                      */
-L 1 "D:\Keil\ARM\RV31\Inc\stdint.h" 1
-N/* Copyright (C) ARM Ltd., 1999 */
+L 1 "D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h" 1
+N/* Copyright (C) ARM Ltd., 1999,2014 */
 N/* All rights reserved */
 N
 N/*
-N * RCS $Revision: 137748 $
-N * Checkin $Date: 2008-09-11 17:34:24 +0100 (Thu, 11 Sep 2008) $
+N * RCS $Revision$
+N * Checkin $Date$
 N * Revising $Author: agrant $
 N */
 N
 N#ifndef __stdint_h
 N#define __stdint_h
+N#define __ARMCLIB_VERSION 5060037
+N
+N  #ifdef __INT64_TYPE__
+S    /* armclang predefines '__INT64_TYPE__' and '__INT64_C_SUFFIX__' */
+S    #define __INT64 __INT64_TYPE__
+N  #else
+N    /* armcc has builtin '__int64' which can be used in --strict mode */
+N    #define __INT64 __int64
+N    #define __INT64_C_SUFFIX__ ll
+N  #endif
+N  #define __PASTE2(x, y) x ## y
+N  #define __PASTE(x, y) __PASTE2(x, y)
+N  #define __INT64_C(x)  __ESCAPE__(__PASTE(x, __INT64_C_SUFFIX__))
+N  #define __UINT64_C(x)  __ESCAPE__(__PASTE(x ## u, __INT64_C_SUFFIX__))
+N  #if defined(__clang__) || (defined(__ARMCC_VERSION) && !defined(__STRICT_ANSI__))
+X  #if 0L || (1L && !0L)
+N    /* armclang and non-strict armcc allow 'long long' in system headers */
+N    #define __LONGLONG long long
+N  #else
+S    /* strict armcc has '__int64' */
+S    #define __LONGLONG __int64
+N  #endif
 N
 N  #ifndef __STDINT_DECLS
 N  #define __STDINT_DECLS
@@ -706,8 +728,6 @@ N
 N/*
 N * 'signed' is redundant below, except for 'signed char' and if
 N * the typedef is used to declare a bitfield.
-N * '__int64' is used instead of 'long long' so that this header
-N * can be used in --strict mode.
 N */
 N
 N    /* 7.18.1.1 */
@@ -716,13 +736,15 @@ N    /* exact-width signed integer types */
 Ntypedef   signed          char int8_t;
 Ntypedef   signed short     int int16_t;
 Ntypedef   signed           int int32_t;
-Ntypedef   signed       __int64 int64_t;
+Ntypedef   signed       __INT64 int64_t;
+Xtypedef   signed       __int64 int64_t;
 N
 N    /* exact-width unsigned integer types */
 Ntypedef unsigned          char uint8_t;
 Ntypedef unsigned short     int uint16_t;
 Ntypedef unsigned           int uint32_t;
-Ntypedef unsigned       __int64 uint64_t;
+Ntypedef unsigned       __INT64 uint64_t;
+Xtypedef unsigned       __int64 uint64_t;
 N
 N    /* 7.18.1.2 */
 N
@@ -731,13 +753,15 @@ N    /* minimum-width signed integer types */
 Ntypedef   signed          char int_least8_t;
 Ntypedef   signed short     int int_least16_t;
 Ntypedef   signed           int int_least32_t;
-Ntypedef   signed       __int64 int_least64_t;
+Ntypedef   signed       __INT64 int_least64_t;
+Xtypedef   signed       __int64 int_least64_t;
 N
 N    /* minimum-width unsigned integer types */
 Ntypedef unsigned          char uint_least8_t;
 Ntypedef unsigned short     int uint_least16_t;
 Ntypedef unsigned           int uint_least32_t;
-Ntypedef unsigned       __int64 uint_least64_t;
+Ntypedef unsigned       __INT64 uint_least64_t;
+Xtypedef unsigned       __int64 uint_least64_t;
 N
 N    /* 7.18.1.3 */
 N
@@ -745,21 +769,31 @@ N    /* fastest minimum-width signed integer types */
 Ntypedef   signed           int int_fast8_t;
 Ntypedef   signed           int int_fast16_t;
 Ntypedef   signed           int int_fast32_t;
-Ntypedef   signed       __int64 int_fast64_t;
+Ntypedef   signed       __INT64 int_fast64_t;
+Xtypedef   signed       __int64 int_fast64_t;
 N
 N    /* fastest minimum-width unsigned integer types */
 Ntypedef unsigned           int uint_fast8_t;
 Ntypedef unsigned           int uint_fast16_t;
 Ntypedef unsigned           int uint_fast32_t;
-Ntypedef unsigned       __int64 uint_fast64_t;
+Ntypedef unsigned       __INT64 uint_fast64_t;
+Xtypedef unsigned       __int64 uint_fast64_t;
 N
 N    /* 7.18.1.4 integer types capable of holding object pointers */
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+Stypedef   signed       __INT64 intptr_t;
+Stypedef unsigned       __INT64 uintptr_t;
+N#else
 Ntypedef   signed           int intptr_t;
 Ntypedef unsigned           int uintptr_t;
+N#endif
 N
 N    /* 7.18.1.5 greatest-width integer types */
-Ntypedef   signed       __int64 intmax_t;
-Ntypedef unsigned       __int64 uintmax_t;
+Ntypedef   signed     __LONGLONG intmax_t;
+Xtypedef   signed     long long intmax_t;
+Ntypedef unsigned     __LONGLONG uintmax_t;
+Xtypedef unsigned     long long uintmax_t;
 N
 N
 N#if !defined(__cplusplus) || defined(__STDC_LIMIT_MACROS)
@@ -771,19 +805,19 @@ N    /* minimum values of exact-width signed integer types */
 N#define INT8_MIN                   -128
 N#define INT16_MIN                -32768
 N#define INT32_MIN          (~0x7fffffff)   /* -2147483648 is unsigned */
-N#define INT64_MIN  __ESCAPE__(~0x7fffffffffffffffll) /* -9223372036854775808 is unsigned */
+N#define INT64_MIN  __INT64_C(~0x7fffffffffffffff) /* -9223372036854775808 is unsigned */
 N
 N    /* maximum values of exact-width signed integer types */
 N#define INT8_MAX                    127
 N#define INT16_MAX                 32767
 N#define INT32_MAX            2147483647
-N#define INT64_MAX  __ESCAPE__(9223372036854775807ll)
+N#define INT64_MAX  __INT64_C(9223372036854775807)
 N
 N    /* maximum values of exact-width unsigned integer types */
 N#define UINT8_MAX                   255
 N#define UINT16_MAX                65535
 N#define UINT32_MAX           4294967295u
-N#define UINT64_MAX __ESCAPE__(18446744073709551615ull)
+N#define UINT64_MAX __UINT64_C(18446744073709551615)
 N
 N    /* 7.18.2.2 */
 N
@@ -791,19 +825,19 @@ N    /* minimum values of minimum-width signed integer types */
 N#define INT_LEAST8_MIN                   -128
 N#define INT_LEAST16_MIN                -32768
 N#define INT_LEAST32_MIN          (~0x7fffffff)
-N#define INT_LEAST64_MIN  __ESCAPE__(~0x7fffffffffffffffll)
+N#define INT_LEAST64_MIN  __INT64_C(~0x7fffffffffffffff)
 N
 N    /* maximum values of minimum-width signed integer types */
 N#define INT_LEAST8_MAX                    127
 N#define INT_LEAST16_MAX                 32767
 N#define INT_LEAST32_MAX            2147483647
-N#define INT_LEAST64_MAX  __ESCAPE__(9223372036854775807ll)
+N#define INT_LEAST64_MAX  __INT64_C(9223372036854775807)
 N
 N    /* maximum values of minimum-width unsigned integer types */
 N#define UINT_LEAST8_MAX                   255
 N#define UINT_LEAST16_MAX                65535
 N#define UINT_LEAST32_MAX           4294967295u
-N#define UINT_LEAST64_MAX __ESCAPE__(18446744073709551615ull)
+N#define UINT_LEAST64_MAX __UINT64_C(18446744073709551615)
 N
 N    /* 7.18.2.3 */
 N
@@ -811,30 +845,45 @@ N    /* minimum values of fastest minimum-width signed integer types */
 N#define INT_FAST8_MIN           (~0x7fffffff)
 N#define INT_FAST16_MIN          (~0x7fffffff)
 N#define INT_FAST32_MIN          (~0x7fffffff)
-N#define INT_FAST64_MIN  __ESCAPE__(~0x7fffffffffffffffll)
+N#define INT_FAST64_MIN  __INT64_C(~0x7fffffffffffffff)
 N
 N    /* maximum values of fastest minimum-width signed integer types */
 N#define INT_FAST8_MAX             2147483647
 N#define INT_FAST16_MAX            2147483647
 N#define INT_FAST32_MAX            2147483647
-N#define INT_FAST64_MAX  __ESCAPE__(9223372036854775807ll)
+N#define INT_FAST64_MAX  __INT64_C(9223372036854775807)
 N
 N    /* maximum values of fastest minimum-width unsigned integer types */
 N#define UINT_FAST8_MAX            4294967295u
 N#define UINT_FAST16_MAX           4294967295u
 N#define UINT_FAST32_MAX           4294967295u
-N#define UINT_FAST64_MAX __ESCAPE__(18446744073709551615ull)
+N#define UINT_FAST64_MAX __UINT64_C(18446744073709551615)
 N
 N    /* 7.18.2.4 */
 N
 N    /* minimum value of pointer-holding signed integer type */
-N#define INTPTR_MIN (~0x7fffffff)
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define INTPTR_MIN INT64_MIN
+N#else
+N#define INTPTR_MIN INT32_MIN
+N#endif
 N
 N    /* maximum value of pointer-holding signed integer type */
-N#define INTPTR_MAX   2147483647
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define INTPTR_MAX INT64_MAX
+N#else
+N#define INTPTR_MAX INT32_MAX
+N#endif
 N
 N    /* maximum value of pointer-holding unsigned integer type */
-N#define UINTPTR_MAX  4294967295u
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define UINTPTR_MAX UINT64_MAX
+N#else
+N#define UINTPTR_MAX UINT32_MAX
+N#endif
 N
 N    /* 7.18.2.5 */
 N
@@ -850,15 +899,26 @@ N
 N    /* 7.18.3 */
 N
 N    /* limits of ptrdiff_t */
-N#define PTRDIFF_MIN (~0x7fffffff)
-N#define PTRDIFF_MAX   2147483647
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define PTRDIFF_MIN INT64_MIN
+S#define PTRDIFF_MAX INT64_MAX
+N#else
+N#define PTRDIFF_MIN INT32_MIN
+N#define PTRDIFF_MAX INT32_MAX
+N#endif
 N
 N    /* limits of sig_atomic_t */
 N#define SIG_ATOMIC_MIN (~0x7fffffff)
 N#define SIG_ATOMIC_MAX   2147483647
 N
 N    /* limit of size_t */
-N#define SIZE_MAX 4294967295u
+N#if __sizeof_ptr == 8
+X#if 4 == 8
+S#define SIZE_MAX UINT64_MAX
+N#else
+N#define SIZE_MAX UINT32_MAX
+N#endif
 N
 N    /* limits of wchar_t */
 N    /* NB we have to undef and redef because they're defined in both
@@ -866,8 +926,8 @@ N     * stdint.h and wchar.h */
 N#undef WCHAR_MIN
 N#undef WCHAR_MAX
 N
-N#if defined(__WCHAR32)
-X#if 0L
+N#if defined(__WCHAR32) || (defined(__ARM_SIZEOF_WCHAR_T) && __ARM_SIZEOF_WCHAR_T == 4)
+X#if 0L || (0L && __ARM_SIZEOF_WCHAR_T == 4)
 S  #define WCHAR_MIN   0
 S  #define WCHAR_MAX   0xffffffffU
 N#else
@@ -888,12 +948,12 @@ N    /* 7.18.4.1 macros for minimum-width integer constants */
 N#define INT8_C(x)   (x)
 N#define INT16_C(x)  (x)
 N#define INT32_C(x)  (x)
-N#define INT64_C(x)  __ESCAPE__(x ## ll)
+N#define INT64_C(x)  __INT64_C(x)
 N
 N#define UINT8_C(x)  (x ## u)
 N#define UINT16_C(x) (x ## u)
 N#define UINT32_C(x) (x ## u)
-N#define UINT64_C(x) __ESCAPE__(x ## ull)
+N#define UINT64_C(x) __UINT64_C(x)
 N
 N    /* 7.18.4.2 macros for greatest-width integer constants */
 N#define INTMAX_C(x)  __ESCAPE__(x ## ll)
@@ -937,39 +997,54 @@ S      using ::std::intptr_t;
 S      using ::std::uintptr_t;
 S      using ::std::intmax_t;
 S      using ::std::uintmax_t;
-S    #endif 
+S    #endif
 N  #endif /* __cplusplus */
+N
+N#undef __INT64
+N#undef __LONGLONG
 N
 N#endif /* __stdint_h */
 N
 N/* end of stdint.h */
-N
-N
 L 169 "..\Libraries\CMSIS\inc\core_cm4.h" 2
 N#include <core_cmInstr.h>                /* Core Instruction Access                         */
-L 1 "D:\Keil\ARM\CMSIS\Include\core_cmInstr.h" 1
+L 1 "D:\Keil_v5\ARM\CMSIS\Include\core_cmInstr.h" 1
 N/**************************************************************************//**
 N * @file     core_cmInstr.h
 N * @brief    CMSIS Cortex-M Core Instruction Access Header File
-N * @version  V3.01
-N * @date     06. March 2012
+N * @version  V3.30
+N * @date     17. February 2014
 N *
 N * @note
-N * Copyright (C) 2009-2012 ARM Limited. All rights reserved.
-N *
-N * @par
-N * ARM Limited (ARM) is supplying this software for use with Cortex-M
-N * processor based microcontrollers.  This file can be freely distributed
-N * within development tools that are supporting such ARM based processors.
-N *
-N * @par
-N * THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
-N * OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
-N * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
-N * ARM SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
-N * CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
 N *
 N ******************************************************************************/
+N/* Copyright (c) 2009 - 2014 ARM LIMITED
+N
+N   All rights reserved.
+N   Redistribution and use in source and binary forms, with or without
+N   modification, are permitted provided that the following conditions are met:
+N   - Redistributions of source code must retain the above copyright
+N     notice, this list of conditions and the following disclaimer.
+N   - Redistributions in binary form must reproduce the above copyright
+N     notice, this list of conditions and the following disclaimer in the
+N     documentation and/or other materials provided with the distribution.
+N   - Neither the name of ARM nor the names of its contributors may be used
+N     to endorse or promote products derived from this software without
+N     specific prior written permission.
+N   *
+N   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+N   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+N   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+N   ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+N   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+N   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+N   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+N   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+N   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+N   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+N   POSSIBILITY OF SUCH DAMAGE.
+N   ---------------------------------------------------------------------------*/
+N
 N
 N#ifndef __CORE_CMINSTR_H
 N#define __CORE_CMINSTR_H
@@ -986,7 +1061,7 @@ X#if   1L
 N/* ARM armcc specific functions */
 N
 N#if (__ARMCC_VERSION < 400677)
-X#if (410894 < 400677)
+X#if (5060750 < 400677)
 S  #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -1063,13 +1138,14 @@ N
 N    \param [in]    value  Value to reverse
 N    \return               Reversed value
 N */
+N#ifndef __NO_EMBEDDED_ASM
 N__attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(uint32_t value)
 X__attribute__((section(".rev16_text"))) static __inline __asm uint32_t __REV16(uint32_t value)
 N{
 N  rev16 r0, r0
 N  bx lr
 N}
-N
+N#endif
 N
 N/** \brief  Reverse byte order in signed short value
 N
@@ -1078,12 +1154,14 @@ N
 N    \param [in]    value  Value to reverse
 N    \return               Reversed value
 N */
+N#ifndef __NO_EMBEDDED_ASM
 N__attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(int32_t value)
 X__attribute__((section(".revsh_text"))) static __inline __asm int32_t __REVSH(int32_t value)
 N{
 N  revsh r0, r0
 N  bx lr
 N}
+N#endif
 N
 N
 N/** \brief  Rotate Right in unsigned value (32 bit)
@@ -1095,6 +1173,17 @@ N    \param [in]    value  Number of Bits to rotate
 N    \return               Rotated value
 N */
 N#define __ROR                             __ror
+N
+N
+N/** \brief  Breakpoint
+N
+N    This function causes the processor to enter Debug state.
+N    Debug tools can use this to investigate system state when the instruction at a particular address is reached.
+N
+N    \param [in]    value  is ignored by the processor.
+N                   If required, a debugger can use it to store additional information about the breakpoint.
+N */
+N#define __BKPT(value)                       __breakpoint(value)
 N
 N
 N#if       (__CORTEX_M >= 0x03)
@@ -1218,21 +1307,19 @@ N
 N#endif /* (__CORTEX_M >= 0x03) */
 N
 N
-N
-N#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
-S/* IAR iccarm specific functions */
-S
-S#include <cmsis_iar.h>
-S
-S
-S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
-S/* TI CCS specific functions */
-S
-S#include <cmsis_ccs.h>
-S
-S
-S#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+N#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
 S/* GNU gcc specific functions */
+S
+S/* Define macros for porting to both thumb1 and thumb2.
+S * For thumb1, use low register (r0-r7), specified by constrant "l"
+S * Otherwise, use general registers, specified by constrant "r" */
+S#if defined (__thumb__) && !defined (__thumb2__)
+S#define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+S#define __CMSIS_GCC_USE_REG(r) "l" (r)
+S#else
+S#define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+S#define __CMSIS_GCC_USE_REG(r) "r" (r)
+S#endif
 S
 S/** \brief  No Operation
 S
@@ -1319,10 +1406,14 @@ S    \return               Reversed value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __REV(uint32_t value)
 S{
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
+S  return __builtin_bswap32(value);
+S#else
 S  uint32_t result;
 S
-S  __ASM volatile ("rev %0, %1" : "=r" (result) : "r" (value) );
+S  __ASM volatile ("rev %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
 S  return(result);
+S#endif
 S}
 S
 S
@@ -1337,7 +1428,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __REV16(uint32_t va
 S{
 S  uint32_t result;
 S
-S  __ASM volatile ("rev16 %0, %1" : "=r" (result) : "r" (value) );
+S  __ASM volatile ("rev16 %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
 S  return(result);
 S}
 S
@@ -1351,10 +1442,14 @@ S    \return               Reversed value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE int32_t __REVSH(int32_t value)
 S{
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
+S  return (short)__builtin_bswap16(value);
+S#else
 S  uint32_t result;
 S
-S  __ASM volatile ("revsh %0, %1" : "=r" (result) : "r" (value) );
+S  __ASM volatile ("revsh %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
 S  return(result);
+S#endif
 S}
 S
 S
@@ -1368,10 +1463,19 @@ S    \return               Rotated value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 S{
-S
-S  __ASM volatile ("ror %0, %0, %1" : "+r" (op1) : "r" (op2) );
-S  return(op1);
+S  return (op1 >> op2) | (op1 << (32 - op2)); 
 S}
+S
+S
+S/** \brief  Breakpoint
+S
+S    This function causes the processor to enter Debug state.
+S    Debug tools can use this to investigate system state when the instruction at a particular address is reached.
+S
+S    \param [in]    value  is ignored by the processor.
+S                   If required, a debugger can use it to store additional information about the breakpoint.
+S */
+S#define __BKPT(value)                       __ASM volatile ("bkpt "#value)
 S
 S
 S#if       (__CORTEX_M >= 0x03)
@@ -1401,10 +1505,17 @@ S    \return             value of type uint8_t at (*ptr)
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint8_t __LDREXB(volatile uint8_t *addr)
 S{
-S    uint8_t result;
+S    uint32_t result;
 S
-S   __ASM volatile ("ldrexb %0, [%1]" : "=r" (result) : "r" (addr) );
-S   return(result);
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
+S   __ASM volatile ("ldrexb %0, %1" : "=r" (result) : "Q" (*addr) );
+S#else
+S    /* Prior to GCC 4.8, "Q" will be expanded to [rx, #0] which is not
+S       accepted by assembler. So has to use following less efficient pattern.
+S    */
+S   __ASM volatile ("ldrexb %0, [%1]" : "=r" (result) : "r" (addr) : "memory" );
+S#endif
+S   return ((uint8_t) result);    /* Add explicit type cast here */
 S}
 S
 S
@@ -1417,10 +1528,17 @@ S    \return        value of type uint16_t at (*ptr)
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint16_t __LDREXH(volatile uint16_t *addr)
 S{
-S    uint16_t result;
+S    uint32_t result;
 S
-S   __ASM volatile ("ldrexh %0, [%1]" : "=r" (result) : "r" (addr) );
-S   return(result);
+S#if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
+S   __ASM volatile ("ldrexh %0, %1" : "=r" (result) : "Q" (*addr) );
+S#else
+S    /* Prior to GCC 4.8, "Q" will be expanded to [rx, #0] which is not
+S       accepted by assembler. So has to use following less efficient pattern.
+S    */
+S   __ASM volatile ("ldrexh %0, [%1]" : "=r" (result) : "r" (addr) : "memory" );
+S#endif
+S   return ((uint16_t) result);    /* Add explicit type cast here */
 S}
 S
 S
@@ -1435,7 +1553,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __LDREXW(volatile u
 S{
 S    uint32_t result;
 S
-S   __ASM volatile ("ldrex %0, [%1]" : "=r" (result) : "r" (addr) );
+S   __ASM volatile ("ldrex %0, %1" : "=r" (result) : "Q" (*addr) );
 S   return(result);
 S}
 S
@@ -1453,7 +1571,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __STREXB(uint8_t va
 S{
 S   uint32_t result;
 S
-S   __ASM volatile ("strexb %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+S   __ASM volatile ("strexb %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" ((uint32_t)value) );
 S   return(result);
 S}
 S
@@ -1471,7 +1589,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __STREXH(uint16_t v
 S{
 S   uint32_t result;
 S
-S   __ASM volatile ("strexh %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+S   __ASM volatile ("strexh %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" ((uint32_t)value) );
 S   return(result);
 S}
 S
@@ -1489,7 +1607,7 @@ S__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __STREXW(uint32_t v
 S{
 S   uint32_t result;
 S
-S   __ASM volatile ("strex %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+S   __ASM volatile ("strex %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" (value) );
 S   return(result);
 S}
 S
@@ -1501,7 +1619,7 @@ S
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __CLREX(void)
 S{
-S  __ASM volatile ("clrex");
+S  __ASM volatile ("clrex" ::: "memory");
 S}
 S
 S
@@ -1548,25 +1666,37 @@ S    \return             number of leading zeros in value
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE uint8_t __CLZ(uint32_t value)
 S{
-S  uint8_t result;
+S  uint32_t result;
 S
 S  __ASM volatile ("clz %0, %1" : "=r" (result) : "r" (value) );
-S  return(result);
+S   return ((uint8_t) result);    /* Add explicit type cast here */
 S}
 S
 S#endif /* (__CORTEX_M >= 0x03) */
 S
 S
+S#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
+S/* IAR iccarm specific functions */
+S#include <cmsis_iar.h>
+S
+S
+S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
+S/* TI CCS specific functions */
+S#include <cmsis_ccs.h>
 S
 S
 S#elif defined ( __TASKING__ ) /*------------------ TASKING Compiler --------------*/
 S/* TASKING carm specific functions */
-S
 S/*
 S * The CMSIS functions have been implemented as intrinsics in the compiler.
 S * Please use "carm -?i" to get an up to date list of all intrinsics,
 S * Including the CMSIS ones.
 S */
+S
+S
+S#elif defined ( __CSMC__ ) /*------------------ COSMIC Compiler -------------------*/
+S/* Cosmic specific functions */
+S#include <cmsis_csm.h>
 S
 N#endif
 N
@@ -1575,29 +1705,43 @@ N
 N#endif /* __CORE_CMINSTR_H */
 L 170 "..\Libraries\CMSIS\inc\core_cm4.h" 2
 N#include <core_cmFunc.h>                 /* Core Function Access                            */
-L 1 "D:\Keil\ARM\CMSIS\Include\core_cmFunc.h" 1
+L 1 "D:\Keil_v5\ARM\CMSIS\Include\core_cmFunc.h" 1
 N/**************************************************************************//**
 N * @file     core_cmFunc.h
 N * @brief    CMSIS Cortex-M Core Function Access Header File
-N * @version  V3.01
-N * @date     06. March 2012
+N * @version  V3.30
+N * @date     17. February 2014
 N *
 N * @note
-N * Copyright (C) 2009-2012 ARM Limited. All rights reserved.
-N *
-N * @par
-N * ARM Limited (ARM) is supplying this software for use with Cortex-M
-N * processor based microcontrollers.  This file can be freely distributed
-N * within development tools that are supporting such ARM based processors.
-N *
-N * @par
-N * THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
-N * OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
-N * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
-N * ARM SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
-N * CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
 N *
 N ******************************************************************************/
+N/* Copyright (c) 2009 - 2014 ARM LIMITED
+N
+N   All rights reserved.
+N   Redistribution and use in source and binary forms, with or without
+N   modification, are permitted provided that the following conditions are met:
+N   - Redistributions of source code must retain the above copyright
+N     notice, this list of conditions and the following disclaimer.
+N   - Redistributions in binary form must reproduce the above copyright
+N     notice, this list of conditions and the following disclaimer in the
+N     documentation and/or other materials provided with the distribution.
+N   - Neither the name of ARM nor the names of its contributors may be used
+N     to endorse or promote products derived from this software without
+N     specific prior written permission.
+N   *
+N   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+N   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+N   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+N   ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+N   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+N   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+N   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+N   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+N   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+N   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+N   POSSIBILITY OF SUCH DAMAGE.
+N   ---------------------------------------------------------------------------*/
+N
 N
 N#ifndef __CORE_CMFUNC_H
 N#define __CORE_CMFUNC_H
@@ -1614,7 +1758,7 @@ X#if   1L
 N/* ARM armcc specific functions */
 N
 N#if (__ARMCC_VERSION < 400677)
-X#if (410894 < 400677)
+X#if (5060750 < 400677)
 S  #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
 N#endif
 N
@@ -1910,19 +2054,7 @@ N
 N#endif /* (__CORTEX_M == 0x04) */
 N
 N
-N#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
-S/* IAR iccarm specific functions */
-S
-S#include <cmsis_iar.h>
-S
-S
-S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
-S/* TI CCS specific functions */
-S
-S#include <cmsis_ccs.h>
-S
-S
-S#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+N#elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
 S/* GNU gcc specific functions */
 S
 S/** \brief  Enable IRQ Interrupts
@@ -1932,7 +2064,7 @@ S  Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
 S{
-S  __ASM volatile ("cpsie i");
+S  __ASM volatile ("cpsie i" : : : "memory");
 S}
 S
 S
@@ -1943,7 +2075,7 @@ S  Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
 S{
-S  __ASM volatile ("cpsid i");
+S  __ASM volatile ("cpsid i" : : : "memory");
 S}
 S
 S
@@ -1970,7 +2102,7 @@ S    \param [in]    control  Control Register value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_CONTROL(uint32_t control)
 S{
-S  __ASM volatile ("MSR control, %0" : : "r" (control) );
+S  __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
 S}
 S
 S
@@ -2042,7 +2174,7 @@ S    \param [in]    topOfProcStack  Process Stack Pointer value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
 S{
-S  __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) );
+S  __ASM volatile ("MSR psp, %0\n" : : "r" (topOfProcStack) : "sp");
 S}
 S
 S
@@ -2069,7 +2201,7 @@ S    \param [in]    topOfMainStack  Main Stack Pointer value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
 S{
-S  __ASM volatile ("MSR msp, %0\n" : : "r" (topOfMainStack) );
+S  __ASM volatile ("MSR msp, %0\n" : : "r" (topOfMainStack) : "sp");
 S}
 S
 S
@@ -2096,7 +2228,7 @@ S    \param [in]    priMask  Priority Mask
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
 S{
-S  __ASM volatile ("MSR primask, %0" : : "r" (priMask) );
+S  __ASM volatile ("MSR primask, %0" : : "r" (priMask) : "memory");
 S}
 S
 S
@@ -2109,7 +2241,7 @@ S    Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_fault_irq(void)
 S{
-S  __ASM volatile ("cpsie f");
+S  __ASM volatile ("cpsie f" : : : "memory");
 S}
 S
 S
@@ -2120,7 +2252,7 @@ S    Can only be executed in Privileged modes.
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_fault_irq(void)
 S{
-S  __ASM volatile ("cpsid f");
+S  __ASM volatile ("cpsid f" : : : "memory");
 S}
 S
 S
@@ -2147,7 +2279,7 @@ S    \param [in]    basePri  Base Priority value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_BASEPRI(uint32_t value)
 S{
-S  __ASM volatile ("MSR basepri, %0" : : "r" (value) );
+S  __ASM volatile ("MSR basepri, %0" : : "r" (value) : "memory");
 S}
 S
 S
@@ -2174,7 +2306,7 @@ S    \param [in]    faultMask  Fault Mask value to set
 S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
 S{
-S  __ASM volatile ("MSR faultmask, %0" : : "r" (faultMask) );
+S  __ASM volatile ("MSR faultmask, %0" : : "r" (faultMask) : "memory");
 S}
 S
 S#endif /* (__CORTEX_M >= 0x03) */
@@ -2193,7 +2325,10 @@ S{
 S#if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
 S  uint32_t result;
 S
+S  /* Empty asm statement works as a scheduling barrier */
+S  __ASM volatile ("");
 S  __ASM volatile ("VMRS %0, fpscr" : "=r" (result) );
+S  __ASM volatile ("");
 S  return(result);
 S#else
 S   return(0);
@@ -2210,26 +2345,42 @@ S */
 S__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 S{
 S#if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
-S  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) );
+S  /* Empty asm statement works as a scheduling barrier */
+S  __ASM volatile ("");
+S  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc");
+S  __ASM volatile ("");
 S#endif
 S}
 S
 S#endif /* (__CORTEX_M == 0x04) */
 S
 S
+S#elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
+S/* IAR iccarm specific functions */
+S#include <cmsis_iar.h>
+S
+S
+S#elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
+S/* TI CCS specific functions */
+S#include <cmsis_ccs.h>
+S
+S
 S#elif defined ( __TASKING__ ) /*------------------ TASKING Compiler --------------*/
 S/* TASKING carm specific functions */
-S
 S/*
 S * The CMSIS functions have been implemented as intrinsics in the compiler.
-S * Please use "carm -?i" to get an up to date list of all instrinsics,
+S * Please use "carm -?i" to get an up to date list of all intrinsics,
 S * Including the CMSIS ones.
 S */
+S
+S
+S#elif defined ( __CSMC__ ) /*------------------ COSMIC Compiler -------------------*/
+S/* Cosmic specific functions */
+S#include <cmsis_csm.h>
 S
 N#endif
 N
 N/*@} end of CMSIS_Core_RegAccFunctions */
-N
 N
 N#endif /* __CORE_CMFUNC_H */
 L 171 "..\Libraries\CMSIS\inc\core_cm4.h" 2
@@ -35784,6 +35935,7 @@ Nvu32 Correct_Strong[10];//校准系数
 N/*************************变量定义***********************************/
 Nvu16 Run_Control[43];
 Nvu8 ADDR;
+Nextern struct MODS_T g_tModS;
 N//============================函数声明===============================//
 Nvu16 Hardware_CRC(vu8 *p_buffer,vu8 count);
 N//===========================MODBUS协议=============================//
@@ -35791,26 +35943,26 @@ Nvoid UART_Action(void)
 N{//RUT格式：
 N	//ADDR  命令码  读寄存器的起始地址高   读寄存器的起始地址低  读数据字个数高字节   读数据个数低字节  CRC高 CRC低
 N	//返回格式：ADDR 命令码 返回数据字节数  数据高  数据低 ..... CRC高  CRC低
-N	if (UART_Buffer_Rece[0] == ADDR)
+N	if (g_tModS.RxBuf[0] == ADDR)
 N	{
-N		if (UART_Buffer_Rece[1] == (0x03))	//命令3 读数据   
+N		if (g_tModS.RxBuf[1] == (0x03))	//命令3 读数据   
 N		{																		 
 N			vu8 i;
 N			vu16 crc_result;
-N			crc_result = (UART_Buffer_Rece[6] << 8) + UART_Buffer_Rece[7];
-N			if ((crc_result == Hardware_CRC(UART_Buffer_Rece,6)) ||(crc_result == 0) )
+N			crc_result = (g_tModS.RxBuf[6] << 8) + g_tModS.RxBuf[7];
+N			if ((crc_result == Hardware_CRC(g_tModS.RxBuf,6)) ||(crc_result == 0) )
 N			{
-N				if (UART_Buffer_Rece[3] < 0x07)    								//如果寄存器在可读范围内
+N				if (g_tModS.RxBuf[3] < 0x07)    								//如果寄存器在可读范围内
 N				{
-N					if ((UART_Buffer_Rece[3] + UART_Buffer_Rece[5]) < 0x0F)		//如果最后一个读取的寄存器地址在可读范围内
+N					if ((g_tModS.RxBuf[3] + g_tModS.RxBuf[5]) < 0x0F)		//如果最后一个读取的寄存器地址在可读范围内
 N					{							
 N						UART_Buffer_Send[0] = ADDR;
 N						UART_Buffer_Send[1] = 0x03;
-N						UART_Buffer_Send[2] = UART_Buffer_Rece[5]*2;
+N						UART_Buffer_Send[2] = g_tModS.RxBuf[5]*2;
 N						for (i=0;i<UART_Buffer_Send[2];i++)
 N						{
-N							if ((i % 2) == 0) UART_Buffer_Send[3 + i] = Run_Control[UART_Buffer_Rece[3] + i / 2] >> 8;
-N							else UART_Buffer_Send[3 + i] = Run_Control[UART_Buffer_Rece[3] + i / 2];														
+N							if ((i % 2) == 0) UART_Buffer_Send[3 + i] = Run_Control[g_tModS.RxBuf[3] + i / 2] >> 8;
+N							else UART_Buffer_Send[3 + i] = Run_Control[g_tModS.RxBuf[3] + i / 2];														
 N						}
 N						crc_result = Hardware_CRC(UART_Buffer_Send,UART_Buffer_Send[2] + 3);
 N						UART_Buffer_Send[3 + UART_Buffer_Send[2]] = crc_result >> 8;
@@ -35824,28 +35976,28 @@ N			}
 N		}
 N	} 
 N//===============================写寄存器=================================
-N	if ((UART_Buffer_Rece[0] == 0) || (UART_Buffer_Rece[0] == ADDR) || (UART_Buffer_Rece[0] == ((ADDR-1)/4+100)))	 
+N	if ((g_tModS.RxBuf[0] == 0) || (g_tModS.RxBuf[0] == ADDR) || (g_tModS.RxBuf[0] == ((ADDR-1)/4+100)))	 
 N	{
 N		vu8 var8;
 N		vu8 a=0;
 N		vu16 var16;
 N		vu16 crc_result;
 N//=========================以下命令6 写单个寄存器===========================
-N		if (UART_Buffer_Rece[1] == 6)                                 //判断第二个字节是否为命令6
+N		if (g_tModS.RxBuf[1] == 6)                                 //判断第二个字节是否为命令6
 N		{
-N			if (UART_Buffer_Rece[3] < 0x05)							  //判断需要写的地址是否在可写范围内
+N			if (g_tModS.RxBuf[3] < 0x05)							  //判断需要写的地址是否在可写范围内
 N			{
-N				crc_result = (UART_Buffer_Rece[6] << 8) + UART_Buffer_Rece[7];
-N				if ((crc_result == Hardware_CRC(UART_Buffer_Rece,6)) ||(crc_result == 0) )		  //检查CRC
+N				crc_result = (g_tModS.RxBuf[6] << 8) + g_tModS.RxBuf[7];
+N				if ((crc_result == Hardware_CRC(g_tModS.RxBuf,6)) ||(crc_result == 0) )		  //检查CRC
 N				{
-N					var16 = (UART_Buffer_Rece[4] << 8) + UART_Buffer_Rece[5];	//第5 6个字节为要写入的数据
-N					var8 = UART_Buffer_Rece[3];	        						//第3 4个字节为要写入的地址
+N					var16 = (g_tModS.RxBuf[4] << 8) + g_tModS.RxBuf[5];	//第5 6个字节为要写入的数据
+N					var8 = g_tModS.RxBuf[3];	        						//第3 4个字节为要写入的地址
 N					Run_Control[var8] = var16;			    //将数据写入指定的地址
 N
-N					if (UART_Buffer_Rece[0] == ADDR)							//广播模式下不返回数据
+N					if (g_tModS.RxBuf[0] == ADDR)							//广播模式下不返回数据
 N					{
 N						for (a=0;a<8;a++)
-N						{UART_Buffer_Send[a] = UART_Buffer_Rece[a];}
+N						{UART_Buffer_Send[a] = g_tModS.RxBuf[a];}
 N						Transmit_BUFFERsize = 8;						//原样数据返回，不计算CRC
 N						UART_SEND_flag=1;
 X						(flagA . bit4)=1;
@@ -35858,23 +36010,23 @@ N//功能码16格式:
 N//     地址 命令 写入起始地址高  写入起始地址低 写入字数高  写入字数低 写入字节数  数据高 数据低 ......CRC高 CRC低
 N//返回数据格式:
 N//     地址 命令 写入起始地址高  写入起始地址低  写入字节数高 写入字节数低  CRC高  CRC低 
-N		if (UART_Buffer_Rece[1] == 16)										  
+N		if (g_tModS.RxBuf[1] == 16)										  
 N		{	
-N			if ((UART_Buffer_Rece[6] == 6) && (UART_Buffer_Rece[3] == 0x00))	//规定连写寄存器的个数
+N			if ((g_tModS.RxBuf[6] == 6) && (g_tModS.RxBuf[3] == 0x00))	//规定连写寄存器的个数
 N			{
-N				crc_result = (UART_Buffer_Rece[13] << 8) + UART_Buffer_Rece[14];
-N				if ((crc_result == Hardware_CRC(UART_Buffer_Rece,13)) ||(crc_result == 0) )	   //检查CRC
+N				crc_result = (g_tModS.RxBuf[13] << 8) + g_tModS.RxBuf[14];
+N				if ((crc_result == Hardware_CRC(g_tModS.RxBuf,13)) ||(crc_result == 0) )	   //检查CRC
 N				{												
-N					for (var8=0;var8<3;var8++) Run_Control[var8] = (UART_Buffer_Rece[var8*2+7] << 8) + UART_Buffer_Rece[var8*2+8];
+N					for (var8=0;var8<3;var8++) Run_Control[var8] = (g_tModS.RxBuf[var8*2+7] << 8) + g_tModS.RxBuf[var8*2+8];
 N
-N					if (UART_Buffer_Rece[0] == ADDR)					  //广播模式不返回数据
+N					if (g_tModS.RxBuf[0] == ADDR)					  //广播模式不返回数据
 N					{
 N						UART_Buffer_Send[0] = ADDR;
 N						UART_Buffer_Send[1] = 16;
-N						UART_Buffer_Send[2] = UART_Buffer_Rece[2];
-N						UART_Buffer_Send[3] = UART_Buffer_Rece[3];
-N						UART_Buffer_Send[4] = UART_Buffer_Rece[4];
-N						UART_Buffer_Send[5] = UART_Buffer_Rece[5];
+N						UART_Buffer_Send[2] = g_tModS.RxBuf[2];
+N						UART_Buffer_Send[3] = g_tModS.RxBuf[3];
+N						UART_Buffer_Send[4] = g_tModS.RxBuf[4];
+N						UART_Buffer_Send[5] = g_tModS.RxBuf[5];
 N						crc_result = Hardware_CRC(UART_Buffer_Send,6);	 //计算CRC码
 N						UART_Buffer_Send[6] = crc_result>>8;
 N						UART_Buffer_Send[7] = crc_result;				 
@@ -35887,18 +36039,323 @@ N			}
 N		}
 N	}
 N//===================================================================================
-N    if (((UART_Buffer_Rece[0] == 0x01)&&(UART_Buffer_Rece[2] == 0xA5))||(flag_ADJ_ON==1))			   //电压校准
-X    if (((UART_Buffer_Rece[0] == 0x01)&&(UART_Buffer_Rece[2] == 0xA5))||((flagF . bit1)==1))			   
+N    if (((g_tModS.RxBuf[0] == 0x01)&&(g_tModS.RxBuf[2] == 0xA5))||(flag_ADJ_ON==1))			   //电压校准
+X    if (((g_tModS.RxBuf[0] == 0x01)&&(g_tModS.RxBuf[2] == 0xA5))||((flagF . bit1)==1))			   
 N	{
+N		if(g_tModS.RxBuf[1] == 0x01)
+N			{
+N				flag_ADJ_VL=0;
+X				(flagF . bit2)=0;
+N				Modify_A_READ = Vmon_value;//测量电压值
+N				Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//读取低段
+N			}
+N			if (g_tModS.RxBuf[1] == 0x02)			   //电压测量校准完成
+N			{
+N				vu32 var16;
+N				vu32 var32a;
+N				vu32 var32b;
+N				
+N				vu32 var16a;
+N				vu32 var32c;
+N				vu32 var32d;
+N				Modify_B_READ =Vmon_value;//测量电压值
+N				Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//读取高段
+N				var32a = Modify_B_ACT;
+N				var32a = var32a - Modify_A_ACT;
+N				var32a = var32a << 12;
+N				var16 = Modify_B_READ - Modify_A_READ;
+N				var32a = var32a / var16;
+N				REG_CorrectionV = var32a;
+X				Correct_Parametet[0] = var32a;
+N				var32a=0;
+N				var32a = Modify_B_ACT;
+N				var32a = var32a << 12;
+N				var32b = Modify_B_READ;
+N				var32b = var32b * REG_CorrectionV;
+X				var32b = var32b * Correct_Parametet[0];
+N				if (var32a < var32b)
+N				{
+N					var32b = var32b - var32a;
+N					REG_ReadV_Offset = var32b;
+X					Correct_Strong[0] = var32b;
+N					Polar |= 0x01;
+X					Correct_Parametet[4] |= 0x01;
+N				}
+N				else 
+N				{
+N					var32a = var32a - var32b;
+N					REG_ReadV_Offset = var32a;
+X					Correct_Strong[0] = var32a;
+N					Polar &= ~0x01;
+X					Correct_Parametet[4] &= ~0x01;
+N				}			
+N				Flash_Write_all();	//参数写进FLASH
+N				Flag_DAC_OFF=0;
+X				(flagB . bit3)=0;
+N			}
+N/************************************???·????У?*****************************************************************/
+N		if (g_tModS.RxBuf[1] == 0x03)			   //CC??У?
+N		{
+N			Modify_A_READ = Imon1_value;//
+N			Modify_C_READ = Contr_Laod;//
+N			Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+N			Flag_DAC_OFF=1;//
+X			(flagB . bit3)=1;
+N		}
+N
+N		if (g_tModS.RxBuf[1] == 0x04)			   //
+N		{
+N			vu32 var16;
+N			vu32 var32a;
+N			vu32 var32b;
+N			
+N			vu32 var16a;
+N			vu32 var32c;
+N			vu32 var32d;
+N			
+N			Modify_B_READ = Imon1_value;
+N			Modify_D_READ = Contr_Laod;
+N			Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+N			
+N			var32a = Modify_B_ACT;
+N			var32a = var32a - Modify_A_ACT;
+N			var32a = var32a << 12;
+N			var16 = Modify_B_READ - Modify_A_READ;
+N			var32a = var32a / var16;
+N			REG_CorrectionA1 = var32a;
+X			Correct_Parametet[2] = var32a;
+N			var32a = Modify_B_ACT;
+N			var32a = var32a << 12;
+N			var32b = Modify_B_READ;
+N			var32b = var32b * REG_CorrectionA1;
+X			var32b = var32b * Correct_Parametet[2];
+N			if (var32a < var32b)
+N			{
+N				var32b = var32b - var32a;
+N				REG_ReadA1_Offset = var32b;
+X				Correct_Strong[2] = var32b;
+N				Polar1 |= 0x01;
+X				Correct_Parametet[9] |= 0x01;
+N			}
+N			else 
+N			{
+N				var32a = var32a - var32b;
+N				REG_ReadA1_Offset = var32a;
+X				Correct_Strong[2] = var32a;
+N				Polar1 &= ~0x01;					
+X				Correct_Parametet[9] &= ~0x01;					
+N			}
+N//---------------------------------------------------------------------------------//
+N			var32c = Modify_B_ACT; 
+N			var32c = var32c - Modify_A_ACT;
+N			var32c = var32c << 12;
+N			var16a=Modify_D_READ-Modify_C_READ;
+N			var16a=var16a*2;
+N			var32c=var32c/var16a;
+N			SET_CorrectionA1 = var32c;
+X			Correct_Parametet[7] = var32c;
+N			var32c = Modify_B_ACT;
+N			var32c = var32c << 12;
+N			var32d = SET_CorrectionA1;
+X			var32d = Correct_Parametet[7];
+N			var32d = var32d * (Modify_D_READ*2);
+N			if (var32c < var32d)
+N			{
+N				var32d = var32d - var32c;
+N				SET_ReadA1_Offset = var32d;
+X				Correct_Strong[6] = var32d;
+N				Polar1 |= 0x04;
+X				Correct_Parametet[9] |= 0x04;
+N			}
+N			else 
+N			{
+N				var32c = var32c - var32d;
+N				SET_ReadA1_Offset = var32c;
+X				Correct_Strong[6] = var32c;
+N				Polar1 &= ~0x04;
+X				Correct_Parametet[9] &= ~0x04;
+N			}
+N			Flash_Write_all ();	
+N			Flag_DAC_OFF =0;
+X			(flagB . bit3) =0;
+N		}
+N				/*******************************电源电压控制和测量校准******************************************/	
+N			if (g_tModS.RxBuf[1] == 0x0B)			   //电流测量校准
+N			{
+N				Modify_A_READ = Vmon_value;//测量电流
+N				Modify_C_READ = Contr_Voltage;//设置电流
+N				Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+N			}
+N
+N			if (g_tModS.RxBuf[1] == 0x0C)			   //电流测量校准完成
+N			{
+N				vu16 var16;
+N				vu32 var32a;
+N				vu32 var32b;
+N				
+N				vu16 var16a;
+N				vu32 var32c;
+N				vu32 var32d;
+N				
+N				Modify_D_READ = Contr_Voltage;
+N				Modify_B_READ = Vmon_value;
+N				Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+N				var32a = Modify_B_ACT;
+N				var32a = var32a - Modify_A_ACT;
+N				var32a = var32a << 14;
+N				var16 = Modify_B_READ - Modify_A_READ;
+N				var32a = var32a / var16;
+N				REG_CorrectionV1 = var32a;
+X				Correct_Parametet[12] = var32a;
+N				var32a = Modify_B_ACT;
+N				var32a = var32a << 14;
+N				var32b = Modify_B_READ;
+N				var32b = var32b * REG_CorrectionV1;
+X				var32b = var32b * Correct_Parametet[12];
+N				if (var32a < var32b)
+N				{
+N					var32b = var32b - var32a;
+N					REG_ReadV1_Offset = var32b;
+X					Correct_Strong[8] = var32b;
+N					Polar2 |= 0x01;
+X					Correct_Parametet[10] |= 0x01;
+N				}
+N				else 
+N				{
+N					var32a = var32a - var32b;
+N					REG_ReadV1_Offset = var32a;
+X					Correct_Strong[8] = var32a;
+N					Polar2 &= ~0x01;					
+X					Correct_Parametet[10] &= ~0x01;					
+N				}
+N		//---------------------------------------------------------------------------------//
+N				var32c = Modify_B_ACT; //设置电压校准
+N				var32c = var32c - Modify_A_ACT;
+N				var32c = var32c << 14;
+N				var16a=Modify_D_READ-Modify_C_READ;
+N				var16a=var16a*2;
+N				var32c=var32c/var16a;
+N				SET_CorrectionV = var32c;
+X				Correct_Parametet[5] = var32c;
+N				var32c = Modify_B_ACT;
+N				var32c = var32c << 14;
+N				var32d = SET_CorrectionV;
+X				var32d = Correct_Parametet[5];
+N				var32d = var32d * (Modify_D_READ*2);
+N				if (var32c < var32d)
+N				{
+N					var32d = var32d - var32c;
+N					SET_ReadV_Offset = var32d;
+X					Correct_Strong[4] = var32d;
+N					Polar2 |= 0x04;
+X					Correct_Parametet[10] |= 0x04;
+N				}
+N				else 
+N				{
+N					var32c = var32c - var32d;
+N					SET_ReadV_Offset = var32c;
+X					Correct_Strong[4] = var32c;
+N					Polar2 &= ~0x04;
+X					Correct_Parametet[10] &= ~0x04;
+N				}
+N				Flash_Write_all ();	
+N				Flag_DAC_OFF=0;
+X				(flagB . bit3)=0;
+N			}
+N			/*******************************电源CC模式电流测量和控制校准******************************************/	
+N			if (g_tModS.RxBuf[1] == 0x09||flag_ADJ_ALCC==1)			   //电流测量校准
+X			if (g_tModS.RxBuf[1] == 0x09||(flagF . bit4)==1)			   
+N			{
+N				Modify_A_READ = Imon_value;//测量电流
+N				Modify_C_READ = Contr_Current;//设置电流
+N				Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+N			}
+N
+N			if (g_tModS.RxBuf[1] == 0x0A||flag_ADJ_AHCC==1)			   //电流测量校准完成
+X			if (g_tModS.RxBuf[1] == 0x0A||(flagF . bit5)==1)			   
+N			{
+N				vu16 var16;
+N				vu32 var32a;
+N				vu32 var32b;
+N				
+N				vu16 var16a;
+N				vu32 var32c;
+N				vu32 var32d;
+N				
+N				Modify_D_READ = Contr_Current;
+N				Modify_B_READ = Imon_value;
+N				Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+N				var32a = Modify_B_ACT;
+N				var32a = var32a - Modify_A_ACT;
+N				var32a = var32a << 12;
+N				var16 = Modify_B_READ - Modify_A_READ;
+N				var32a = var32a / var16;
+N				CON_CorrectionA = var32a;
+X				Correct_Parametet[8] = var32a;
+N				var32a = Modify_B_ACT;
+N				var32a = var32a << 12;
+N				var32b = Modify_B_READ;
+N				var32b = var32b * CON_CorrectionA;
+X				var32b = var32b * Correct_Parametet[8];
+N				if (var32a < var32b)
+N				{
+N					var32b = var32b - var32a;
+N					CON_ReadA_Offset = var32b;
+X					Correct_Strong[7] = var32b;
+N					Polar2 |= 0x01;
+X					Correct_Parametet[10] |= 0x01;
+N				}
+N				else 
+N				{
+N					var32a = var32a - var32b;
+N					CON_ReadA_Offset = var32a;
+X					Correct_Strong[7] = var32a;
+N					Polar2 &= ~0x01;					//电流测量系数和零点校准完成
+X					Correct_Parametet[10] &= ~0x01;					
+N				}
+N		//---------------------------------------------------------------------------------//
+N				var32c = Modify_B_ACT; //设置电流校准
+N				var32c = var32c - Modify_A_ACT;
+N				var32c = var32c << 14;
+N				var16a=Modify_D_READ-Modify_C_READ;
+N				var16a=var16a*2;
+N				var32c=var32c/var16a;
+N				SET_CorrectionA = var32c;
+X				Correct_Parametet[6] = var32c;
+N				var32c = Modify_B_ACT;
+N				var32c = var32c << 14;
+N				var32d = SET_CorrectionA;
+X				var32d = Correct_Parametet[6];
+N				var32d = var32d * (Modify_D_READ*2);
+N				if (var32c < var32d)
+N				{
+N					var32d = var32d - var32c;
+N					SET_ReadA_Offset = var32d;
+X					Correct_Strong[5] = var32d;
+N					Polar2 |= 0x04;
+X					Correct_Parametet[10] |= 0x04;
+N				}
+N				else 
+N				{
+N					var32c = var32c - var32d;
+N					SET_ReadA_Offset = var32c;
+X					Correct_Strong[5] = var32c;
+N					Polar2 &= ~0x04;
+X					Correct_Parametet[10] &= ~0x04;
+N				}
+N				Flash_Write_all ();	
+N				Flag_DAC_OFF=0;
+X				(flagB . bit3)=0;
+N			}
 N        /*************************************内阻校准**************************************************************************/
-N		if(UART_Buffer_Rece[1] == 0x07||flag_ADJ_VL==1)
-X		if(UART_Buffer_Rece[1] == 0x07||(flagF . bit2)==1)
+N		if(g_tModS.RxBuf[1] == 0x07||flag_ADJ_VL==1)
+X		if(g_tModS.RxBuf[1] == 0x07||(flagF . bit2)==1)
 N		{
 N			Modify_A_READ = Rmon_value;//测量电压值
-N			Modify_A_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//读取低段
+N			Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//读取低段
 N		}
-N		if (UART_Buffer_Rece[1] == 0x08||flag_ADJ_VH==1)			   //电压测量校准完成
-X		if (UART_Buffer_Rece[1] == 0x08||(flagF . bit3)==1)			   
+N		if (g_tModS.RxBuf[1] == 0x08||flag_ADJ_VH==1)			   //电压测量校准完成
+X		if (g_tModS.RxBuf[1] == 0x08||(flagF . bit3)==1)			   
 N		{
 N			vu16 var16;
 N			vu32 var32a;
@@ -35910,7 +36367,7 @@ N			vu32 var32d;
 N			Modify_B_READ =Rmon_value;//测量电压值
 N			flag_OverV=1;
 X			(flagG . bit1)=1;
-N			Modify_B_ACT = (UART_Buffer_Rece[3] << 8) + UART_Buffer_Rece[4];//读取高段
+N			Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//读取高段
 N			if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
 X			if((flagG . bit1)==1)
 N			{
@@ -35952,6 +36409,25 @@ X				(flagB . bit3)=0;
 N			}
 N			flag_ADJ_VH=0;//清掉标志位防止一直进入
 X			(flagF . bit3)=0;
+N		}	
+N/***********??DAC*******************************************/
+N		if (g_tModS.RxBuf[1] == 0x0F)			   
+N		{
+N			Contr_Laod = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+N			Flag_DAC_OFF=1;
+X			(flagB . bit3)=1;
+N		}
+N		if (g_tModS.RxBuf[1] == 0x20)			   
+N		{
+N			Contr_Voltage = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+N			Flag_DAC_OFF=1;
+X			(flagB . bit3)=1;
+N		}
+N		if (g_tModS.RxBuf[1] == 0x21)			   
+N		{
+N			Contr_Current = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+N			Flag_DAC_OFF=1;
+X			(flagB . bit3)=1;
 N		}		
 N    }
 N}
@@ -35960,6 +36436,7 @@ Nvoid Transformation_ADC(void)
 N{
 N	vu32 var32;
 N	vu32 var32a;
+N	float temp;
 N/*****************************测量电压转换*******************************************/
 N	var32 = Vmon_value;
 N	var32 = var32 * REG_CorrectionV;  
@@ -35986,28 +36463,40 @@ X	DISS_Voltage=Run_Control[10];
 N	DISS_Voltage=DISS_Voltage/100;//计算显示电压
 N	var32 = 0;
 N/*****************************稳压电源测量电压转换*******************************************/
-N	var32 = Vmon1_value;
-N	var32 = var32 * REG_CorrectionV1;  
-X	var32 = var32 * Correct_Parametet[12];  
-N	if ((Polar3 & 0x01) == 0x01)		  
-X	if ((Correct_Parametet[11] & 0x01) == 0x01)		  
-N	{
-N		if (var32 < REG_ReadV1_Offset) 
-X		if (var32 < Correct_Strong[8]) 
-N		{
-N			var32 = 0;
-N		}
-N		else var32 = var32 - REG_ReadV1_Offset;
-X		else var32 = var32 - Correct_Strong[8];
-N	}
-N	else var32 = var32 + REG_ReadV1_Offset;
-X	else var32 = var32 + Correct_Strong[8];
-N	var32 = var32 >> 14;
-N	if (var32 < 5) var32 = 0;				  //40mV以下清零
-N	POW_Voltage = var32;
-X	Run_Control[9] = var32;
+N	temp = (float)Vmon1_value;
+N//	var32 = var32 * REG_CorrectionV1;  
+N////	if ((Polar3 & 0x01) == 0x01)		  
+N////	{
+N////		if (var32 < REG_ReadV1_Offset) 
+N////		{
+N////			var32 = 0;
+N////		}
+N////		else var32 = var32 - REG_ReadV1_Offset;
+N////	}
+N////	else 
+N//		var32 = var32 - REG_ReadV1_Offset;
+W "..\drive\modbus.c" 504 9 single-precision operand implicitly converted to double-precision
+N	temp = temp * 0.8115;  
+W "..\drive\modbus.c" 505 9 single-precision operand implicitly converted to double-precision
+N	temp = temp - 5.495;
+N//	var32 = var32 >> 14;
+N	if (temp < 5) temp = 0;				  //40mV以下清零
+N	POW_Voltage = (vu16)temp;
+X	Run_Control[9] = (vu16)temp;
+N//	if(POW_Voltage >= 1600)
+N//	{
+N//		DISS_POW_Voltage=POW_Voltage - (vu16)((float)SET_Voltage*0.359);
+N//	}else if(POW_Voltage >= 300 && POW_Voltage < 1600){
+N//		DISS_POW_Voltage=POW_Voltage - (vu16)((float)SET_Voltage*0.359);
+N//	}else{
+N//		DISS_POW_Voltage=POW_Voltage - (vu16)((float)SET_Voltage*0.36);
+N//	}
 N	DISS_POW_Voltage=POW_Voltage;
 X	DISS_POW_Voltage=Run_Control[9];
+N	if(DISS_POW_Voltage < 0)
+N	{
+N		DISS_POW_Voltage = 0;
+N	}
 N	DISS_POW_Voltage=DISS_POW_Voltage/100;//计算显示电压
 N	var32 = 0;
 N/*****************************内阻值转换*******************************************/
@@ -36078,39 +36567,39 @@ N/*****************************稳压电源测量电流转换*****************************
 N	var32 = Imon_value;
 N	var32 = var32 * CON_CorrectionA;	   
 X	var32 = var32 * Correct_Parametet[8];	   
-N	if ((Polar2 & 0x01) == 0x01)			   
-X	if ((Correct_Parametet[10] & 0x01) == 0x01)			   
-N	{
-N		if (var32 < CON_ReadA_Offset) var32 = 0;
-X		if (var32 < Correct_Strong[7]) var32 = 0;
-N		else var32 = var32 - CON_ReadA_Offset;
-X		else var32 = var32 - Correct_Strong[7];
-N	}
-N	else
-N	{
-N		var32 = var32 + CON_ReadA_Offset;
-X		var32 = var32 + Correct_Strong[7];
-N	}	
+N//	if ((Polar2 & 0x01) == 0x01)			   
+N//	{
+N//		if (var32 < CON_ReadA_Offset) var32 = 0;
+N//		else var32 = var32 - CON_ReadA_Offset;
+N//	}
+N//	else
+N//	{
+N//		var32 = var32 + CON_ReadA_Offset;
+N//	}	
+N	var32 = var32 - CON_ReadA_Offset;
+X	var32 = var32 - Correct_Strong[7];
 N	var32 = var32 >> 12;
 N	Current = var32;;
 X	Run_Control[11] = var32;;
 N	DISS_POW_Current=Current;
 X	DISS_POW_Current=Run_Control[11];
 N	DISS_POW_Current=DISS_POW_Current/1000;//计算显示电流
+N	if(DISS_POW_Current > 6)
+N	{
+N		DISS_POW_Current = 0;
+N	}
 N/**************************稳压电源设置电压转换******************************************/
 N	var32 = SET_Voltage;
 X	var32 = Run_Control[1];
 N	var32=var32<<14;   
-N	if ((Polar1 & 0x01) == 0)			   
-X	if ((Correct_Parametet[9] & 0x01) == 0)			   
-N	{
-N		if (var32 < SET_ReadV_Offset) var32 = 0;
-X		if (var32 < Correct_Strong[4]) var32 = 0;
-N		else var32 = var32 - SET_ReadV_Offset;
-X		else var32 = var32 - Correct_Strong[4];
-N	}
-N	else var32 = var32 + SET_ReadV_Offset;
-X	else var32 = var32 + Correct_Strong[4];
+N//	if ((Polar1 & 0x01) == 0)			   
+N//	{
+N//		if (var32 < SET_ReadV_Offset) var32 = 0;
+N//		else var32 = var32 - SET_ReadV_Offset;
+N//	}
+N//	else 
+N		var32 = var32 + SET_ReadV_Offset;
+X		var32 = var32 + Correct_Strong[4];
 N	var32 = var32/SET_CorrectionV;
 X	var32 = var32/Correct_Parametet[5];
 N	var32=var32>>1;

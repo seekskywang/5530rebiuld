@@ -191,7 +191,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         GUI_SetColor(0x00BFFFFF);
         GUI_SetFont(&GUI_Font24_1);
         GUI_DispStringAt("JK5530", 180, 50);
-        GUI_DispStringAt("Ver:2.6", 180, 75);
+        GUI_DispStringAt("Ver:2.7", 180, 75);
         //1.7版本修改内阻测试判断测试结束与下一次测试开始的逻辑
         //1.8版本修正内阻测试短路后激活电池问题，添加手动测试功能，修正内阻显示不稳定问题
         //2.0版本添加英文
