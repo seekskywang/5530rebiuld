@@ -259,30 +259,30 @@ void UART_Action(void)
 				/*******************************电源电压控制和测量校准******************************************/	
 			if (g_tModS.RxBuf[1] == 0x0B)			   //电流测量校准
 			{
-				Modify_A_READ = Vmon_value;//测量电流
+				Modify_A_READ = Vmon1_value;//测量电流
 				Modify_C_READ = Contr_Voltage;//设置电流
 				Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
 			}
 
 			if (g_tModS.RxBuf[1] == 0x0C)			   //电流测量校准完成
 			{
-				vu16 var16;
+				vu32 var16;
 				vu32 var32a;
 				vu32 var32b;
 				
-				vu16 var16a;
+				vu32 var16a;
 				vu32 var32c;
 				vu32 var32d;
-				
 				Modify_D_READ = Contr_Voltage;
-				Modify_B_READ = Vmon_value;
-				Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+				Modify_B_READ = Vmon1_value;
+				Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//读取高段
 				var32a = Modify_B_ACT;
 				var32a = var32a - Modify_A_ACT;
 				var32a = var32a << 14;
 				var16 = Modify_B_READ - Modify_A_READ;
 				var32a = var32a / var16;
 				REG_CorrectionV1 = var32a;
+				var32a=0;
 				var32a = Modify_B_ACT;
 				var32a = var32a << 14;
 				var32b = Modify_B_READ;
@@ -297,8 +297,42 @@ void UART_Action(void)
 				{
 					var32a = var32a - var32b;
 					REG_ReadV1_Offset = var32a;
-					Polar2 &= ~0x01;					
-				}
+					Polar2 &= ~0x01;
+				}			
+				
+//				vu16 var16;
+//				vu32 var32a;
+//				vu32 var32b;
+//				
+//				vu16 var16a;
+//				vu32 var32c;
+//				vu32 var32d;
+//				
+//				Modify_D_READ = Contr_Voltage;
+//				Modify_B_READ = Vmon1_value;
+//				Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+//				var32a = Modify_B_ACT;
+//				var32a = var32a - Modify_A_ACT;
+//				var32a = var32a << 12;
+//				var16 = Modify_B_READ - Modify_A_READ;
+//				var32a = var32a / var16;
+//				REG_CorrectionV1 = var32a;
+//				var32a = Modify_B_ACT;
+//				var32a = var32a << 12;
+//				var32b = Modify_B_READ;
+//				var32b = var32b * REG_CorrectionV1;
+//				if (var32a < var32b)
+//				{
+//					var32b = var32b - var32a;
+//					REG_ReadV1_Offset = var32b;
+//					Polar2 |= 0x01;
+//				}
+//				else 
+//				{
+//					var32a = var32a - var32b;
+//					REG_ReadV1_Offset = var32a;
+//					Polar2 &= ~0x01;					
+//				}
 		//---------------------------------------------------------------------------------//
 				var32c = Modify_B_ACT; //设置电压校准
 				var32c = var32c - Modify_A_ACT;
@@ -489,23 +523,23 @@ void Transformation_ADC(void)
 	DISS_Voltage=DISS_Voltage/100;//计算显示电压
 	var32 = 0;
 /*****************************稳压电源测量电压转换*******************************************/
-	temp = (float)Vmon1_value;
-//	var32 = var32 * REG_CorrectionV1;  
-////	if ((Polar3 & 0x01) == 0x01)		  
-////	{
-////		if (var32 < REG_ReadV1_Offset) 
-////		{
-////			var32 = 0;
-////		}
-////		else var32 = var32 - REG_ReadV1_Offset;
-////	}
-////	else 
-//		var32 = var32 - REG_ReadV1_Offset;
-	temp = temp * 0.8115;  
-	temp = temp - 5.495;
-//	var32 = var32 >> 14;
+	var32 = Vmon1_value;
+	var32 = var32 * REG_CorrectionV1;  
+	if ((Polar3 & 0x01) == 0x01)		  
+	{
+		if (var32 < REG_ReadV1_Offset) 
+		{
+			var32 = 0;
+		}
+		else var32 = var32 + REG_ReadV1_Offset;
+	}
+	else 
+		var32 = var32 - REG_ReadV1_Offset;
+//	temp = temp * 0.8191;  
+//	temp = temp - 5.2066;
+	var32 = var32 >> 14;
 	if (temp < 5) temp = 0;				  //40mV以下清零
-	POW_Voltage = (vu16)temp;
+	POW_Voltage = var32;
 //	if(POW_Voltage >= 1600)
 //	{
 //		DISS_POW_Voltage=POW_Voltage - (vu16)((float)SET_Voltage*0.359);
@@ -541,15 +575,16 @@ void Transformation_ADC(void)
 // 	var32 = 0;	
     var32 = Rmon_value;
 	var32 = var32 * REG_CorrectionR;  
-	if ((Polar1 & 0x04) == 0x04)		  
-	{
-		if (var32 < REG_ReadR_Offset) 
-		{
-			var32 = 0;
-		}
-		else var32 = var32 - REG_ReadR_Offset;
-	}
-	else var32 = var32 + REG_ReadR_Offset;
+//	if ((Polar1 & 0x04) == 0x04)		  
+//	{
+//		if (var32 < REG_ReadR_Offset) 
+//		{
+//			var32 = 0;
+//		}
+//		else var32 = var32 - REG_ReadR_Offset;
+//	}
+//	else 
+		var32 = var32 - REG_ReadR_Offset;
 	var32 = var32 >> 12;
 	if (var32 < 5) var32 = 0;				  //40mV以下清零
 	R_VLUE = var32;
@@ -557,15 +592,16 @@ void Transformation_ADC(void)
     {
         var32 = Rmon_value;
         var32 = var32 * REG_CorrectionRH;  
-        if ((Polar1 & 0x04) == 0x04)		  
-        {
-            if (var32 < REG_ReadRH_Offset) 
-            {
-                var32 = 0;
-            }
-            else var32 = var32 - REG_ReadRH_Offset;
-        }
-        else var32 = var32 + REG_ReadRH_Offset;
+//        if ((Polar1 & 0x04) == 0x04)		  
+//        {
+//            if (var32 < REG_ReadRH_Offset) 
+//            {
+//                var32 = 0;
+//            }
+//            else var32 = var32 - REG_ReadRH_Offset;
+//        }
+//        else 
+			var32 = var32 - REG_ReadRH_Offset;
         var32 = var32 >> 12;
         if (var32 < 5) var32 = 0;				  //40mV訑袀去拢
         R_VLUE = var32;

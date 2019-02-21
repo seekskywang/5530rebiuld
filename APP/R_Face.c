@@ -568,17 +568,26 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
             }else if(DISS_Voltage < 1){
                 r_stable = 0;
             }
-                
-            if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
-                {
-                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-                    sprintf(buf,"%.2f",0.00);       
-                    TEXT_SetText(hItem,buf);
-                }else{
-                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-                    sprintf(buf,"%.2f",DISS_Voltage);       
-                    TEXT_SetText(hItem,buf);
-                }
+            if(DISS_Voltage <= 0.1)
+			{
+				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+				sprintf(buf,"%.2f",0.00);       
+				TEXT_SetText(hItem,buf);
+			}else{
+				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+				sprintf(buf,"%.2f",DISS_Voltage);       
+				TEXT_SetText(hItem,buf);
+			}   
+//            if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
+//                {
+//                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+//                    sprintf(buf,"%.2f",0.00);       
+//                    TEXT_SetText(hItem,buf);
+//                }else{
+//                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+//                    sprintf(buf,"%.2f",DISS_Voltage);       
+//                    TEXT_SetText(hItem,buf);
+//                }
                 if(clear_flag1 == 1 && R_VLUE <= clear_r)
                 {
                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_81);

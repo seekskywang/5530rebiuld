@@ -36182,24 +36182,23 @@ N		}
 N				/*******************************电源电压控制和测量校准******************************************/	
 N			if (g_tModS.RxBuf[1] == 0x0B)			   //电流测量校准
 N			{
-N				Modify_A_READ = Vmon_value;//测量电流
+N				Modify_A_READ = Vmon1_value;//测量电流
 N				Modify_C_READ = Contr_Voltage;//设置电流
 N				Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
 N			}
 N
 N			if (g_tModS.RxBuf[1] == 0x0C)			   //电流测量校准完成
 N			{
-N				vu16 var16;
+N				vu32 var16;
 N				vu32 var32a;
 N				vu32 var32b;
 N				
-N				vu16 var16a;
+N				vu32 var16a;
 N				vu32 var32c;
 N				vu32 var32d;
-N				
 N				Modify_D_READ = Contr_Voltage;
-N				Modify_B_READ = Vmon_value;
-N				Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+N				Modify_B_READ = Vmon1_value;
+N				Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//读取高段
 N				var32a = Modify_B_ACT;
 N				var32a = var32a - Modify_A_ACT;
 N				var32a = var32a << 14;
@@ -36207,6 +36206,7 @@ N				var16 = Modify_B_READ - Modify_A_READ;
 N				var32a = var32a / var16;
 N				REG_CorrectionV1 = var32a;
 X				Correct_Parametet[12] = var32a;
+N				var32a=0;
 N				var32a = Modify_B_ACT;
 N				var32a = var32a << 14;
 N				var32b = Modify_B_READ;
@@ -36225,9 +36225,43 @@ N				{
 N					var32a = var32a - var32b;
 N					REG_ReadV1_Offset = var32a;
 X					Correct_Strong[8] = var32a;
-N					Polar2 &= ~0x01;					
-X					Correct_Parametet[10] &= ~0x01;					
-N				}
+N					Polar2 &= ~0x01;
+X					Correct_Parametet[10] &= ~0x01;
+N				}			
+N				
+N//				vu16 var16;
+N//				vu32 var32a;
+N//				vu32 var32b;
+N//				
+N//				vu16 var16a;
+N//				vu32 var32c;
+N//				vu32 var32d;
+N//				
+N//				Modify_D_READ = Contr_Voltage;
+N//				Modify_B_READ = Vmon1_value;
+N//				Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+N//				var32a = Modify_B_ACT;
+N//				var32a = var32a - Modify_A_ACT;
+N//				var32a = var32a << 12;
+N//				var16 = Modify_B_READ - Modify_A_READ;
+N//				var32a = var32a / var16;
+N//				REG_CorrectionV1 = var32a;
+N//				var32a = Modify_B_ACT;
+N//				var32a = var32a << 12;
+N//				var32b = Modify_B_READ;
+N//				var32b = var32b * REG_CorrectionV1;
+N//				if (var32a < var32b)
+N//				{
+N//					var32b = var32b - var32a;
+N//					REG_ReadV1_Offset = var32b;
+N//					Polar2 |= 0x01;
+N//				}
+N//				else 
+N//				{
+N//					var32a = var32a - var32b;
+N//					REG_ReadV1_Offset = var32a;
+N//					Polar2 &= ~0x01;					
+N//				}
 N		//---------------------------------------------------------------------------------//
 N				var32c = Modify_B_ACT; //设置电压校准
 N				var32c = var32c - Modify_A_ACT;
@@ -36463,26 +36497,29 @@ X	DISS_Voltage=Run_Control[10];
 N	DISS_Voltage=DISS_Voltage/100;//计算显示电压
 N	var32 = 0;
 N/*****************************稳压电源测量电压转换*******************************************/
-N	temp = (float)Vmon1_value;
-N//	var32 = var32 * REG_CorrectionV1;  
-N////	if ((Polar3 & 0x01) == 0x01)		  
-N////	{
-N////		if (var32 < REG_ReadV1_Offset) 
-N////		{
-N////			var32 = 0;
-N////		}
-N////		else var32 = var32 - REG_ReadV1_Offset;
-N////	}
-N////	else 
-N//		var32 = var32 - REG_ReadV1_Offset;
-W "..\drive\modbus.c" 504 9 single-precision operand implicitly converted to double-precision
-N	temp = temp * 0.8115;  
-W "..\drive\modbus.c" 505 9 single-precision operand implicitly converted to double-precision
-N	temp = temp - 5.495;
-N//	var32 = var32 >> 14;
+N	var32 = Vmon1_value;
+N	var32 = var32 * REG_CorrectionV1;  
+X	var32 = var32 * Correct_Parametet[12];  
+N	if ((Polar3 & 0x01) == 0x01)		  
+X	if ((Correct_Parametet[11] & 0x01) == 0x01)		  
+N	{
+N		if (var32 < REG_ReadV1_Offset) 
+X		if (var32 < Correct_Strong[8]) 
+N		{
+N			var32 = 0;
+N		}
+N		else var32 = var32 + REG_ReadV1_Offset;
+X		else var32 = var32 + Correct_Strong[8];
+N	}
+N	else 
+N		var32 = var32 - REG_ReadV1_Offset;
+X		var32 = var32 - Correct_Strong[8];
+N//	temp = temp * 0.8191;  
+N//	temp = temp - 5.2066;
+N	var32 = var32 >> 14;
 N	if (temp < 5) temp = 0;				  //40mV以下清零
-N	POW_Voltage = (vu16)temp;
-X	Run_Control[9] = (vu16)temp;
+N	POW_Voltage = var32;
+X	Run_Control[9] = var32;
 N//	if(POW_Voltage >= 1600)
 N//	{
 N//		DISS_POW_Voltage=POW_Voltage - (vu16)((float)SET_Voltage*0.359);
@@ -36520,19 +36557,17 @@ N// 	var32 = 0;
 N    var32 = Rmon_value;
 N	var32 = var32 * REG_CorrectionR;  
 X	var32 = var32 * Correct_Parametet[3];  
-N	if ((Polar1 & 0x04) == 0x04)		  
-X	if ((Correct_Parametet[9] & 0x04) == 0x04)		  
-N	{
-N		if (var32 < REG_ReadR_Offset) 
-X		if (var32 < Correct_Strong[3]) 
-N		{
-N			var32 = 0;
-N		}
-N		else var32 = var32 - REG_ReadR_Offset;
-X		else var32 = var32 - Correct_Strong[3];
-N	}
-N	else var32 = var32 + REG_ReadR_Offset;
-X	else var32 = var32 + Correct_Strong[3];
+N//	if ((Polar1 & 0x04) == 0x04)		  
+N//	{
+N//		if (var32 < REG_ReadR_Offset) 
+N//		{
+N//			var32 = 0;
+N//		}
+N//		else var32 = var32 - REG_ReadR_Offset;
+N//	}
+N//	else 
+N		var32 = var32 - REG_ReadR_Offset;
+X		var32 = var32 - Correct_Strong[3];
 N	var32 = var32 >> 12;
 N	if (var32 < 5) var32 = 0;				  //40mV以下清零
 N	R_VLUE = var32;
@@ -36543,19 +36578,17 @@ N    {
 N        var32 = Rmon_value;
 N        var32 = var32 * REG_CorrectionRH;  
 X        var32 = var32 * Correct_Parametet[13];  
-N        if ((Polar1 & 0x04) == 0x04)		  
-X        if ((Correct_Parametet[9] & 0x04) == 0x04)		  
-N        {
-N            if (var32 < REG_ReadRH_Offset) 
-X            if (var32 < Correct_Strong[9]) 
-N            {
-N                var32 = 0;
-N            }
-N            else var32 = var32 - REG_ReadRH_Offset;
-X            else var32 = var32 - Correct_Strong[9];
-N        }
-N        else var32 = var32 + REG_ReadRH_Offset;
-X        else var32 = var32 + Correct_Strong[9];
+N//        if ((Polar1 & 0x04) == 0x04)		  
+N//        {
+N//            if (var32 < REG_ReadRH_Offset) 
+N//            {
+N//                var32 = 0;
+N//            }
+N//            else var32 = var32 - REG_ReadRH_Offset;
+N//        }
+N//        else 
+N			var32 = var32 - REG_ReadRH_Offset;
+X			var32 = var32 - Correct_Strong[9];
 N        var32 = var32 >> 12;
 N        if (var32 < 5) var32 = 0;				  //40mV訑袀去拢
 N        R_VLUE = var32;

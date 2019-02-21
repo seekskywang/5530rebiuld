@@ -53531,19 +53531,29 @@ N                stable_time = GUI_GetTime()/500;
 N            }else if(DISS_Voltage < 1){
 N                r_stable = 0;
 N            }
-N                
-N            if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
-N                {
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
-N                    sprintf(buf,"%.2f",0.00);       
-N                    TEXT_SetText(hItem,buf);
-N                }else{
-N                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
-X                    hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
-N                    sprintf(buf,"%.2f",DISS_Voltage);       
-N                    TEXT_SetText(hItem,buf);
-N                }
+W "..\APP\R_Face.c" 571 16 single-precision operand implicitly converted to double-precision
+N            if(DISS_Voltage <= 0.1)
+N			{
+N				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+X				hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
+N				sprintf(buf,"%.2f",0.00);       
+N				TEXT_SetText(hItem,buf);
+N			}else{
+N				hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+X				hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x8D));
+N				sprintf(buf,"%.2f",DISS_Voltage);       
+N				TEXT_SetText(hItem,buf);
+N			}   
+N//            if(clear_flag1 == 1 && DISS_Voltage <= clear_v)
+N//                {
+N//                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+N//                    sprintf(buf,"%.2f",0.00);       
+N//                    TEXT_SetText(hItem,buf);
+N//                }else{
+N//                    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_80);
+N//                    sprintf(buf,"%.2f",DISS_Voltage);       
+N//                    TEXT_SetText(hItem,buf);
+N//                }
 N                if(clear_flag1 == 1 && R_VLUE <= clear_r)
 X                if(clear_flag1 == 1 && Run_Control[13] <= clear_r)
 N                {
@@ -53571,7 +53581,7 @@ N                        sprintf(buf,"%4d",r);
 N                        TEXT_SetText(hItem,buf);
 N                    }else if(r_stable == 0)
 N                    {
-W "..\APP\R_Face.c" 603 28 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 612 28 single-precision operand implicitly converted to double-precision
 N                        if(DISS_Voltage < 0.3)
 N                            {
 N                                if(para_set1 == set_1_on)
@@ -53648,8 +53658,8 @@ N            {
 N                case Lion:
 X                case 1:
 N                {
-W "..\APP\R_Face.c" 671 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 671 63 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 680 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 680 63 single-precision operand implicitly converted to double-precision
 N                    if(R_VLUE != 0  && DISS_Voltage >= 3.4 && DISS_Voltage <= 4.2)
 X                    if(Run_Control[13] != 0  && DISS_Voltage >= 3.4 && DISS_Voltage <= 4.2)
 N                    {
@@ -53677,8 +53687,8 @@ N                }
 N                case NiMH:
 X                case 2:
 N                {
-W "..\APP\R_Face.c" 692 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 692 63 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 701 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 701 63 single-precision operand implicitly converted to double-precision
 N                    if(R_VLUE != 0  && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
 X                    if(Run_Control[13] != 0  && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
 N                    {
@@ -53706,8 +53716,8 @@ N                }
 N                case NiCd:
 X                case 3:
 N                {
-W "..\APP\R_Face.c" 713 39 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 713 62 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 722 39 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 722 62 single-precision operand implicitly converted to double-precision
 N                    if(R_VLUE != 0 && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
 X                    if(Run_Control[13] != 0 && DISS_Voltage >= 0.9 && DISS_Voltage <= 1.4)
 N                    {
@@ -53735,8 +53745,8 @@ N                }
 N                case SLA:
 X                case 4:
 N                {
-W "..\APP\R_Face.c" 734 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 734 63 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 743 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 743 63 single-precision operand implicitly converted to double-precision
 N                    if(R_VLUE != 0  && DISS_Voltage >= 1.8 && DISS_Voltage <= 2.4)
 X                    if(Run_Control[13] != 0  && DISS_Voltage >= 1.8 && DISS_Voltage <= 2.4)
 N                    {
@@ -53764,8 +53774,8 @@ N                }
 N                case LiMH:
 X                case 5:
 N                {
-W "..\APP\R_Face.c" 755 40 single-precision operand implicitly converted to double-precision
-W "..\APP\R_Face.c" 755 63 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 764 40 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 764 63 single-precision operand implicitly converted to double-precision
 N                    if(R_VLUE != 0  && DISS_Voltage >= 2.8 && DISS_Voltage <= 3.3)
 X                    if(Run_Control[13] != 0  && DISS_Voltage >= 2.8 && DISS_Voltage <= 3.3)
 N                    {
@@ -55037,7 +55047,7 @@ N    char sbs_c[5];
 N    float change_sbs_c;
 N    static float crec1,crec2;
 N
-W "..\APP\R_Face.c" 1744 27 single-precision operand implicitly converted to double-precision
+W "..\APP\R_Face.c" 1753 27 single-precision operand implicitly converted to double-precision
 N    if(v - DISS_Voltage > v*0.9 && para_set2 == set_2_on)
 X    if(v - DISS_Voltage > v*0.9 && para_set2 == 0xff)
 N    {

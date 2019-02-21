@@ -5,696 +5,660 @@
                           AREA ||i.Hardware_CRC||, CODE, READONLY, ALIGN=1
 
                   Hardware_CRC PROC
-;;;680    //-----------------------------CRC检测--------------------------------------------//
-;;;681    vu16 Hardware_CRC(vu8 *p_buffer,vu8 count)    //CRC16
+;;;716    //-----------------------------CRC检测--------------------------------------------//
+;;;717    vu16 Hardware_CRC(vu8 *p_buffer,vu8 count)    //CRC16
 000000  b503              PUSH     {r0,r1,lr}
-;;;682    {
+;;;718    {
 000002  b082              SUB      sp,sp,#8
-;;;683    	vu16 CRC_Result=0xffff;
+;;;719    	vu16 CRC_Result=0xffff;
 000004  f64f71ff          MOV      r1,#0xffff
 000008  9101              STR      r1,[sp,#4]
-;;;684    	vu8 i;
-;;;685    	if(count==0)
+;;;720    	vu8 i;
+;;;721    	if(count==0)
 00000a  f89d100c          LDRB     r1,[sp,#0xc]
 00000e  2900              CMP      r1,#0
 000010  d126              BNE      |L1.96|
-;;;686    	{
-;;;687    		count=1;
+;;;722    	{
+;;;723    		count=1;
 000012  2101              MOVS     r1,#1
 000014  9103              STR      r1,[sp,#0xc]
 000016  e023              B        |L1.96|
                   |L1.24|
-;;;688    	}
-;;;689    	while(count--)
-;;;690    	{
-;;;691    		CRC_Result^=*p_buffer;
+;;;724    	}
+;;;725    	while(count--)
+;;;726    	{
+;;;727    		CRC_Result^=*p_buffer;
 000018  7801              LDRB     r1,[r0,#0]
 00001a  f8bd2004          LDRH     r2,[sp,#4]
 00001e  4051              EORS     r1,r1,r2
 000020  9101              STR      r1,[sp,#4]
-;;;692    		for(i=0;i<8;i++)
+;;;728    		for(i=0;i<8;i++)
 000022  2100              MOVS     r1,#0
 000024  9100              STR      r1,[sp,#0]
-;;;693    		{
-;;;694    			if(CRC_Result&1)
-;;;695    			{
-;;;696    				CRC_Result>>=1;
-;;;697    				CRC_Result^=0xA001;
+;;;729    		{
+;;;730    			if(CRC_Result&1)
+;;;731    			{
+;;;732    				CRC_Result>>=1;
+;;;733    				CRC_Result^=0xA001;
 000026  f24a0201          MOV      r2,#0xa001
 00002a  e014              B        |L1.86|
                   |L1.44|
-00002c  f8bd1004          LDRH     r1,[sp,#4]            ;694
-000030  07c9              LSLS     r1,r1,#31             ;694
+00002c  f8bd1004          LDRH     r1,[sp,#4]            ;730
+000030  07c9              LSLS     r1,r1,#31             ;730
 000032  d008              BEQ      |L1.70|
-000034  f8bd1004          LDRH     r1,[sp,#4]            ;696
-000038  0849              LSRS     r1,r1,#1              ;696
-00003a  9101              STR      r1,[sp,#4]            ;696
+000034  f8bd1004          LDRH     r1,[sp,#4]            ;732
+000038  0849              LSRS     r1,r1,#1              ;732
+00003a  9101              STR      r1,[sp,#4]            ;732
 00003c  f8bd1004          LDRH     r1,[sp,#4]
 000040  4051              EORS     r1,r1,r2
 000042  9101              STR      r1,[sp,#4]
 000044  e003              B        |L1.78|
                   |L1.70|
-;;;698    			}
-;;;699    			else 
-;;;700    			{
-;;;701    				CRC_Result>>=1;
+;;;734    			}
+;;;735    			else 
+;;;736    			{
+;;;737    				CRC_Result>>=1;
 000046  f8bd1004          LDRH     r1,[sp,#4]
 00004a  0849              LSRS     r1,r1,#1
 00004c  9101              STR      r1,[sp,#4]
                   |L1.78|
-00004e  f89d1000          LDRB     r1,[sp,#0]            ;692
-000052  1c49              ADDS     r1,r1,#1              ;692
-000054  9100              STR      r1,[sp,#0]            ;692
+00004e  f89d1000          LDRB     r1,[sp,#0]            ;728
+000052  1c49              ADDS     r1,r1,#1              ;728
+000054  9100              STR      r1,[sp,#0]            ;728
                   |L1.86|
-000056  f89d1000          LDRB     r1,[sp,#0]            ;692
-00005a  2908              CMP      r1,#8                 ;692
+000056  f89d1000          LDRB     r1,[sp,#0]            ;728
+00005a  2908              CMP      r1,#8                 ;728
 00005c  d3e6              BCC      |L1.44|
-;;;702    			}
-;;;703    		}
-;;;704    		p_buffer++;
+;;;738    			}
+;;;739    		}
+;;;740    		p_buffer++;
 00005e  1c40              ADDS     r0,r0,#1
                   |L1.96|
-000060  f89d100c          LDRB     r1,[sp,#0xc]          ;689
-000064  1e4a              SUBS     r2,r1,#1              ;689
-000066  9203              STR      r2,[sp,#0xc]          ;689
+000060  f89d100c          LDRB     r1,[sp,#0xc]          ;725
+000064  1e4a              SUBS     r2,r1,#1              ;725
+000066  9203              STR      r2,[sp,#0xc]          ;725
 000068  d2d6              BCS      |L1.24|
-;;;705    	}
-;;;706    	return CRC_Result;
+;;;741    	}
+;;;742    	return CRC_Result;
 00006a  f8bd0004          LDRH     r0,[sp,#4]
-;;;707    }
+;;;743    }
 00006e  b004              ADD      sp,sp,#0x10
 000070  bd00              POP      {pc}
-;;;708    
+;;;744    
                           ENDP
 
 
                           AREA ||i.Transformation_ADC||, CODE, READONLY, ALIGN=2
 
                   Transformation_ADC PROC
-;;;467    //===============================AD值转换成测量值============================================//
-;;;468    void Transformation_ADC(void)  
-000000  b5f0              PUSH     {r4-r7,lr}
-;;;469    {
-000002  ed2d8b02          VPUSH    {d8}
-000006  b081              SUB      sp,sp,#4
-;;;470    	vu32 var32;
-;;;471    	vu32 var32a;
-;;;472    	float temp;
-;;;473    /*****************************测量电压转换*******************************************/
-;;;474    	var32 = Vmon_value;
-000008  48b8              LDR      r0,|L2.748|
-00000a  8800              LDRH     r0,[r0,#0]  ; Vmon_value
-00000c  9000              STR      r0,[sp,#0]
-;;;475    	var32 = var32 * REG_CorrectionV;  
-00000e  4eb8              LDR      r6,|L2.752|
-000010  8830              LDRH     r0,[r6,#0]  ; Correct_Parametet
-000012  9900              LDR      r1,[sp,#0]
-000014  4348              MULS     r0,r1,r0
-000016  9000              STR      r0,[sp,#0]
-;;;476    	if ((Polar & 0x01) == 0x01)		  
-000018  8930              LDRH     r0,[r6,#8]  ; Correct_Parametet
-;;;477    	{
-;;;478    		if (var32 < REG_ReadV_Offset) 
-00001a  f106041c          ADD      r4,r6,#0x1c
-00001e  07c0              LSLS     r0,r0,#31             ;476
-000020  f04f0700          MOV      r7,#0
-000024  d00a              BEQ      |L2.60|
-000026  6820              LDR      r0,[r4,#0]  ; Correct_Strong
-000028  9900              LDR      r1,[sp,#0]
-00002a  4288              CMP      r0,r1
-00002c  d901              BLS      |L2.50|
-;;;479    		{
-;;;480    			var32 = 0;
-00002e  9700              STR      r7,[sp,#0]
-000030  e008              B        |L2.68|
-                  |L2.50|
-;;;481    		}
-;;;482    		else var32 = var32 - REG_ReadV_Offset;
-000032  6820              LDR      r0,[r4,#0]  ; Correct_Strong
-000034  9900              LDR      r1,[sp,#0]
-000036  1a08              SUBS     r0,r1,r0
-000038  9000              STR      r0,[sp,#0]
-00003a  e003              B        |L2.68|
-                  |L2.60|
-;;;483    	}
-;;;484    	else var32 = var32 + REG_ReadV_Offset;
-00003c  6820              LDR      r0,[r4,#0]  ; Correct_Strong
+;;;501    //===============================AD值转换成测量值============================================//
+;;;502    void Transformation_ADC(void)  
+000000  b578              PUSH     {r3-r6,lr}
+;;;503    {
+;;;504    	vu32 var32;
+;;;505    	vu32 var32a;
+;;;506    	float temp;
+;;;507    /*****************************测量电压转换*******************************************/
+;;;508    	var32 = Vmon_value;
+000002  48a3              LDR      r0,|L2.656|
+000004  8800              LDRH     r0,[r0,#0]  ; Vmon_value
+000006  9000              STR      r0,[sp,#0]
+;;;509    	var32 = var32 * REG_CorrectionV;  
+000008  4aa2              LDR      r2,|L2.660|
+00000a  8810              LDRH     r0,[r2,#0]  ; Correct_Parametet
+00000c  9900              LDR      r1,[sp,#0]
+00000e  4348              MULS     r0,r1,r0
+000010  9000              STR      r0,[sp,#0]
+;;;510    	if ((Polar & 0x01) == 0x01)		  
+000012  8910              LDRH     r0,[r2,#8]  ; Correct_Parametet
+;;;511    	{
+;;;512    		if (var32 < REG_ReadV_Offset) 
+000014  f04f0300          MOV      r3,#0
+000018  07c1              LSLS     r1,r0,#31             ;510
+00001a  f102001c          ADD      r0,r2,#0x1c
+00001e  d00a              BEQ      |L2.54|
+000020  6801              LDR      r1,[r0,#0]  ; Correct_Strong
+000022  9d00              LDR      r5,[sp,#0]
+000024  42a9              CMP      r1,r5
+000026  d901              BLS      |L2.44|
+;;;513    		{
+;;;514    			var32 = 0;
+000028  9300              STR      r3,[sp,#0]
+00002a  e008              B        |L2.62|
+                  |L2.44|
+;;;515    		}
+;;;516    		else var32 = var32 - REG_ReadV_Offset;
+00002c  6801              LDR      r1,[r0,#0]  ; Correct_Strong
+00002e  9d00              LDR      r5,[sp,#0]
+000030  1a69              SUBS     r1,r5,r1
+000032  9100              STR      r1,[sp,#0]
+000034  e003              B        |L2.62|
+                  |L2.54|
+;;;517    	}
+;;;518    	else var32 = var32 + REG_ReadV_Offset;
+000036  6801              LDR      r1,[r0,#0]  ; Correct_Strong
+000038  9d00              LDR      r5,[sp,#0]
+00003a  4429              ADD      r1,r1,r5
+00003c  9100              STR      r1,[sp,#0]
+                  |L2.62|
+;;;519    	var32 = var32 >> 12;
 00003e  9900              LDR      r1,[sp,#0]
-000040  4408              ADD      r0,r0,r1
-000042  9000              STR      r0,[sp,#0]
-                  |L2.68|
-;;;485    	var32 = var32 >> 12;
-000044  9800              LDR      r0,[sp,#0]
-000046  0b00              LSRS     r0,r0,#12
-000048  9000              STR      r0,[sp,#0]
-;;;486    	if (var32 < 5) var32 = 0;				  //40mV以下清零
-00004a  9800              LDR      r0,[sp,#0]
-00004c  2805              CMP      r0,#5
-00004e  d200              BCS      |L2.82|
-000050  9700              STR      r7,[sp,#0]
-                  |L2.82|
-;;;487    	Voltage = var32;
-000052  4da7              LDR      r5,|L2.752|
-000054  9800              LDR      r0,[sp,#0]
-000056  3544              ADDS     r5,r5,#0x44
-000058  82a8              STRH     r0,[r5,#0x14]
-;;;488    	DISS_Voltage=Voltage;
-00005a  8aa8              LDRH     r0,[r5,#0x14]  ; Run_Control
-00005c  ee000a10          VMOV     s0,r0
-000060  48a4              LDR      r0,|L2.756|
-000062  eeb80a40          VCVT.F32.U32 s0,s0
-;;;489    	DISS_Voltage=DISS_Voltage/100;//计算显示电压
-000066  ed9f8aa4          VLDR     s16,|L2.760|
-00006a  eec00a08          VDIV.F32 s1,s0,s16
-00006e  edc00a00          VSTR     s1,[r0,#0]
-;;;490    	var32 = 0;
-000072  9700              STR      r7,[sp,#0]
-;;;491    /*****************************稳压电源测量电压转换*******************************************/
-;;;492    	temp = (float)Vmon1_value;
-000074  48a1              LDR      r0,|L2.764|
-000076  8800              LDRH     r0,[r0,#0]  ; Vmon1_value
-000078  ee000a10          VMOV     s0,r0
-00007c  eeb80a40          VCVT.F32.U32 s0,s0
-;;;493    //	var32 = var32 * REG_CorrectionV1;  
-;;;494    ////	if ((Polar3 & 0x01) == 0x01)		  
-;;;495    ////	{
-;;;496    ////		if (var32 < REG_ReadV1_Offset) 
-;;;497    ////		{
-;;;498    ////			var32 = 0;
-;;;499    ////		}
-;;;500    ////		else var32 = var32 - REG_ReadV1_Offset;
-;;;501    ////	}
-;;;502    ////	else 
-;;;503    //		var32 = var32 - REG_ReadV1_Offset;
-;;;504    	temp = temp * 0.8115;  
-000080  ee100a10          VMOV     r0,s0
-000084  f7fffffe          BL       __aeabi_f2d
-000088  ed9f1b9d          VLDR     d1,|L2.768|
-00008c  ec532b11          VMOV     r2,r3,d1
-000090  f7fffffe          BL       __aeabi_dmul
-000094  f7fffffe          BL       __aeabi_d2f
-;;;505    	temp = temp - 5.495;
-000098  f7fffffe          BL       __aeabi_f2d
-00009c  ed9f1b9a          VLDR     d1,|L2.776|
-0000a0  ec532b11          VMOV     r2,r3,d1
-0000a4  f7fffffe          BL       __aeabi_dsub
-0000a8  f7fffffe          BL       __aeabi_d2f
-0000ac  ee000a10          VMOV     s0,r0
-;;;506    //	var32 = var32 >> 14;
-;;;507    	if (temp < 5) temp = 0;				  //40mV以下清零
-0000b0  4997              LDR      r1,|L2.784|
-0000b2  ee100a10          VMOV     r0,s0
-0000b6  ed9f1a97          VLDR     s2,|L2.788|
-0000ba  4288              CMP      r0,r1
-0000bc  da01              BGE      |L2.194|
-0000be  eeb00a41          VMOV.F32 s0,s2
-                  |L2.194|
-;;;508    	POW_Voltage = (vu16)temp;
-0000c2  eebc0ac0          VCVT.U32.F32 s0,s0
-0000c6  ee100a10          VMOV     r0,s0
-0000ca  8268              STRH     r0,[r5,#0x12]
-;;;509    //	if(POW_Voltage >= 1600)
-;;;510    //	{
-;;;511    //		DISS_POW_Voltage=POW_Voltage - (vu16)((float)SET_Voltage*0.359);
-;;;512    //	}else if(POW_Voltage >= 300 && POW_Voltage < 1600){
-;;;513    //		DISS_POW_Voltage=POW_Voltage - (vu16)((float)SET_Voltage*0.359);
-;;;514    //	}else{
-;;;515    //		DISS_POW_Voltage=POW_Voltage - (vu16)((float)SET_Voltage*0.36);
-;;;516    //	}
-;;;517    	DISS_POW_Voltage=POW_Voltage;
-0000cc  8a68              LDRH     r0,[r5,#0x12]  ; Run_Control
-0000ce  ee000a10          VMOV     s0,r0
-0000d2  4891              LDR      r0,|L2.792|
-0000d4  eef80a40          VCVT.F32.U32 s1,s0
-0000d8  edc00a00          VSTR     s1,[r0,#0]
-;;;518    	if(DISS_POW_Voltage < 0)
-0000dc  eef50ac0          VCMPE.F32 s1,#0.0
-0000e0  eef1fa10          VMRS     APSR_nzcv,FPSCR
-0000e4  d201              BCS      |L2.234|
-;;;519    	{
-;;;520    		DISS_POW_Voltage = 0;
-0000e6  ed801a00          VSTR     s2,[r0,#0]
-                  |L2.234|
-;;;521    	}
-;;;522    	DISS_POW_Voltage=DISS_POW_Voltage/100;//计算显示电压
-0000ea  edd00a00          VLDR     s1,[r0,#0]
-0000ee  ee800a88          VDIV.F32 s0,s1,s16
-0000f2  ed800a00          VSTR     s0,[r0,#0]
-;;;523    	var32 = 0;
-;;;524    /*****************************内阻值转换*******************************************/
-;;;525    // 	var32 = Rmon_value;
-;;;526    // 	var32 = var32 * 6040;  
-;;;527    // // 	if ((Polar1 & 0x04) == 0x04)		  
-;;;528    // // 	{
-;;;529    // 		if (var32 < 38926) 
-;;;530    // 		{
-;;;531    // 			var32 = 0;
-;;;532    // 		}
-;;;533    // 		else {
-;;;534    //             var32 = var32 - 38926;
-;;;535    //         }
-;;;536    // // 	}
-;;;537    // // 	else var32 = var32 + REG_ReadR_Offset;
-;;;538    // // 	var32 = var32 >> 12;
-;;;539    // 	if (var32 < 5) var32 = 0;				  //40mV以下清零
-;;;540    // 	R_VLUE = var32/10000;
-;;;541    // 	var32 = 0;	
-;;;542        var32 = Rmon_value;
-0000f6  4989              LDR      r1,|L2.796|
-0000f8  8808              LDRH     r0,[r1,#0]  ; Rmon_value
-0000fa  9000              STR      r0,[sp,#0]
-;;;543    	var32 = var32 * REG_CorrectionR;  
-0000fc  88f0              LDRH     r0,[r6,#6]  ; Correct_Parametet
-0000fe  9a00              LDR      r2,[sp,#0]
-000100  4350              MULS     r0,r2,r0
-000102  9000              STR      r0,[sp,#0]
-;;;544    	if ((Polar1 & 0x04) == 0x04)		  
-000104  8a70              LDRH     r0,[r6,#0x12]  ; Correct_Parametet
-000106  0740              LSLS     r0,r0,#29
-000108  d50a              BPL      |L2.288|
-;;;545    	{
-;;;546    		if (var32 < REG_ReadR_Offset) 
-00010a  68e0              LDR      r0,[r4,#0xc]  ; Correct_Strong
-00010c  9a00              LDR      r2,[sp,#0]
-00010e  4290              CMP      r0,r2
-000110  d901              BLS      |L2.278|
-;;;547    		{
-;;;548    			var32 = 0;
-000112  9700              STR      r7,[sp,#0]
-000114  e008              B        |L2.296|
-                  |L2.278|
-;;;549    		}
-;;;550    		else var32 = var32 - REG_ReadR_Offset;
-000116  68e0              LDR      r0,[r4,#0xc]  ; Correct_Strong
-000118  9a00              LDR      r2,[sp,#0]
-00011a  1a10              SUBS     r0,r2,r0
-00011c  9000              STR      r0,[sp,#0]
-00011e  e003              B        |L2.296|
-                  |L2.288|
-;;;551    	}
-;;;552    	else var32 = var32 + REG_ReadR_Offset;
-000120  68e2              LDR      r2,[r4,#0xc]  ; Correct_Strong
-000122  9800              LDR      r0,[sp,#0]
-000124  4410              ADD      r0,r0,r2
-000126  9000              STR      r0,[sp,#0]
-                  |L2.296|
-;;;553    	var32 = var32 >> 12;
-000128  9800              LDR      r0,[sp,#0]
-00012a  0b00              LSRS     r0,r0,#12
-00012c  9000              STR      r0,[sp,#0]
-;;;554    	if (var32 < 5) var32 = 0;				  //40mV以下清零
-00012e  9800              LDR      r0,[sp,#0]
-000130  2805              CMP      r0,#5
-000132  d200              BCS      |L2.310|
-000134  9700              STR      r7,[sp,#0]
-                  |L2.310|
-;;;555    	R_VLUE = var32;
-000136  9800              LDR      r0,[sp,#0]
-000138  8368              STRH     r0,[r5,#0x1a]
-;;;556        if(R_VLUE > 100)
-00013a  8b68              LDRH     r0,[r5,#0x1a]  ; Run_Control
-00013c  2864              CMP      r0,#0x64
-00013e  d920              BLS      |L2.386|
-;;;557        {
-;;;558            var32 = Rmon_value;
-000140  8808              LDRH     r0,[r1,#0]  ; Rmon_value
-000142  9000              STR      r0,[sp,#0]
-;;;559            var32 = var32 * REG_CorrectionRH;  
-000144  8b70              LDRH     r0,[r6,#0x1a]  ; Correct_Parametet
-000146  9900              LDR      r1,[sp,#0]
-000148  4348              MULS     r0,r1,r0
-00014a  9000              STR      r0,[sp,#0]
-;;;560            if ((Polar1 & 0x04) == 0x04)		  
-00014c  8a70              LDRH     r0,[r6,#0x12]  ; Correct_Parametet
-00014e  0740              LSLS     r0,r0,#29
-000150  d50a              BPL      |L2.360|
-;;;561            {
-;;;562                if (var32 < REG_ReadRH_Offset) 
-000152  6a60              LDR      r0,[r4,#0x24]  ; Correct_Strong
-000154  9900              LDR      r1,[sp,#0]
-000156  4288              CMP      r0,r1
-000158  d901              BLS      |L2.350|
-;;;563                {
-;;;564                    var32 = 0;
-00015a  9700              STR      r7,[sp,#0]
-00015c  e008              B        |L2.368|
-                  |L2.350|
-;;;565                }
-;;;566                else var32 = var32 - REG_ReadRH_Offset;
-00015e  6a60              LDR      r0,[r4,#0x24]  ; Correct_Strong
-000160  9900              LDR      r1,[sp,#0]
-000162  1a08              SUBS     r0,r1,r0
-000164  9000              STR      r0,[sp,#0]
-000166  e003              B        |L2.368|
-                  |L2.360|
-;;;567            }
-;;;568            else var32 = var32 + REG_ReadRH_Offset;
-000168  6a60              LDR      r0,[r4,#0x24]  ; Correct_Strong
-00016a  9900              LDR      r1,[sp,#0]
-00016c  4408              ADD      r0,r0,r1
-00016e  9000              STR      r0,[sp,#0]
-                  |L2.368|
-;;;569            var32 = var32 >> 12;
-000170  9800              LDR      r0,[sp,#0]
-000172  0b00              LSRS     r0,r0,#12
-000174  9000              STR      r0,[sp,#0]
-;;;570            if (var32 < 5) var32 = 0;				  //40mV訑袀去拢
-000176  9800              LDR      r0,[sp,#0]
-000178  2805              CMP      r0,#5
-00017a  d200              BCS      |L2.382|
-00017c  9700              STR      r7,[sp,#0]
-                  |L2.382|
-;;;571            R_VLUE = var32;
-00017e  9800              LDR      r0,[sp,#0]
-000180  8368              STRH     r0,[r5,#0x1a]
-                  |L2.386|
-;;;572        }
-;;;573    	var32 = 0;	
-;;;574        
-;;;575    /*****************************稳压电源测量电流转换*******************************************/
-;;;576    	var32 = Imon_value;
-000182  4867              LDR      r0,|L2.800|
-000184  8800              LDRH     r0,[r0,#0]  ; Imon_value
-000186  9000              STR      r0,[sp,#0]
-;;;577    	var32 = var32 * CON_CorrectionA;	   
-000188  8a30              LDRH     r0,[r6,#0x10]  ; Correct_Parametet
-00018a  9900              LDR      r1,[sp,#0]
-00018c  4348              MULS     r0,r1,r0
-00018e  9000              STR      r0,[sp,#0]
-;;;578    //	if ((Polar2 & 0x01) == 0x01)			   
+000040  0b09              LSRS     r1,r1,#12
+000042  9100              STR      r1,[sp,#0]
+;;;520    	if (var32 < 5) var32 = 0;				  //40mV以下清零
+000044  9900              LDR      r1,[sp,#0]
+000046  2905              CMP      r1,#5
+000048  d200              BCS      |L2.76|
+00004a  9300              STR      r3,[sp,#0]
+                  |L2.76|
+;;;521    	Voltage = var32;
+00004c  4991              LDR      r1,|L2.660|
+00004e  9d00              LDR      r5,[sp,#0]
+000050  3144              ADDS     r1,r1,#0x44
+000052  828d              STRH     r5,[r1,#0x14]
+;;;522    	DISS_Voltage=Voltage;
+000054  8a8d              LDRH     r5,[r1,#0x14]  ; Run_Control
+000056  ee005a10          VMOV     s0,r5
+00005a  4d8f              LDR      r5,|L2.664|
+00005c  eeb80a40          VCVT.F32.U32 s0,s0
+;;;523    	DISS_Voltage=DISS_Voltage/100;//计算显示电压
+000060  ed9f1a8e          VLDR     s2,|L2.668|
+000064  eec00a01          VDIV.F32 s1,s0,s2
+000068  edc50a00          VSTR     s1,[r5,#0]
+;;;524    	var32 = 0;
+;;;525    /*****************************稳压电源测量电压转换*******************************************/
+;;;526    	var32 = Vmon1_value;
+00006c  4d8c              LDR      r5,|L2.672|
+00006e  882d              LDRH     r5,[r5,#0]  ; Vmon1_value
+000070  9500              STR      r5,[sp,#0]
+;;;527    	var32 = var32 * REG_CorrectionV1;  
+000072  8b15              LDRH     r5,[r2,#0x18]  ; Correct_Parametet
+000074  9e00              LDR      r6,[sp,#0]
+000076  4375              MULS     r5,r6,r5
+000078  9500              STR      r5,[sp,#0]
+;;;528    	if ((Polar3 & 0x01) == 0x01)		  
+00007a  8ad5              LDRH     r5,[r2,#0x16]  ; Correct_Parametet
+00007c  07ed              LSLS     r5,r5,#31
+00007e  d00a              BEQ      |L2.150|
+;;;529    	{
+;;;530    		if (var32 < REG_ReadV1_Offset) 
+000080  6a06              LDR      r6,[r0,#0x20]  ; Correct_Strong
+000082  9d00              LDR      r5,[sp,#0]
+000084  42ae              CMP      r6,r5
+000086  d901              BLS      |L2.140|
+;;;531    		{
+;;;532    			var32 = 0;
+000088  9300              STR      r3,[sp,#0]
+00008a  e008              B        |L2.158|
+                  |L2.140|
+;;;533    		}
+;;;534    		else var32 = var32 + REG_ReadV1_Offset;
+00008c  6a05              LDR      r5,[r0,#0x20]  ; Correct_Strong
+00008e  9e00              LDR      r6,[sp,#0]
+000090  4435              ADD      r5,r5,r6
+000092  9500              STR      r5,[sp,#0]
+000094  e003              B        |L2.158|
+                  |L2.150|
+;;;535    	}
+;;;536    	else 
+;;;537    		var32 = var32 - REG_ReadV1_Offset;
+000096  6a05              LDR      r5,[r0,#0x20]  ; Correct_Strong
+000098  9e00              LDR      r6,[sp,#0]
+00009a  1b75              SUBS     r5,r6,r5
+00009c  9500              STR      r5,[sp,#0]
+                  |L2.158|
+;;;538    //	temp = temp * 0.8191;  
+;;;539    //	temp = temp - 5.2066;
+;;;540    	var32 = var32 >> 14;
+00009e  9d00              LDR      r5,[sp,#0]
+0000a0  0bad              LSRS     r5,r5,#14
+0000a2  9500              STR      r5,[sp,#0]
+;;;541    	if (temp < 5) temp = 0;				  //40mV以下清零
+0000a4  eddf1a7f          VLDR     s3,|L2.676|
+;;;542    	POW_Voltage = var32;
+0000a8  9c00              LDR      r4,[sp,#0]
+0000aa  824c              STRH     r4,[r1,#0x12]
+;;;543    //	if(POW_Voltage >= 1600)
+;;;544    //	{
+;;;545    //		DISS_POW_Voltage=POW_Voltage - (vu16)((float)SET_Voltage*0.359);
+;;;546    //	}else if(POW_Voltage >= 300 && POW_Voltage < 1600){
+;;;547    //		DISS_POW_Voltage=POW_Voltage - (vu16)((float)SET_Voltage*0.359);
+;;;548    //	}else{
+;;;549    //		DISS_POW_Voltage=POW_Voltage - (vu16)((float)SET_Voltage*0.36);
+;;;550    //	}
+;;;551    	DISS_POW_Voltage=POW_Voltage;
+0000ac  8a4c              LDRH     r4,[r1,#0x12]  ; Run_Control
+0000ae  ee004a10          VMOV     s0,r4
+0000b2  4c7d              LDR      r4,|L2.680|
+0000b4  eeb80a40          VCVT.F32.U32 s0,s0
+0000b8  ed840a00          VSTR     s0,[r4,#0]
+;;;552    	if(DISS_POW_Voltage < 0)
+0000bc  eeb50ac0          VCMPE.F32 s0,#0.0
+0000c0  eef1fa10          VMRS     APSR_nzcv,FPSCR
+0000c4  d201              BCS      |L2.202|
+;;;553    	{
+;;;554    		DISS_POW_Voltage = 0;
+0000c6  edc41a00          VSTR     s3,[r4,#0]
+                  |L2.202|
+;;;555    	}
+;;;556    	DISS_POW_Voltage=DISS_POW_Voltage/100;//计算显示电压
+0000ca  ed940a00          VLDR     s0,[r4,#0]
+0000ce  eec00a01          VDIV.F32 s1,s0,s2
+0000d2  edc40a00          VSTR     s1,[r4,#0]
+;;;557    	var32 = 0;
+;;;558    /*****************************内阻值转换*******************************************/
+;;;559    // 	var32 = Rmon_value;
+;;;560    // 	var32 = var32 * 6040;  
+;;;561    // // 	if ((Polar1 & 0x04) == 0x04)		  
+;;;562    // // 	{
+;;;563    // 		if (var32 < 38926) 
+;;;564    // 		{
+;;;565    // 			var32 = 0;
+;;;566    // 		}
+;;;567    // 		else {
+;;;568    //             var32 = var32 - 38926;
+;;;569    //         }
+;;;570    // // 	}
+;;;571    // // 	else var32 = var32 + REG_ReadR_Offset;
+;;;572    // // 	var32 = var32 >> 12;
+;;;573    // 	if (var32 < 5) var32 = 0;				  //40mV以下清零
+;;;574    // 	R_VLUE = var32/10000;
+;;;575    // 	var32 = 0;	
+;;;576        var32 = Rmon_value;
+0000d6  4d75              LDR      r5,|L2.684|
+0000d8  882c              LDRH     r4,[r5,#0]  ; Rmon_value
+0000da  9400              STR      r4,[sp,#0]
+;;;577    	var32 = var32 * REG_CorrectionR;  
+0000dc  88d4              LDRH     r4,[r2,#6]  ; Correct_Parametet
+0000de  9e00              LDR      r6,[sp,#0]
+0000e0  4374              MULS     r4,r6,r4
+0000e2  9400              STR      r4,[sp,#0]
+;;;578    //	if ((Polar1 & 0x04) == 0x04)		  
 ;;;579    //	{
-;;;580    //		if (var32 < CON_ReadA_Offset) var32 = 0;
-;;;581    //		else var32 = var32 - CON_ReadA_Offset;
-;;;582    //	}
-;;;583    //	else
-;;;584    //	{
-;;;585    //		var32 = var32 + CON_ReadA_Offset;
-;;;586    //	}	
-;;;587    	var32 = var32 - CON_ReadA_Offset;
-000190  69e0              LDR      r0,[r4,#0x1c]  ; Correct_Strong
-000192  9900              LDR      r1,[sp,#0]
-000194  1a08              SUBS     r0,r1,r0
-000196  9000              STR      r0,[sp,#0]
+;;;580    //		if (var32 < REG_ReadR_Offset) 
+;;;581    //		{
+;;;582    //			var32 = 0;
+;;;583    //		}
+;;;584    //		else var32 = var32 - REG_ReadR_Offset;
+;;;585    //	}
+;;;586    //	else 
+;;;587    		var32 = var32 - REG_ReadR_Offset;
+0000e4  68c4              LDR      r4,[r0,#0xc]  ; Correct_Strong
+0000e6  9e00              LDR      r6,[sp,#0]
+0000e8  1b34              SUBS     r4,r6,r4
+0000ea  9400              STR      r4,[sp,#0]
 ;;;588    	var32 = var32 >> 12;
-000198  9800              LDR      r0,[sp,#0]
-00019a  0b00              LSRS     r0,r0,#12
-00019c  9000              STR      r0,[sp,#0]
-;;;589    	Current = var32;;
-00019e  9800              LDR      r0,[sp,#0]
-0001a0  82e8              STRH     r0,[r5,#0x16]
-;;;590    	DISS_POW_Current=Current;
-0001a2  8ae8              LDRH     r0,[r5,#0x16]  ; Run_Control
-0001a4  495f              LDR      r1,|L2.804|
-0001a6  ee000a10          VMOV     s0,r0
-0001aa  eeb80a40          VCVT.F32.U32 s0,s0
-;;;591    	DISS_POW_Current=DISS_POW_Current/1000;//计算显示电流
-0001ae  eddf1a5e          VLDR     s3,|L2.808|
-0001b2  eec00a21          VDIV.F32 s1,s0,s3
-0001b6  edc10a00          VSTR     s1,[r1,#0]
-;;;592    	if(DISS_POW_Current > 6)
-0001ba  ee100a90          VMOV     r0,s1
-0001be  4a5b              LDR      r2,|L2.812|
-0001c0  4290              CMP      r0,r2
-0001c2  dd01              BLE      |L2.456|
-;;;593    	{
-;;;594    		DISS_POW_Current = 0;
-0001c4  ed811a00          VSTR     s2,[r1,#0]
-                  |L2.456|
-;;;595    	}
-;;;596    /**************************稳压电源设置电压转换******************************************/
-;;;597    	var32 = SET_Voltage;
-0001c8  8868              LDRH     r0,[r5,#2]  ; Run_Control
-0001ca  9000              STR      r0,[sp,#0]
-;;;598    	var32=var32<<14;   
-0001cc  9800              LDR      r0,[sp,#0]
-0001ce  0380              LSLS     r0,r0,#14
-0001d0  9000              STR      r0,[sp,#0]
-;;;599    //	if ((Polar1 & 0x01) == 0)			   
-;;;600    //	{
-;;;601    //		if (var32 < SET_ReadV_Offset) var32 = 0;
-;;;602    //		else var32 = var32 - SET_ReadV_Offset;
-;;;603    //	}
-;;;604    //	else 
-;;;605    		var32 = var32 + SET_ReadV_Offset;
-0001d2  6920              LDR      r0,[r4,#0x10]  ; Correct_Strong
-0001d4  9900              LDR      r1,[sp,#0]
-0001d6  4408              ADD      r0,r0,r1
-0001d8  9000              STR      r0,[sp,#0]
-;;;606    	var32 = var32/SET_CorrectionV;
-0001da  8970              LDRH     r0,[r6,#0xa]  ; Correct_Parametet
-0001dc  9900              LDR      r1,[sp,#0]
-0001de  fbb1f0f0          UDIV     r0,r1,r0
-0001e2  9000              STR      r0,[sp,#0]
-;;;607    	var32=var32>>1;
-0001e4  9800              LDR      r0,[sp,#0]
-0001e6  0840              LSRS     r0,r0,#1
-0001e8  9000              STR      r0,[sp,#0]
-;;;608    	Contr_Voltage = var32;
-0001ea  4851              LDR      r0,|L2.816|
-0001ec  9900              LDR      r1,[sp,#0]
-0001ee  8001              STRH     r1,[r0,#0]
-;;;609    	if(SET_Voltage==0)
-0001f0  8869              LDRH     r1,[r5,#2]  ; Run_Control
-0001f2  b901              CBNZ     r1,|L2.502|
-;;;610    	{
-;;;611    		Contr_Voltage=0;
-0001f4  8007              STRH     r7,[r0,#0]
-                  |L2.502|
-;;;612    	}
-;;;613    	var32 = 0;
-;;;614    /**************************稳压电源设置电流转换**************************************/
-;;;615    	var32 = SET_Current;
-0001f6  88a8              LDRH     r0,[r5,#4]  ; Run_Control
-0001f8  9000              STR      r0,[sp,#0]
-;;;616    	var32=var32<<14;   
-0001fa  9800              LDR      r0,[sp,#0]
-0001fc  0380              LSLS     r0,r0,#14
-0001fe  9000              STR      r0,[sp,#0]
-;;;617    	if ((Polar1 & 0x08) == 0)			   
-000200  8a70              LDRH     r0,[r6,#0x12]  ; Correct_Parametet
-000202  0700              LSLS     r0,r0,#28
-000204  d40a              BMI      |L2.540|
-;;;618    	{
-;;;619    		if (var32 < SET_ReadA_Offset) var32 = 0;
-000206  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
-000208  9900              LDR      r1,[sp,#0]
-00020a  4288              CMP      r0,r1
-00020c  d901              BLS      |L2.530|
-00020e  9700              STR      r7,[sp,#0]
-000210  e008              B        |L2.548|
-                  |L2.530|
-;;;620    		else var32 = var32 - SET_ReadA_Offset;
-000212  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
-000214  9900              LDR      r1,[sp,#0]
-000216  1a08              SUBS     r0,r1,r0
-000218  9000              STR      r0,[sp,#0]
-00021a  e003              B        |L2.548|
-                  |L2.540|
-;;;621    	}
-;;;622    	else var32 = var32 + SET_ReadA_Offset;
-00021c  6960              LDR      r0,[r4,#0x14]  ; Correct_Strong
-00021e  9900              LDR      r1,[sp,#0]
-000220  4408              ADD      r0,r0,r1
-000222  9000              STR      r0,[sp,#0]
-                  |L2.548|
-;;;623    	var32 = var32/SET_CorrectionA;
-000224  89b0              LDRH     r0,[r6,#0xc]  ; Correct_Parametet
-000226  9900              LDR      r1,[sp,#0]
-000228  fbb1f0f0          UDIV     r0,r1,r0
-00022c  9000              STR      r0,[sp,#0]
-;;;624    	var32=var32>>1;
-00022e  9800              LDR      r0,[sp,#0]
-000230  0840              LSRS     r0,r0,#1
-000232  9000              STR      r0,[sp,#0]
-;;;625    	Contr_Current = var32;
-000234  483f              LDR      r0,|L2.820|
-000236  9900              LDR      r1,[sp,#0]
-000238  8001              STRH     r1,[r0,#0]
-;;;626    	if(SET_Current==0)
-00023a  88a9              LDRH     r1,[r5,#4]  ; Run_Control
-00023c  b901              CBNZ     r1,|L2.576|
-;;;627    	{
-;;;628    		Contr_Current=0;
-00023e  8007              STRH     r7,[r0,#0]
-                  |L2.576|
-;;;629    	}
-;;;630    	
-;;;631    	var32 = 0;
-;;;632    
-;;;633    /*************************负载电流控制转换**************************************/
-;;;634    	var32 = SET_Current_Laod;
-000240  8928              LDRH     r0,[r5,#8]  ; Run_Control
-000242  9000              STR      r0,[sp,#0]
-;;;635    	var32=var32<<12;   
-000244  9800              LDR      r0,[sp,#0]
-000246  0300              LSLS     r0,r0,#12
-000248  9000              STR      r0,[sp,#0]
-;;;636    	if ((Polar2 & 0x08) == 0)			   
-00024a  8ab0              LDRH     r0,[r6,#0x14]  ; Correct_Parametet
-00024c  0700              LSLS     r0,r0,#28
-00024e  d40a              BMI      |L2.614|
-;;;637    	{
-;;;638    		if (var32 < SET_ReadA1_Offset) var32 = 0;
-000250  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
-000252  9900              LDR      r1,[sp,#0]
-000254  4288              CMP      r0,r1
-000256  d901              BLS      |L2.604|
-000258  9700              STR      r7,[sp,#0]
-00025a  e008              B        |L2.622|
-                  |L2.604|
-;;;639    		else var32 = var32 - SET_ReadA1_Offset;
-00025c  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
-00025e  9900              LDR      r1,[sp,#0]
-000260  1a08              SUBS     r0,r1,r0
-000262  9000              STR      r0,[sp,#0]
-000264  e003              B        |L2.622|
-                  |L2.614|
-;;;640    	}
-;;;641    	else var32 = var32 + SET_ReadA1_Offset;
-000266  69a0              LDR      r0,[r4,#0x18]  ; Correct_Strong
-000268  9900              LDR      r1,[sp,#0]
-00026a  4408              ADD      r0,r0,r1
-00026c  9000              STR      r0,[sp,#0]
-                  |L2.622|
-;;;642    	var32 = var32/SET_CorrectionA1;
-00026e  89f0              LDRH     r0,[r6,#0xe]  ; Correct_Parametet
-000270  9900              LDR      r1,[sp,#0]
-000272  fbb1f0f0          UDIV     r0,r1,r0
-000276  9000              STR      r0,[sp,#0]
+0000ec  9c00              LDR      r4,[sp,#0]
+0000ee  0b24              LSRS     r4,r4,#12
+0000f0  9400              STR      r4,[sp,#0]
+;;;589    	if (var32 < 5) var32 = 0;				  //40mV以下清零
+0000f2  9c00              LDR      r4,[sp,#0]
+0000f4  2c05              CMP      r4,#5
+0000f6  d200              BCS      |L2.250|
+0000f8  9300              STR      r3,[sp,#0]
+                  |L2.250|
+;;;590    	R_VLUE = var32;
+0000fa  9c00              LDR      r4,[sp,#0]
+0000fc  834c              STRH     r4,[r1,#0x1a]
+;;;591        if(R_VLUE > 100)
+0000fe  8b4c              LDRH     r4,[r1,#0x1a]  ; Run_Control
+000100  2c64              CMP      r4,#0x64
+000102  d912              BLS      |L2.298|
+;;;592        {
+;;;593            var32 = Rmon_value;
+000104  882c              LDRH     r4,[r5,#0]  ; Rmon_value
+000106  9400              STR      r4,[sp,#0]
+;;;594            var32 = var32 * REG_CorrectionRH;  
+000108  8b54              LDRH     r4,[r2,#0x1a]  ; Correct_Parametet
+00010a  9d00              LDR      r5,[sp,#0]
+00010c  436c              MULS     r4,r5,r4
+00010e  9400              STR      r4,[sp,#0]
+;;;595    //        if ((Polar1 & 0x04) == 0x04)		  
+;;;596    //        {
+;;;597    //            if (var32 < REG_ReadRH_Offset) 
+;;;598    //            {
+;;;599    //                var32 = 0;
+;;;600    //            }
+;;;601    //            else var32 = var32 - REG_ReadRH_Offset;
+;;;602    //        }
+;;;603    //        else 
+;;;604    			var32 = var32 - REG_ReadRH_Offset;
+000110  6a45              LDR      r5,[r0,#0x24]  ; Correct_Strong
+000112  9c00              LDR      r4,[sp,#0]
+000114  1b64              SUBS     r4,r4,r5
+000116  9400              STR      r4,[sp,#0]
+;;;605            var32 = var32 >> 12;
+000118  9c00              LDR      r4,[sp,#0]
+00011a  0b24              LSRS     r4,r4,#12
+00011c  9400              STR      r4,[sp,#0]
+;;;606            if (var32 < 5) var32 = 0;				  //40mV訑袀去拢
+00011e  9c00              LDR      r4,[sp,#0]
+000120  2c05              CMP      r4,#5
+000122  d200              BCS      |L2.294|
+000124  9300              STR      r3,[sp,#0]
+                  |L2.294|
+;;;607            R_VLUE = var32;
+000126  9c00              LDR      r4,[sp,#0]
+000128  834c              STRH     r4,[r1,#0x1a]
+                  |L2.298|
+;;;608        }
+;;;609    	var32 = 0;	
+;;;610        
+;;;611    /*****************************稳压电源测量电流转换*******************************************/
+;;;612    	var32 = Imon_value;
+00012a  4c61              LDR      r4,|L2.688|
+00012c  8824              LDRH     r4,[r4,#0]  ; Imon_value
+00012e  9400              STR      r4,[sp,#0]
+;;;613    	var32 = var32 * CON_CorrectionA;	   
+000130  8a14              LDRH     r4,[r2,#0x10]  ; Correct_Parametet
+000132  9d00              LDR      r5,[sp,#0]
+000134  436c              MULS     r4,r5,r4
+000136  9400              STR      r4,[sp,#0]
+;;;614    //	if ((Polar2 & 0x01) == 0x01)			   
+;;;615    //	{
+;;;616    //		if (var32 < CON_ReadA_Offset) var32 = 0;
+;;;617    //		else var32 = var32 - CON_ReadA_Offset;
+;;;618    //	}
+;;;619    //	else
+;;;620    //	{
+;;;621    //		var32 = var32 + CON_ReadA_Offset;
+;;;622    //	}	
+;;;623    	var32 = var32 - CON_ReadA_Offset;
+000138  69c4              LDR      r4,[r0,#0x1c]  ; Correct_Strong
+00013a  9d00              LDR      r5,[sp,#0]
+00013c  1b2c              SUBS     r4,r5,r4
+00013e  9400              STR      r4,[sp,#0]
+;;;624    	var32 = var32 >> 12;
+000140  9c00              LDR      r4,[sp,#0]
+000142  0b24              LSRS     r4,r4,#12
+000144  9400              STR      r4,[sp,#0]
+;;;625    	Current = var32;;
+000146  9c00              LDR      r4,[sp,#0]
+000148  82cc              STRH     r4,[r1,#0x16]
+;;;626    	DISS_POW_Current=Current;
+00014a  8acc              LDRH     r4,[r1,#0x16]  ; Run_Control
+00014c  ee004a10          VMOV     s0,r4
+000150  4c58              LDR      r4,|L2.692|
+000152  eef80a40          VCVT.F32.U32 s1,s0
+;;;627    	DISS_POW_Current=DISS_POW_Current/1000;//计算显示电流
+000156  ed9f2a58          VLDR     s4,|L2.696|
+00015a  ee800a82          VDIV.F32 s0,s1,s4
+00015e  ed840a00          VSTR     s0,[r4,#0]
+;;;628    	if(DISS_POW_Current > 6)
+000162  ee105a10          VMOV     r5,s0
+000166  4e55              LDR      r6,|L2.700|
+000168  42b5              CMP      r5,r6
+00016a  dd01              BLE      |L2.368|
+;;;629    	{
+;;;630    		DISS_POW_Current = 0;
+00016c  edc41a00          VSTR     s3,[r4,#0]
+                  |L2.368|
+;;;631    	}
+;;;632    /**************************稳压电源设置电压转换******************************************/
+;;;633    	var32 = SET_Voltage;
+000170  884c              LDRH     r4,[r1,#2]  ; Run_Control
+000172  9400              STR      r4,[sp,#0]
+;;;634    	var32=var32<<14;   
+000174  9c00              LDR      r4,[sp,#0]
+000176  03a4              LSLS     r4,r4,#14
+000178  9400              STR      r4,[sp,#0]
+;;;635    //	if ((Polar1 & 0x01) == 0)			   
+;;;636    //	{
+;;;637    //		if (var32 < SET_ReadV_Offset) var32 = 0;
+;;;638    //		else var32 = var32 - SET_ReadV_Offset;
+;;;639    //	}
+;;;640    //	else 
+;;;641    		var32 = var32 + SET_ReadV_Offset;
+00017a  6904              LDR      r4,[r0,#0x10]  ; Correct_Strong
+00017c  9d00              LDR      r5,[sp,#0]
+00017e  442c              ADD      r4,r4,r5
+000180  9400              STR      r4,[sp,#0]
+;;;642    	var32 = var32/SET_CorrectionV;
+000182  8954              LDRH     r4,[r2,#0xa]  ; Correct_Parametet
+000184  9d00              LDR      r5,[sp,#0]
+000186  fbb5f4f4          UDIV     r4,r5,r4
+00018a  9400              STR      r4,[sp,#0]
 ;;;643    	var32=var32>>1;
-000278  9800              LDR      r0,[sp,#0]
-00027a  0840              LSRS     r0,r0,#1
-00027c  9000              STR      r0,[sp,#0]
-;;;644    	if(Flag_DAC_OFF==0)
-00027e  482e              LDR      r0,|L2.824|
-000280  7800              LDRB     r0,[r0,#0]  ; flagB
-000282  0701              LSLS     r1,r0,#28
-;;;645    	{
-;;;646    		Contr_Laod = var32;
-000284  482d              LDR      r0,|L2.828|
-000286  d401              BMI      |L2.652|
-000288  9900              LDR      r1,[sp,#0]
-00028a  8001              STRH     r1,[r0,#0]
-                  |L2.652|
-;;;647    	}
-;;;648    	if(SET_Current_Laod==0)
-00028c  8929              LDRH     r1,[r5,#8]  ; Run_Control
-00028e  b901              CBNZ     r1,|L2.658|
-;;;649    	{
-;;;650    		Contr_Laod=0;
-000290  8007              STRH     r7,[r0,#0]
-                  |L2.658|
-;;;651    	}
-;;;652    	
-;;;653    	var32 = 0;
-;;;654    /*******************负载测量电流转换**************************************/
-;;;655    	var32 = Imon1_value;
-000292  482b              LDR      r0,|L2.832|
-000294  8800              LDRH     r0,[r0,#0]  ; Imon1_value
-000296  9000              STR      r0,[sp,#0]
-;;;656    	var32 = var32 * REG_CorrectionA1;  
-000298  88b0              LDRH     r0,[r6,#4]  ; Correct_Parametet
-00029a  9900              LDR      r1,[sp,#0]
-00029c  4348              MULS     r0,r1,r0
-00029e  9000              STR      r0,[sp,#0]
-;;;657    	if ((Polar2 & 0x04) == 0x04)		  
-0002a0  8ab0              LDRH     r0,[r6,#0x14]  ; Correct_Parametet
-0002a2  0740              LSLS     r0,r0,#29
-0002a4  d50a              BPL      |L2.700|
-;;;658    	{
-;;;659    		if (var32 < REG_ReadA1_Offset) 
-0002a6  68a0              LDR      r0,[r4,#8]  ; Correct_Strong
-0002a8  9900              LDR      r1,[sp,#0]
-0002aa  4288              CMP      r0,r1
-0002ac  d901              BLS      |L2.690|
-;;;660    		{
-;;;661    			var32 = 0;
-0002ae  9700              STR      r7,[sp,#0]
-0002b0  e008              B        |L2.708|
-                  |L2.690|
-;;;662    		}
-;;;663    		else var32 = var32 - REG_ReadA1_Offset;
-0002b2  68a0              LDR      r0,[r4,#8]  ; Correct_Strong
-0002b4  9900              LDR      r1,[sp,#0]
-0002b6  1a08              SUBS     r0,r1,r0
-0002b8  9000              STR      r0,[sp,#0]
-0002ba  e003              B        |L2.708|
-                  |L2.700|
-;;;664    	}
-;;;665    	else var32 = var32 + REG_ReadA1_Offset;
-0002bc  68a0              LDR      r0,[r4,#8]  ; Correct_Strong
-0002be  9900              LDR      r1,[sp,#0]
-0002c0  4408              ADD      r0,r0,r1
-0002c2  9000              STR      r0,[sp,#0]
-                  |L2.708|
-;;;666    	var32 = var32 >> 12;
-0002c4  9800              LDR      r0,[sp,#0]
-0002c6  0b00              LSRS     r0,r0,#12
-0002c8  9000              STR      r0,[sp,#0]
-;;;667    	Laod_Current = var32;
-0002ca  9800              LDR      r0,[sp,#0]
-0002cc  8328              STRH     r0,[r5,#0x18]
-;;;668    	DISS_Current=Laod_Current;
-0002ce  8b28              LDRH     r0,[r5,#0x18]  ; Run_Control
-0002d0  ee000a10          VMOV     s0,r0
-0002d4  481b              LDR      r0,|L2.836|
-0002d6  eeb80a40          VCVT.F32.U32 s0,s0
-;;;669    	DISS_Current=DISS_Current/100;//计算显示电流
-0002da  eec00a08          VDIV.F32 s1,s0,s16
-0002de  edc00a00          VSTR     s1,[r0,#0]
-;;;670    	var32 = 0;		
-0002e2  9700              STR      r7,[sp,#0]
-;;;671    	
-;;;672    }
-0002e4  b001              ADD      sp,sp,#4
-0002e6  ecbd8b02          VPOP     {d8}
-0002ea  bdf0              POP      {r4-r7,pc}
-;;;673    /********************************************************************************
+00018c  9c00              LDR      r4,[sp,#0]
+00018e  0864              LSRS     r4,r4,#1
+000190  9400              STR      r4,[sp,#0]
+;;;644    	Contr_Voltage = var32;
+000192  4c4b              LDR      r4,|L2.704|
+000194  9d00              LDR      r5,[sp,#0]
+000196  8025              STRH     r5,[r4,#0]
+;;;645    	if(SET_Voltage==0)
+000198  884d              LDRH     r5,[r1,#2]  ; Run_Control
+00019a  b905              CBNZ     r5,|L2.414|
+;;;646    	{
+;;;647    		Contr_Voltage=0;
+00019c  8023              STRH     r3,[r4,#0]
+                  |L2.414|
+;;;648    	}
+;;;649    	var32 = 0;
+;;;650    /**************************稳压电源设置电流转换**************************************/
+;;;651    	var32 = SET_Current;
+00019e  888c              LDRH     r4,[r1,#4]  ; Run_Control
+0001a0  9400              STR      r4,[sp,#0]
+;;;652    	var32=var32<<14;   
+0001a2  9c00              LDR      r4,[sp,#0]
+0001a4  03a4              LSLS     r4,r4,#14
+0001a6  9400              STR      r4,[sp,#0]
+;;;653    	if ((Polar1 & 0x08) == 0)			   
+0001a8  8a54              LDRH     r4,[r2,#0x12]  ; Correct_Parametet
+0001aa  0724              LSLS     r4,r4,#28
+0001ac  d40a              BMI      |L2.452|
+;;;654    	{
+;;;655    		if (var32 < SET_ReadA_Offset) var32 = 0;
+0001ae  6944              LDR      r4,[r0,#0x14]  ; Correct_Strong
+0001b0  9d00              LDR      r5,[sp,#0]
+0001b2  42ac              CMP      r4,r5
+0001b4  d901              BLS      |L2.442|
+0001b6  9300              STR      r3,[sp,#0]
+0001b8  e008              B        |L2.460|
+                  |L2.442|
+;;;656    		else var32 = var32 - SET_ReadA_Offset;
+0001ba  6944              LDR      r4,[r0,#0x14]  ; Correct_Strong
+0001bc  9d00              LDR      r5,[sp,#0]
+0001be  1b2c              SUBS     r4,r5,r4
+0001c0  9400              STR      r4,[sp,#0]
+0001c2  e003              B        |L2.460|
+                  |L2.452|
+;;;657    	}
+;;;658    	else var32 = var32 + SET_ReadA_Offset;
+0001c4  6944              LDR      r4,[r0,#0x14]  ; Correct_Strong
+0001c6  9d00              LDR      r5,[sp,#0]
+0001c8  442c              ADD      r4,r4,r5
+0001ca  9400              STR      r4,[sp,#0]
+                  |L2.460|
+;;;659    	var32 = var32/SET_CorrectionA;
+0001cc  8994              LDRH     r4,[r2,#0xc]  ; Correct_Parametet
+0001ce  9d00              LDR      r5,[sp,#0]
+0001d0  fbb5f4f4          UDIV     r4,r5,r4
+0001d4  9400              STR      r4,[sp,#0]
+;;;660    	var32=var32>>1;
+0001d6  9c00              LDR      r4,[sp,#0]
+0001d8  0864              LSRS     r4,r4,#1
+0001da  9400              STR      r4,[sp,#0]
+;;;661    	Contr_Current = var32;
+0001dc  4c39              LDR      r4,|L2.708|
+0001de  9d00              LDR      r5,[sp,#0]
+0001e0  8025              STRH     r5,[r4,#0]
+;;;662    	if(SET_Current==0)
+0001e2  888d              LDRH     r5,[r1,#4]  ; Run_Control
+0001e4  b905              CBNZ     r5,|L2.488|
+;;;663    	{
+;;;664    		Contr_Current=0;
+0001e6  8023              STRH     r3,[r4,#0]
+                  |L2.488|
+;;;665    	}
+;;;666    	
+;;;667    	var32 = 0;
+;;;668    
+;;;669    /*************************负载电流控制转换**************************************/
+;;;670    	var32 = SET_Current_Laod;
+0001e8  890c              LDRH     r4,[r1,#8]  ; Run_Control
+0001ea  9400              STR      r4,[sp,#0]
+;;;671    	var32=var32<<12;   
+0001ec  9c00              LDR      r4,[sp,#0]
+0001ee  0324              LSLS     r4,r4,#12
+0001f0  9400              STR      r4,[sp,#0]
+;;;672    	if ((Polar2 & 0x08) == 0)			   
+0001f2  8a94              LDRH     r4,[r2,#0x14]  ; Correct_Parametet
+0001f4  0724              LSLS     r4,r4,#28
+0001f6  d40a              BMI      |L2.526|
+;;;673    	{
+;;;674    		if (var32 < SET_ReadA1_Offset) var32 = 0;
+0001f8  6984              LDR      r4,[r0,#0x18]  ; Correct_Strong
+0001fa  9d00              LDR      r5,[sp,#0]
+0001fc  42ac              CMP      r4,r5
+0001fe  d901              BLS      |L2.516|
+000200  9300              STR      r3,[sp,#0]
+000202  e008              B        |L2.534|
+                  |L2.516|
+;;;675    		else var32 = var32 - SET_ReadA1_Offset;
+000204  6984              LDR      r4,[r0,#0x18]  ; Correct_Strong
+000206  9d00              LDR      r5,[sp,#0]
+000208  1b2c              SUBS     r4,r5,r4
+00020a  9400              STR      r4,[sp,#0]
+00020c  e003              B        |L2.534|
+                  |L2.526|
+;;;676    	}
+;;;677    	else var32 = var32 + SET_ReadA1_Offset;
+00020e  6984              LDR      r4,[r0,#0x18]  ; Correct_Strong
+000210  9d00              LDR      r5,[sp,#0]
+000212  442c              ADD      r4,r4,r5
+000214  9400              STR      r4,[sp,#0]
+                  |L2.534|
+;;;678    	var32 = var32/SET_CorrectionA1;
+000216  89d4              LDRH     r4,[r2,#0xe]  ; Correct_Parametet
+000218  9d00              LDR      r5,[sp,#0]
+00021a  fbb5f4f4          UDIV     r4,r5,r4
+00021e  9400              STR      r4,[sp,#0]
+;;;679    	var32=var32>>1;
+000220  9c00              LDR      r4,[sp,#0]
+000222  0864              LSRS     r4,r4,#1
+000224  9400              STR      r4,[sp,#0]
+;;;680    	if(Flag_DAC_OFF==0)
+000226  4c28              LDR      r4,|L2.712|
+000228  7824              LDRB     r4,[r4,#0]  ; flagB
+00022a  0725              LSLS     r5,r4,#28
+;;;681    	{
+;;;682    		Contr_Laod = var32;
+00022c  4c27              LDR      r4,|L2.716|
+00022e  d401              BMI      |L2.564|
+000230  9d00              LDR      r5,[sp,#0]
+000232  8025              STRH     r5,[r4,#0]
+                  |L2.564|
+;;;683    	}
+;;;684    	if(SET_Current_Laod==0)
+000234  890d              LDRH     r5,[r1,#8]  ; Run_Control
+000236  b905              CBNZ     r5,|L2.570|
+;;;685    	{
+;;;686    		Contr_Laod=0;
+000238  8023              STRH     r3,[r4,#0]
+                  |L2.570|
+;;;687    	}
+;;;688    	
+;;;689    	var32 = 0;
+;;;690    /*******************负载测量电流转换**************************************/
+;;;691    	var32 = Imon1_value;
+00023a  4c25              LDR      r4,|L2.720|
+00023c  8824              LDRH     r4,[r4,#0]  ; Imon1_value
+00023e  9400              STR      r4,[sp,#0]
+;;;692    	var32 = var32 * REG_CorrectionA1;  
+000240  8894              LDRH     r4,[r2,#4]  ; Correct_Parametet
+000242  9d00              LDR      r5,[sp,#0]
+000244  436c              MULS     r4,r5,r4
+000246  9400              STR      r4,[sp,#0]
+;;;693    	if ((Polar2 & 0x04) == 0x04)		  
+000248  8a92              LDRH     r2,[r2,#0x14]  ; Correct_Parametet
+00024a  0752              LSLS     r2,r2,#29
+00024c  d50a              BPL      |L2.612|
+;;;694    	{
+;;;695    		if (var32 < REG_ReadA1_Offset) 
+00024e  6882              LDR      r2,[r0,#8]  ; Correct_Strong
+000250  9c00              LDR      r4,[sp,#0]
+000252  42a2              CMP      r2,r4
+000254  d901              BLS      |L2.602|
+;;;696    		{
+;;;697    			var32 = 0;
+000256  9300              STR      r3,[sp,#0]
+000258  e008              B        |L2.620|
+                  |L2.602|
+;;;698    		}
+;;;699    		else var32 = var32 - REG_ReadA1_Offset;
+00025a  6880              LDR      r0,[r0,#8]  ; Correct_Strong
+00025c  9a00              LDR      r2,[sp,#0]
+00025e  1a10              SUBS     r0,r2,r0
+000260  9000              STR      r0,[sp,#0]
+000262  e003              B        |L2.620|
+                  |L2.612|
+;;;700    	}
+;;;701    	else var32 = var32 + REG_ReadA1_Offset;
+000264  6880              LDR      r0,[r0,#8]  ; Correct_Strong
+000266  9a00              LDR      r2,[sp,#0]
+000268  4410              ADD      r0,r0,r2
+00026a  9000              STR      r0,[sp,#0]
+                  |L2.620|
+;;;702    	var32 = var32 >> 12;
+00026c  9800              LDR      r0,[sp,#0]
+00026e  0b00              LSRS     r0,r0,#12
+000270  9000              STR      r0,[sp,#0]
+;;;703    	Laod_Current = var32;
+000272  9800              LDR      r0,[sp,#0]
+000274  8308              STRH     r0,[r1,#0x18]
+;;;704    	DISS_Current=Laod_Current;
+000276  8b08              LDRH     r0,[r1,#0x18]  ; Run_Control
+000278  ee000a10          VMOV     s0,r0
+00027c  4815              LDR      r0,|L2.724|
+00027e  eeb80a40          VCVT.F32.U32 s0,s0
+;;;705    	DISS_Current=DISS_Current/100;//计算显示电流
+000282  eec00a01          VDIV.F32 s1,s0,s2
+000286  edc00a00          VSTR     s1,[r0,#0]
+;;;706    	var32 = 0;		
+00028a  9300              STR      r3,[sp,#0]
+;;;707    	
+;;;708    }
+00028c  bd78              POP      {r3-r6,pc}
+;;;709    /********************************************************************************
                           ENDP
 
-                  |L2.748|
+00028e  0000              DCW      0x0000
+                  |L2.656|
                           DCD      Vmon_value
-                  |L2.752|
+                  |L2.660|
                           DCD      ||.bss||
-                  |L2.756|
+                  |L2.664|
                           DCD      DISS_Voltage
-                  |L2.760|
-0002f8  42c80000          DCFS     0x42c80000 ; 100
-                  |L2.764|
+                  |L2.668|
+00029c  42c80000          DCFS     0x42c80000 ; 100
+                  |L2.672|
                           DCD      Vmon1_value
-                  |L2.768|
-000300  d916872b          DCFD     0x3fe9f7ced916872b ; 0.8115
-000304  3fe9f7ce
-                  |L2.776|
-000308  47ae147b          DCFD     0x4015fae147ae147b ; 5.4950000000000001
-00030c  4015fae1
-                  |L2.784|
-                          DCD      0x40a00000
-                  |L2.788|
-000314  00000000          DCFS     0x00000000 ; 0
-                  |L2.792|
+                  |L2.676|
+0002a4  00000000          DCFS     0x00000000 ; 0
+                  |L2.680|
                           DCD      DISS_POW_Voltage
-                  |L2.796|
+                  |L2.684|
                           DCD      Rmon_value
-                  |L2.800|
+                  |L2.688|
                           DCD      Imon_value
-                  |L2.804|
+                  |L2.692|
                           DCD      DISS_POW_Current
-                  |L2.808|
-000328  447a0000          DCFS     0x447a0000 ; 1000
-                  |L2.812|
+                  |L2.696|
+0002b8  447a0000          DCFS     0x447a0000 ; 1000
+                  |L2.700|
                           DCD      0x40c00000
-                  |L2.816|
+                  |L2.704|
                           DCD      Contr_Voltage
-                  |L2.820|
+                  |L2.708|
                           DCD      Contr_Current
-                  |L2.824|
+                  |L2.712|
                           DCD      flagB
-                  |L2.828|
+                  |L2.716|
                           DCD      Contr_Laod
-                  |L2.832|
+                  |L2.720|
                           DCD      Imon1_value
-                  |L2.836|
+                  |L2.724|
                           DCD      DISS_Current
 
                           AREA ||i.UART_Action||, CODE, READONLY, ALIGN=2
@@ -1050,7 +1014,7 @@
                   |L3.636|
 00027c  7838              LDRB     r0,[r7,#0]  ; flagF
 00027e  0780              LSLS     r0,r0,#30
-000280  d57d              BPL      |L3.894|
+000280  d57e              BPL      |L3.896|
                   |L3.642|
 ;;;143    	{
 ;;;144    		if(g_tModS.RxBuf[1] == 0x01)
@@ -1058,20 +1022,20 @@
 ;;;145    			{
 ;;;146    				flag_ADJ_VL=0;
 ;;;147    				Modify_A_READ = Vmon_value;//测量电压值
-000286  f8df9194          LDR      r9,|L3.1052|
-00028a  2801              CMP      r0,#1                 ;144
-00028c  d10d              BNE      |L3.682|
-00028e  6839              LDR      r1,[r7,#0]            ;146  ; flagF
-000290  f0210104          BIC      r1,r1,#4              ;146
-000294  6039              STR      r1,[r7,#0]            ;146  ; flagF
-000296  f8b91000          LDRH     r1,[r9,#0]  ; Vmon_value
-00029a  8069              STRH     r1,[r5,#2]
+000286  4965              LDR      r1,|L3.1052|
+000288  2801              CMP      r0,#1                 ;144
+00028a  d10c              BNE      |L3.678|
+00028c  683a              LDR      r2,[r7,#0]            ;146  ; flagF
+00028e  f0220204          BIC      r2,r2,#4              ;146
+000292  603a              STR      r2,[r7,#0]            ;146  ; flagF
+000294  880a              LDRH     r2,[r1,#0]  ; Vmon_value
+000296  806a              STRH     r2,[r5,#2]
 ;;;148    				Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//读取低段
-00029c  f89b1004          LDRB     r1,[r11,#4]  ; g_tModS
-0002a0  f89b2003          LDRB     r2,[r11,#3]  ; g_tModS
-0002a4  eb012102          ADD      r1,r1,r2,LSL #8
-0002a8  80e9              STRH     r1,[r5,#6]
-                  |L3.682|
+000298  f89b2004          LDRB     r2,[r11,#4]  ; g_tModS
+00029c  f89b3003          LDRB     r3,[r11,#3]  ; g_tModS
+0002a0  eb022203          ADD      r2,r2,r3,LSL #8
+0002a4  80ea              STRH     r2,[r5,#6]
+                  |L3.678|
 ;;;149    			}
 ;;;150    			if (g_tModS.RxBuf[1] == 0x02)			   //电压测量校准完成
 ;;;151    			{
@@ -1099,7 +1063,7 @@
 ;;;173    				{
 ;;;174    					var32b = var32b - var32a;
 ;;;175    					REG_ReadV_Offset = var32b;
-0002aa  4c5a              LDR      r4,|L3.1044|
+0002a6  4c5b              LDR      r4,|L3.1044|
 ;;;176    					Polar |= 0x01;
 ;;;177    				}
 ;;;178    				else 
@@ -1110,107 +1074,107 @@
 ;;;183    				}			
 ;;;184    				Flash_Write_all();	//参数写进FLASH
 ;;;185    				Flag_DAC_OFF=0;
-0002ac  4e5c              LDR      r6,|L3.1056|
-0002ae  3c28              SUBS     r4,r4,#0x28           ;175
-0002b0  f1a4081c          SUB      r8,r4,#0x1c           ;166
-0002b4  2802              CMP      r0,#2                 ;150
-0002b6  d14d              BNE      |L3.852|
-0002b8  f8b90000          LDRH     r0,[r9,#0]            ;159  ; Vmon_value
-0002bc  8128              STRH     r0,[r5,#8]            ;159
-0002be  f89b0004          LDRB     r0,[r11,#4]           ;160  ; g_tModS
-0002c2  f89b1003          LDRB     r1,[r11,#3]           ;160  ; g_tModS
-0002c6  eb002001          ADD      r0,r0,r1,LSL #8       ;160
-0002ca  81a8              STRH     r0,[r5,#0xc]          ;160
-0002cc  89a8              LDRH     r0,[r5,#0xc]          ;161  ; Modify_B_ACT
-0002ce  9005              STR      r0,[sp,#0x14]         ;161
-0002d0  88e9              LDRH     r1,[r5,#6]            ;162  ; Modify_A_ACT
-0002d2  9805              LDR      r0,[sp,#0x14]         ;162
-0002d4  1a40              SUBS     r0,r0,r1              ;162
-0002d6  9005              STR      r0,[sp,#0x14]         ;162
-0002d8  9805              LDR      r0,[sp,#0x14]         ;163
-0002da  0300              LSLS     r0,r0,#12             ;163
-0002dc  9005              STR      r0,[sp,#0x14]         ;163
-0002de  8928              LDRH     r0,[r5,#8]            ;164  ; Modify_B_READ
-0002e0  8869              LDRH     r1,[r5,#2]            ;164  ; Modify_A_READ
-0002e2  1a40              SUBS     r0,r0,r1              ;164
-0002e4  9006              STR      r0,[sp,#0x18]         ;164
-0002e6  e9dd0105          LDRD     r0,r1,[sp,#0x14]      ;165
-0002ea  fbb0f0f1          UDIV     r0,r0,r1              ;165
-0002ee  9005              STR      r0,[sp,#0x14]         ;165
-0002f0  9805              LDR      r0,[sp,#0x14]         ;166
-0002f2  f8a80000          STRH     r0,[r8,#0]            ;166
-0002f6  89a8              LDRH     r0,[r5,#0xc]          ;168  ; Modify_B_ACT
-0002f8  9005              STR      r0,[sp,#0x14]         ;168
-0002fa  9805              LDR      r0,[sp,#0x14]         ;169
-0002fc  0300              LSLS     r0,r0,#12             ;169
-0002fe  9005              STR      r0,[sp,#0x14]         ;169
-000300  8928              LDRH     r0,[r5,#8]            ;170  ; Modify_B_READ
-000302  9004              STR      r0,[sp,#0x10]         ;170
-000304  f8b80000          LDRH     r0,[r8,#0]            ;171  ; Correct_Parametet
-000308  9904              LDR      r1,[sp,#0x10]         ;171
-00030a  4348              MULS     r0,r1,r0              ;171
-00030c  9004              STR      r0,[sp,#0x10]         ;171
-00030e  e9dd1004          LDRD     r1,r0,[sp,#0x10]      ;172
-000312  4288              CMP      r0,r1                 ;172
-000314  d20c              BCS      |L3.816|
-000316  e9dd0104          LDRD     r0,r1,[sp,#0x10]      ;174
-00031a  1a40              SUBS     r0,r0,r1              ;174
-00031c  9004              STR      r0,[sp,#0x10]         ;174
-00031e  9804              LDR      r0,[sp,#0x10]         ;175
-000320  6020              STR      r0,[r4,#0]            ;175  ; Correct_Strong
-000322  f8b80008          LDRH     r0,[r8,#8]            ;176  ; Correct_Parametet
-000326  f0400001          ORR      r0,r0,#1              ;176
-00032a  f8a80008          STRH     r0,[r8,#8]            ;176
-00032e  e00b              B        |L3.840|
-                  |L3.816|
-000330  e9dd1004          LDRD     r1,r0,[sp,#0x10]      ;180
-000334  1a40              SUBS     r0,r0,r1              ;180
-000336  9005              STR      r0,[sp,#0x14]         ;180
-000338  9805              LDR      r0,[sp,#0x14]         ;181
-00033a  6020              STR      r0,[r4,#0]            ;181  ; Correct_Strong
-00033c  f8b80008          LDRH     r0,[r8,#8]            ;182  ; Correct_Parametet
-000340  f0200001          BIC      r0,r0,#1              ;182
-000344  f8a80008          STRH     r0,[r8,#8]            ;182
-                  |L3.840|
-000348  f7fffffe          BL       Flash_Write_all
-00034c  6830              LDR      r0,[r6,#0]  ; flagB
-00034e  f0200008          BIC      r0,r0,#8
-000352  6030              STR      r0,[r6,#0]  ; flagB
-                  |L3.852|
+0002a8  4e5d              LDR      r6,|L3.1056|
+0002aa  3c28              SUBS     r4,r4,#0x28           ;175
+0002ac  f1a4081c          SUB      r8,r4,#0x1c           ;166
+0002b0  2802              CMP      r0,#2                 ;150
+0002b2  d14c              BNE      |L3.846|
+0002b4  8808              LDRH     r0,[r1,#0]            ;159  ; Vmon_value
+0002b6  8128              STRH     r0,[r5,#8]            ;159
+0002b8  f89b0004          LDRB     r0,[r11,#4]           ;160  ; g_tModS
+0002bc  f89b1003          LDRB     r1,[r11,#3]           ;160  ; g_tModS
+0002c0  eb002001          ADD      r0,r0,r1,LSL #8       ;160
+0002c4  81a8              STRH     r0,[r5,#0xc]          ;160
+0002c6  89a8              LDRH     r0,[r5,#0xc]          ;161  ; Modify_B_ACT
+0002c8  9005              STR      r0,[sp,#0x14]         ;161
+0002ca  88e9              LDRH     r1,[r5,#6]            ;162  ; Modify_A_ACT
+0002cc  9805              LDR      r0,[sp,#0x14]         ;162
+0002ce  1a40              SUBS     r0,r0,r1              ;162
+0002d0  9005              STR      r0,[sp,#0x14]         ;162
+0002d2  9805              LDR      r0,[sp,#0x14]         ;163
+0002d4  0300              LSLS     r0,r0,#12             ;163
+0002d6  9005              STR      r0,[sp,#0x14]         ;163
+0002d8  8928              LDRH     r0,[r5,#8]            ;164  ; Modify_B_READ
+0002da  8869              LDRH     r1,[r5,#2]            ;164  ; Modify_A_READ
+0002dc  1a40              SUBS     r0,r0,r1              ;164
+0002de  9006              STR      r0,[sp,#0x18]         ;164
+0002e0  e9dd0105          LDRD     r0,r1,[sp,#0x14]      ;165
+0002e4  fbb0f0f1          UDIV     r0,r0,r1              ;165
+0002e8  9005              STR      r0,[sp,#0x14]         ;165
+0002ea  9805              LDR      r0,[sp,#0x14]         ;166
+0002ec  f8a80000          STRH     r0,[r8,#0]            ;166
+0002f0  89a8              LDRH     r0,[r5,#0xc]          ;168  ; Modify_B_ACT
+0002f2  9005              STR      r0,[sp,#0x14]         ;168
+0002f4  9805              LDR      r0,[sp,#0x14]         ;169
+0002f6  0300              LSLS     r0,r0,#12             ;169
+0002f8  9005              STR      r0,[sp,#0x14]         ;169
+0002fa  8928              LDRH     r0,[r5,#8]            ;170  ; Modify_B_READ
+0002fc  9004              STR      r0,[sp,#0x10]         ;170
+0002fe  f8b80000          LDRH     r0,[r8,#0]            ;171  ; Correct_Parametet
+000302  9904              LDR      r1,[sp,#0x10]         ;171
+000304  4348              MULS     r0,r1,r0              ;171
+000306  9004              STR      r0,[sp,#0x10]         ;171
+000308  e9dd1004          LDRD     r1,r0,[sp,#0x10]      ;172
+00030c  4288              CMP      r0,r1                 ;172
+00030e  d20c              BCS      |L3.810|
+000310  e9dd0104          LDRD     r0,r1,[sp,#0x10]      ;174
+000314  1a40              SUBS     r0,r0,r1              ;174
+000316  9004              STR      r0,[sp,#0x10]         ;174
+000318  9804              LDR      r0,[sp,#0x10]         ;175
+00031a  6020              STR      r0,[r4,#0]            ;175  ; Correct_Strong
+00031c  f8b80008          LDRH     r0,[r8,#8]            ;176  ; Correct_Parametet
+000320  f0400001          ORR      r0,r0,#1              ;176
+000324  f8a80008          STRH     r0,[r8,#8]            ;176
+000328  e00b              B        |L3.834|
+                  |L3.810|
+00032a  e9dd1004          LDRD     r1,r0,[sp,#0x10]      ;180
+00032e  1a40              SUBS     r0,r0,r1              ;180
+000330  9005              STR      r0,[sp,#0x14]         ;180
+000332  9805              LDR      r0,[sp,#0x14]         ;181
+000334  6020              STR      r0,[r4,#0]            ;181  ; Correct_Strong
+000336  f8b80008          LDRH     r0,[r8,#8]            ;182  ; Correct_Parametet
+00033a  f0200001          BIC      r0,r0,#1              ;182
+00033e  f8a80008          STRH     r0,[r8,#8]            ;182
+                  |L3.834|
+000342  f7fffffe          BL       Flash_Write_all
+000346  6830              LDR      r0,[r6,#0]  ; flagB
+000348  f0200008          BIC      r0,r0,#8
+00034c  6030              STR      r0,[r6,#0]  ; flagB
+                  |L3.846|
 ;;;186    			}
 ;;;187    /************************************???·????У?*****************************************************************/
 ;;;188    		if (g_tModS.RxBuf[1] == 0x03)			   //CC??У?
-000354  f89b0001          LDRB     r0,[r11,#1]  ; g_tModS
+00034e  f89b0001          LDRB     r0,[r11,#1]  ; g_tModS
 ;;;189    		{
 ;;;190    			Modify_A_READ = Imon1_value;//
-000358  4932              LDR      r1,|L3.1060|
+000352  4934              LDR      r1,|L3.1060|
 ;;;191    			Modify_C_READ = Contr_Laod;//
-00035a  f8dfa0cc          LDR      r10,|L3.1064|
-00035e  2803              CMP      r0,#3                 ;188
-000360  d111              BNE      |L3.902|
-000362  880a              LDRH     r2,[r1,#0]            ;190  ; Imon1_value
-000364  806a              STRH     r2,[r5,#2]            ;190
-000366  f8ba2000          LDRH     r2,[r10,#0]  ; Contr_Laod
-00036a  80aa              STRH     r2,[r5,#4]
+000354  f8df90d0          LDR      r9,|L3.1064|
+000358  2803              CMP      r0,#3                 ;188
+00035a  d10f              BNE      |L3.892|
+00035c  880a              LDRH     r2,[r1,#0]            ;190  ; Imon1_value
+00035e  806a              STRH     r2,[r5,#2]            ;190
+000360  f8b92000          LDRH     r2,[r9,#0]  ; Contr_Laod
+000364  80aa              STRH     r2,[r5,#4]
 ;;;192    			Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
-00036c  f89b2004          LDRB     r2,[r11,#4]  ; g_tModS
-000370  f89b3003          LDRB     r3,[r11,#3]  ; g_tModS
-000374  eb022203          ADD      r2,r2,r3,LSL #8
-000378  80ea              STRH     r2,[r5,#6]
+000366  f89b2004          LDRB     r2,[r11,#4]  ; g_tModS
+00036a  f89b3003          LDRB     r3,[r11,#3]  ; g_tModS
+00036e  eb022203          ADD      r2,r2,r3,LSL #8
+000372  80ea              STRH     r2,[r5,#6]
 ;;;193    			Flag_DAC_OFF=1;//
-00037a  6832              LDR      r2,[r6,#0]  ; flagB
-00037c  e000              B        |L3.896|
-                  |L3.894|
-00037e  e2a9              B        |L3.2260|
-                  |L3.896|
-000380  f0420208          ORR      r2,r2,#8
-000384  6032              STR      r2,[r6,#0]  ; flagB
-                  |L3.902|
+000374  6832              LDR      r2,[r6,#0]  ; flagB
+000376  f0420208          ORR      r2,r2,#8
+00037a  6032              STR      r2,[r6,#0]  ; flagB
+                  |L3.892|
 ;;;194    		}
 ;;;195    
 ;;;196    		if (g_tModS.RxBuf[1] == 0x04)			   //
-000386  2804              CMP      r0,#4
-000388  d17e              BNE      |L3.1160|
+00037c  2804              CMP      r0,#4
+00037e  e000              B        |L3.898|
+                  |L3.896|
+000380  e29f              B        |L3.2242|
+                  |L3.898|
+000382  d17d              BNE      |L3.1152|
 ;;;197    		{
 ;;;198    			vu32 var16;
 ;;;199    			vu32 var32a;
@@ -1221,72 +1185,73 @@
 ;;;204    			vu32 var32d;
 ;;;205    			
 ;;;206    			Modify_B_READ = Imon1_value;
-00038a  8808              LDRH     r0,[r1,#0]  ; Imon1_value
-00038c  8128              STRH     r0,[r5,#8]
+000384  8808              LDRH     r0,[r1,#0]  ; Imon1_value
+000386  8128              STRH     r0,[r5,#8]
 ;;;207    			Modify_D_READ = Contr_Laod;
-00038e  f8ba0000          LDRH     r0,[r10,#0]  ; Contr_Laod
-000392  8168              STRH     r0,[r5,#0xa]
+000388  f8b90000          LDRH     r0,[r9,#0]  ; Contr_Laod
+00038c  8168              STRH     r0,[r5,#0xa]
 ;;;208    			Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
-000394  f89b0004          LDRB     r0,[r11,#4]  ; g_tModS
-000398  f89b1003          LDRB     r1,[r11,#3]  ; g_tModS
-00039c  eb002001          ADD      r0,r0,r1,LSL #8
-0003a0  81a8              STRH     r0,[r5,#0xc]
+00038e  f89b0004          LDRB     r0,[r11,#4]  ; g_tModS
+000392  f89b1003          LDRB     r1,[r11,#3]  ; g_tModS
+000396  eb002001          ADD      r0,r0,r1,LSL #8
+00039a  81a8              STRH     r0,[r5,#0xc]
 ;;;209    			
 ;;;210    			var32a = Modify_B_ACT;
-0003a2  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
-0003a4  9005              STR      r0,[sp,#0x14]
+00039c  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
+00039e  9005              STR      r0,[sp,#0x14]
 ;;;211    			var32a = var32a - Modify_A_ACT;
-0003a6  88e9              LDRH     r1,[r5,#6]  ; Modify_A_ACT
-0003a8  9805              LDR      r0,[sp,#0x14]
-0003aa  1a40              SUBS     r0,r0,r1
-0003ac  9005              STR      r0,[sp,#0x14]
+0003a0  88e9              LDRH     r1,[r5,#6]  ; Modify_A_ACT
+0003a2  9805              LDR      r0,[sp,#0x14]
+0003a4  1a40              SUBS     r0,r0,r1
+0003a6  9005              STR      r0,[sp,#0x14]
 ;;;212    			var32a = var32a << 12;
-0003ae  9805              LDR      r0,[sp,#0x14]
-0003b0  0300              LSLS     r0,r0,#12
-0003b2  9005              STR      r0,[sp,#0x14]
+0003a8  9805              LDR      r0,[sp,#0x14]
+0003aa  0300              LSLS     r0,r0,#12
+0003ac  9005              STR      r0,[sp,#0x14]
 ;;;213    			var16 = Modify_B_READ - Modify_A_READ;
-0003b4  8928              LDRH     r0,[r5,#8]  ; Modify_B_READ
-0003b6  8869              LDRH     r1,[r5,#2]  ; Modify_A_READ
-0003b8  1a40              SUBS     r0,r0,r1
-0003ba  9006              STR      r0,[sp,#0x18]
+0003ae  8928              LDRH     r0,[r5,#8]  ; Modify_B_READ
+0003b0  8869              LDRH     r1,[r5,#2]  ; Modify_A_READ
+0003b2  1a40              SUBS     r0,r0,r1
+0003b4  9006              STR      r0,[sp,#0x18]
 ;;;214    			var32a = var32a / var16;
-0003bc  e9dd0105          LDRD     r0,r1,[sp,#0x14]
-0003c0  fbb0f0f1          UDIV     r0,r0,r1
-0003c4  9005              STR      r0,[sp,#0x14]
+0003b6  e9dd1005          LDRD     r1,r0,[sp,#0x14]
+0003ba  fbb1f0f0          UDIV     r0,r1,r0
+0003be  9005              STR      r0,[sp,#0x14]
 ;;;215    			REG_CorrectionA1 = var32a;
-0003c6  9805              LDR      r0,[sp,#0x14]
-0003c8  f8a80004          STRH     r0,[r8,#4]
+0003c0  9805              LDR      r0,[sp,#0x14]
+0003c2  f8a80004          STRH     r0,[r8,#4]
 ;;;216    			var32a = Modify_B_ACT;
-0003cc  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
-0003ce  9005              STR      r0,[sp,#0x14]
+0003c6  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
+0003c8  9005              STR      r0,[sp,#0x14]
 ;;;217    			var32a = var32a << 12;
-0003d0  9805              LDR      r0,[sp,#0x14]
-0003d2  0300              LSLS     r0,r0,#12
-0003d4  9005              STR      r0,[sp,#0x14]
+0003ca  9805              LDR      r0,[sp,#0x14]
+0003cc  0300              LSLS     r0,r0,#12
+0003ce  9005              STR      r0,[sp,#0x14]
 ;;;218    			var32b = Modify_B_READ;
-0003d6  8928              LDRH     r0,[r5,#8]  ; Modify_B_READ
-0003d8  9004              STR      r0,[sp,#0x10]
+0003d0  8928              LDRH     r0,[r5,#8]  ; Modify_B_READ
+0003d2  9004              STR      r0,[sp,#0x10]
 ;;;219    			var32b = var32b * REG_CorrectionA1;
-0003da  f8b80004          LDRH     r0,[r8,#4]  ; Correct_Parametet
-0003de  9904              LDR      r1,[sp,#0x10]
-0003e0  4348              MULS     r0,r1,r0
-0003e2  9004              STR      r0,[sp,#0x10]
+0003d4  f8b80004          LDRH     r0,[r8,#4]  ; Correct_Parametet
+0003d8  9904              LDR      r1,[sp,#0x10]
+0003da  4348              MULS     r0,r1,r0
+0003dc  9004              STR      r0,[sp,#0x10]
 ;;;220    			if (var32a < var32b)
-0003e4  e9dd1004          LDRD     r1,r0,[sp,#0x10]
-0003e8  4288              CMP      r0,r1
-0003ea  d224              BCS      |L3.1078|
+0003de  e9dd0104          LDRD     r0,r1,[sp,#0x10]
+0003e2  4281              CMP      r1,r0
+0003e4  d222              BCS      |L3.1068|
 ;;;221    			{
 ;;;222    				var32b = var32b - var32a;
-0003ec  e9dd0104          LDRD     r0,r1,[sp,#0x10]
-0003f0  1a40              SUBS     r0,r0,r1
-0003f2  9004              STR      r0,[sp,#0x10]
+0003e6  e9dd0104          LDRD     r0,r1,[sp,#0x10]
+0003ea  1a40              SUBS     r0,r0,r1
+0003ec  9004              STR      r0,[sp,#0x10]
 ;;;223    				REG_ReadA1_Offset = var32b;
-0003f4  9804              LDR      r0,[sp,#0x10]
-0003f6  60a0              STR      r0,[r4,#8]  ; Correct_Strong
+0003ee  9804              LDR      r0,[sp,#0x10]
+0003f0  60a0              STR      r0,[r4,#8]  ; Correct_Strong
 ;;;224    				Polar1 |= 0x01;
-0003f8  f8b80012          LDRH     r0,[r8,#0x12]  ; Correct_Parametet
-0003fc  e016              B        |L3.1068|
-0003fe  0000              DCW      0x0000
+0003f2  f8b80012          LDRH     r0,[r8,#0x12]  ; Correct_Parametet
+0003f6  f0400001          ORR      r0,r0,#1
+0003fa  f8a80012          STRH     r0,[r8,#0x12]
+0003fe  e021              B        |L3.1092|
                   |L3.1024|
                           DCD      g_tModS
                   |L3.1028|
@@ -1310,770 +1275,796 @@
                   |L3.1064|
                           DCD      Contr_Laod
                   |L3.1068|
-00042c  f0400001          ORR      r0,r0,#1
-000430  f8a80012          STRH     r0,[r8,#0x12]
-000434  e00b              B        |L3.1102|
-                  |L3.1078|
 ;;;225    			}
 ;;;226    			else 
 ;;;227    			{
 ;;;228    				var32a = var32a - var32b;
-000436  e9dd1004          LDRD     r1,r0,[sp,#0x10]
-00043a  1a40              SUBS     r0,r0,r1
-00043c  9005              STR      r0,[sp,#0x14]
+00042c  e9dd1004          LDRD     r1,r0,[sp,#0x10]
+000430  1a40              SUBS     r0,r0,r1
+000432  9005              STR      r0,[sp,#0x14]
 ;;;229    				REG_ReadA1_Offset = var32a;
-00043e  9805              LDR      r0,[sp,#0x14]
-000440  60a0              STR      r0,[r4,#8]  ; Correct_Strong
+000434  9805              LDR      r0,[sp,#0x14]
+000436  60a0              STR      r0,[r4,#8]  ; Correct_Strong
 ;;;230    				Polar1 &= ~0x01;					
-000442  f8b80012          LDRH     r0,[r8,#0x12]  ; Correct_Parametet
-000446  f0200001          BIC      r0,r0,#1
-00044a  f8a80012          STRH     r0,[r8,#0x12]
-                  |L3.1102|
+000438  f8b80012          LDRH     r0,[r8,#0x12]  ; Correct_Parametet
+00043c  f0200001          BIC      r0,r0,#1
+000440  f8a80012          STRH     r0,[r8,#0x12]
+                  |L3.1092|
 ;;;231    			}
 ;;;232    //---------------------------------------------------------------------------------//
 ;;;233    			var32c = Modify_B_ACT; 
-00044e  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
-000450  9002              STR      r0,[sp,#8]
+000444  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
+000446  9002              STR      r0,[sp,#8]
 ;;;234    			var32c = var32c - Modify_A_ACT;
-000452  88e9              LDRH     r1,[r5,#6]  ; Modify_A_ACT
-000454  9802              LDR      r0,[sp,#8]
-000456  1a40              SUBS     r0,r0,r1
-000458  9002              STR      r0,[sp,#8]
+000448  88e9              LDRH     r1,[r5,#6]  ; Modify_A_ACT
+00044a  9802              LDR      r0,[sp,#8]
+00044c  1a40              SUBS     r0,r0,r1
+00044e  9002              STR      r0,[sp,#8]
 ;;;235    			var32c = var32c << 12;
-00045a  9802              LDR      r0,[sp,#8]
-00045c  0300              LSLS     r0,r0,#12
-00045e  9002              STR      r0,[sp,#8]
+000450  9802              LDR      r0,[sp,#8]
+000452  0300              LSLS     r0,r0,#12
+000454  9002              STR      r0,[sp,#8]
 ;;;236    			var16a=Modify_D_READ-Modify_C_READ;
-000460  8968              LDRH     r0,[r5,#0xa]  ; Modify_D_READ
-000462  88a9              LDRH     r1,[r5,#4]  ; Modify_C_READ
-000464  1a40              SUBS     r0,r0,r1
-000466  9003              STR      r0,[sp,#0xc]
+000456  8968              LDRH     r0,[r5,#0xa]  ; Modify_D_READ
+000458  88a9              LDRH     r1,[r5,#4]  ; Modify_C_READ
+00045a  1a40              SUBS     r0,r0,r1
+00045c  9003              STR      r0,[sp,#0xc]
 ;;;237    			var16a=var16a*2;
-000468  9803              LDR      r0,[sp,#0xc]
-00046a  0040              LSLS     r0,r0,#1
-00046c  9003              STR      r0,[sp,#0xc]
+00045e  9803              LDR      r0,[sp,#0xc]
+000460  0040              LSLS     r0,r0,#1
+000462  9003              STR      r0,[sp,#0xc]
 ;;;238    			var32c=var32c/var16a;
-00046e  e9dd0102          LDRD     r0,r1,[sp,#8]
-000472  fbb0f0f1          UDIV     r0,r0,r1
-000476  9002              STR      r0,[sp,#8]
+000464  e9dd0102          LDRD     r0,r1,[sp,#8]
+000468  fbb0f0f1          UDIV     r0,r0,r1
+00046c  9002              STR      r0,[sp,#8]
 ;;;239    			SET_CorrectionA1 = var32c;
-000478  9802              LDR      r0,[sp,#8]
-00047a  f8a8000e          STRH     r0,[r8,#0xe]
+00046e  9802              LDR      r0,[sp,#8]
+000470  f8a8000e          STRH     r0,[r8,#0xe]
 ;;;240    			var32c = Modify_B_ACT;
-00047e  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
-000480  9002              STR      r0,[sp,#8]
+000474  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
+000476  9002              STR      r0,[sp,#8]
 ;;;241    			var32c = var32c << 12;
-000482  9802              LDR      r0,[sp,#8]
-000484  0300              LSLS     r0,r0,#12
-000486  e000              B        |L3.1162|
-                  |L3.1160|
-000488  e02b              B        |L3.1250|
-                  |L3.1162|
-00048a  9002              STR      r0,[sp,#8]
+000478  9802              LDR      r0,[sp,#8]
+00047a  0300              LSLS     r0,r0,#12
+00047c  9002              STR      r0,[sp,#8]
 ;;;242    			var32d = SET_CorrectionA1;
-00048c  f8b8000e          LDRH     r0,[r8,#0xe]  ; Correct_Parametet
-000490  9001              STR      r0,[sp,#4]
+00047e  e000              B        |L3.1154|
+                  |L3.1152|
+000480  e02a              B        |L3.1240|
+                  |L3.1154|
+000482  f8b8000e          LDRH     r0,[r8,#0xe]  ; Correct_Parametet
+000486  9001              STR      r0,[sp,#4]
 ;;;243    			var32d = var32d * (Modify_D_READ*2);
-000492  8969              LDRH     r1,[r5,#0xa]  ; Modify_D_READ
-000494  9801              LDR      r0,[sp,#4]
-000496  4348              MULS     r0,r1,r0
-000498  0040              LSLS     r0,r0,#1
-00049a  9001              STR      r0,[sp,#4]
+000488  8969              LDRH     r1,[r5,#0xa]  ; Modify_D_READ
+00048a  9801              LDR      r0,[sp,#4]
+00048c  4348              MULS     r0,r1,r0
+00048e  0040              LSLS     r0,r0,#1
+000490  9001              STR      r0,[sp,#4]
 ;;;244    			if (var32c < var32d)
-00049c  e9dd1001          LDRD     r1,r0,[sp,#4]
-0004a0  4288              CMP      r0,r1
-0004a2  d20c              BCS      |L3.1214|
+000492  e9dd1001          LDRD     r1,r0,[sp,#4]
+000496  4288              CMP      r0,r1
+000498  d20c              BCS      |L3.1204|
 ;;;245    			{
 ;;;246    				var32d = var32d - var32c;
-0004a4  e9dd0101          LDRD     r0,r1,[sp,#4]
-0004a8  1a40              SUBS     r0,r0,r1
-0004aa  9001              STR      r0,[sp,#4]
+00049a  e9dd0101          LDRD     r0,r1,[sp,#4]
+00049e  1a40              SUBS     r0,r0,r1
+0004a0  9001              STR      r0,[sp,#4]
 ;;;247    				SET_ReadA1_Offset = var32d;
-0004ac  9801              LDR      r0,[sp,#4]
-0004ae  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
+0004a2  9801              LDR      r0,[sp,#4]
+0004a4  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
 ;;;248    				Polar1 |= 0x04;
-0004b0  f8b80012          LDRH     r0,[r8,#0x12]  ; Correct_Parametet
-0004b4  f0400004          ORR      r0,r0,#4
-0004b8  f8a80012          STRH     r0,[r8,#0x12]
-0004bc  e00b              B        |L3.1238|
-                  |L3.1214|
+0004a6  f8b80012          LDRH     r0,[r8,#0x12]  ; Correct_Parametet
+0004aa  f0400004          ORR      r0,r0,#4
+0004ae  f8a80012          STRH     r0,[r8,#0x12]
+0004b2  e00b              B        |L3.1228|
+                  |L3.1204|
 ;;;249    			}
 ;;;250    			else 
 ;;;251    			{
 ;;;252    				var32c = var32c - var32d;
-0004be  e9dd1001          LDRD     r1,r0,[sp,#4]
-0004c2  1a40              SUBS     r0,r0,r1
-0004c4  9002              STR      r0,[sp,#8]
+0004b4  e9dd1001          LDRD     r1,r0,[sp,#4]
+0004b8  1a40              SUBS     r0,r0,r1
+0004ba  9002              STR      r0,[sp,#8]
 ;;;253    				SET_ReadA1_Offset = var32c;
-0004c6  9802              LDR      r0,[sp,#8]
-0004c8  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
+0004bc  9802              LDR      r0,[sp,#8]
+0004be  61a0              STR      r0,[r4,#0x18]  ; Correct_Strong
 ;;;254    				Polar1 &= ~0x04;
-0004ca  f8b80012          LDRH     r0,[r8,#0x12]  ; Correct_Parametet
-0004ce  f0200004          BIC      r0,r0,#4
-0004d2  f8a80012          STRH     r0,[r8,#0x12]
-                  |L3.1238|
+0004c0  f8b80012          LDRH     r0,[r8,#0x12]  ; Correct_Parametet
+0004c4  f0200004          BIC      r0,r0,#4
+0004c8  f8a80012          STRH     r0,[r8,#0x12]
+                  |L3.1228|
 ;;;255    			}
 ;;;256    			Flash_Write_all ();	
-0004d6  f7fffffe          BL       Flash_Write_all
+0004cc  f7fffffe          BL       Flash_Write_all
 ;;;257    			Flag_DAC_OFF =0;
-0004da  6830              LDR      r0,[r6,#0]  ; flagB
-0004dc  f0200008          BIC      r0,r0,#8
-0004e0  6030              STR      r0,[r6,#0]  ; flagB
-                  |L3.1250|
+0004d0  6830              LDR      r0,[r6,#0]  ; flagB
+0004d2  f0200008          BIC      r0,r0,#8
+0004d6  6030              STR      r0,[r6,#0]  ; flagB
+                  |L3.1240|
 ;;;258    		}
 ;;;259    				/*******************************电源电压控制和测量校准******************************************/	
 ;;;260    			if (g_tModS.RxBuf[1] == 0x0B)			   //电流测量校准
-0004e2  4659              MOV      r1,r11
-0004e4  f89b0001          LDRB     r0,[r11,#1]  ; g_tModS
+0004d8  f89b0001          LDRB     r0,[r11,#1]  ; g_tModS
 ;;;261    			{
-;;;262    				Modify_A_READ = Vmon_value;//测量电流
+;;;262    				Modify_A_READ = Vmon1_value;//测量电流
+0004dc  49fa              LDR      r1,|L3.2248|
 ;;;263    				Modify_C_READ = Contr_Voltage;//设置电流
-0004e8  f8dfb3f0          LDR      r11,|L3.2268|
-0004ec  280b              CMP      r0,#0xb               ;260
-0004ee  d10a              BNE      |L3.1286|
-0004f0  f8b92000          LDRH     r2,[r9,#0]            ;262  ; Vmon_value
-0004f4  806a              STRH     r2,[r5,#2]            ;262
-0004f6  f8bb2000          LDRH     r2,[r11,#0]  ; Contr_Voltage
-0004fa  80aa              STRH     r2,[r5,#4]
+0004de  f8dfa3ec          LDR      r10,|L3.2252|
+0004e2  280b              CMP      r0,#0xb               ;260
+0004e4  d10b              BNE      |L3.1278|
+0004e6  880a              LDRH     r2,[r1,#0]            ;262  ; Vmon1_value
+0004e8  806a              STRH     r2,[r5,#2]            ;262
+0004ea  f8ba2000          LDRH     r2,[r10,#0]  ; Contr_Voltage
+0004ee  80aa              STRH     r2,[r5,#4]
 ;;;264    				Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
-0004fc  790a              LDRB     r2,[r1,#4]  ; g_tModS
-0004fe  78cb              LDRB     r3,[r1,#3]  ; g_tModS
-000500  eb022203          ADD      r2,r2,r3,LSL #8
-000504  80ea              STRH     r2,[r5,#6]
-                  |L3.1286|
+0004f0  f89b2004          LDRB     r2,[r11,#4]  ; g_tModS
+0004f4  f89b3003          LDRB     r3,[r11,#3]  ; g_tModS
+0004f8  eb022203          ADD      r2,r2,r3,LSL #8
+0004fc  80ea              STRH     r2,[r5,#6]
+                  |L3.1278|
 ;;;265    			}
 ;;;266    
 ;;;267    			if (g_tModS.RxBuf[1] == 0x0C)			   //电流测量校准完成
-000506  280c              CMP      r0,#0xc
-000508  d17e              BNE      |L3.1544|
+0004fe  280c              CMP      r0,#0xc
+000500  d17d              BNE      |L3.1534|
 ;;;268    			{
-;;;269    				vu16 var16;
+;;;269    				vu32 var16;
 ;;;270    				vu32 var32a;
 ;;;271    				vu32 var32b;
 ;;;272    				
-;;;273    				vu16 var16a;
+;;;273    				vu32 var16a;
 ;;;274    				vu32 var32c;
 ;;;275    				vu32 var32d;
-;;;276    				
-;;;277    				Modify_D_READ = Contr_Voltage;
-00050a  f8bb0000          LDRH     r0,[r11,#0]  ; Contr_Voltage
-00050e  8168              STRH     r0,[r5,#0xa]
-;;;278    				Modify_B_READ = Vmon_value;
-000510  f8b90000          LDRH     r0,[r9,#0]  ; Vmon_value
-000514  8128              STRH     r0,[r5,#8]
-;;;279    				Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
-000516  48f2              LDR      r0,|L3.2272|
-000518  7901              LDRB     r1,[r0,#4]  ; g_tModS
-00051a  78c0              LDRB     r0,[r0,#3]  ; g_tModS
-00051c  eb012000          ADD      r0,r1,r0,LSL #8
-000520  81a8              STRH     r0,[r5,#0xc]
-;;;280    				var32a = Modify_B_ACT;
-000522  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
+;;;276    				Modify_D_READ = Contr_Voltage;
+000502  f8ba0000          LDRH     r0,[r10,#0]  ; Contr_Voltage
+000506  8168              STRH     r0,[r5,#0xa]
+;;;277    				Modify_B_READ = Vmon1_value;
+000508  8808              LDRH     r0,[r1,#0]  ; Vmon1_value
+00050a  8128              STRH     r0,[r5,#8]
+;;;278    				Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//读取高段
+00050c  f89b0004          LDRB     r0,[r11,#4]  ; g_tModS
+000510  f89b1003          LDRB     r1,[r11,#3]  ; g_tModS
+000514  eb002001          ADD      r0,r0,r1,LSL #8
+000518  81a8              STRH     r0,[r5,#0xc]
+;;;279    				var32a = Modify_B_ACT;
+00051a  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
+00051c  9005              STR      r0,[sp,#0x14]
+;;;280    				var32a = var32a - Modify_A_ACT;
+00051e  88e9              LDRH     r1,[r5,#6]  ; Modify_A_ACT
+000520  9805              LDR      r0,[sp,#0x14]
+000522  1a40              SUBS     r0,r0,r1
 000524  9005              STR      r0,[sp,#0x14]
-;;;281    				var32a = var32a - Modify_A_ACT;
-000526  88e9              LDRH     r1,[r5,#6]  ; Modify_A_ACT
-000528  9805              LDR      r0,[sp,#0x14]
-00052a  1a40              SUBS     r0,r0,r1
-00052c  9005              STR      r0,[sp,#0x14]
-;;;282    				var32a = var32a << 14;
-00052e  9805              LDR      r0,[sp,#0x14]
-000530  0380              LSLS     r0,r0,#14
-000532  9005              STR      r0,[sp,#0x14]
-;;;283    				var16 = Modify_B_READ - Modify_A_READ;
-000534  8928              LDRH     r0,[r5,#8]  ; Modify_B_READ
-000536  8869              LDRH     r1,[r5,#2]  ; Modify_A_READ
-000538  1a40              SUBS     r0,r0,r1
-00053a  9006              STR      r0,[sp,#0x18]
-;;;284    				var32a = var32a / var16;
-00053c  f8bd0018          LDRH     r0,[sp,#0x18]
-000540  9905              LDR      r1,[sp,#0x14]
-000542  fbb1f0f0          UDIV     r0,r1,r0
-000546  9005              STR      r0,[sp,#0x14]
-;;;285    				REG_CorrectionV1 = var32a;
-000548  9805              LDR      r0,[sp,#0x14]
-00054a  f8a80018          STRH     r0,[r8,#0x18]
+;;;281    				var32a = var32a << 14;
+000526  9805              LDR      r0,[sp,#0x14]
+000528  0380              LSLS     r0,r0,#14
+00052a  9005              STR      r0,[sp,#0x14]
+;;;282    				var16 = Modify_B_READ - Modify_A_READ;
+00052c  8928              LDRH     r0,[r5,#8]  ; Modify_B_READ
+00052e  8869              LDRH     r1,[r5,#2]  ; Modify_A_READ
+000530  1a40              SUBS     r0,r0,r1
+000532  9006              STR      r0,[sp,#0x18]
+;;;283    				var32a = var32a / var16;
+000534  e9dd0105          LDRD     r0,r1,[sp,#0x14]
+000538  fbb0f0f1          UDIV     r0,r0,r1
+00053c  9005              STR      r0,[sp,#0x14]
+;;;284    				REG_CorrectionV1 = var32a;
+00053e  9805              LDR      r0,[sp,#0x14]
+000540  f8a80018          STRH     r0,[r8,#0x18]
+;;;285    				var32a=0;
 ;;;286    				var32a = Modify_B_ACT;
-00054e  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
-000550  9005              STR      r0,[sp,#0x14]
+000544  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
+000546  9005              STR      r0,[sp,#0x14]
 ;;;287    				var32a = var32a << 14;
-000552  9805              LDR      r0,[sp,#0x14]
-000554  0380              LSLS     r0,r0,#14
-000556  9005              STR      r0,[sp,#0x14]
+000548  9805              LDR      r0,[sp,#0x14]
+00054a  0380              LSLS     r0,r0,#14
+00054c  9005              STR      r0,[sp,#0x14]
 ;;;288    				var32b = Modify_B_READ;
-000558  8928              LDRH     r0,[r5,#8]  ; Modify_B_READ
-00055a  9004              STR      r0,[sp,#0x10]
+00054e  8928              LDRH     r0,[r5,#8]  ; Modify_B_READ
+000550  9004              STR      r0,[sp,#0x10]
 ;;;289    				var32b = var32b * REG_CorrectionV1;
-00055c  f8b80018          LDRH     r0,[r8,#0x18]  ; Correct_Parametet
-000560  9904              LDR      r1,[sp,#0x10]
-000562  4348              MULS     r0,r1,r0
-000564  9004              STR      r0,[sp,#0x10]
+000552  f8b80018          LDRH     r0,[r8,#0x18]  ; Correct_Parametet
+000556  9904              LDR      r1,[sp,#0x10]
+000558  4348              MULS     r0,r1,r0
+00055a  9004              STR      r0,[sp,#0x10]
 ;;;290    				if (var32a < var32b)
-000566  e9dd1004          LDRD     r1,r0,[sp,#0x10]
-00056a  4288              CMP      r0,r1
-00056c  d20c              BCS      |L3.1416|
+00055c  e9dd1004          LDRD     r1,r0,[sp,#0x10]
+000560  4288              CMP      r0,r1
+000562  d20c              BCS      |L3.1406|
 ;;;291    				{
 ;;;292    					var32b = var32b - var32a;
-00056e  e9dd0104          LDRD     r0,r1,[sp,#0x10]
-000572  1a40              SUBS     r0,r0,r1
-000574  9004              STR      r0,[sp,#0x10]
+000564  e9dd0104          LDRD     r0,r1,[sp,#0x10]
+000568  1a40              SUBS     r0,r0,r1
+00056a  9004              STR      r0,[sp,#0x10]
 ;;;293    					REG_ReadV1_Offset = var32b;
-000576  9804              LDR      r0,[sp,#0x10]
-000578  6220              STR      r0,[r4,#0x20]  ; Correct_Strong
+00056c  9804              LDR      r0,[sp,#0x10]
+00056e  6220              STR      r0,[r4,#0x20]  ; Correct_Strong
 ;;;294    					Polar2 |= 0x01;
-00057a  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
-00057e  f0400001          ORR      r0,r0,#1
-000582  f8a80014          STRH     r0,[r8,#0x14]
-000586  e00b              B        |L3.1440|
-                  |L3.1416|
+000570  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
+000574  f0400001          ORR      r0,r0,#1
+000578  f8a80014          STRH     r0,[r8,#0x14]
+00057c  e00b              B        |L3.1430|
+                  |L3.1406|
 ;;;295    				}
 ;;;296    				else 
 ;;;297    				{
 ;;;298    					var32a = var32a - var32b;
-000588  e9dd1004          LDRD     r1,r0,[sp,#0x10]
-00058c  1a40              SUBS     r0,r0,r1
-00058e  9005              STR      r0,[sp,#0x14]
+00057e  e9dd1004          LDRD     r1,r0,[sp,#0x10]
+000582  1a40              SUBS     r0,r0,r1
+000584  9005              STR      r0,[sp,#0x14]
 ;;;299    					REG_ReadV1_Offset = var32a;
-000590  9805              LDR      r0,[sp,#0x14]
-000592  6220              STR      r0,[r4,#0x20]  ; Correct_Strong
-;;;300    					Polar2 &= ~0x01;					
-000594  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
-000598  f0200001          BIC      r0,r0,#1
-00059c  f8a80014          STRH     r0,[r8,#0x14]
-                  |L3.1440|
-;;;301    				}
-;;;302    		//---------------------------------------------------------------------------------//
-;;;303    				var32c = Modify_B_ACT; //设置电压校准
-0005a0  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
-0005a2  9002              STR      r0,[sp,#8]
-;;;304    				var32c = var32c - Modify_A_ACT;
-0005a4  88e9              LDRH     r1,[r5,#6]  ; Modify_A_ACT
-0005a6  9802              LDR      r0,[sp,#8]
-0005a8  1a40              SUBS     r0,r0,r1
-0005aa  9002              STR      r0,[sp,#8]
-;;;305    				var32c = var32c << 14;
-0005ac  9802              LDR      r0,[sp,#8]
-0005ae  0380              LSLS     r0,r0,#14
-0005b0  9002              STR      r0,[sp,#8]
-;;;306    				var16a=Modify_D_READ-Modify_C_READ;
-0005b2  8968              LDRH     r0,[r5,#0xa]  ; Modify_D_READ
-0005b4  88a9              LDRH     r1,[r5,#4]  ; Modify_C_READ
-0005b6  1a40              SUBS     r0,r0,r1
-0005b8  9003              STR      r0,[sp,#0xc]
-;;;307    				var16a=var16a*2;
-0005ba  f8bd100c          LDRH     r1,[sp,#0xc]
-0005be  f64f70ff          MOV      r0,#0xffff
-0005c2  ea000041          AND      r0,r0,r1,LSL #1
-0005c6  9003              STR      r0,[sp,#0xc]
-;;;308    				var32c=var32c/var16a;
-0005c8  f8bd000c          LDRH     r0,[sp,#0xc]
-0005cc  9902              LDR      r1,[sp,#8]
-0005ce  fbb1f0f0          UDIV     r0,r1,r0
-0005d2  9002              STR      r0,[sp,#8]
-;;;309    				SET_CorrectionV = var32c;
-0005d4  9802              LDR      r0,[sp,#8]
-0005d6  f8a8000a          STRH     r0,[r8,#0xa]
-;;;310    				var32c = Modify_B_ACT;
-0005da  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
-0005dc  9002              STR      r0,[sp,#8]
-;;;311    				var32c = var32c << 14;
-0005de  9802              LDR      r0,[sp,#8]
-0005e0  0380              LSLS     r0,r0,#14
-0005e2  9002              STR      r0,[sp,#8]
-;;;312    				var32d = SET_CorrectionV;
-0005e4  f8b8000a          LDRH     r0,[r8,#0xa]  ; Correct_Parametet
-0005e8  9001              STR      r0,[sp,#4]
-;;;313    				var32d = var32d * (Modify_D_READ*2);
-0005ea  8969              LDRH     r1,[r5,#0xa]  ; Modify_D_READ
-0005ec  9801              LDR      r0,[sp,#4]
-0005ee  4348              MULS     r0,r1,r0
-0005f0  0040              LSLS     r0,r0,#1
-0005f2  9001              STR      r0,[sp,#4]
-;;;314    				if (var32c < var32d)
-0005f4  e9dd1001          LDRD     r1,r0,[sp,#4]
-0005f8  4288              CMP      r0,r1
-0005fa  d20e              BCS      |L3.1562|
-;;;315    				{
-;;;316    					var32d = var32d - var32c;
-0005fc  e9dd0101          LDRD     r0,r1,[sp,#4]
-000600  1a40              SUBS     r0,r0,r1
-000602  9001              STR      r0,[sp,#4]
-;;;317    					SET_ReadV_Offset = var32d;
-000604  9801              LDR      r0,[sp,#4]
-000606  e000              B        |L3.1546|
-                  |L3.1544|
-000608  e019              B        |L3.1598|
-                  |L3.1546|
-00060a  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
-;;;318    					Polar2 |= 0x04;
-00060c  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
-000610  f0400004          ORR      r0,r0,#4
-000614  f8a80014          STRH     r0,[r8,#0x14]
-000618  e00b              B        |L3.1586|
-                  |L3.1562|
-;;;319    				}
-;;;320    				else 
-;;;321    				{
-;;;322    					var32c = var32c - var32d;
-00061a  e9dd1001          LDRD     r1,r0,[sp,#4]
-00061e  1a40              SUBS     r0,r0,r1
-000620  9002              STR      r0,[sp,#8]
-;;;323    					SET_ReadV_Offset = var32c;
-000622  9802              LDR      r0,[sp,#8]
-000624  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
-;;;324    					Polar2 &= ~0x04;
-000626  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
-00062a  f0200004          BIC      r0,r0,#4
-00062e  f8a80014          STRH     r0,[r8,#0x14]
-                  |L3.1586|
-;;;325    				}
-;;;326    				Flash_Write_all ();	
-000632  f7fffffe          BL       Flash_Write_all
-;;;327    				Flag_DAC_OFF=0;
-000636  6830              LDR      r0,[r6,#0]  ; flagB
-000638  f0200008          BIC      r0,r0,#8
-00063c  6030              STR      r0,[r6,#0]  ; flagB
-                  |L3.1598|
-;;;328    			}
-;;;329    			/*******************************电源CC模式电流测量和控制校准******************************************/	
-;;;330    			if (g_tModS.RxBuf[1] == 0x09||flag_ADJ_ALCC==1)			   //电流测量校准
-00063e  49a8              LDR      r1,|L3.2272|
-;;;331    			{
-;;;332    				Modify_A_READ = Imon_value;//测量电流
-000640  4aa8              LDR      r2,|L3.2276|
-;;;333    				Modify_C_READ = Contr_Current;//设置电流
-000642  f8df92a4          LDR      r9,|L3.2280|
-000646  7848              LDRB     r0,[r1,#1]            ;330  ; g_tModS
-000648  2809              CMP      r0,#9                 ;330
-00064a  d002              BEQ      |L3.1618|
-00064c  783b              LDRB     r3,[r7,#0]            ;330  ; flagF
-00064e  06db              LSLS     r3,r3,#27             ;330
-000650  d50a              BPL      |L3.1640|
-                  |L3.1618|
-000652  8813              LDRH     r3,[r2,#0]            ;332  ; Imon_value
-000654  806b              STRH     r3,[r5,#2]            ;332
-000656  f8b93000          LDRH     r3,[r9,#0]  ; Contr_Current
-00065a  80ab              STRH     r3,[r5,#4]
-;;;334    				Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
-00065c  790b              LDRB     r3,[r1,#4]  ; g_tModS
-00065e  f891c003          LDRB     r12,[r1,#3]  ; g_tModS
-000662  eb03230c          ADD      r3,r3,r12,LSL #8
-000666  80eb              STRH     r3,[r5,#6]
-                  |L3.1640|
-;;;335    			}
-;;;336    
-;;;337    			if (g_tModS.RxBuf[1] == 0x0A||flag_ADJ_AHCC==1)			   //电流测量校准完成
-000668  280a              CMP      r0,#0xa
-00066a  d002              BEQ      |L3.1650|
-00066c  7838              LDRB     r0,[r7,#0]  ; flagF
-00066e  0680              LSLS     r0,r0,#26
-000670  d57e              BPL      |L3.1904|
-                  |L3.1650|
-;;;338    			{
-;;;339    				vu16 var16;
-;;;340    				vu32 var32a;
-;;;341    				vu32 var32b;
-;;;342    				
-;;;343    				vu16 var16a;
-;;;344    				vu32 var32c;
-;;;345    				vu32 var32d;
-;;;346    				
-;;;347    				Modify_D_READ = Contr_Current;
-000672  f8b90000          LDRH     r0,[r9,#0]  ; Contr_Current
-000676  8168              STRH     r0,[r5,#0xa]
-;;;348    				Modify_B_READ = Imon_value;
-000678  8810              LDRH     r0,[r2,#0]  ; Imon_value
-00067a  8128              STRH     r0,[r5,#8]
-;;;349    				Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
-00067c  4898              LDR      r0,|L3.2272|
-00067e  7901              LDRB     r1,[r0,#4]  ; g_tModS
-000680  78c0              LDRB     r0,[r0,#3]  ; g_tModS
-000682  eb012000          ADD      r0,r1,r0,LSL #8
-000686  81a8              STRH     r0,[r5,#0xc]
-;;;350    				var32a = Modify_B_ACT;
-000688  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
-00068a  9005              STR      r0,[sp,#0x14]
-;;;351    				var32a = var32a - Modify_A_ACT;
-00068c  88e9              LDRH     r1,[r5,#6]  ; Modify_A_ACT
-00068e  9805              LDR      r0,[sp,#0x14]
-000690  1a40              SUBS     r0,r0,r1
-000692  9005              STR      r0,[sp,#0x14]
-;;;352    				var32a = var32a << 12;
+000586  9805              LDR      r0,[sp,#0x14]
+000588  6220              STR      r0,[r4,#0x20]  ; Correct_Strong
+;;;300    					Polar2 &= ~0x01;
+00058a  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
+00058e  f0200001          BIC      r0,r0,#1
+000592  f8a80014          STRH     r0,[r8,#0x14]
+                  |L3.1430|
+;;;301    				}			
+;;;302    				
+;;;303    //				vu16 var16;
+;;;304    //				vu32 var32a;
+;;;305    //				vu32 var32b;
+;;;306    //				
+;;;307    //				vu16 var16a;
+;;;308    //				vu32 var32c;
+;;;309    //				vu32 var32d;
+;;;310    //				
+;;;311    //				Modify_D_READ = Contr_Voltage;
+;;;312    //				Modify_B_READ = Vmon1_value;
+;;;313    //				Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+;;;314    //				var32a = Modify_B_ACT;
+;;;315    //				var32a = var32a - Modify_A_ACT;
+;;;316    //				var32a = var32a << 12;
+;;;317    //				var16 = Modify_B_READ - Modify_A_READ;
+;;;318    //				var32a = var32a / var16;
+;;;319    //				REG_CorrectionV1 = var32a;
+;;;320    //				var32a = Modify_B_ACT;
+;;;321    //				var32a = var32a << 12;
+;;;322    //				var32b = Modify_B_READ;
+;;;323    //				var32b = var32b * REG_CorrectionV1;
+;;;324    //				if (var32a < var32b)
+;;;325    //				{
+;;;326    //					var32b = var32b - var32a;
+;;;327    //					REG_ReadV1_Offset = var32b;
+;;;328    //					Polar2 |= 0x01;
+;;;329    //				}
+;;;330    //				else 
+;;;331    //				{
+;;;332    //					var32a = var32a - var32b;
+;;;333    //					REG_ReadV1_Offset = var32a;
+;;;334    //					Polar2 &= ~0x01;					
+;;;335    //				}
+;;;336    		//---------------------------------------------------------------------------------//
+;;;337    				var32c = Modify_B_ACT; //设置电压校准
+000596  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
+000598  9002              STR      r0,[sp,#8]
+;;;338    				var32c = var32c - Modify_A_ACT;
+00059a  88e9              LDRH     r1,[r5,#6]  ; Modify_A_ACT
+00059c  9802              LDR      r0,[sp,#8]
+00059e  1a40              SUBS     r0,r0,r1
+0005a0  9002              STR      r0,[sp,#8]
+;;;339    				var32c = var32c << 14;
+0005a2  9802              LDR      r0,[sp,#8]
+0005a4  0380              LSLS     r0,r0,#14
+0005a6  9002              STR      r0,[sp,#8]
+;;;340    				var16a=Modify_D_READ-Modify_C_READ;
+0005a8  8968              LDRH     r0,[r5,#0xa]  ; Modify_D_READ
+0005aa  88a9              LDRH     r1,[r5,#4]  ; Modify_C_READ
+0005ac  1a40              SUBS     r0,r0,r1
+0005ae  9003              STR      r0,[sp,#0xc]
+;;;341    				var16a=var16a*2;
+0005b0  9803              LDR      r0,[sp,#0xc]
+0005b2  0040              LSLS     r0,r0,#1
+0005b4  9003              STR      r0,[sp,#0xc]
+;;;342    				var32c=var32c/var16a;
+0005b6  e9dd0102          LDRD     r0,r1,[sp,#8]
+0005ba  fbb0f0f1          UDIV     r0,r0,r1
+0005be  9002              STR      r0,[sp,#8]
+;;;343    				SET_CorrectionV = var32c;
+0005c0  9802              LDR      r0,[sp,#8]
+0005c2  f8a8000a          STRH     r0,[r8,#0xa]
+;;;344    				var32c = Modify_B_ACT;
+0005c6  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
+0005c8  9002              STR      r0,[sp,#8]
+;;;345    				var32c = var32c << 14;
+0005ca  9802              LDR      r0,[sp,#8]
+0005cc  0380              LSLS     r0,r0,#14
+0005ce  9002              STR      r0,[sp,#8]
+;;;346    				var32d = SET_CorrectionV;
+0005d0  f8b8000a          LDRH     r0,[r8,#0xa]  ; Correct_Parametet
+0005d4  9001              STR      r0,[sp,#4]
+;;;347    				var32d = var32d * (Modify_D_READ*2);
+0005d6  8969              LDRH     r1,[r5,#0xa]  ; Modify_D_READ
+0005d8  9801              LDR      r0,[sp,#4]
+0005da  4348              MULS     r0,r1,r0
+0005dc  0040              LSLS     r0,r0,#1
+0005de  9001              STR      r0,[sp,#4]
+;;;348    				if (var32c < var32d)
+0005e0  e9dd1001          LDRD     r1,r0,[sp,#4]
+0005e4  4288              CMP      r0,r1
+0005e6  d20e              BCS      |L3.1542|
+;;;349    				{
+;;;350    					var32d = var32d - var32c;
+0005e8  e9dd0101          LDRD     r0,r1,[sp,#4]
+0005ec  1a40              SUBS     r0,r0,r1
+0005ee  9001              STR      r0,[sp,#4]
+;;;351    					SET_ReadV_Offset = var32d;
+0005f0  9801              LDR      r0,[sp,#4]
+0005f2  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
+;;;352    					Polar2 |= 0x04;
+0005f4  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
+0005f8  f0400004          ORR      r0,r0,#4
+0005fc  e000              B        |L3.1536|
+                  |L3.1534|
+0005fe  e014              B        |L3.1578|
+                  |L3.1536|
+000600  f8a80014          STRH     r0,[r8,#0x14]
+000604  e00b              B        |L3.1566|
+                  |L3.1542|
+;;;353    				}
+;;;354    				else 
+;;;355    				{
+;;;356    					var32c = var32c - var32d;
+000606  e9dd1001          LDRD     r1,r0,[sp,#4]
+00060a  1a40              SUBS     r0,r0,r1
+00060c  9002              STR      r0,[sp,#8]
+;;;357    					SET_ReadV_Offset = var32c;
+00060e  9802              LDR      r0,[sp,#8]
+000610  6120              STR      r0,[r4,#0x10]  ; Correct_Strong
+;;;358    					Polar2 &= ~0x04;
+000612  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
+000616  f0200004          BIC      r0,r0,#4
+00061a  f8a80014          STRH     r0,[r8,#0x14]
+                  |L3.1566|
+;;;359    				}
+;;;360    				Flash_Write_all ();	
+00061e  f7fffffe          BL       Flash_Write_all
+;;;361    				Flag_DAC_OFF=0;
+000622  6830              LDR      r0,[r6,#0]  ; flagB
+000624  f0200008          BIC      r0,r0,#8
+000628  6030              STR      r0,[r6,#0]  ; flagB
+                  |L3.1578|
+;;;362    			}
+;;;363    			/*******************************电源CC模式电流测量和控制校准******************************************/	
+;;;364    			if (g_tModS.RxBuf[1] == 0x09||flag_ADJ_ALCC==1)			   //电流测量校准
+00062a  4659              MOV      r1,r11
+00062c  f89b0001          LDRB     r0,[r11,#1]  ; g_tModS
+;;;365    			{
+;;;366    				Modify_A_READ = Imon_value;//测量电流
+000630  4aa7              LDR      r2,|L3.2256|
+;;;367    				Modify_C_READ = Contr_Current;//设置电流
+000632  f8dfb2a0          LDR      r11,|L3.2260|
+000636  2809              CMP      r0,#9                 ;364
+000638  d002              BEQ      |L3.1600|
+00063a  783b              LDRB     r3,[r7,#0]            ;364  ; flagF
+00063c  06db              LSLS     r3,r3,#27             ;364
+00063e  d50a              BPL      |L3.1622|
+                  |L3.1600|
+000640  8813              LDRH     r3,[r2,#0]            ;366  ; Imon_value
+000642  806b              STRH     r3,[r5,#2]            ;366
+000644  f8bb3000          LDRH     r3,[r11,#0]  ; Contr_Current
+000648  80ab              STRH     r3,[r5,#4]
+;;;368    				Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+00064a  790b              LDRB     r3,[r1,#4]  ; g_tModS
+00064c  f891c003          LDRB     r12,[r1,#3]  ; g_tModS
+000650  eb03230c          ADD      r3,r3,r12,LSL #8
+000654  80eb              STRH     r3,[r5,#6]
+                  |L3.1622|
+;;;369    			}
+;;;370    
+;;;371    			if (g_tModS.RxBuf[1] == 0x0A||flag_ADJ_AHCC==1)			   //电流测量校准完成
+000656  280a              CMP      r0,#0xa
+000658  d002              BEQ      |L3.1632|
+00065a  7838              LDRB     r0,[r7,#0]  ; flagF
+00065c  0680              LSLS     r0,r0,#26
+00065e  d57d              BPL      |L3.1884|
+                  |L3.1632|
+;;;372    			{
+;;;373    				vu16 var16;
+;;;374    				vu32 var32a;
+;;;375    				vu32 var32b;
+;;;376    				
+;;;377    				vu16 var16a;
+;;;378    				vu32 var32c;
+;;;379    				vu32 var32d;
+;;;380    				
+;;;381    				Modify_D_READ = Contr_Current;
+000660  f8bb0000          LDRH     r0,[r11,#0]  ; Contr_Current
+000664  8168              STRH     r0,[r5,#0xa]
+;;;382    				Modify_B_READ = Imon_value;
+000666  8810              LDRH     r0,[r2,#0]  ; Imon_value
+000668  8128              STRH     r0,[r5,#8]
+;;;383    				Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+00066a  489b              LDR      r0,|L3.2264|
+00066c  7901              LDRB     r1,[r0,#4]  ; g_tModS
+00066e  78c0              LDRB     r0,[r0,#3]  ; g_tModS
+000670  eb012000          ADD      r0,r1,r0,LSL #8
+000674  81a8              STRH     r0,[r5,#0xc]
+;;;384    				var32a = Modify_B_ACT;
+000676  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
+000678  9005              STR      r0,[sp,#0x14]
+;;;385    				var32a = var32a - Modify_A_ACT;
+00067a  88e9              LDRH     r1,[r5,#6]  ; Modify_A_ACT
+00067c  9805              LDR      r0,[sp,#0x14]
+00067e  1a40              SUBS     r0,r0,r1
+000680  9005              STR      r0,[sp,#0x14]
+;;;386    				var32a = var32a << 12;
+000682  9805              LDR      r0,[sp,#0x14]
+000684  0300              LSLS     r0,r0,#12
+000686  9005              STR      r0,[sp,#0x14]
+;;;387    				var16 = Modify_B_READ - Modify_A_READ;
+000688  8928              LDRH     r0,[r5,#8]  ; Modify_B_READ
+00068a  8869              LDRH     r1,[r5,#2]  ; Modify_A_READ
+00068c  1a40              SUBS     r0,r0,r1
+00068e  9006              STR      r0,[sp,#0x18]
+;;;388    				var32a = var32a / var16;
+000690  f8bd1018          LDRH     r1,[sp,#0x18]
 000694  9805              LDR      r0,[sp,#0x14]
-000696  0300              LSLS     r0,r0,#12
-000698  9005              STR      r0,[sp,#0x14]
-;;;353    				var16 = Modify_B_READ - Modify_A_READ;
-00069a  8929              LDRH     r1,[r5,#8]  ; Modify_B_READ
-00069c  8868              LDRH     r0,[r5,#2]  ; Modify_A_READ
-00069e  1a08              SUBS     r0,r1,r0
-0006a0  9006              STR      r0,[sp,#0x18]
-;;;354    				var32a = var32a / var16;
-0006a2  f8bd0018          LDRH     r0,[sp,#0x18]
-0006a6  9905              LDR      r1,[sp,#0x14]
-0006a8  fbb1f0f0          UDIV     r0,r1,r0
-0006ac  9005              STR      r0,[sp,#0x14]
-;;;355    				CON_CorrectionA = var32a;
-0006ae  9805              LDR      r0,[sp,#0x14]
-0006b0  f8a80010          STRH     r0,[r8,#0x10]
-;;;356    				var32a = Modify_B_ACT;
-0006b4  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
-0006b6  9005              STR      r0,[sp,#0x14]
-;;;357    				var32a = var32a << 12;
-0006b8  9805              LDR      r0,[sp,#0x14]
-0006ba  0300              LSLS     r0,r0,#12
-0006bc  9005              STR      r0,[sp,#0x14]
-;;;358    				var32b = Modify_B_READ;
-0006be  8928              LDRH     r0,[r5,#8]  ; Modify_B_READ
-0006c0  9004              STR      r0,[sp,#0x10]
-;;;359    				var32b = var32b * CON_CorrectionA;
-0006c2  f8b80010          LDRH     r0,[r8,#0x10]  ; Correct_Parametet
-0006c6  9904              LDR      r1,[sp,#0x10]
-0006c8  4348              MULS     r0,r1,r0
-0006ca  9004              STR      r0,[sp,#0x10]
-;;;360    				if (var32a < var32b)
-0006cc  e9dd1004          LDRD     r1,r0,[sp,#0x10]
-0006d0  4288              CMP      r0,r1
-0006d2  d20c              BCS      |L3.1774|
-;;;361    				{
-;;;362    					var32b = var32b - var32a;
-0006d4  e9dd0104          LDRD     r0,r1,[sp,#0x10]
-0006d8  1a40              SUBS     r0,r0,r1
-0006da  9004              STR      r0,[sp,#0x10]
-;;;363    					CON_ReadA_Offset = var32b;
-0006dc  9804              LDR      r0,[sp,#0x10]
-0006de  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
-;;;364    					Polar2 |= 0x01;
-0006e0  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
-0006e4  f0400001          ORR      r0,r0,#1
-0006e8  f8a80014          STRH     r0,[r8,#0x14]
-0006ec  e00b              B        |L3.1798|
-                  |L3.1774|
-;;;365    				}
-;;;366    				else 
-;;;367    				{
-;;;368    					var32a = var32a - var32b;
-0006ee  e9dd0104          LDRD     r0,r1,[sp,#0x10]
-0006f2  1a08              SUBS     r0,r1,r0
-0006f4  9005              STR      r0,[sp,#0x14]
-;;;369    					CON_ReadA_Offset = var32a;
-0006f6  9805              LDR      r0,[sp,#0x14]
-0006f8  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
-;;;370    					Polar2 &= ~0x01;					//电流测量系数和零点校准完成
-0006fa  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
-0006fe  f0200001          BIC      r0,r0,#1
-000702  f8a80014          STRH     r0,[r8,#0x14]
-                  |L3.1798|
-;;;371    				}
-;;;372    		//---------------------------------------------------------------------------------//
-;;;373    				var32c = Modify_B_ACT; //设置电流校准
-000706  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
-000708  9002              STR      r0,[sp,#8]
-;;;374    				var32c = var32c - Modify_A_ACT;
-00070a  88e9              LDRH     r1,[r5,#6]  ; Modify_A_ACT
-00070c  9802              LDR      r0,[sp,#8]
-00070e  1a40              SUBS     r0,r0,r1
-000710  9002              STR      r0,[sp,#8]
-;;;375    				var32c = var32c << 14;
-000712  9802              LDR      r0,[sp,#8]
-000714  0380              LSLS     r0,r0,#14
-000716  9002              STR      r0,[sp,#8]
-;;;376    				var16a=Modify_D_READ-Modify_C_READ;
-000718  8968              LDRH     r0,[r5,#0xa]  ; Modify_D_READ
-00071a  88a9              LDRH     r1,[r5,#4]  ; Modify_C_READ
-00071c  1a40              SUBS     r0,r0,r1
-00071e  9003              STR      r0,[sp,#0xc]
-;;;377    				var16a=var16a*2;
-000720  f8bd100c          LDRH     r1,[sp,#0xc]
-000724  f64f70ff          MOV      r0,#0xffff
-000728  ea000041          AND      r0,r0,r1,LSL #1
-00072c  9003              STR      r0,[sp,#0xc]
-;;;378    				var32c=var32c/var16a;
-00072e  f8bd100c          LDRH     r1,[sp,#0xc]
+000696  fbb0f0f1          UDIV     r0,r0,r1
+00069a  9005              STR      r0,[sp,#0x14]
+;;;389    				CON_CorrectionA = var32a;
+00069c  9805              LDR      r0,[sp,#0x14]
+00069e  f8a80010          STRH     r0,[r8,#0x10]
+;;;390    				var32a = Modify_B_ACT;
+0006a2  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
+0006a4  9005              STR      r0,[sp,#0x14]
+;;;391    				var32a = var32a << 12;
+0006a6  9805              LDR      r0,[sp,#0x14]
+0006a8  0300              LSLS     r0,r0,#12
+0006aa  9005              STR      r0,[sp,#0x14]
+;;;392    				var32b = Modify_B_READ;
+0006ac  8928              LDRH     r0,[r5,#8]  ; Modify_B_READ
+0006ae  9004              STR      r0,[sp,#0x10]
+;;;393    				var32b = var32b * CON_CorrectionA;
+0006b0  f8b80010          LDRH     r0,[r8,#0x10]  ; Correct_Parametet
+0006b4  9904              LDR      r1,[sp,#0x10]
+0006b6  4348              MULS     r0,r1,r0
+0006b8  9004              STR      r0,[sp,#0x10]
+;;;394    				if (var32a < var32b)
+0006ba  e9dd0104          LDRD     r0,r1,[sp,#0x10]
+0006be  4281              CMP      r1,r0
+0006c0  d20c              BCS      |L3.1756|
+;;;395    				{
+;;;396    					var32b = var32b - var32a;
+0006c2  e9dd0104          LDRD     r0,r1,[sp,#0x10]
+0006c6  1a40              SUBS     r0,r0,r1
+0006c8  9004              STR      r0,[sp,#0x10]
+;;;397    					CON_ReadA_Offset = var32b;
+0006ca  9804              LDR      r0,[sp,#0x10]
+0006cc  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
+;;;398    					Polar2 |= 0x01;
+0006ce  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
+0006d2  f0400001          ORR      r0,r0,#1
+0006d6  f8a80014          STRH     r0,[r8,#0x14]
+0006da  e00b              B        |L3.1780|
+                  |L3.1756|
+;;;399    				}
+;;;400    				else 
+;;;401    				{
+;;;402    					var32a = var32a - var32b;
+0006dc  e9dd1004          LDRD     r1,r0,[sp,#0x10]
+0006e0  1a40              SUBS     r0,r0,r1
+0006e2  9005              STR      r0,[sp,#0x14]
+;;;403    					CON_ReadA_Offset = var32a;
+0006e4  9805              LDR      r0,[sp,#0x14]
+0006e6  61e0              STR      r0,[r4,#0x1c]  ; Correct_Strong
+;;;404    					Polar2 &= ~0x01;					//电流测量系数和零点校准完成
+0006e8  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
+0006ec  f0200001          BIC      r0,r0,#1
+0006f0  f8a80014          STRH     r0,[r8,#0x14]
+                  |L3.1780|
+;;;405    				}
+;;;406    		//---------------------------------------------------------------------------------//
+;;;407    				var32c = Modify_B_ACT; //设置电流校准
+0006f4  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
+0006f6  9002              STR      r0,[sp,#8]
+;;;408    				var32c = var32c - Modify_A_ACT;
+0006f8  88e9              LDRH     r1,[r5,#6]  ; Modify_A_ACT
+0006fa  9802              LDR      r0,[sp,#8]
+0006fc  1a40              SUBS     r0,r0,r1
+0006fe  9002              STR      r0,[sp,#8]
+;;;409    				var32c = var32c << 14;
+000700  9802              LDR      r0,[sp,#8]
+000702  0380              LSLS     r0,r0,#14
+000704  9002              STR      r0,[sp,#8]
+;;;410    				var16a=Modify_D_READ-Modify_C_READ;
+000706  8968              LDRH     r0,[r5,#0xa]  ; Modify_D_READ
+000708  88a9              LDRH     r1,[r5,#4]  ; Modify_C_READ
+00070a  1a40              SUBS     r0,r0,r1
+00070c  9003              STR      r0,[sp,#0xc]
+;;;411    				var16a=var16a*2;
+00070e  f8bd000c          LDRH     r0,[sp,#0xc]
+000712  f64f71ff          MOV      r1,#0xffff
+000716  ea010040          AND      r0,r1,r0,LSL #1
+00071a  9003              STR      r0,[sp,#0xc]
+;;;412    				var32c=var32c/var16a;
+00071c  f8bd100c          LDRH     r1,[sp,#0xc]
+000720  9802              LDR      r0,[sp,#8]
+000722  fbb0f0f1          UDIV     r0,r0,r1
+000726  9002              STR      r0,[sp,#8]
+;;;413    				SET_CorrectionA = var32c;
+000728  9802              LDR      r0,[sp,#8]
+00072a  f8a8000c          STRH     r0,[r8,#0xc]
+;;;414    				var32c = Modify_B_ACT;
+00072e  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
+000730  9002              STR      r0,[sp,#8]
+;;;415    				var32c = var32c << 14;
 000732  9802              LDR      r0,[sp,#8]
-000734  fbb0f0f1          UDIV     r0,r0,r1
-000738  9002              STR      r0,[sp,#8]
-;;;379    				SET_CorrectionA = var32c;
-00073a  9802              LDR      r0,[sp,#8]
-00073c  f8a8000c          STRH     r0,[r8,#0xc]
-;;;380    				var32c = Modify_B_ACT;
-000740  89a8              LDRH     r0,[r5,#0xc]  ; Modify_B_ACT
-000742  9002              STR      r0,[sp,#8]
-;;;381    				var32c = var32c << 14;
-000744  9802              LDR      r0,[sp,#8]
-000746  0380              LSLS     r0,r0,#14
-000748  9002              STR      r0,[sp,#8]
-;;;382    				var32d = SET_CorrectionA;
-00074a  f8b8000c          LDRH     r0,[r8,#0xc]  ; Correct_Parametet
-00074e  9001              STR      r0,[sp,#4]
-;;;383    				var32d = var32d * (Modify_D_READ*2);
-000750  8969              LDRH     r1,[r5,#0xa]  ; Modify_D_READ
-000752  9801              LDR      r0,[sp,#4]
-000754  4348              MULS     r0,r1,r0
-000756  0040              LSLS     r0,r0,#1
-000758  9001              STR      r0,[sp,#4]
-;;;384    				if (var32c < var32d)
-00075a  e9dd0101          LDRD     r0,r1,[sp,#4]
-00075e  4281              CMP      r1,r0
-000760  d20e              BCS      |L3.1920|
-;;;385    				{
-;;;386    					var32d = var32d - var32c;
-000762  e9dd1001          LDRD     r1,r0,[sp,#4]
-000766  1a08              SUBS     r0,r1,r0
-000768  9001              STR      r0,[sp,#4]
-;;;387    					SET_ReadA_Offset = var32d;
-00076a  9801              LDR      r0,[sp,#4]
-00076c  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
-;;;388    					Polar2 |= 0x04;
-00076e  e000              B        |L3.1906|
-                  |L3.1904|
-000770  e018              B        |L3.1956|
-                  |L3.1906|
-000772  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
-000776  f0400004          ORR      r0,r0,#4
-00077a  f8a80014          STRH     r0,[r8,#0x14]
-00077e  e00b              B        |L3.1944|
-                  |L3.1920|
-;;;389    				}
-;;;390    				else 
-;;;391    				{
-;;;392    					var32c = var32c - var32d;
-000780  e9dd0101          LDRD     r0,r1,[sp,#4]
-000784  1a08              SUBS     r0,r1,r0
-000786  9002              STR      r0,[sp,#8]
-;;;393    					SET_ReadA_Offset = var32c;
-000788  9802              LDR      r0,[sp,#8]
-00078a  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
-;;;394    					Polar2 &= ~0x04;
-00078c  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
-000790  f0200004          BIC      r0,r0,#4
-000794  f8a80014          STRH     r0,[r8,#0x14]
-                  |L3.1944|
-;;;395    				}
-;;;396    				Flash_Write_all ();	
-000798  f7fffffe          BL       Flash_Write_all
-;;;397    				Flag_DAC_OFF=0;
-00079c  6830              LDR      r0,[r6,#0]  ; flagB
-00079e  f0200008          BIC      r0,r0,#8
-0007a2  6030              STR      r0,[r6,#0]  ; flagB
-                  |L3.1956|
-;;;398    			}
-;;;399            /*************************************内阻校准**************************************************************************/
-;;;400    		if(g_tModS.RxBuf[1] == 0x07||flag_ADJ_VL==1)
-0007a4  494e              LDR      r1,|L3.2272|
-;;;401    		{
-;;;402    			Modify_A_READ = Rmon_value;//测量电压值
-0007a6  4a51              LDR      r2,|L3.2284|
-0007a8  7848              LDRB     r0,[r1,#1]            ;400  ; g_tModS
-0007aa  2807              CMP      r0,#7                 ;400
-0007ac  d002              BEQ      |L3.1972|
-0007ae  783b              LDRB     r3,[r7,#0]            ;400  ; flagF
-0007b0  075b              LSLS     r3,r3,#29             ;400
-0007b2  d507              BPL      |L3.1988|
-                  |L3.1972|
-0007b4  8813              LDRH     r3,[r2,#0]  ; Rmon_value
-0007b6  806b              STRH     r3,[r5,#2]
-;;;403    			Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//读取低段
-0007b8  790b              LDRB     r3,[r1,#4]  ; g_tModS
-0007ba  f891c003          LDRB     r12,[r1,#3]  ; g_tModS
-0007be  eb03230c          ADD      r3,r3,r12,LSL #8
-0007c2  80eb              STRH     r3,[r5,#6]
-                  |L3.1988|
-;;;404    		}
-;;;405    		if (g_tModS.RxBuf[1] == 0x08||flag_ADJ_VH==1)			   //电压测量校准完成
-0007c4  2808              CMP      r0,#8
-0007c6  d002              BEQ      |L3.1998|
-0007c8  7838              LDRB     r0,[r7,#0]  ; flagF
-0007ca  0700              LSLS     r0,r0,#28
-0007cc  d55c              BPL      |L3.2184|
-                  |L3.1998|
-;;;406    		{
-;;;407    			vu16 var16;
-;;;408    			vu32 var32a;
-;;;409    			vu32 var32b;
-;;;410    			
-;;;411    			vu16 var16a;
-;;;412    			vu32 var32c;
-;;;413    			vu32 var32d;
-;;;414    			Modify_B_READ =Rmon_value;//测量电压值
-0007ce  8811              LDRH     r1,[r2,#0]  ; Rmon_value
-0007d0  4628              MOV      r0,r5
-0007d2  8129              STRH     r1,[r5,#8]
-;;;415    			flag_OverV=1;
-0007d4  4d46              LDR      r5,|L3.2288|
-0007d6  6829              LDR      r1,[r5,#0]  ; flagG
-0007d8  f0410102          ORR      r1,r1,#2
-0007dc  6029              STR      r1,[r5,#0]  ; flagG
-;;;416    			Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//读取高段
-0007de  4a40              LDR      r2,|L3.2272|
-0007e0  7913              LDRB     r3,[r2,#4]  ; g_tModS
-0007e2  78d2              LDRB     r2,[r2,#3]  ; g_tModS
-0007e4  eb032202          ADD      r2,r3,r2,LSL #8
-0007e8  8182              STRH     r2,[r0,#0xc]
-;;;417    			if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
-0007ea  0789              LSLS     r1,r1,#30
-0007ec  d548              BPL      |L3.2176|
-;;;418    			{
-;;;419    				var32a = Modify_B_ACT;
-0007ee  8981              LDRH     r1,[r0,#0xc]  ; Modify_B_ACT
-0007f0  9105              STR      r1,[sp,#0x14]
-;;;420    				var32a = var32a - Modify_A_ACT;
-0007f2  88c2              LDRH     r2,[r0,#6]  ; Modify_A_ACT
-0007f4  9905              LDR      r1,[sp,#0x14]
-0007f6  1a89              SUBS     r1,r1,r2
-0007f8  9105              STR      r1,[sp,#0x14]
-;;;421    				var32a = var32a << 12;
-0007fa  9905              LDR      r1,[sp,#0x14]
-0007fc  0309              LSLS     r1,r1,#12
-0007fe  9105              STR      r1,[sp,#0x14]
-;;;422    				var16 = Modify_B_READ - Modify_A_READ;
-000800  8901              LDRH     r1,[r0,#8]  ; Modify_B_READ
-000802  8842              LDRH     r2,[r0,#2]  ; Modify_A_READ
-000804  1a89              SUBS     r1,r1,r2
-000806  9106              STR      r1,[sp,#0x18]
-;;;423    				var32a = var32a / var16;
-000808  f8bd1018          LDRH     r1,[sp,#0x18]
-00080c  9a05              LDR      r2,[sp,#0x14]
-00080e  fbb2f1f1          UDIV     r1,r2,r1
-000812  9105              STR      r1,[sp,#0x14]
-;;;424    				REG_CorrectionR = var32a;
-000814  9905              LDR      r1,[sp,#0x14]
-000816  f8a81006          STRH     r1,[r8,#6]
-;;;425    				var32a=0;
-;;;426    				var32a = Modify_B_ACT;
-00081a  8981              LDRH     r1,[r0,#0xc]  ; Modify_B_ACT
-00081c  9105              STR      r1,[sp,#0x14]
-;;;427    				var32a = var32a << 12;
-00081e  9905              LDR      r1,[sp,#0x14]
-000820  0309              LSLS     r1,r1,#12
-000822  9105              STR      r1,[sp,#0x14]
-;;;428    				var32b = Modify_B_READ;
-000824  8900              LDRH     r0,[r0,#8]  ; Modify_B_READ
-000826  9004              STR      r0,[sp,#0x10]
-;;;429    				var32b = var32b * REG_CorrectionR;
-000828  f8b80006          LDRH     r0,[r8,#6]  ; Correct_Parametet
-00082c  9904              LDR      r1,[sp,#0x10]
-00082e  4348              MULS     r0,r1,r0
-000830  9004              STR      r0,[sp,#0x10]
-;;;430    				if (var32a < var32b)
-000832  e9dd1004          LDRD     r1,r0,[sp,#0x10]
-000836  4288              CMP      r0,r1
-000838  d20c              BCS      |L3.2132|
-;;;431    				{
-;;;432    					var32b = var32b - var32a;
-00083a  e9dd0104          LDRD     r0,r1,[sp,#0x10]
-00083e  1a40              SUBS     r0,r0,r1
-000840  9004              STR      r0,[sp,#0x10]
-;;;433    					REG_ReadR_Offset = var32b;
-000842  9804              LDR      r0,[sp,#0x10]
-000844  60e0              STR      r0,[r4,#0xc]  ; Correct_Strong
-;;;434    					Polar3 |= 0x01;
-000846  f8b80016          LDRH     r0,[r8,#0x16]  ; Correct_Parametet
-00084a  f0400001          ORR      r0,r0,#1
-00084e  f8a80016          STRH     r0,[r8,#0x16]
-000852  e00b              B        |L3.2156|
-                  |L3.2132|
-;;;435    				}
-;;;436    				else 
-;;;437    				{
-;;;438    					var32a = var32a - var32b;
-000854  e9dd1004          LDRD     r1,r0,[sp,#0x10]
-000858  1a40              SUBS     r0,r0,r1
-00085a  9005              STR      r0,[sp,#0x14]
-;;;439    					REG_ReadR_Offset = var32a;
-00085c  9805              LDR      r0,[sp,#0x14]
-00085e  60e0              STR      r0,[r4,#0xc]  ; Correct_Strong
-;;;440    					Polar3 &= ~0x01;
-000860  f8b80016          LDRH     r0,[r8,#0x16]  ; Correct_Parametet
-000864  f0200001          BIC      r0,r0,#1
-000868  f8a80016          STRH     r0,[r8,#0x16]
-                  |L3.2156|
-;;;441    				}
-;;;442    	//---------------------------------------------------------------------------------------//
-;;;443    				Flash_Write_all();	//参数写进FLASH
-00086c  f7fffffe          BL       Flash_Write_all
-;;;444    				flag_OverV=0;
-000870  6828              LDR      r0,[r5,#0]  ; flagG
-000872  f0200002          BIC      r0,r0,#2
-000876  6028              STR      r0,[r5,#0]  ; flagG
-;;;445    				Flag_DAC_OFF=0;
-000878  6830              LDR      r0,[r6,#0]  ; flagB
-00087a  f0200008          BIC      r0,r0,#8
-00087e  6030              STR      r0,[r6,#0]  ; flagB
-                  |L3.2176|
-;;;446    			}
-;;;447    			flag_ADJ_VH=0;//清掉标志位防止一直进入
-000880  6838              LDR      r0,[r7,#0]  ; flagF
-000882  f0200008          BIC      r0,r0,#8
-000886  6038              STR      r0,[r7,#0]  ; flagF
-                  |L3.2184|
-;;;448    		}	
-;;;449    /***********??DAC*******************************************/
-;;;450    		if (g_tModS.RxBuf[1] == 0x0F)			   
-000888  4915              LDR      r1,|L3.2272|
-00088a  7848              LDRB     r0,[r1,#1]  ; g_tModS
-00088c  280f              CMP      r0,#0xf
-00088e  d109              BNE      |L3.2212|
-;;;451    		{
-;;;452    			Contr_Laod = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
-000890  790a              LDRB     r2,[r1,#4]  ; g_tModS
-000892  78cb              LDRB     r3,[r1,#3]  ; g_tModS
-000894  eb022203          ADD      r2,r2,r3,LSL #8
-000898  f8aa2000          STRH     r2,[r10,#0]
-;;;453    			Flag_DAC_OFF=1;
-00089c  6832              LDR      r2,[r6,#0]  ; flagB
-00089e  f0420208          ORR      r2,r2,#8
-0008a2  6032              STR      r2,[r6,#0]  ; flagB
-                  |L3.2212|
-;;;454    		}
-;;;455    		if (g_tModS.RxBuf[1] == 0x20)			   
-0008a4  2820              CMP      r0,#0x20
-0008a6  d109              BNE      |L3.2236|
-;;;456    		{
-;;;457    			Contr_Voltage = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
-0008a8  790a              LDRB     r2,[r1,#4]  ; g_tModS
-0008aa  78cb              LDRB     r3,[r1,#3]  ; g_tModS
-0008ac  eb022203          ADD      r2,r2,r3,LSL #8
-0008b0  f8ab2000          STRH     r2,[r11,#0]
-;;;458    			Flag_DAC_OFF=1;
-0008b4  6832              LDR      r2,[r6,#0]  ; flagB
-0008b6  f0420208          ORR      r2,r2,#8
-0008ba  6032              STR      r2,[r6,#0]  ; flagB
-                  |L3.2236|
-;;;459    		}
-;;;460    		if (g_tModS.RxBuf[1] == 0x21)			   
-0008bc  2821              CMP      r0,#0x21
-0008be  d109              BNE      |L3.2260|
-;;;461    		{
-;;;462    			Contr_Current = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
-0008c0  7908              LDRB     r0,[r1,#4]  ; g_tModS
-0008c2  78c9              LDRB     r1,[r1,#3]  ; g_tModS
-0008c4  eb002001          ADD      r0,r0,r1,LSL #8
-0008c8  f8a90000          STRH     r0,[r9,#0]
-;;;463    			Flag_DAC_OFF=1;
-0008cc  6830              LDR      r0,[r6,#0]  ; flagB
-0008ce  f0400008          ORR      r0,r0,#8
-0008d2  6030              STR      r0,[r6,#0]  ; flagB
+000734  0380              LSLS     r0,r0,#14
+000736  9002              STR      r0,[sp,#8]
+;;;416    				var32d = SET_CorrectionA;
+000738  f8b8000c          LDRH     r0,[r8,#0xc]  ; Correct_Parametet
+00073c  9001              STR      r0,[sp,#4]
+;;;417    				var32d = var32d * (Modify_D_READ*2);
+00073e  8969              LDRH     r1,[r5,#0xa]  ; Modify_D_READ
+000740  9801              LDR      r0,[sp,#4]
+000742  4348              MULS     r0,r1,r0
+000744  0040              LSLS     r0,r0,#1
+000746  9001              STR      r0,[sp,#4]
+;;;418    				if (var32c < var32d)
+000748  e9dd1001          LDRD     r1,r0,[sp,#4]
+00074c  4288              CMP      r0,r1
+00074e  d20e              BCS      |L3.1902|
+;;;419    				{
+;;;420    					var32d = var32d - var32c;
+000750  e9dd1001          LDRD     r1,r0,[sp,#4]
+000754  1a08              SUBS     r0,r1,r0
+000756  9001              STR      r0,[sp,#4]
+;;;421    					SET_ReadA_Offset = var32d;
+000758  9801              LDR      r0,[sp,#4]
+00075a  e000              B        |L3.1886|
+                  |L3.1884|
+00075c  e019              B        |L3.1938|
+                  |L3.1886|
+00075e  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
+;;;422    					Polar2 |= 0x04;
+000760  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
+000764  f0400004          ORR      r0,r0,#4
+000768  f8a80014          STRH     r0,[r8,#0x14]
+00076c  e00b              B        |L3.1926|
+                  |L3.1902|
+;;;423    				}
+;;;424    				else 
+;;;425    				{
+;;;426    					var32c = var32c - var32d;
+00076e  e9dd1001          LDRD     r1,r0,[sp,#4]
+000772  1a40              SUBS     r0,r0,r1
+000774  9002              STR      r0,[sp,#8]
+;;;427    					SET_ReadA_Offset = var32c;
+000776  9802              LDR      r0,[sp,#8]
+000778  6160              STR      r0,[r4,#0x14]  ; Correct_Strong
+;;;428    					Polar2 &= ~0x04;
+00077a  f8b80014          LDRH     r0,[r8,#0x14]  ; Correct_Parametet
+00077e  f0200004          BIC      r0,r0,#4
+000782  f8a80014          STRH     r0,[r8,#0x14]
+                  |L3.1926|
+;;;429    				}
+;;;430    				Flash_Write_all ();	
+000786  f7fffffe          BL       Flash_Write_all
+;;;431    				Flag_DAC_OFF=0;
+00078a  6830              LDR      r0,[r6,#0]  ; flagB
+00078c  f0200008          BIC      r0,r0,#8
+000790  6030              STR      r0,[r6,#0]  ; flagB
+                  |L3.1938|
+;;;432    			}
+;;;433            /*************************************内阻校准**************************************************************************/
+;;;434    		if(g_tModS.RxBuf[1] == 0x07||flag_ADJ_VL==1)
+000792  4951              LDR      r1,|L3.2264|
+;;;435    		{
+;;;436    			Modify_A_READ = Rmon_value;//测量电压值
+000794  4a51              LDR      r2,|L3.2268|
+000796  7848              LDRB     r0,[r1,#1]            ;434  ; g_tModS
+000798  2807              CMP      r0,#7                 ;434
+00079a  d002              BEQ      |L3.1954|
+00079c  783b              LDRB     r3,[r7,#0]            ;434  ; flagF
+00079e  075b              LSLS     r3,r3,#29             ;434
+0007a0  d507              BPL      |L3.1970|
+                  |L3.1954|
+0007a2  8813              LDRH     r3,[r2,#0]  ; Rmon_value
+0007a4  806b              STRH     r3,[r5,#2]
+;;;437    			Modify_A_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//读取低段
+0007a6  790b              LDRB     r3,[r1,#4]  ; g_tModS
+0007a8  f891c003          LDRB     r12,[r1,#3]  ; g_tModS
+0007ac  eb03230c          ADD      r3,r3,r12,LSL #8
+0007b0  80eb              STRH     r3,[r5,#6]
+                  |L3.1970|
+;;;438    		}
+;;;439    		if (g_tModS.RxBuf[1] == 0x08||flag_ADJ_VH==1)			   //电压测量校准完成
+0007b2  2808              CMP      r0,#8
+0007b4  d002              BEQ      |L3.1980|
+0007b6  7838              LDRB     r0,[r7,#0]  ; flagF
+0007b8  0700              LSLS     r0,r0,#28
+0007ba  d55c              BPL      |L3.2166|
+                  |L3.1980|
+;;;440    		{
+;;;441    			vu16 var16;
+;;;442    			vu32 var32a;
+;;;443    			vu32 var32b;
+;;;444    			
+;;;445    			vu16 var16a;
+;;;446    			vu32 var32c;
+;;;447    			vu32 var32d;
+;;;448    			Modify_B_READ =Rmon_value;//测量电压值
+0007bc  8811              LDRH     r1,[r2,#0]  ; Rmon_value
+0007be  4628              MOV      r0,r5
+0007c0  8129              STRH     r1,[r5,#8]
+;;;449    			flag_OverV=1;
+0007c2  4d47              LDR      r5,|L3.2272|
+0007c4  6829              LDR      r1,[r5,#0]  ; flagG
+0007c6  f0410102          ORR      r1,r1,#2
+0007ca  6029              STR      r1,[r5,#0]  ; flagG
+;;;450    			Modify_B_ACT = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];//读取高段
+0007cc  4a42              LDR      r2,|L3.2264|
+0007ce  7913              LDRB     r3,[r2,#4]  ; g_tModS
+0007d0  78d2              LDRB     r2,[r2,#3]  ; g_tModS
+0007d2  eb032202          ADD      r2,r3,r2,LSL #8
+0007d6  8182              STRH     r2,[r0,#0xc]
+;;;451    			if(flag_OverV==1)//只有当有数据写入时才能将校准数据写入FLASH
+0007d8  0789              LSLS     r1,r1,#30
+0007da  d548              BPL      |L3.2158|
+;;;452    			{
+;;;453    				var32a = Modify_B_ACT;
+0007dc  8981              LDRH     r1,[r0,#0xc]  ; Modify_B_ACT
+0007de  9105              STR      r1,[sp,#0x14]
+;;;454    				var32a = var32a - Modify_A_ACT;
+0007e0  88c2              LDRH     r2,[r0,#6]  ; Modify_A_ACT
+0007e2  9905              LDR      r1,[sp,#0x14]
+0007e4  1a89              SUBS     r1,r1,r2
+0007e6  9105              STR      r1,[sp,#0x14]
+;;;455    				var32a = var32a << 12;
+0007e8  9905              LDR      r1,[sp,#0x14]
+0007ea  0309              LSLS     r1,r1,#12
+0007ec  9105              STR      r1,[sp,#0x14]
+;;;456    				var16 = Modify_B_READ - Modify_A_READ;
+0007ee  8901              LDRH     r1,[r0,#8]  ; Modify_B_READ
+0007f0  8842              LDRH     r2,[r0,#2]  ; Modify_A_READ
+0007f2  1a89              SUBS     r1,r1,r2
+0007f4  9106              STR      r1,[sp,#0x18]
+;;;457    				var32a = var32a / var16;
+0007f6  f8bd1018          LDRH     r1,[sp,#0x18]
+0007fa  9a05              LDR      r2,[sp,#0x14]
+0007fc  fbb2f1f1          UDIV     r1,r2,r1
+000800  9105              STR      r1,[sp,#0x14]
+;;;458    				REG_CorrectionR = var32a;
+000802  9905              LDR      r1,[sp,#0x14]
+000804  f8a81006          STRH     r1,[r8,#6]
+;;;459    				var32a=0;
+;;;460    				var32a = Modify_B_ACT;
+000808  8981              LDRH     r1,[r0,#0xc]  ; Modify_B_ACT
+00080a  9105              STR      r1,[sp,#0x14]
+;;;461    				var32a = var32a << 12;
+00080c  9905              LDR      r1,[sp,#0x14]
+00080e  0309              LSLS     r1,r1,#12
+000810  9105              STR      r1,[sp,#0x14]
+;;;462    				var32b = Modify_B_READ;
+000812  8900              LDRH     r0,[r0,#8]  ; Modify_B_READ
+000814  9004              STR      r0,[sp,#0x10]
+;;;463    				var32b = var32b * REG_CorrectionR;
+000816  f8b80006          LDRH     r0,[r8,#6]  ; Correct_Parametet
+00081a  9904              LDR      r1,[sp,#0x10]
+00081c  4348              MULS     r0,r1,r0
+00081e  9004              STR      r0,[sp,#0x10]
+;;;464    				if (var32a < var32b)
+000820  e9dd0104          LDRD     r0,r1,[sp,#0x10]
+000824  4281              CMP      r1,r0
+000826  d20c              BCS      |L3.2114|
+;;;465    				{
+;;;466    					var32b = var32b - var32a;
+000828  e9dd0104          LDRD     r0,r1,[sp,#0x10]
+00082c  1a40              SUBS     r0,r0,r1
+00082e  9004              STR      r0,[sp,#0x10]
+;;;467    					REG_ReadR_Offset = var32b;
+000830  9804              LDR      r0,[sp,#0x10]
+000832  60e0              STR      r0,[r4,#0xc]  ; Correct_Strong
+;;;468    					Polar3 |= 0x01;
+000834  f8b80016          LDRH     r0,[r8,#0x16]  ; Correct_Parametet
+000838  f0400001          ORR      r0,r0,#1
+00083c  f8a80016          STRH     r0,[r8,#0x16]
+000840  e00b              B        |L3.2138|
+                  |L3.2114|
+;;;469    				}
+;;;470    				else 
+;;;471    				{
+;;;472    					var32a = var32a - var32b;
+000842  e9dd1004          LDRD     r1,r0,[sp,#0x10]
+000846  1a40              SUBS     r0,r0,r1
+000848  9005              STR      r0,[sp,#0x14]
+;;;473    					REG_ReadR_Offset = var32a;
+00084a  9805              LDR      r0,[sp,#0x14]
+00084c  60e0              STR      r0,[r4,#0xc]  ; Correct_Strong
+;;;474    					Polar3 &= ~0x01;
+00084e  f8b80016          LDRH     r0,[r8,#0x16]  ; Correct_Parametet
+000852  f0200001          BIC      r0,r0,#1
+000856  f8a80016          STRH     r0,[r8,#0x16]
+                  |L3.2138|
+;;;475    				}
+;;;476    	//---------------------------------------------------------------------------------------//
+;;;477    				Flash_Write_all();	//参数写进FLASH
+00085a  f7fffffe          BL       Flash_Write_all
+;;;478    				flag_OverV=0;
+00085e  6828              LDR      r0,[r5,#0]  ; flagG
+000860  f0200002          BIC      r0,r0,#2
+000864  6028              STR      r0,[r5,#0]  ; flagG
+;;;479    				Flag_DAC_OFF=0;
+000866  6830              LDR      r0,[r6,#0]  ; flagB
+000868  f0200008          BIC      r0,r0,#8
+00086c  6030              STR      r0,[r6,#0]  ; flagB
+                  |L3.2158|
+;;;480    			}
+;;;481    			flag_ADJ_VH=0;//清掉标志位防止一直进入
+00086e  6838              LDR      r0,[r7,#0]  ; flagF
+000870  f0200008          BIC      r0,r0,#8
+000874  6038              STR      r0,[r7,#0]  ; flagF
+                  |L3.2166|
+;;;482    		}	
+;;;483    /***********??DAC*******************************************/
+;;;484    		if (g_tModS.RxBuf[1] == 0x0F)			   
+000876  4918              LDR      r1,|L3.2264|
+000878  7848              LDRB     r0,[r1,#1]  ; g_tModS
+00087a  280f              CMP      r0,#0xf
+00087c  d109              BNE      |L3.2194|
+;;;485    		{
+;;;486    			Contr_Laod = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+00087e  790a              LDRB     r2,[r1,#4]  ; g_tModS
+000880  78cb              LDRB     r3,[r1,#3]  ; g_tModS
+000882  eb022203          ADD      r2,r2,r3,LSL #8
+000886  f8a92000          STRH     r2,[r9,#0]
+;;;487    			Flag_DAC_OFF=1;
+00088a  6832              LDR      r2,[r6,#0]  ; flagB
+00088c  f0420208          ORR      r2,r2,#8
+000890  6032              STR      r2,[r6,#0]  ; flagB
+                  |L3.2194|
+;;;488    		}
+;;;489    		if (g_tModS.RxBuf[1] == 0x20)			   
+000892  2820              CMP      r0,#0x20
+000894  d109              BNE      |L3.2218|
+;;;490    		{
+;;;491    			Contr_Voltage = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+000896  790a              LDRB     r2,[r1,#4]  ; g_tModS
+000898  78cb              LDRB     r3,[r1,#3]  ; g_tModS
+00089a  eb022203          ADD      r2,r2,r3,LSL #8
+00089e  f8aa2000          STRH     r2,[r10,#0]
+;;;492    			Flag_DAC_OFF=1;
+0008a2  6832              LDR      r2,[r6,#0]  ; flagB
+0008a4  f0420208          ORR      r2,r2,#8
+0008a8  6032              STR      r2,[r6,#0]  ; flagB
+                  |L3.2218|
+;;;493    		}
+;;;494    		if (g_tModS.RxBuf[1] == 0x21)			   
+0008aa  2821              CMP      r0,#0x21
+0008ac  d109              BNE      |L3.2242|
+;;;495    		{
+;;;496    			Contr_Current = (g_tModS.RxBuf[3] << 8) + g_tModS.RxBuf[4];
+0008ae  7908              LDRB     r0,[r1,#4]  ; g_tModS
+0008b0  78c9              LDRB     r1,[r1,#3]  ; g_tModS
+0008b2  eb002001          ADD      r0,r0,r1,LSL #8
+0008b6  f8ab0000          STRH     r0,[r11,#0]
+;;;497    			Flag_DAC_OFF=1;
+0008ba  6830              LDR      r0,[r6,#0]  ; flagB
+0008bc  f0400008          ORR      r0,r0,#8
+0008c0  6030              STR      r0,[r6,#0]  ; flagB
+                  |L3.2242|
+;;;498    		}		
+;;;499        }
+;;;500    }
+0008c2  b007              ADD      sp,sp,#0x1c
+0008c4  e8bd8ff0          POP      {r4-r11,pc}
+                  |L3.2248|
+                          DCD      Vmon1_value
+                  |L3.2252|
+                          DCD      Contr_Voltage
+                  |L3.2256|
+                          DCD      Imon_value
                   |L3.2260|
-;;;464    		}		
-;;;465        }
-;;;466    }
-0008d4  b007              ADD      sp,sp,#0x1c
-0008d6  e8bd8ff0          POP      {r4-r11,pc}
-;;;467    //===============================AD值转换成测量值============================================//
+                          DCD      Contr_Current
+                  |L3.2264|
+                          DCD      g_tModS
+                  |L3.2268|
+                          DCD      Rmon_value
+                  |L3.2272|
+                          DCD      flagG
                           ENDP
 
-0008da  0000              DCW      0x0000
-                  |L3.2268|
-                          DCD      Contr_Voltage
-                  |L3.2272|
-                          DCD      g_tModS
-                  |L3.2276|
-                          DCD      Imon_value
-                  |L3.2280|
-                          DCD      Contr_Current
-                  |L3.2284|
-                          DCD      Rmon_value
-                  |L3.2288|
-                          DCD      flagG
 
                           AREA ||.bss||, DATA, NOINIT, ALIGN=2
 
