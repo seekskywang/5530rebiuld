@@ -525,15 +525,15 @@ void Transformation_ADC(void)
 /*****************************稳压电源测量电压转换*******************************************/
 	var32 = Vmon1_value;
 	var32 = var32 * REG_CorrectionV1;  
-	if ((Polar3 & 0x01) == 0x01)		  
-	{
-		if (var32 < REG_ReadV1_Offset) 
-		{
-			var32 = 0;
-		}
-		else var32 = var32 + REG_ReadV1_Offset;
-	}
-	else 
+//	if ((Polar2 & 0x01) == 0x01)		  
+//	{
+//		if (var32 < REG_ReadV1_Offset) 
+//		{
+//			var32 = 0;
+//		}
+//		else var32 = var32 + REG_ReadV1_Offset;
+//	}
+//	else 
 		var32 = var32 - REG_ReadV1_Offset;
 //	temp = temp * 0.8191;  
 //	temp = temp - 5.2066;
@@ -552,6 +552,10 @@ void Transformation_ADC(void)
 	if(DISS_POW_Voltage < 0)
 	{
 		DISS_POW_Voltage = 0;
+	}
+	if(DISS_POW_Voltage > SET_Voltage - 50 && DISS_POW_Voltage < SET_Voltage + 50)
+	{
+		DISS_POW_Voltage = SET_Voltage;
 	}
 	DISS_POW_Voltage=DISS_POW_Voltage/100;//计算显示电压
 	var32 = 0;

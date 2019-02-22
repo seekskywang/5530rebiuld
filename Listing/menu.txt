@@ -1287,7 +1287,7 @@
 ;;;118            GUI_SetColor(GUI_WHITE);//设置前景色为白色
 ;;;119    //      GUI_SetFont(&GUI_FontD24x32);//
 ;;;120    // 		GUI_GotoXY(95,72);//设置显示坐标
-;;;121    // 		GUI_DispFloatFix(DISS_POW_Voltage,5,2);//显示电压值
+;;;121    // 		GUI_DispFloatFix(DISS_Voltage,5,2);//显示电压值
 ;;;122    // 		GUI_GotoXY(95,140);//设置显示坐标
 ;;;123    // 		GUI_DispFloatFix(DISS_POW_Current,5,2);//显示电流值
 ;;;124            GUI_SetFont(&GUI_Font24_1);
@@ -1312,7 +1312,7 @@
 ;;;138    	{
 ;;;139    //         if(clear_flag2 == 1)
 ;;;140    //         {
-;;;141                 if(DISS_POW_Voltage <= 0.1)
+;;;141                 if(DISS_Voltage <= 0.1)
 ;;;142                 {
 ;;;143                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
 ;;;144                     sprintf(buf,"%.2f",0.00);       
@@ -1327,12 +1327,12 @@
 ;;;145                     TEXT_SetText(hItem,buf);
 ;;;146                 }else{
 ;;;147                     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
-;;;148                     sprintf(buf,"%.2f",DISS_POW_Voltage);       
+;;;148                     sprintf(buf,"%.2f",DISS_Voltage);       
 ;;;149                     TEXT_SetText(hItem,buf);
 ;;;150                 }
 ;;;151    //         }else{
 ;;;152    //            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
-;;;153    //            sprintf(buf,"%.2f",DISS_POW_Voltage);       
+;;;153    //            sprintf(buf,"%.2f",DISS_Voltage);       
 ;;;154    //            TEXT_SetText(hItem,buf);
 ;;;155    //         }
 ;;;156            
@@ -1763,7 +1763,7 @@
 00013e  d18d              BNE      |L7.92|
 000140  4eca              LDR      r6,|L7.1132|
 000142  49cb              LDR      r1,|L7.1136|
-000144  6830              LDR      r0,[r6,#0]            ;141  ; DISS_POW_Voltage
+000144  6830              LDR      r0,[r6,#0]            ;141  ; DISS_Voltage
 000146  4288              CMP      r0,r1                 ;141
 000148  da10              BGE      |L7.364|
 00014a  f6400193          MOV      r1,#0x893             ;143
@@ -1783,7 +1783,7 @@
 000170  6860              LDR      r0,[r4,#4]            ;147
 000172  f7fffffe          BL       WM_GetDialogItem
 000176  4607              MOV      r7,r0                 ;147
-000178  6830              LDR      r0,[r6,#0]            ;148  ; DISS_POW_Voltage
+000178  6830              LDR      r0,[r6,#0]            ;148  ; DISS_Voltage
 00017a  f7fffffe          BL       __aeabi_f2d
 00017e  ec410b10          VMOV     d0,r0,r1              ;148
 000182  a1bc              ADR      r1,|L7.1140|
@@ -2088,7 +2088,7 @@
 00046a  00                DCB      0
 00046b  00                DCB      0
                   |L7.1132|
-                          DCD      DISS_POW_Voltage
+                          DCD      DISS_Voltage
                   |L7.1136|
                           DCD      0x3dcccccd
                   |L7.1140|
@@ -2521,7 +2521,7 @@
 000002  4834              LDR      r0,|L8.212|
 000004  7800              LDRB     r0,[r0,#0]  ; pow_sw
 ;;;922        {
-;;;923            if(DISS_POW_Voltage*100 > set_max_v || DISS_POW_Voltage*100 < set_min_v || DISS_POW_Current * 100 > set_max_c || DISS_POW_Current * 100 < set_min_c)
+;;;923            if(DISS_Voltage*100 > set_max_v || DISS_Voltage*100 < set_min_v || DISS_POW_Current * 100 > set_max_c || DISS_POW_Current * 100 < set_min_c)
 ;;;924            {
 ;;;925                if(para_set4 == set_4_on){
 ;;;926                    BEEP_Tiggr();
@@ -2624,7 +2624,7 @@
                   |L8.220|
                           DCD      para_set1
                   |L8.224|
-                          DCD      DISS_POW_Voltage
+                          DCD      DISS_Voltage
                   |L8.228|
 0000e4  42c80000          DCFS     0x42c80000 ; 100
                   |L8.232|

@@ -36500,18 +36500,15 @@ N/*****************************稳压电源测量电压转换*****************************
 N	var32 = Vmon1_value;
 N	var32 = var32 * REG_CorrectionV1;  
 X	var32 = var32 * Correct_Parametet[12];  
-N	if ((Polar3 & 0x01) == 0x01)		  
-X	if ((Correct_Parametet[11] & 0x01) == 0x01)		  
-N	{
-N		if (var32 < REG_ReadV1_Offset) 
-X		if (var32 < Correct_Strong[8]) 
-N		{
-N			var32 = 0;
-N		}
-N		else var32 = var32 + REG_ReadV1_Offset;
-X		else var32 = var32 + Correct_Strong[8];
-N	}
-N	else 
+N//	if ((Polar2 & 0x01) == 0x01)		  
+N//	{
+N//		if (var32 < REG_ReadV1_Offset) 
+N//		{
+N//			var32 = 0;
+N//		}
+N//		else var32 = var32 + REG_ReadV1_Offset;
+N//	}
+N//	else 
 N		var32 = var32 - REG_ReadV1_Offset;
 X		var32 = var32 - Correct_Strong[8];
 N//	temp = temp * 0.8191;  
@@ -36533,6 +36530,12 @@ X	DISS_POW_Voltage=Run_Control[9];
 N	if(DISS_POW_Voltage < 0)
 N	{
 N		DISS_POW_Voltage = 0;
+N	}
+N	if(DISS_POW_Voltage > SET_Voltage - 50 && DISS_POW_Voltage < SET_Voltage + 50)
+X	if(DISS_POW_Voltage > Run_Control[1] - 50 && DISS_POW_Voltage < Run_Control[1] + 50)
+N	{
+N		DISS_POW_Voltage = SET_Voltage;
+X		DISS_POW_Voltage = Run_Control[1];
 N	}
 N	DISS_POW_Voltage=DISS_POW_Voltage/100;//计算显示电压
 N	var32 = 0;

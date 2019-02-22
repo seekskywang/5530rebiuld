@@ -118,7 +118,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
         GUI_SetColor(GUI_WHITE);//设置前景色为白色
 //      GUI_SetFont(&GUI_FontD24x32);//
 // 		GUI_GotoXY(95,72);//设置显示坐标
-// 		GUI_DispFloatFix(DISS_POW_Voltage,5,2);//显示电压值
+// 		GUI_DispFloatFix(DISS_Voltage,5,2);//显示电压值
 // 		GUI_GotoXY(95,140);//设置显示坐标
 // 		GUI_DispFloatFix(DISS_POW_Current,5,2);//显示电流值
         GUI_SetFont(&GUI_Font24_1);
@@ -138,19 +138,19 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 	{
 //         if(clear_flag2 == 1)
 //         {
-             if(DISS_POW_Voltage <= 0.1)
+             if(DISS_Voltage <= 0.1)
              {
                  hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
                  sprintf(buf,"%.2f",0.00);       
                  TEXT_SetText(hItem,buf);
              }else{
                  hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
-                 sprintf(buf,"%.2f",DISS_POW_Voltage);       
+                 sprintf(buf,"%.2f",DISS_Voltage);       
                  TEXT_SetText(hItem,buf);
              }
 //         }else{
 //            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_86);
-//            sprintf(buf,"%.2f",DISS_POW_Voltage);       
+//            sprintf(buf,"%.2f",DISS_Voltage);       
 //            TEXT_SetText(hItem,buf);
 //         }
         
@@ -920,7 +920,7 @@ void test_pow(void)
 
     if(pow_sw == pow_on && para_set1 == set_1_on)
     {
-        if(DISS_POW_Voltage*100 > set_max_v || DISS_POW_Voltage*100 < set_min_v || DISS_POW_Current * 100 > set_max_c || DISS_POW_Current * 100 < set_min_c)
+        if(DISS_Voltage*100 > set_max_v || DISS_Voltage*100 < set_min_v || DISS_POW_Current * 100 > set_max_c || DISS_POW_Current * 100 < set_min_c)
         {
             if(para_set4 == set_4_on){
                 BEEP_Tiggr();
