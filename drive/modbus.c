@@ -694,19 +694,24 @@ void Transformation_ADC(void)
 /*******************负载测量电流转换**************************************/
 	var32 = Imon1_value;
 	var32 = var32 * REG_CorrectionA1;  
-	if ((Polar2 & 0x04) == 0x04)		  
-	{
-		if (var32 < REG_ReadA1_Offset) 
-		{
-			var32 = 0;
-		}
-		else var32 = var32 - REG_ReadA1_Offset;
-	}
-	else var32 = var32 + REG_ReadA1_Offset;
+//	if ((Polar2 & 0x04) == 0x04)		  
+//	{
+//		if (var32 < REG_ReadA1_Offset) 
+//		{
+//			var32 = 0;
+//		}
+//		else 
+			var32 = var32 - REG_ReadA1_Offset;
+//	}
+//	else var32 = var32 + REG_ReadA1_Offset;
 	var32 = var32 >> 12;
 	Laod_Current = var32;
 	DISS_Current=Laod_Current;
 	DISS_Current=DISS_Current/100;//计算显示电流
+	if(DISS_Current > 20)
+	{
+		DISS_Current = 0;
+	}
 	var32 = 0;		
 	
 }

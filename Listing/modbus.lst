@@ -36705,25 +36705,27 @@ N/*******************负载测量电流转换**************************************/
 N	var32 = Imon1_value;
 N	var32 = var32 * REG_CorrectionA1;  
 X	var32 = var32 * Correct_Parametet[2];  
-N	if ((Polar2 & 0x04) == 0x04)		  
-X	if ((Correct_Parametet[10] & 0x04) == 0x04)		  
-N	{
-N		if (var32 < REG_ReadA1_Offset) 
-X		if (var32 < Correct_Strong[2]) 
-N		{
-N			var32 = 0;
-N		}
-N		else var32 = var32 - REG_ReadA1_Offset;
-X		else var32 = var32 - Correct_Strong[2];
-N	}
-N	else var32 = var32 + REG_ReadA1_Offset;
-X	else var32 = var32 + Correct_Strong[2];
+N//	if ((Polar2 & 0x04) == 0x04)		  
+N//	{
+N//		if (var32 < REG_ReadA1_Offset) 
+N//		{
+N//			var32 = 0;
+N//		}
+N//		else 
+N			var32 = var32 - REG_ReadA1_Offset;
+X			var32 = var32 - Correct_Strong[2];
+N//	}
+N//	else var32 = var32 + REG_ReadA1_Offset;
 N	var32 = var32 >> 12;
 N	Laod_Current = var32;
 X	Run_Control[12] = var32;
 N	DISS_Current=Laod_Current;
 X	DISS_Current=Run_Control[12];
 N	DISS_Current=DISS_Current/100;//计算显示电流
+N	if(DISS_Current > 20)
+N	{
+N		DISS_Current = 0;
+N	}
 N	var32 = 0;		
 N	
 N}
