@@ -35446,14 +35446,14 @@ N}
 N/**************************************************************************************/
 Nvoid Temp_Comapre(void)	  //温度来控制风扇
 N{
-N	if(NTC_value<=3500)
+N	if(NTC_value<=1700)
 N	{
 N		GPIO_SetBits(GPIOB,GPIO_Pin_12);//开启风扇
 X		GPIO_SetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x1000));
 N		flag_FAN_ON=1;
 X		(flagG . bit5)=1;
 N	}
-N	else if(NTC_value>=3628)
+N	else if(NTC_value>=1850)
 N	{
 N		GPIO_ResetBits(GPIOB,GPIO_Pin_12);//关闭风扇
 X		GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0400)),((uint16_t)0x1000));

@@ -174,10 +174,10 @@
 ;;;91     void Temp_Comapre(void)	  //温度来控制风扇
 000000  b570              PUSH     {r4-r6,lr}
 ;;;92     {
-;;;93     	if(NTC_value<=3500)
+;;;93     	if(NTC_value<=1700)
 000002  4a0e              LDR      r2,|L3.60|
 000004  8813              LDRH     r3,[r2,#0]  ; NTC_value
-000006  f64055ac          MOV      r5,#0xdac
+000006  f24065a4          MOV      r5,#0x6a4
 ;;;94     	{
 ;;;95     		GPIO_SetBits(GPIOB,GPIO_Pin_12);//开启风扇
 00000a  480d              LDR      r0,|L3.64|
@@ -192,7 +192,7 @@
 000020  6020              STR      r0,[r4,#0]  ; flagG
                   |L3.34|
 ;;;97     	}
-;;;98     	else if(NTC_value>=3628)
+;;;98     	else if(NTC_value>=1850)
 ;;;99     	{
 ;;;100    		GPIO_ResetBits(GPIOB,GPIO_Pin_12);//关闭风扇
 ;;;101    		flag_FAN_ON=0;
@@ -201,7 +201,7 @@
 000022  bd70              POP      {r4-r6,pc}
                   |L3.36|
 000024  8812              LDRH     r2,[r2,#0]            ;98  ; NTC_value
-000026  f640632c          MOV      r3,#0xe2c             ;98
+000026  f240733a          MOV      r3,#0x73a             ;98
 00002a  429a              CMP      r2,r3                 ;98
 00002c  d3f9              BCC      |L3.34|
 00002e  f7fffffe          BL       GPIO_ResetBits
