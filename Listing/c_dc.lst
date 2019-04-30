@@ -53655,7 +53655,7 @@ N
 N            
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_66);
 X            hItem = WM_GetDialogItem(pMsg->hWin, (0x800 + 0x7F));
-N            sprintf(buf,"%.2f",DISS_POW_Voltage);       
+N            sprintf(buf,"%.2f",DISS_Voltage);       
 N            TEXT_SetText(hItem,buf);
 N            
 N            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_67);
@@ -53786,13 +53786,13 @@ N            {
 N                if(cov1 == 0 || coc1 == 0)
 X                if(coff[0] == 0 || coff[3] == 0)
 N                {
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0){//判断电流是否小于截止电流，并记录时间
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) || DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0){
+N                    if(((DISS_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0){//判断电流是否小于截止电流，并记录时间
+X                    if(((DISS_Voltage >= (float)coff[0]/100 && coff[0] != 0) || DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0){
 N                        cutoff_time = GUI_GetTime()/500;
 N                        cutoff_flag = 1;
 N                    }
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )//若测量电流小于截止电流
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) || DISS_POW_Current < (float)coff[3]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )
+N                    if(((DISS_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )//若测量电流小于截止电流
+X                    if(((DISS_Voltage >= (float)coff[0]/100 && coff[0] != 0) || DISS_POW_Current < (float)coff[3]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )
 N                    {
 N                        if(mode_sw == mode_pow){
 X                        if(mode_sw == 3){
@@ -53805,13 +53805,13 @@ N                        GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
 X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
 N                    }
 N                }else{
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0){//判断电流是否小于截止电流，并记录时间
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) && DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0){
+N                    if(((DISS_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0){//判断电流是否小于截止电流，并记录时间
+X                    if(((DISS_Voltage >= (float)coff[0]/100 && coff[0] != 0) && DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0){
 N                        cutoff_time = GUI_GetTime()/500;
 N                        cutoff_flag = 1;
 N                    }
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )//若测量电流小于截止电流
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) && DISS_POW_Current < (float)coff[3]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )
+N                    if(((DISS_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )//若测量电流小于截止电流
+X                    if(((DISS_Voltage >= (float)coff[0]/100 && coff[0] != 0) && DISS_POW_Current < (float)coff[3]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 )
 N                    {
 N                        if(mode_sw == mode_pow){
 X                        if(mode_sw == 3){
@@ -53829,8 +53829,8 @@ X            }else if(Run_Control[33] == 0 && Run_Control[36] == 0){
 N                if(cov1 == 0 || coc1 == 0)
 X                if(coff[0] == 0 || coff[3] == 0)
 N                { 
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) || DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0 && charge_step == 1)
+N                    if(((DISS_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
+X                    if(((DISS_Voltage >= (float)coff[0]/100 && coff[0] != 0) || DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0 && charge_step == 1)
 N                    {//判断电流是否小于截止电流，并记录时间
 N                        SET_Voltage = opv2;
 X                        Run_Control[1] = Run_Control[32];
@@ -53839,8 +53839,8 @@ X                        Run_Control[2] = Run_Control[35];
 N                        charge_step = 2;
 N                    }
 N                }else{
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) && DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0 && charge_step == 1)
+N                    if(((DISS_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
+X                    if(((DISS_Voltage >= (float)coff[0]/100 && coff[0] != 0) && DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0 && charge_step == 1)
 N                    {//判断电流是否小于截止电流，并记录时间
 N                        SET_Voltage = opv2;
 X                        Run_Control[1] = Run_Control[32];
@@ -53852,13 +53852,13 @@ N                }
 N                if(cov2 == 0 || coc2 == 0)
 X                if(coff[1] == 0 || coff[4] == 0)
 N                {
-N                    if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2){//判断电流是否小于截止电流，并记录时间
-X                    if(((DISS_POW_Voltage >= (float)coff[1]/100 && coff[1] != 0) || DISS_POW_Current < (float)coff[4]/1000) && cutoff_flag == 0 && charge_step == 2){
+N                    if(((DISS_Voltage >= (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2){//判断电流是否小于截止电流，并记录时间
+X                    if(((DISS_Voltage >= (float)coff[1]/100 && coff[1] != 0) || DISS_POW_Current < (float)coff[4]/1000) && cutoff_flag == 0 && charge_step == 2){
 N                        cutoff_time = GUI_GetTime()/500;
 N                        cutoff_flag = 1;
 N                    }
-N                    if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)//若测量电流小于截止电流
-X                    if(((DISS_POW_Voltage >= (float)coff[1]/100 && coff[1] != 0) || DISS_POW_Current < (float)coff[4]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)
+N                    if(((DISS_Voltage >= (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)//若测量电流小于截止电流
+X                    if(((DISS_Voltage >= (float)coff[1]/100 && coff[1] != 0) || DISS_POW_Current < (float)coff[4]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)
 N                    {
 N                        if(mode_sw == mode_pow){
 X                        if(mode_sw == 3){
@@ -53871,13 +53871,13 @@ N                        GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
 X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
 N                    }
 N                }else{
-N                    if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) && DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2){//判断电流是否小于截止电流，并记录时间
-X                    if(((DISS_POW_Voltage >= (float)coff[1]/100 && coff[1] != 0) && DISS_POW_Current < (float)coff[4]/1000) && cutoff_flag == 0 && charge_step == 2){
+N                    if(((DISS_Voltage >= (float)cov2/100 && cov2 != 0) && DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2){//判断电流是否小于截止电流，并记录时间
+X                    if(((DISS_Voltage >= (float)coff[1]/100 && coff[1] != 0) && DISS_POW_Current < (float)coff[4]/1000) && cutoff_flag == 0 && charge_step == 2){
 N                        cutoff_time = GUI_GetTime()/500;
 N                        cutoff_flag = 1;
 N                    }
-N                    if(((DISS_POW_Voltage >= (float)cov2/100 && cov2 != 0) && DISS_POW_Current < (float)coc2/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)//若测量电流小于截止电流
-X                    if(((DISS_POW_Voltage >= (float)coff[1]/100 && coff[1] != 0) && DISS_POW_Current < (float)coff[4]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)
+N                    if(((DISS_Voltage >= (float)cov2/100 && cov2 != 0) && DISS_POW_Current < (float)coc2/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)//若测量电流小于截止电流
+X                    if(((DISS_Voltage >= (float)coff[1]/100 && coff[1] != 0) && DISS_POW_Current < (float)coff[4]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 2)
 N                    {
 N                        if(mode_sw == mode_pow){
 X                        if(mode_sw == 3){
@@ -53895,8 +53895,8 @@ X            }else if((Run_Control[31] != 0 || Run_Control[34] != 0) && (Run_Con
 N                if(cov1 == 0 || coc1 == 0)
 X                if(coff[0] == 0 || coff[3] == 0)
 N                { 
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) || DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0 && charge_step == 1)
+N                    if(((DISS_Voltage >= (float)cov1/100 && cov1 != 0) || DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
+X                    if(((DISS_Voltage >= (float)coff[0]/100 && coff[0] != 0) || DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0 && charge_step == 1)
 N                    {//判断电流是否小于截止电流，并记录时间
 N                        SET_Voltage = opv2;
 X                        Run_Control[1] = Run_Control[32];
@@ -53905,8 +53905,8 @@ X                        Run_Control[2] = Run_Control[35];
 N                        charge_step = 2;
 N                    }
 N                }else{
-N                    if(((DISS_POW_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
-X                    if(((DISS_POW_Voltage >= (float)coff[0]/100 && coff[0] != 0) && DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0 && charge_step == 1)
+N                    if(((DISS_Voltage >= (float)cov1/100 && cov1 != 0) && DISS_POW_Current < (float)coc1/1000) && cutoff_flag == 0 && charge_step == 1)
+X                    if(((DISS_Voltage >= (float)coff[0]/100 && coff[0] != 0) && DISS_POW_Current < (float)coff[3]/1000) && cutoff_flag == 0 && charge_step == 1)
 N                    {//判断电流是否小于截止电流，并记录时间
 N                        SET_Voltage = opv2;
 X                        Run_Control[1] = Run_Control[32];
@@ -53919,8 +53919,8 @@ N
 N                if(cov2 == 0 || coc2 == 0)
 X                if(coff[1] == 0 || coff[4] == 0)
 N                {
-N                    if(((DISS_POW_Voltage > (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2)
-X                    if(((DISS_POW_Voltage > (float)coff[1]/100 && coff[1] != 0) || DISS_POW_Current < (float)coff[4]/1000) && cutoff_flag == 0 && charge_step == 2)
+N                    if(((DISS_Voltage > (float)cov2/100 && cov2 != 0) || DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2)
+X                    if(((DISS_Voltage > (float)coff[1]/100 && coff[1] != 0) || DISS_POW_Current < (float)coff[4]/1000) && cutoff_flag == 0 && charge_step == 2)
 N                    {//判断电流是否小于截止电流，并记录时间
 N                        SET_Voltage = opv3;
 X                        Run_Control[1] = Run_Control[33];
@@ -53929,8 +53929,8 @@ X                        Run_Control[2] = Run_Control[36];
 N                        charge_step = 3;
 N                    }
 N                }else{
-N                    if(((DISS_POW_Voltage > (float)cov2/100 && cov2 != 0) && DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2)
-X                    if(((DISS_POW_Voltage > (float)coff[1]/100 && coff[1] != 0) && DISS_POW_Current < (float)coff[4]/1000) && cutoff_flag == 0 && charge_step == 2)
+N                    if(((DISS_Voltage > (float)cov2/100 && cov2 != 0) && DISS_POW_Current < (float)coc2/1000) && cutoff_flag == 0 && charge_step == 2)
+X                    if(((DISS_Voltage > (float)coff[1]/100 && coff[1] != 0) && DISS_POW_Current < (float)coff[4]/1000) && cutoff_flag == 0 && charge_step == 2)
 N                    {//判断电流是否小于截止电流，并记录时间
 N                        SET_Voltage = opv3;
 X                        Run_Control[1] = Run_Control[33];
@@ -53942,13 +53942,13 @@ N                }
 N                if(cov3 == 0 || coc3 == 0)
 X                if(coff[2] == 0 || coff[5] == 0)
 N                {
-N                    if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) || DISS_POW_Current < (float)coc3/1000) && cutoff_flag == 0 && charge_step == 3){//判断电流是否小于截止电流，并记录时间
-X                    if(((DISS_POW_Voltage > (float)coff[2]/100 && coff[2] != 0) || DISS_POW_Current < (float)coff[5]/1000) && cutoff_flag == 0 && charge_step == 3){
+N                    if(((DISS_Voltage > (float)cov3/100 && cov3 != 0) || DISS_POW_Current < (float)coc3/1000) && cutoff_flag == 0 && charge_step == 3){//判断电流是否小于截止电流，并记录时间
+X                    if(((DISS_Voltage > (float)coff[2]/100 && coff[2] != 0) || DISS_POW_Current < (float)coff[5]/1000) && cutoff_flag == 0 && charge_step == 3){
 N                        cutoff_time = GUI_GetTime()/500;
 N                        cutoff_flag = 1;
 N                    }
-N                    if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) || DISS_POW_Current < (float)coc3/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)//若测量电流小于截止电流
-X                    if(((DISS_POW_Voltage > (float)coff[2]/100 && coff[2] != 0) || DISS_POW_Current < (float)coff[5]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)
+N                    if(((DISS_Voltage > (float)cov3/100 && cov3 != 0) || DISS_POW_Current < (float)coc3/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)//若测量电流小于截止电流
+X                    if(((DISS_Voltage > (float)coff[2]/100 && coff[2] != 0) || DISS_POW_Current < (float)coff[5]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)
 N                    {
 N                        if(mode_sw == mode_pow){
 X                        if(mode_sw == 3){
@@ -53961,13 +53961,13 @@ N                        GPIO_ResetBits(GPIOC,GPIO_Pin_1);//开启负载
 X                        GPIO_ResetBits(((GPIO_TypeDef *) ((((uint32_t)0x40000000) + 0x00020000) + 0x0800)),((uint16_t)0x0002));
 N                    }
 N                }else{
-N                    if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) && DISS_POW_Current < (float)coc3/1000) && cutoff_flag == 0 && charge_step == 3){//判断电流是否小于截止电流，并记录时间
-X                    if(((DISS_POW_Voltage > (float)coff[2]/100 && coff[2] != 0) && DISS_POW_Current < (float)coff[5]/1000) && cutoff_flag == 0 && charge_step == 3){
+N                    if(((DISS_Voltage > (float)cov3/100 && cov3 != 0) && DISS_POW_Current < (float)coc3/1000) && cutoff_flag == 0 && charge_step == 3){//判断电流是否小于截止电流，并记录时间
+X                    if(((DISS_Voltage > (float)coff[2]/100 && coff[2] != 0) && DISS_POW_Current < (float)coff[5]/1000) && cutoff_flag == 0 && charge_step == 3){
 N                        cutoff_time = GUI_GetTime()/500;
 N                        cutoff_flag = 1;
 N                    }
-N                    if(((DISS_POW_Voltage > (float)cov3/100 && cov3 != 0) && DISS_POW_Current < (float)coc3/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)//若测量电流小于截止电流
-X                    if(((DISS_POW_Voltage > (float)coff[2]/100 && coff[2] != 0) && DISS_POW_Current < (float)coff[5]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)
+N                    if(((DISS_Voltage > (float)cov3/100 && cov3 != 0) && DISS_POW_Current < (float)coc3/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)//若测量电流小于截止电流
+X                    if(((DISS_Voltage > (float)coff[2]/100 && coff[2] != 0) && DISS_POW_Current < (float)coff[5]/1000) && (GUI_GetTime()/500 - cutoff_time) >= 10 && charge_step == 3)
 N                    {
 N                        if(mode_sw == mode_pow){
 X                        if(mode_sw == 3){
@@ -53986,7 +53986,7 @@ N//             if(DISS_POW_Current < dis_c_cutoff_c && cutoff_flag == 0){//判�
 N//                 cutoff_time = GUI_GetTime()/500;
 N//                 cutoff_flag = 1;
 N//             }
-N//             if(((DISS_POW_Voltage >= dis_c_cutoff_v && dis_c_cutoff_v != 0) || DISS_POW_Current < dis_c_cutoff_c) && (GUI_GetTime()/500 - cutoff_time) >= 10 )//若测量电流小于截止电流
+N//             if(((DISS_Voltage >= dis_c_cutoff_v && dis_c_cutoff_v != 0) || DISS_POW_Current < dis_c_cutoff_c) && (GUI_GetTime()/500 - cutoff_time) >= 10 )//若测量电流小于截止电流
 N//             {
 N//                 if(mode_sw == mode_pow){
 N//                     start_time = GUI_GetTime()/500;//记录开始时间
