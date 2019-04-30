@@ -521,6 +521,12 @@ void Transformation_ADC(void)
 	Voltage = var32;
 	DISS_Voltage=Voltage;
 	DISS_Voltage=DISS_Voltage/100;//计算显示电压
+	if(DISS_Voltage < 10)
+	{
+		DISS_Voltage +=0.04;
+	}else if(DISS_Voltage >= 10 && DISS_Voltage < 22){
+		DISS_Voltage +=0.02;
+	}
 	var32 = 0;
 /*****************************稳压电源测量电压转换*******************************************/
 	var32 = Vmon1_value;

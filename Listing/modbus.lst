@@ -36495,6 +36495,14 @@ X	Run_Control[10] = var32;
 N	DISS_Voltage=Voltage;
 X	DISS_Voltage=Run_Control[10];
 N	DISS_Voltage=DISS_Voltage/100;//计算显示电压
+N	if(DISS_Voltage < 10)
+N	{
+W "..\drive\modbus.c" 526 3 single-precision operand implicitly converted to double-precision
+N		DISS_Voltage +=0.04;
+N	}else if(DISS_Voltage >= 10 && DISS_Voltage < 22){
+W "..\drive\modbus.c" 528 3 single-precision operand implicitly converted to double-precision
+N		DISS_Voltage +=0.02;
+N	}
 N	var32 = 0;
 N/*****************************稳压电源测量电压转换*******************************************/
 N	var32 = Vmon1_value;

@@ -27,8 +27,17 @@ Project File Date:  01/11/2019
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'JK_BTSET'
-"..\Output\JK_BTSET.axf" - 0 Error(s), 0 Warning(s).
-Build Time Elapsed:  00:00:01
+compiling modbus.c...
+..\drive\modbus.c(526): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+                DISS_Voltage +=0.04;
+..\drive\modbus.c(528): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+                DISS_Voltage +=0.02;
+..\drive\modbus.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=161242 RO-data=120214 RW-data=2256 ZI-data=34720  
+FromELF: creating hex file...
+"..\Output\JK_BTSET.axf" - 0 Error(s), 2 Warning(s).
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>
